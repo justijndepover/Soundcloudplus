@@ -83,8 +83,7 @@ namespace ClassLibrary.API
                 apiResponse.StatusCode = response.StatusCode;
                 if (response.IsSuccessStatusCode)
                 {
-                    apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
-                    
+                    apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());                  
                 }
             }
             return apiResponse;

@@ -18,6 +18,7 @@ namespace SoundCloudPlus
     /// </summary>
     sealed partial class App
     {
+        public static SoundCloud SoundCloud { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -36,17 +37,17 @@ namespace SoundCloudPlus
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 #if DEBUG
             if (Debugger.IsAttached)
             {
-                DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
-            SoundCloud soundCloud = new SoundCloud();
-            var a = await soundCloud.ApiProxy.RequestTask(HttpMethod.Get, "/connect");
+            SoundCloud = new SoundCloud();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

@@ -11,7 +11,6 @@ namespace ClassLibrary.API
     public class ApiResponse
     {
         public HttpStatusCode StatusCode { get; set; }
-        [JsonProperty("RootObject", Order = 0)]
         public dynamic Data { get; set; }
 
     }
