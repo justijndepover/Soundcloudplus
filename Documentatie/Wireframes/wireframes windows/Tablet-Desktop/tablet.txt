@@ -1,0 +1,16 @@
+1
+Home screen met listview met top items. Onderaan staat een gridview met de stream die de gebruiker volgt. Links zie je de splitview met navigatie.
+
+2
+Page die je te zien krijgt als je muziek afspeelt. 
+
+Onderaan zie je een listview met de volgende nummers
+
+3
+Listview met alle artiesten die je volgt
+
+4
+Listview met alle genres
+
+5
+Page met meer info over de artiest

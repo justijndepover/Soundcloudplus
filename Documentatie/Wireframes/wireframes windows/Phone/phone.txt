@@ -1,0 +1,26 @@
+1
+Home screen met een slider waar de top hits staan van het moment. onderaan een listbox met de nieuwste items waar de gebruiker op geabonneerd is
+
+2
+Login scherm 
+
+3
+Splitview Pane als het open is. Je krijgt de navigation items te zien
+
+4
+Page die je te zien krijgt als je muziek afspeelt. 
+
+5
+Page die je ziet als je een nieuwe reactie wilt ingeven
+
+6
+Als je de page naar beneden scrollt krijg je een listview met volgende nummers te zien
+
+7
+Listview met alle artiesten die je volgt
+
+8
+Listview met alle genres
+
+9
+Page met meer info over de artiest
