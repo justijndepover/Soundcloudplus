@@ -128,13 +128,14 @@ namespace ClassLibrary.API
 
         public async Task<bool> Authenticate()
         {
+            var callbackUrl = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
             WebAuthenticationResult webAuthenticationResult =
-                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(BaseEndpointUrl + "/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + WebAuthenticationBroker.GetCurrentApplicationCallbackUri() + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
+                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(BaseEndpointUrl + "/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
             if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && webAuthenticationResult.ResponseData != null)
             {
                 string response = webAuthenticationResult.ResponseData;
-                string code = Regex.Split(response, "code=")[1].Split('&')[0];
-                string token = Regex.Split(response, "access_token=")[1].Split('&')[0];
+                string code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
+                string token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
                 await StorageHelper.SaveObjectAsync(code, "code");
                 await StorageHelper.SaveObjectAsync(token, "token");
                 return true;
