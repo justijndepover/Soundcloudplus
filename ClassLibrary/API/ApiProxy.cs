@@ -129,8 +129,8 @@ namespace ClassLibrary.API
         public async Task<bool> Authenticate()
         {
             WebAuthenticationResult webAuthenticationResult =
-                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(BaseEndpointUrl + "/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=soundcloudplus://soundcloudauth&response_type=code_and_token&scope=non-expiring&display=popup&state="), new Uri("soundcloudplus://soundcloudauth"));
-            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(BaseEndpointUrl + "/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + WebAuthenticationBroker.GetCurrentApplicationCallbackUri() + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), WebAuthenticationBroker.GetCurrentApplicationCallbackUri());
+            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && webAuthenticationResult.ResponseData != null)
             {
                 string response = webAuthenticationResult.ResponseData;
                 string code = Regex.Split(response, "code=")[1].Split('&')[0];
