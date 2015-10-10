@@ -8,29 +8,60 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:MainPageViewModel x:Key="MainPageViewModel"/>
+        <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource MainPageViewModel}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          DataContext="{StaticResource MainPageViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Background="#FFFF5500">
             <Button x:Name="NavButton" Content="&#xE700;" FontFamily="Segoe MDL2 Assets" Width="48" Height="36"
-                        Background="Transparent" HorizontalAlignment="Left" Click="NavButton_Click" />
-            <TextBlock Text="SoundCloud Plus" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
+                    Background="Transparent" HorizontalAlignment="Left" Click="NavButton_Click" />
+            <TextBlock Text="SoundCloud Plus" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="White" />
         </Grid>
         <SplitView x:Name="SplitView" Grid.Row="1">
             <SplitView.Pane>
-                <ListView ItemsSource="{Binding NavigationCollection}" Background="#FFFF5500" SelectionMode="None">
-
-                </ListView>
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button x:Name="AccountButton" Background="Transparent" Click="AccountButton_Click">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Connect with SoundCloud" />
+                            </Grid>
+                        </Button>
+                        <Button>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Settings" />
+                            </Grid>
+                        </Button>
+                        <Button>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="About" />
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
             </SplitView.Pane>
             <SplitView.Content>
                 <RelativePanel>
-                    <Grid>
-                        <Image/>
-                    </Grid>
+                    <Grid />
                 </RelativePanel>
             </SplitView.Content>
         </SplitView>

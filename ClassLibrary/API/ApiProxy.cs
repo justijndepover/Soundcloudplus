@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Security.Authentication.Web;
+using Enough.Storage;
 using Newtonsoft.Json;
+using HttpClient = System.Net.Http.HttpClient;
+using HttpMethod = System.Net.Http.HttpMethod;
+using HttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace ClassLibrary.API
 {
@@ -15,12 +21,6 @@ namespace ClassLibrary.API
         public async Task<ApiResponse> RequestTask(HttpMethod method, string endpoint, object body = null,
             object queryStringPairs = null, object clientHeaders = null)
         {
-            string jsonBody = null;
-            if (method != HttpMethod.Get && body != null)
-            {
-                jsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(body);
-            }
-
             Dictionary<String, String> dictQueryStringPairs = null;
             if (queryStringPairs != null && queryStringPairs.GetType() == typeof (Dictionary<String, String>))
             {
@@ -51,7 +51,7 @@ namespace ClassLibrary.API
             }
             else if (method == HttpMethod.Post)
             {
-                //return await Post(endpoint, queryString, jsonBody);
+                return await Post(endpoint, queryString, body, clientHeaders);
             }
             else if (method == HttpMethod.Put)
             {
@@ -88,6 +88,58 @@ namespace ClassLibrary.API
                 }
             }
             return apiResponse;
+        }
+        private async Task<ApiResponse> Post(string endpoint, string queryString, object body, object queryHeaders = null)
+        {
+            ApiResponse apiResponse = new ApiResponse();
+            string finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            using (HttpClient client = new HttpClient())
+            {
+                using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent())
+                {
+                    if (queryHeaders != null)
+                {
+                    var properties = queryHeaders.GetType().GetRuntimeProperties();
+                    foreach (var property in properties)
+                    {
+                        object val = property.GetValue(queryHeaders);
+                        client.DefaultRequestHeaders.Add(property.Name, val.ToString());
+                    }
+                }
+                if (body != null)
+                {
+                    var properties = body.GetType().GetRuntimeProperties();
+                    foreach (var property in properties)
+                    {
+                        object value = property.GetValue(body);
+                        multipartFormDataContent.Add(new StringContent(value.ToString()), '"' + property.Name + '"');
+                    }
+                }
+                HttpResponseMessage response = await client.PostAsync(finalEndpoint, multipartFormDataContent);
+                apiResponse.StatusCode = response.StatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
+                }
+                }
+            }
+            return apiResponse;
+        }
+
+        public async Task<bool> Authenticate()
+        {
+            WebAuthenticationResult webAuthenticationResult =
+                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(BaseEndpointUrl + "/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=soundcloudplus://soundcloudauth&response_type=code_and_token&scope=non-expiring&display=popup&state="), new Uri("soundcloudplus://soundcloudauth"));
+            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+            {
+                string response = webAuthenticationResult.ResponseData;
+                string code = Regex.Split(response, "code=")[1].Split('&')[0];
+                string token = Regex.Split(response, "access_token=")[1].Split('&')[0];
+                await StorageHelper.SaveObjectAsync(code, "code");
+                await StorageHelper.SaveObjectAsync(token, "token");
+                return true;
+            }
+            return false;
         }
     }
 }
