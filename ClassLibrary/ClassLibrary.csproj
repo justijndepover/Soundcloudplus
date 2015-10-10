@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="API\ApiProxy.cs" />
     <Compile Include="API\ApiResponse.cs" />
+    <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Track.cs" />

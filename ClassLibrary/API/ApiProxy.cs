@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Data.Json;
-using Windows.Devices.Bluetooth.Advertisement;
 using Newtonsoft.Json;
 
 namespace ClassLibrary.API
@@ -19,7 +13,7 @@ namespace ClassLibrary.API
         public string BaseEndpointUrl { get; } = "https://api.soundcloud.com";
 
         public async Task<ApiResponse> RequestTask(HttpMethod method, string endpoint, object body = null,
-            object queryStringPairs = null)
+            object queryStringPairs = null, object clientHeaders = null)
         {
             string jsonBody = null;
             if (method != HttpMethod.Get && body != null)
@@ -53,7 +47,7 @@ namespace ClassLibrary.API
             }
             if (method == HttpMethod.Get)
             {
-                return await Get(endpoint, queryString);
+                return await Get(endpoint, queryString, clientHeaders);
             }
             else if (method == HttpMethod.Post)
             {
@@ -70,14 +64,21 @@ namespace ClassLibrary.API
             return null;
         }
 
-        private async Task<ApiResponse> Get(string endpoint, string queryString)
+        private async Task<ApiResponse> Get(string endpoint, string queryString, object queryHeaders = null)
         {
             ApiResponse apiResponse = new ApiResponse();
             string finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("client_id", "bb45a30915dd5b2e04cf203b0f257c09");
-                client.DefaultRequestHeaders.Add("client_secret", "85a0ba75066c4bd5fb14142b16c21d8a");
+                if (queryHeaders != null)
+                {
+                    var properties = queryHeaders.GetType().GetRuntimeProperties();
+                    foreach (var property in properties)
+                    {
+                        object val = property.GetValue(queryHeaders);
+                        client.DefaultRequestHeaders.Add(property.Name, val.ToString());
+                    }
+                }
 
                 HttpResponseMessage response = await client.GetAsync(finalEndpoint);
                 apiResponse.StatusCode = response.StatusCode;

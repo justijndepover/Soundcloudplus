@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net.Http;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary;
-using ClassLibrary.API;
 using Microsoft.ApplicationInsights;
 using SoundCloudPlus.Pages;
 
