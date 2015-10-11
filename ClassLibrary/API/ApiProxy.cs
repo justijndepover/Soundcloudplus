@@ -16,7 +16,7 @@ namespace ClassLibrary.API
 {
     public class ApiProxy
     {
-        public string BaseEndpointUrl { get; } = "https://api.soundcloud.com";
+        public string BaseEndpointUrl { get; } = "https://api-v2.soundcloud.com";
 
         public async Task<ApiResponse> RequestTask(HttpMethod method, string endpoint, object body = null,
             object queryStringPairs = null, object clientHeaders = null)
@@ -103,7 +103,7 @@ namespace ClassLibrary.API
                     foreach (var property in properties)
                     {
                         object val = property.GetValue(queryHeaders);
-                        client.DefaultRequestHeaders.Add(property.Name, val.ToString());
+                        client.DefaultRequestHeaders.Add(property.Name, Uri.EscapeDataString(val.ToString()));
                     }
                 }
                 if (body != null)
@@ -130,8 +130,8 @@ namespace ClassLibrary.API
         {
             var callbackUrl = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
             WebAuthenticationResult webAuthenticationResult =
-                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(BaseEndpointUrl + "/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
-            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && webAuthenticationResult.ResponseData != null)
+                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri("https://api.soundcloud.com/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
+            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
             {
                 string response = webAuthenticationResult.ResponseData;
                 string code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];

@@ -1,7 +1,7 @@
-﻿using Windows.UI.Xaml.Navigation;
+﻿using System;
+using Windows.UI.Popups;
+using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace SoundCloudPlus.Pages
 {
@@ -12,11 +12,14 @@ namespace SoundCloudPlus.Pages
         {
             InitializeComponent();
         }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             _mainPageViewModel =
                 (MainPageViewModel)Resources["MainPageViewModel"];
+            if (App.SoundCloud.IsAuthenticated)
+            {
+                _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+            }
             base.OnNavigatedTo(e);
         }
 
@@ -25,9 +28,17 @@ namespace SoundCloudPlus.Pages
             SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
         }
 
-        private void AccountButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void AccountButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            App.SoundCloud.SignIn();
+            if (App.SoundCloud.CurrentUser == null)
+            {
+                App.SoundCloud.SignIn();
+            }
+            else
+            {
+                await new MessageDialog("You are already signed in").ShowAsync();
+            }
+            _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
         }
     }
 }

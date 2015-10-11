@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ClassLibrary.API;
+using ClassLibrary.Common;
 using ClassLibrary.Models;
 using Enough.Storage;
 
@@ -23,11 +25,12 @@ namespace ClassLibrary
             LoadSettings();
         }
 
-        private async void LoadSettings()
+        private void LoadSettings()
         {
-            CurrentUser = await StorageHelper.TryLoadObjectAsync<User>("currentUser");
-            Code = await StorageHelper.TryLoadObjectAsync<string>("code");
-            Token = await StorageHelper.TryLoadObjectAsync<string>("token");
+            //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
+            CurrentUser = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<User>("currentUser"));
+            Code = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("code"));
+            Token = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("token"));
             if (CurrentUser != null && Code != null && Token != null)
             {
                 IsAuthenticated = true;
@@ -38,10 +41,17 @@ namespace ClassLibrary
             }
         }
 
-        public async Task<List<Track>> GetExplore()
+        public async Task<ObservableCollection<Track>> GetStream()
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/sounds", null, new {limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId}, new {client_id = ClientId});
-            List<Track> tracks = apiResponse.Data.Cast<Playlist>();
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = 10, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "Oauth " + Token});
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            foreach (var item in apiResponse.Data["collection"])
+            {
+                if (item["type"].ToString().Equals("track"))
+                {
+                    tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                }
+            }
             return tracks;
         }
 

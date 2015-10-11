@@ -61,7 +61,22 @@
             </SplitView.Pane>
             <SplitView.Content>
                 <RelativePanel>
-                    <Grid />
+                    <GridView ItemsSource="{Binding StreamCollection}">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="10" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding ArtworkUrl}" Height="100" Width="100"/>
+                                        <TextBlock Text="{Binding Title}" Grid.Column="1"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </RelativePanel>
             </SplitView.Content>
         </SplitView>

@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="API\ApiProxy.cs" />
     <Compile Include="API\ApiResponse.cs" />
+    <Compile Include="Common\AsyncHelper.cs" />
     <Compile Include="Common\ContinuationManager.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Models\Comment.cs" />
