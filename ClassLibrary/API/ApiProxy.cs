@@ -34,14 +34,14 @@ namespace ClassLibrary.API
             {
                 var properties = queryStringPairs.GetType().GetRuntimeProperties();
 
-                List<string> keyValuePairs = (from property in properties
+                var keyValuePairs = (from property in properties
                     let val = property.GetValue(queryStringPairs)
                     select String.Format("{0}={1}", property.Name, val)).ToList();
                 queryString = String.Join("&", keyValuePairs);
             }
             else if (dictQueryStringPairs != null)
             {
-                List<String> keyValuePairs =
+                var keyValuePairs =
                     (from pair in dictQueryStringPairs select String.Format("{0}={1}", pair.Key, pair.Value)).ToList();
                 queryString = String.Join("&", keyValuePairs);
             }
@@ -66,43 +66,47 @@ namespace ClassLibrary.API
 
         private async Task<ApiResponse> Get(string endpoint, string queryString, object queryHeaders = null)
         {
-            ApiResponse apiResponse = new ApiResponse();
-            string finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
-            using (HttpClient client = new HttpClient())
+            var apiResponse = new ApiResponse();
+            var finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            using (var client = new HttpClient())
             {
                 if (queryHeaders != null)
                 {
                     var properties = queryHeaders.GetType().GetRuntimeProperties();
                     foreach (var property in properties)
                     {
-                        object val = property.GetValue(queryHeaders);
+                        var val = property.GetValue(queryHeaders);
                         client.DefaultRequestHeaders.Add(property.Name, val.ToString());
                     }
                 }
 
-                HttpResponseMessage response = await client.GetAsync(finalEndpoint);
-                apiResponse.StatusCode = response.StatusCode;
+                var response = await client.GetAsync(finalEndpoint);
                 if (response.IsSuccessStatusCode)
                 {
+                    apiResponse.Succes = true;
                     apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());                  
+                }
+                else
+                {
+                    apiResponse.Succes = false;
                 }
             }
             return apiResponse;
         }
         private async Task<ApiResponse> Post(string endpoint, string queryString, object body, object queryHeaders = null)
         {
-            ApiResponse apiResponse = new ApiResponse();
-            string finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
-            using (HttpClient client = new HttpClient())
+            var apiResponse = new ApiResponse();
+            var finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            using (var client = new HttpClient())
             {
-                using (MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent())
+                using (var multipartFormDataContent = new MultipartFormDataContent())
                 {
                     if (queryHeaders != null)
                 {
                     var properties = queryHeaders.GetType().GetRuntimeProperties();
                     foreach (var property in properties)
                     {
-                        object val = property.GetValue(queryHeaders);
+                        var val = property.GetValue(queryHeaders);
                         client.DefaultRequestHeaders.Add(property.Name, Uri.EscapeDataString(val.ToString()));
                     }
                 }
@@ -111,15 +115,19 @@ namespace ClassLibrary.API
                     var properties = body.GetType().GetRuntimeProperties();
                     foreach (var property in properties)
                     {
-                        object value = property.GetValue(body);
+                        var value = property.GetValue(body);
                         multipartFormDataContent.Add(new StringContent(value.ToString()), '"' + property.Name + '"');
                     }
                 }
-                HttpResponseMessage response = await client.PostAsync(finalEndpoint, multipartFormDataContent);
-                apiResponse.StatusCode = response.StatusCode;
+                var response = await client.PostAsync(finalEndpoint, multipartFormDataContent);
                 if (response.IsSuccessStatusCode)
                 {
+                    apiResponse.Succes = true;
                     apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    apiResponse.Succes = false;
                 }
                 }
             }
@@ -129,13 +137,12 @@ namespace ClassLibrary.API
         public async Task<bool> Authenticate()
         {
             var callbackUrl = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
-            WebAuthenticationResult webAuthenticationResult =
-                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri("https://soundcloud.com/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
-            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
+            var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri("https://soundcloud.com/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
+            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && !String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
             {
-                string response = webAuthenticationResult.ResponseData;
-                string code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
-                string token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
+                var response = webAuthenticationResult.ResponseData;
+                var code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
+                var token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
                 await StorageHelper.SaveObjectAsync(code, "code");
                 await StorageHelper.SaveObjectAsync(token, "token");
                 return true;

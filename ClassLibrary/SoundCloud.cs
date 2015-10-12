@@ -45,25 +45,31 @@ namespace ClassLibrary
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = 10, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "Oauth " + Token});
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
-            foreach (var item in apiResponse.Data["collection"])
+            if (apiResponse.Succes)
             {
-                if (item["type"].ToString().Equals("track"))
+                foreach (var item in apiResponse.Data["collection"])
                 {
-                    tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                    if (item["type"].ToString().Equals("track"))
+                    {
+                        tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                    }
                 }
             }
             return tracks;
         }
 
-        public async void SignIn()
+        public async Task<bool> SignIn()
         {
             if (await ApiProxy.Authenticate())
             {
                 Token = await StorageHelper.TryLoadObjectAsync<string>("token");
-                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new { oauth_token = Token});
+                ApiResponse apiResponse =
+                    await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new {oauth_token = Token});
                 CurrentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
                 await StorageHelper.SaveObjectAsync(CurrentUser, "currentUser");
+                return true;
             }
+            return false;
         }
     }
 }

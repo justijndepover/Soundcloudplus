@@ -4,7 +4,7 @@ namespace ClassLibrary.API
 {
     public class ApiResponse
     {
-        public HttpStatusCode StatusCode { get; set; }
+        public bool Succes { get; set; }
         public dynamic Data { get; set; }
 
     }
