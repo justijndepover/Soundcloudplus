@@ -30,22 +30,22 @@ namespace SoundCloudPlus.Pages
 
         private async void AccountButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //if (App.SoundCloud.CurrentUser == null)
-            //{
-                if (await App.SoundCloud.SignIn())
-                {
-                    _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                }
-                else
-                {
-                    await new MessageDialog("There was a problem signing you in").ShowAsync();
-                }
-            //}
-            //else
-            //{
-            //    await new MessageDialog("You are already signed in").ShowAsync();
-            //    _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-            //}
+            if (App.SoundCloud.CurrentUser == null)
+            {
+              if (await App.SoundCloud.SignIn())
+              {
+                  _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+              }
+              else
+              {
+                  await new MessageDialog("There was a problem signing you in").ShowAsync();
+              }
+            }
+            else
+            {
+                await new MessageDialog("You are already signed in").ShowAsync();
+                _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+            }
         }
     }
 }
