@@ -50,7 +50,7 @@ namespace ClassLibrary
             {
                 foreach (var item in apiResponse.Data["collection"])
                 {
-                    if (item["type"].ToString().Equals("track"))
+                    if (item["type"].ToString().Contains("track"))
                     {
                         tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
                     }
