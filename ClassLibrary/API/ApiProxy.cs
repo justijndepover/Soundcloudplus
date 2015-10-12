@@ -80,7 +80,7 @@ namespace ClassLibrary.API
                     }
                 }
 
-                var response = await client.GetAsync(finalEndpoint);
+                HttpResponseMessage response = await client.GetAsync(finalEndpoint);
                 if (response.IsSuccessStatusCode)
                 {
                     apiResponse.Succes = true;
@@ -89,6 +89,8 @@ namespace ClassLibrary.API
                 else
                 {
                     apiResponse.Succes = false;
+                    await StorageHelper.DeleteObjectAsync<string>("code");
+                    await StorageHelper.DeleteObjectAsync<string>("token");
                 }
             }
             return apiResponse;

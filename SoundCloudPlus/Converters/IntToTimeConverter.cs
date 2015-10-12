@@ -10,7 +10,7 @@ namespace SoundCloudPlus.Converters
             int val = (int)value;
             DateTime time = new DateTime();
             time = time.AddMilliseconds(val);
-            return time.Minute + ":" + time.Second;
+            return time.ToString("mm:ss");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
