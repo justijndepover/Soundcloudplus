@@ -38,7 +38,87 @@
                                 <TextBlock Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Recent" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Artists" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Genres" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Following" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Followers" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Playlists" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="Likes" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image />
+                                <TextBlock Grid.Column="1" Text="My profile" />
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -48,7 +128,7 @@
                                 <TextBlock Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
-                        <Button>
+                        <Button Style="{StaticResource buttonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

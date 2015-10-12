@@ -130,7 +130,7 @@ namespace ClassLibrary.API
         {
             var callbackUrl = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
             WebAuthenticationResult webAuthenticationResult =
-                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri("https://api.soundcloud.com/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
+                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri("https://soundcloud.com/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
             if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
             {
                 string response = webAuthenticationResult.ResponseData;

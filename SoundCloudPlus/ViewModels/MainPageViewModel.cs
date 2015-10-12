@@ -17,7 +17,7 @@ namespace SoundCloudPlus.ViewModels
 
         public MainPageViewModel()
         {
-            
+            //StreamCollection = new ObservableCollection<Track>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
