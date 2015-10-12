@@ -8,8 +8,13 @@
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="buttonsInMenu">
                 <Setter Property="Foreground" Value="#4C4C4C"></Setter>
-                <Setter Property="Background" Value="#DEDEDE"></Setter>
-                             
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+            <Style TargetType="TextBlock" x:Key="textInMenu">
+                <Setter Property="Margin" Value="10,0,0,0"></Setter>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

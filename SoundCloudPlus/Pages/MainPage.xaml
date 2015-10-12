@@ -28,14 +28,14 @@
             <SplitView.Pane>
                 <ScrollViewer>
                     <StackPanel>
-                        <Button x:Name="AccountButton" Background="Transparent" Click="AccountButton_Click">
+                        <Button Style="{StaticResource buttonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Connect with SoundCloud" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -44,8 +44,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Recent" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Recent" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -54,8 +54,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Artists" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Artists" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -64,8 +64,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Genres" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Genres" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -74,8 +74,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Following" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -84,8 +84,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Followers" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -94,8 +94,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Playlists" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -104,8 +104,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Likes" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -114,8 +114,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="My profile" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -124,8 +124,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="Settings" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource buttonsInMenu}">
@@ -134,8 +134,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image />
-                                <TextBlock Grid.Column="1" Text="About" />
+                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="About" />
                             </Grid>
                         </Button>
                     </StackPanel>
