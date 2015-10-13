@@ -15,6 +15,13 @@ namespace SoundCloudPlus.ViewModels
             set { _streamCollection = value; OnPropertyChanged(nameof(StreamCollection)); }
         }
 
+        private ObservableCollection<Track> _exploreCollection;
+        public ObservableCollection<Track> ExploreCollection
+        {
+            get { return _exploreCollection; }
+            set { _exploreCollection = value; OnPropertyChanged(nameof(ExploreCollection)); }
+        }
+
         public MainPageViewModel()
         {
             //StreamCollection = new ObservableCollection<Track>();

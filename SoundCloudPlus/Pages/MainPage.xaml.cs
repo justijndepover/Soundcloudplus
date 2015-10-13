@@ -19,6 +19,7 @@ namespace SoundCloudPlus.Pages
             if (App.SoundCloud.IsAuthenticated)
             {
                 _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
             base.OnNavigatedTo(e);
         }
@@ -30,7 +31,7 @@ namespace SoundCloudPlus.Pages
 
         private async void AccountButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (App.SoundCloud.CurrentUser == null)
+            if (!App.SoundCloud.IsAuthenticated)
             {
               if (await App.SoundCloud.SignIn())
               {

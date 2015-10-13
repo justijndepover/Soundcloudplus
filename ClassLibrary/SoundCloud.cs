@@ -59,6 +59,20 @@ namespace ClassLibrary
             return tracks;
         }
 
+        public async Task<ObservableCollection<Track>> GetExplore()
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["tracks"])
+                {
+                    tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item.ToString()));
+                }
+            }
+            return tracks;
+        }
+
         public async Task<bool> SignIn()
         {
             if (await ApiProxy.Authenticate())

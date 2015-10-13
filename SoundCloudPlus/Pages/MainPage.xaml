@@ -188,6 +188,51 @@
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
+                    <GridView x:Name="ExploreGridView" ItemsSource="{Binding ExploreCollection}" RelativePanel.Below="StreamGridView">
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="10" Background="#25808080" Padding="10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Height="100" Width="100" VerticalAlignment="Top">
+                                            <Image x:Name="ExploreItemUserImage" Source="{Binding User.AvatarUrl}" Height="100" Width="100"/>
+                                            <Image x:Name="ExploreItemArtworkImage" Source="{Binding ArtworkUrl}" Height="100" Width="100"/>
+                                            <Grid VerticalAlignment="Bottom" Background="#817F7F7F">
+                                                <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Foreground="White" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </Grid>
+                                        <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
+                                        <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
+                                            <Run Text="{Binding User.FullName}"/>
+                                            <Run Text="{Binding User.Username}" Foreground="Gray"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="1" Grid.Row="2">
+                                            <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
+                                            <Run Text="{Binding PlaybackCount}" />
+                                            <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
+                                            <Run Text="{Binding FavoritingsCount}"/>
+                                            <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
+                                            <Run Text="{Binding CommentCount}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </RelativePanel>
             </SplitView.Content>
         </SplitView>
