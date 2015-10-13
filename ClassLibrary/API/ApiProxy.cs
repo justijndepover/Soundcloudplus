@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -139,6 +140,8 @@ namespace ClassLibrary.API
         public async Task<bool> Authenticate()
         {
             var callbackUrl = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
+            try
+            {
             var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri("https://soundcloud.com/connect?client_id=776ca412db7b101b1602c6a67b1a0579&redirect_uri=" + callbackUrl + "&response_type=code_and_token&scope=non-expiring&display=popup&state="), callbackUrl);
             if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && !String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
             {
@@ -150,6 +153,13 @@ namespace ClassLibrary.API
                 return true;
             }
             return false;
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }
