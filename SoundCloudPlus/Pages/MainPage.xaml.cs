@@ -36,7 +36,8 @@ namespace SoundCloudPlus.Pages
               if (await App.SoundCloud.SignIn())
               {
                   _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-              }
+                  _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                }
               else
               {
                   await new MessageDialog("There was a problem signing you in").ShowAsync();
@@ -46,6 +47,7 @@ namespace SoundCloudPlus.Pages
             {
                 await new MessageDialog("You are already signed in").ShowAsync();
                 _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
         }
     }
