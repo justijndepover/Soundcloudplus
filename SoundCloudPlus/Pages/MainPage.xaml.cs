@@ -3,7 +3,6 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
-using System.Diagnostics;
 
 namespace SoundCloudPlus.Pages
 {
@@ -57,13 +56,10 @@ namespace SoundCloudPlus.Pages
         {
             ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)StreamGridView.ItemsPanelRoot;
             double screenWidth = e.NewSize.Width;
-            if (StreamGridView.Items != null)
+            int? itemsNumber = StreamGridView.Items?.Count;
+            if (itemsNumber > 0)
             {
-                int itemsNumber = StreamGridView.Items.Count;
-                if (itemsNumber > 0)
-                {
-                    if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
-                }
+                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
             }
         }
 
@@ -77,11 +73,8 @@ namespace SoundCloudPlus.Pages
                 {
                     return c;
                 }
-                else
-                {
-                    c++;
-                    w += 400;
-                }
+                c++;
+                w += 400;
             }
         }
 
@@ -89,13 +82,10 @@ namespace SoundCloudPlus.Pages
         {
             ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)ExploreGridView.ItemsPanelRoot;
             double screenWidth = e.NewSize.Width;
-            if (ExploreGridView.Items != null)
+            int? itemsNumber = ExploreGridView.Items?.Count;
+            if (itemsNumber > 0)
             {
-                int itemsNumber = ExploreGridView.Items.Count;
-                if (itemsNumber > 0)
-                {
-                    if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
-                }
+                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
             }
         }
     }
