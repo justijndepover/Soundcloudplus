@@ -3,6 +3,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
+using System.Diagnostics;
 
 namespace SoundCloudPlus.Pages
 {
@@ -55,13 +56,45 @@ namespace SoundCloudPlus.Pages
         private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
             ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)StreamGridView.ItemsPanelRoot;
-            double margin = 10.0;
+            double screenWidth = e.NewSize.Width;
             if (StreamGridView.Items != null)
             {
                 int itemsNumber = StreamGridView.Items.Count;
                 if (itemsNumber > 0)
                 {
-                    if (myItemsPanel != null) myItemsPanel.ItemWidth = (e.NewSize.Width - margin) / itemsNumber;
+                    if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
+                }
+            }
+        }
+
+        private int getNumberOfColumns(double screenWidth)
+        {
+            int w = 799;
+            int c = 1;
+            while (true)
+            {
+                if (screenWidth <= w)
+                {
+                    return c;
+                }
+                else
+                {
+                    c++;
+                    w += 400;
+                }
+            }
+        }
+
+        private void ExploreGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)ExploreGridView.ItemsPanelRoot;
+            double screenWidth = e.NewSize.Width;
+            if (ExploreGridView.Items != null)
+            {
+                int itemsNumber = ExploreGridView.Items.Count;
+                if (itemsNumber > 0)
+                {
+                    if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
                 }
             }
         }
