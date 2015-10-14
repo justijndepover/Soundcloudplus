@@ -35,6 +35,13 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
+            <Style TargetType="TextBlock" x:Key="SubTitle">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="#FFFF5500"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
             
             <!--GRID-->
             <Style TargetType="Grid" x:Key="gridMusicStyleTop">
