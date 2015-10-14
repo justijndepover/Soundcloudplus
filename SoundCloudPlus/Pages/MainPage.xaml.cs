@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
 
@@ -48,6 +49,20 @@ namespace SoundCloudPlus.Pages
                 await new MessageDialog("You are already signed in").ShowAsync();
                 _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
                 _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+            }
+        }
+
+        private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)StreamGridView.ItemsPanelRoot;
+            double margin = 10.0;
+            if (StreamGridView.Items != null)
+            {
+                int itemsNumber = StreamGridView.Items.Count;
+                if (itemsNumber > 0)
+                {
+                    if (myItemsPanel != null) myItemsPanel.ItemWidth = (e.NewSize.Width - margin) / itemsNumber;
+                }
             }
         }
     }

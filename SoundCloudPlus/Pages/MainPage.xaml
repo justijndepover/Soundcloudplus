@@ -141,7 +141,12 @@
             </SplitView.Pane>
             <SplitView.Content>
                 <RelativePanel>
-                    <GridView x:Name="StreamGridView" ItemsSource="{Binding StreamCollection}">
+                    <GridView x:Name="StreamGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid MinWidth="400" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
                                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
