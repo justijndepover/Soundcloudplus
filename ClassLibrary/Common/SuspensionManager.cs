@@ -14,7 +14,7 @@ namespace ClassLibrary.Common
     {
         private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
         private static readonly List<Type> _knownTypes = new List<Type>();
-        private const string sessionStateFilename = "_sessionState.xml";
+        private const string SessionStateFilename = "_sessionState.xml";
 
         /// <summary>
         /// Provides access to global session state for the current session.  This state is
@@ -50,7 +50,7 @@ namespace ClassLibrary.Common
             try
             {
                 // Save the navigation state for all registered frames
-                foreach (var weakFrameReference in _registeredFrames)
+                foreach (var weakFrameReference in RegisteredFrames)
                 {
                     Frame frame;
                     if (weakFrameReference.TryGetTarget(out frame))
@@ -66,7 +66,7 @@ namespace ClassLibrary.Common
                 serializer.WriteObject(sessionData, _sessionState);
 
                 // Get an output stream for the SessionState file and write the state asynchronously
-                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(SessionStateFilename, CreationCollisionOption.ReplaceExisting);
                 using (Stream fileStream = await file.OpenStreamForWriteAsync())
                 {
                     sessionData.Seek(0, SeekOrigin.Begin);
@@ -96,7 +96,7 @@ namespace ClassLibrary.Common
             try
             {
                 // Get the input stream for the SessionState file
-                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(sessionStateFilename);
+                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(SessionStateFilename);
                 using (IInputStream inStream = await file.OpenSequentialReadAsync())
                 {
                     // Deserialize the Session State
@@ -105,7 +105,7 @@ namespace ClassLibrary.Common
                 }
 
                 // Restore any registered frames to their saved state
-                foreach (var weakFrameReference in _registeredFrames)
+                foreach (var weakFrameReference in RegisteredFrames)
                 {
                     Frame frame;
                     if (weakFrameReference.TryGetTarget(out frame))
@@ -125,7 +125,7 @@ namespace ClassLibrary.Common
             DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(String), typeof(SuspensionManager), null);
         private static readonly DependencyProperty FrameSessionStateProperty =
             DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<String, Object>), typeof(SuspensionManager), null);
-        private static readonly List<WeakReference<Frame>> _registeredFrames = new List<WeakReference<Frame>>();
+        private static readonly List<WeakReference<Frame>> RegisteredFrames = new List<WeakReference<Frame>>();
 
         /// <summary>
         /// Registers a <see cref="Frame"/> instance to allow its navigation history to be saved to
@@ -154,7 +154,7 @@ namespace ClassLibrary.Common
             // Use a dependency property to associate the session key with a frame, and keep a list of frames whose
             // navigation state should be managed
             frame.SetValue(FrameSessionStateKeyProperty, sessionStateKey);
-            _registeredFrames.Add(new WeakReference<Frame>(frame));
+            RegisteredFrames.Add(new WeakReference<Frame>(frame));
 
             // Check to see if navigation state can be restored
             RestoreFrameNavigationState(frame);
@@ -172,7 +172,7 @@ namespace ClassLibrary.Common
             // Remove session state and remove the frame from the list of frames whose navigation
             // state will be saved (along with any weak references that are no longer reachable)
             SessionState.Remove((String)frame.GetValue(FrameSessionStateKeyProperty));
-            _registeredFrames.RemoveAll((weakFrameReference) =>
+            RegisteredFrames.RemoveAll(weakFrameReference =>
             {
                 Frame testFrame;
                 return !weakFrameReference.TryGetTarget(out testFrame) || testFrame == frame;
@@ -187,7 +187,10 @@ namespace ClassLibrary.Common
         /// that can still be useful when restoring pages that have been discarded from the
         /// navigation cache.
         /// </summary>
-        /// <remarks>Apps may choose to rely on <see cref="LayoutAwarePage"/> to manage
+        /// <remarks>Apps may choose to rely on <see>
+        ///         <cref>LayoutAwarePage</cref>
+        ///     </see>
+        ///     to manage
         /// page-specific state instead of working with frame session state directly.</remarks>
         /// <param name="frame">The instance for which session state is desired.</param>
         /// <returns>A collection of state subject to the same serialization mechanism as

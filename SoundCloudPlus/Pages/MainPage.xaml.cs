@@ -59,11 +59,11 @@ namespace SoundCloudPlus.Pages
             int? itemsNumber = StreamGridView.Items?.Count;
             if (itemsNumber > 0)
             {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
+                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
             }
         }
 
-        private int getNumberOfColumns(double screenWidth)
+        private int GetNumberOfColumns(double screenWidth)
         {
             int w = 799;
             int c = 1;
@@ -85,7 +85,7 @@ namespace SoundCloudPlus.Pages
             int? itemsNumber = ExploreGridView.Items?.Count;
             if (itemsNumber > 0)
             {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / getNumberOfColumns(screenWidth));
+                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
             }
         }
     }

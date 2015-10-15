@@ -22,11 +22,6 @@ namespace SoundCloudPlus.ViewModels
             set { _exploreCollection = value; OnPropertyChanged(nameof(ExploreCollection)); }
         }
 
-        public MainPageViewModel()
-        {
-            //StreamCollection = new ObservableCollection<Track>();
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

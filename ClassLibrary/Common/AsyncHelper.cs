@@ -72,11 +72,11 @@ namespace ClassLibrary.Common
 
         private class ExclusiveSynchronizationContext : SynchronizationContext
         {
-            private bool done;
+            private bool _done;
             public Exception InnerException { get; set; }
-            private readonly AutoResetEvent workItemsWaiting = new AutoResetEvent(false);
+            private readonly AutoResetEvent _workItemsWaiting = new AutoResetEvent(false);
 
-            private readonly Queue<Tuple<SendOrPostCallback, object>> items =
+            private readonly Queue<Tuple<SendOrPostCallback, object>> _items =
                 new Queue<Tuple<SendOrPostCallback, object>>();
 
             public override void Send(SendOrPostCallback d, object state)
@@ -86,28 +86,28 @@ namespace ClassLibrary.Common
 
             public override void Post(SendOrPostCallback d, object state)
             {
-                lock (items)
+                lock (_items)
                 {
-                    items.Enqueue(Tuple.Create(d, state));
+                    _items.Enqueue(Tuple.Create(d, state));
                 }
-                workItemsWaiting.Set();
+                _workItemsWaiting.Set();
             }
 
             public void EndMessageLoop()
             {
-                Post(_ => done = true, null);
+                Post(_ => _done = true, null);
             }
 
             public void BeginMessageLoop()
             {
-                while (!done)
+                while (!_done)
                 {
                     Tuple<SendOrPostCallback, object> task = null;
-                    lock (items)
+                    lock (_items)
                     {
-                        if (items.Count > 0)
+                        if (_items.Count > 0)
                         {
-                            task = items.Dequeue();
+                            task = _items.Dequeue();
                         }
                     }
                     if (task != null)
@@ -120,7 +120,7 @@ namespace ClassLibrary.Common
                     }
                     else
                     {
-                        workItemsWaiting.WaitOne();
+                        _workItemsWaiting.WaitOne();
                     }
                 }
             }

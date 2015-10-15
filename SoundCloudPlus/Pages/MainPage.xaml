@@ -19,121 +19,121 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Background="#FFFF5500">
-            <Button x:Name="NavButton" Style="{StaticResource btnNav}" Content="&#xE700;" Click="NavButton_Click" />
+            <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
         <SplitView x:Name="SplitView" Grid.Row="1">
             <SplitView.Pane>
                 <ScrollViewer>
                     <StackPanel>
-                        <Button Style="{StaticResource buttonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click">
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Recent" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Recent" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Artists" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Artists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Genres" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Genres" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Following" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}"  Grid.Column="1" Text="Followers" />
+                                <TextBlock Style="{StaticResource TextInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Playlists" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Likes" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="My profile" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="Settings" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource buttonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
-                                <TextBlock Style="{StaticResource textInMenu}" Grid.Column="1" Text="About" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="About" />
                             </Grid>
                         </Button>
                     </StackPanel>
@@ -152,7 +152,7 @@
                             </GridView.ItemContainerStyle>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Style="{StaticResource borderStyle1}">
+                                    <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -163,10 +163,10 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource gridMusicStyleTop}">
-                                                <Image x:Name="StreamItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource imageAlbum}"/>
-                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource imageAlbum}"/>
-                                                <Grid Style="{StaticResource gridMusicStyleBottom}">
+                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                <Image x:Name="StreamItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
                                                     <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>
                                             </Grid>
@@ -198,7 +198,7 @@
                             </GridView.ItemContainerStyle>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Style="{StaticResource borderStyle1}">
+                                    <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -209,10 +209,10 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource gridMusicStyleTop}">
-                                                <Image x:Name="ExploreItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource imageAlbum}"/>
-                                                <Image x:Name="ExploreItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource imageAlbum}"/>
-                                                <Grid Style="{StaticResource gridMusicStyleBottom}">
+                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                <Image x:Name="ExploreItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image x:Name="ExploreItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
                                                     <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>
                                             </Grid>

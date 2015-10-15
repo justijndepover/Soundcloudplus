@@ -7,14 +7,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--BUTTONS-->
-            <Style TargetType="Button" x:Key="btnNav">
+            <Style TargetType="Button" x:Key="BtnNav">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="Width" Value="48"/>
                 <Setter Property="Height" Value="36"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
-            <Style TargetType="Button" x:Key="buttonsInMenu">
+            <Style TargetType="Button" x:Key="ButtonsInMenu">
                 <Setter Property="Foreground" Value="#4C4C4C"></Setter>
                 <Setter Property="Background" Value="Transparent"></Setter>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -23,7 +23,7 @@
             </Style>
             
             <!--TEXTBLOCK-->
-            <Style TargetType="TextBlock" x:Key="textInMenu">
+            <Style TargetType="TextBlock" x:Key="TextInMenu">
                 <Setter Property="Margin" Value="10,0,0,0"></Setter>
             </Style>
             <Style TargetType="TextBlock" x:Key="AppTitle">
@@ -44,24 +44,24 @@
             </Style>
             
             <!--GRID-->
-            <Style TargetType="Grid" x:Key="gridMusicStyleTop">
+            <Style TargetType="Grid" x:Key="GridMusicStyleTop">
                 <Setter Property="Height" Value="100"/>
                 <Setter Property="Width" Value="100"/>
                 <Setter Property="VerticalAlignment" Value="Top"/>
             </Style>
-            <Style TargetType="Grid" x:Key="gridMusicStyleBottom">
+            <Style TargetType="Grid" x:Key="GridMusicStyleBottom">
                 <Setter Property="VerticalAlignment" Value="Bottom"/>
                 <Setter Property="Background" Value="#817F7F7F"/>
             </Style>
 
             <!--IMAGE-->
-            <Style TargetType="Image" x:Key="imageAlbum">
+            <Style TargetType="Image" x:Key="ImageAlbum">
                 <Setter Property="Height" Value="100"/>
                 <Setter Property="Width" Value="100"/>
             </Style>
 
             <!--BORDER-->
-            <Style TargetType="Border" x:Key="borderStyle1">
+            <Style TargetType="Border" x:Key="BorderStyle1">
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="Background" Value="#25808080"/>
                 <Setter Property="Padding" Value="#10"/>

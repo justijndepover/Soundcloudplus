@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace ClassLibrary.API
+﻿namespace ClassLibrary.API
 {
     public class ApiResponse
     {

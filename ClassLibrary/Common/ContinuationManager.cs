@@ -11,9 +11,8 @@ namespace ClassLibrary.Common
     /// </summary>
     public class ContinuationManager
     {
-        private IContinuationActivatedEventArgs args = null;
-        private bool handled = false;
-        private Guid id = Guid.Empty;
+        private IContinuationActivatedEventArgs _args;
+        private bool _handled;
 
         /// <summary>
         /// Sets the ContinuationArgs for this instance. Using default Frame of current Window
@@ -36,12 +35,12 @@ namespace ClassLibrary.Common
             if (args == null)
                 throw new ArgumentNullException("args");
 
-            if (this.args != null && !handled)
+            if (_args != null && !_handled)
                 throw new InvalidOperationException("Can't set args more than once");
 
-            this.args = args;
-            this.handled = false;
-            this.id = Guid.NewGuid();
+            _args = args;
+            _handled = false;
+            Id = Guid.NewGuid();
 
             if (rootFrame == null)
                 return;
@@ -50,34 +49,22 @@ namespace ClassLibrary.Common
             {
                 case ActivationKind.PickFileContinuation:
                     var fileOpenPickerPage = rootFrame.Content as IFileOpenPickerContinuable;
-                    if (fileOpenPickerPage != null)
-                    {
-                        fileOpenPickerPage.ContinueFileOpenPicker(args as FileOpenPickerContinuationEventArgs);
-                    }
+                    fileOpenPickerPage?.ContinueFileOpenPicker(args as FileOpenPickerContinuationEventArgs);
                     break;
 
                 case ActivationKind.PickSaveFileContinuation:
                     var fileSavePickerPage = rootFrame.Content as IFileSavePickerContinuable;
-                    if (fileSavePickerPage != null)
-                    {
-                        fileSavePickerPage.ContinueFileSavePicker(args as FileSavePickerContinuationEventArgs);
-                    }
+                    fileSavePickerPage?.ContinueFileSavePicker(args as FileSavePickerContinuationEventArgs);
                     break;
 
                 case ActivationKind.PickFolderContinuation:
                     var folderPickerPage = rootFrame.Content as IFolderPickerContinuable;
-                    if (folderPickerPage != null)
-                    {
-                        folderPickerPage.ContinueFolderPicker(args as FolderPickerContinuationEventArgs);
-                    }
+                    folderPickerPage?.ContinueFolderPicker(args as FolderPickerContinuationEventArgs);
                     break;
 
                 case ActivationKind.WebAuthenticationBrokerContinuation:
                     var wabPage = rootFrame.Content as IWebAuthenticationContinuable;
-                    if (wabPage != null)
-                    {
-                        wabPage.ContinueWebAuthentication(args as WebAuthenticationBrokerContinuationEventArgs);
-                    }
+                    wabPage?.ContinueWebAuthentication(args as WebAuthenticationBrokerContinuationEventArgs);
                     break;
             }
         }
@@ -90,7 +77,7 @@ namespace ClassLibrary.Common
         /// </summary>
         internal void MarkAsStale()
         {
-            this.handled = true;
+            _handled = true;
         }
 
         /// <summary>
@@ -101,10 +88,10 @@ namespace ClassLibrary.Common
         {
             get
             {
-                if (handled)
+                if (_handled)
                     return null;
                 MarkAsStale();
-                return args;
+                return _args;
             }
         }
 
@@ -113,10 +100,7 @@ namespace ClassLibrary.Common
         /// retrieve the continuation data via <see cref="GetContinuationArgs"/> and need
         /// to perform their own replay check
         /// </summary>
-        public Guid Id
-        {
-            get { return id; }
-        }
+        public Guid Id { get; private set; } = Guid.Empty;
 
         /// <summary>
         /// Retrieves the continuation args, optionally retrieving them even if they have already
@@ -126,10 +110,10 @@ namespace ClassLibrary.Common
         /// <returns>The continuation args, or null if there aren't any</returns>
         public IContinuationActivatedEventArgs GetContinuationArgs(bool includeStaleArgs)
         {
-            if (!includeStaleArgs && handled)
+            if (!includeStaleArgs && _handled)
                 return null;
             MarkAsStale();
-            return args;
+            return _args;
         }
     }
 
