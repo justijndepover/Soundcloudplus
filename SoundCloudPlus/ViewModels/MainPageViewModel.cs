@@ -16,10 +16,18 @@ namespace SoundCloudPlus.ViewModels
         }
 
         private ObservableCollection<Track> _exploreCollection;
+        private Track _selectedExploreTrack;
+
         public ObservableCollection<Track> ExploreCollection
         {
             get { return _exploreCollection; }
             set { _exploreCollection = value; OnPropertyChanged(nameof(ExploreCollection)); }
+        }
+
+        public Track SelectedExploreTrack
+        {
+            get { return _selectedExploreTrack; }
+            set { _selectedExploreTrack = value; OnPropertyChanged(nameof(SelectedExploreTrack));}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -142,7 +142,53 @@
             <SplitView.Content>
                 <ScrollViewer>
                     <RelativePanel>
-                        <TextBlock x:Name="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Stream" Style="{StaticResource SubTitle}"></TextBlock>
+                        <FlipView x:Name="ExploreFlipView" Background="#FFFF5500" Height="300" RelativePanel.AlignLeftWithPanel="True" ItemsSource="{Binding ExploreCollection}" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
+                            <FlipView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Image x:Name="ExploreUserImage" Source="{Binding User.AvatarUrl}"/>
+                                        <Image x:Name="ExploreArtworkImage" Source="{Binding ArtworkUrl}"/>
+                                        <Border Background="#3F808080" Height="60" VerticalAlignment="Bottom">
+                                            <TextBlock x:Name="Control2Text" Text="{Binding Title}"  Foreground="White" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </FlipView.ItemTemplate>
+                        </FlipView>
+                        <ListView x:Name="ExploreListView"  ItemsSource="{Binding ExploreCollection}" RelativePanel.AlignRightWithPanel="True" Height="300" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource BorderStyle1}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" TextWrapping="Wrap" Grid.Row="0"/>
+                                            <TextBlock x:Name="ExploreItemArtist" TextWrapping="Wrap" Grid.Row="1">
+                                            <Run Text="{Binding User.FullName}"/>
+                                            <Run Text="{Binding User.Username}" Foreground="Gray"/>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="2">
+                                            <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
+                                            <Run Text="{Binding PlaybackCount}" />
+                                            <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
+                                            <Run Text="{Binding FavoritingsCount}"/>
+                                            <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
+                                            <Run Text="{Binding CommentCount}"/>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <TextBlock x:Name="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Stream" Style="{StaticResource SubTitle}" RelativePanel.Below="ExploreListView"/>
                         <GridView x:Name="StreamGridView" RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -236,99 +282,35 @@
                         </GridView>
                     </RelativePanel>
                 </ScrollViewer>
-                <!--<RelativePanel>
-                    <GridView x:Name="StreamGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged">
-                        <GridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </GridView.ItemContainerStyle>
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource borderStyle1}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource gridMusicStyleTop}">
-                                            <Image x:Name="StreamItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource imageAlbum}"/>
-                                            <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource imageAlbum}"/>
-                                            <Grid Style="{StaticResource gridMusicStyleBottom}">
-                                            <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
-                                        </Grid>
-                                        </Grid>
-                                        <TextBlock x:Name="StreamItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                        <TextBlock x:Name="StreamItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
-                                            <Run Text="{Binding User.FullName}"/>
-                                            <Run Text="{Binding User.Username}" Foreground="Gray"/>
-                                        </TextBlock>
-                                        <TextBlock Grid.Column="1" Grid.Row="2">
-                                            <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding PlaybackCount}" />
-                                            <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding FavoritingsCount}"/>
-                                            <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding CommentCount}"/>
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
-                    <GridView x:Name="ExploreGridView" RelativePanel.Below="StreamGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged">
-                        <GridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </GridView.ItemContainerStyle>
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource borderStyle1}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource gridMusicStyleTop}">
-                                            <Image x:Name="ExploreItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource imageAlbum}"/>
-                                            <Image x:Name="ExploreItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource imageAlbum}"/>
-                                            <Grid Style="{StaticResource gridMusicStyleBottom}">
-                                                <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
-                                            </Grid>
-                                        </Grid>
-                                        <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                        <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
-                                            <Run Text="{Binding User.FullName}"/>
-                                            <Run Text="{Binding User.Username}" Foreground="Gray"/>
-                                        </TextBlock>
-                                        <TextBlock Grid.Column="1" Grid.Row="2">
-                                            <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding PlaybackCount}" />
-                                            <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding FavoritingsCount}"/>
-                                            <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding CommentCount}"/>
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
-                </RelativePanel>-->
             </SplitView.Content>
         </SplitView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Min320State">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="320" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="ExploreListView.(RelativePanel.Below)" Value="ExploreFlipView"/>
+                        <Setter Target="ExploreListView.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Min720State">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
+                        <Setter Target="ExploreListView.Width" Value="400"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
