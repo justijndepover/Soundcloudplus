@@ -71,6 +71,20 @@ namespace ClassLibrary
             return tracks;
         }
 
+        public async Task<ObservableCollection<string>> GetCategories()
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/categories", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<string> categories = new ObservableCollection<string>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["music"])
+                {
+                    categories.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<string>(item.ToString()));
+                }
+            }
+            return categories;
+        }
+
         public async Task<bool> SignIn()
         {
             if (await ApiProxy.Authenticate())
