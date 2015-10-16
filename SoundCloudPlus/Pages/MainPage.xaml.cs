@@ -27,7 +27,7 @@ namespace SoundCloudPlus.Pages
 
         private void NavButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
+            SplitViewMenu.IsPaneOpen = !SplitViewMenu.IsPaneOpen;
         }
 
         private async void AccountButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

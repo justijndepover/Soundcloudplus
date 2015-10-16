@@ -15,6 +15,47 @@
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           DataContext="{StaticResource MainPageViewModel}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitViewMenu.DisplayMode" Value="Overlay" />
+                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="False" />
+                        <Setter Target="NavButton.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Min320State">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="320" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="ExploreListView.(RelativePanel.Below)" Value="ExploreFlipView"/>
+                        <Setter Target="ExploreListView.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+
+                        <Setter Target="SplitViewMenu.DisplayMode" Value="Overlay" />
+                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="False" />
+                        <Setter Target="NavButton.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Min720State">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
+                        <Setter Target="ExploreListView.Width" Value="400"/>
+
+                        <Setter Target="SplitViewMenu.DisplayMode" Value="CompactInline" />
+                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="True" />
+                        <Setter Target="NavButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -23,7 +64,7 @@
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
-        <SplitView x:Name="SplitView" Grid.Row="1" CompactPaneLength="50" DisplayMode="CompactOverlay">
+        <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="48">
             <SplitView.Pane>
                 <ScrollViewer>
                     <StackPanel>
@@ -33,7 +74,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Width="50" Height="50" Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <Image Width="36" Height="36" Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
@@ -285,34 +326,5 @@
                 </ScrollViewer>
             </SplitView.Content>
         </SplitView>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="AdaptiveStates">
-                <VisualState x:Name="DefaultState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState x:Name="Min320State">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="320" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
-                        <Setter Target="ExploreListView.(RelativePanel.Below)" Value="ExploreFlipView"/>
-                        <Setter Target="ExploreListView.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Min720State">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
-                        <Setter Target="ExploreListView.Width" Value="400"/>
-                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
