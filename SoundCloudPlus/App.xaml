@@ -8,10 +8,22 @@
             <!--BUTTONS-->
             <Style TargetType="Button" x:Key="BtnNav">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-                <Setter Property="Width" Value="48"/>
+                <Setter Property="Width" Value="52"/>
                 <Setter Property="Height" Value="36"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+            </Style>
+            <Style TargetType="Button" x:Key="BtnInNav">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="Width" Value="36"/>
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Margin" Value="0 0 4 0" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderBrush" Value="Transparent" />
             </Style>
             <Style TargetType="Button" x:Key="ButtonsInMenu">
                 <Setter Property="Foreground" Value="#4C4C4C"></Setter>
@@ -19,11 +31,14 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderBrush" Value="Transparent" />
             </Style>
             
             <!--TEXTBLOCK-->
             <Style TargetType="TextBlock" x:Key="TextInMenu">
-                <Setter Property="Margin" Value="10,0,0,0"></Setter>
+                <Setter Property="Margin" Value="10,4,0,0"></Setter>
             </Style>
             <Style TargetType="TextBlock" x:Key="AppTitle">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
