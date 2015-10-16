@@ -112,6 +112,8 @@
     <Compile Include="Common\AsyncHelper.cs" />
     <Compile Include="Common\ContinuationManager.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Track.cs" />
