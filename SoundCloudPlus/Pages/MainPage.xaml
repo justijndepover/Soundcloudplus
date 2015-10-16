@@ -22,7 +22,7 @@
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
-        <SplitView x:Name="SplitView" Grid.Row="1">
+        <SplitView x:Name="SplitView" Grid.Row="1" CompactPaneLength="50" DisplayMode="CompactOverlay">
             <SplitView.Pane>
                 <ScrollViewer>
                     <StackPanel>
@@ -32,7 +32,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
+                                <Image Width="50" Height="50" Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
@@ -308,6 +308,7 @@
                     <VisualState.Setters>
                         <Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
                         <Setter Target="ExploreListView.Width" Value="400"/>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
