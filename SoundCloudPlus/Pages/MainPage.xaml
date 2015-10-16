@@ -11,6 +11,7 @@
     <Page.Resources>
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
+        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           DataContext="{StaticResource MainPageViewModel}">
@@ -146,8 +147,8 @@
                             <FlipView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <Image x:Name="ExploreUserImage" Source="{Binding User.AvatarUrl}"/>
-                                        <Image x:Name="ExploreArtworkImage" Source="{Binding ArtworkUrl}"/>
+                                        <Image x:Name="ExploreUserImage" Source="{Binding User.AvatarUrl, Converter={StaticResource ImageToHighResConverter}}"/>
+                                        <Image x:Name="ExploreArtworkImage" Source="{Binding ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}"/>
                                         <Border Background="#3F808080" Height="60" VerticalAlignment="Bottom">
                                             <TextBlock x:Name="Control2Text" Text="{Binding Title}"  Foreground="White" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
                                         </Border>
