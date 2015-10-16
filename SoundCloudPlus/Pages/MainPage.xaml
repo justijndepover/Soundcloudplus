@@ -155,7 +155,7 @@
                                 </DataTemplate>
                             </FlipView.ItemTemplate>
                         </FlipView>
-                        <ListView x:Name="ExploreListView"  ItemsSource="{Binding ExploreCollection}" RelativePanel.AlignRightWithPanel="True" Height="300" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
+                        <!--<ListView x:Name="ExploreListView"  ItemsSource="{Binding ExploreCollection}" RelativePanel.AlignRightWithPanel="True" Height="300" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -187,8 +187,8 @@
                                     </Border>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                        </ListView>
-                        <TextBlock x:Name="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Stream" Style="{StaticResource SubTitle}" RelativePanel.Below="ExploreListView"/>
+                        </ListView>-->
+                        <TextBlock x:Name="StreamTitle" RelativePanel.Below="ExploreFlipView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Stream" Style="{StaticResource SubTitle}"/>
                         <GridView x:Name="StreamGridView" RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">

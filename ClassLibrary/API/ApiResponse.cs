@@ -4,6 +4,5 @@
     {
         public bool Succes { get; set; }
         public dynamic Data { get; set; }
-
     }
 }
