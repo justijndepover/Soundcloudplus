@@ -8,7 +8,7 @@ namespace SoundCloudPlus.Pages
 {
     public sealed partial class MainPage
     {
-        private MainPageViewModel _mainPageViewModel;
+        private HomePageViewModel _mainPageViewModel;
         public MainPage()
         {
             InitializeComponent();
@@ -16,12 +16,13 @@ namespace SoundCloudPlus.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             _mainPageViewModel =
-                (MainPageViewModel)Resources["MainPageViewModel"];
+                (HomePageViewModel)Resources["MainPageViewModel"];
             if (App.SoundCloud.IsAuthenticated)
             {
                 _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
                 _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
+            MyFrame.Navigate(typeof (HomePage));
             base.OnNavigatedTo(e);
         }
 
@@ -49,43 +50,6 @@ namespace SoundCloudPlus.Pages
                 await new MessageDialog("You are already signed in").ShowAsync();
                 _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
                 _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
-            }
-        }
-
-        private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
-        {
-            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)StreamGridView.ItemsPanelRoot;
-            double screenWidth = e.NewSize.Width;
-            int? itemsNumber = StreamGridView.Items?.Count;
-            if (itemsNumber > 0)
-            {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
-            }
-        }
-
-        private int GetNumberOfColumns(double screenWidth)
-        {
-            int w = 799;
-            int c = 1;
-            while (true)
-            {
-                if (screenWidth <= w)
-                {
-                    return c;
-                }
-                c++;
-                w += 400;
-            }
-        }
-
-        private void ExploreGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
-        {
-            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)ExploreGridView.ItemsPanelRoot;
-            double screenWidth = e.NewSize.Width;
-            int? itemsNumber = ExploreGridView.Items?.Count;
-            if (itemsNumber > 0)
-            {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
             }
         }
     }

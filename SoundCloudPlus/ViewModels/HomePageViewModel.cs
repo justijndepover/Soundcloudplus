@@ -6,7 +6,7 @@ using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class HomePageViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Track> _streamCollection;
         public ObservableCollection<Track> StreamCollection
