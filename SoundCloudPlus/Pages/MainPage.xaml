@@ -15,14 +15,16 @@
           DataContext="{StaticResource MainPageViewModel}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">
-                <VisualState x:Name="DefaultState">
+                <VisualState x:Name="Min720State">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SplitViewMenu.DisplayMode" Value="Overlay" />
-                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="False" />
-                        <Setter Target="NavButton.Visibility" Value="Collapsed" />
+                        <!--<Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
+                        <Setter Target="ExploreListView.Width" Value="400"/>-->
+
+                        <Setter Target="SplitViewMenu.DisplayMode" Value="CompactInline" />
+                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Min320State">
@@ -30,26 +32,21 @@
                         <AdaptiveTrigger MinWindowWidth="320" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <!--<Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
                         <Setter Target="ExploreListView.(RelativePanel.Below)" Value="ExploreFlipView"/>
-                        <Setter Target="ExploreListView.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <Setter Target="ExploreListView.(RelativePanel.AlignLeftWithPanel)" Value="True"/>-->
 
-                        <Setter Target="SplitViewMenu.DisplayMode" Value="Overlay" />
+                        <Setter Target="SplitViewMenu.DisplayMode" Value="CompactOverlay" />
                         <Setter Target="SplitViewMenu.IsPaneOpen" Value="False" />
-                        <Setter Target="NavButton.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="Min720State">
+                <VisualState x:Name="DefaultState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
+                        <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
-                        <Setter Target="ExploreListView.Width" Value="400"/>
-
-                        <Setter Target="SplitViewMenu.DisplayMode" Value="CompactInline" />
-                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="True" />
-                        <Setter Target="NavButton.Visibility" Value="Visible" />
+                        <Setter Target="SplitViewMenu.DisplayMode" Value="Overlay" />
+                        <Setter Target="SplitViewMenu.IsPaneOpen" Value="false" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -62,7 +59,7 @@
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
-        <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="48">
+        <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="48" IsPaneOpen="True" DisplayMode="CompactInline">
             <SplitView.Pane>
                 <ScrollViewer>
                     <StackPanel>
