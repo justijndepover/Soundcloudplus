@@ -59,7 +59,7 @@
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
-        <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="48" IsPaneOpen="True" DisplayMode="CompactInline">
+        <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="48" DisplayMode="CompactInline">
             <SplitView.Pane>
                 <ScrollViewer>
                     <StackPanel>
