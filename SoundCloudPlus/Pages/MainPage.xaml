@@ -61,9 +61,23 @@
         </Grid>
         <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="52" DisplayMode="CompactInline">
             <SplitView.Pane>
-                <ScrollViewer>
-                    <StackPanel>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                        </Grid.RowDefinitions>
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click" Grid.Row="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -73,7 +87,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -84,7 +98,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Recent" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -94,7 +108,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Artists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -104,7 +118,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Genres" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -114,7 +128,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -124,7 +138,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="6">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -134,7 +148,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="7">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -144,7 +158,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -154,7 +168,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -164,7 +178,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="11">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -174,7 +188,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="About" />
                             </Grid>
                         </Button>
-                    </StackPanel>
+                    </Grid>
                 </ScrollViewer>
             </SplitView.Pane>
             <SplitView.Content>
