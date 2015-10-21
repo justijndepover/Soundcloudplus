@@ -36,8 +36,16 @@ namespace SoundCloudPlus.Pages
                 (HomePageViewModel)Resources["MainPageViewModel"];
             if (App.SoundCloud.IsAuthenticated)
             {
-                _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                try
+                {
+                    _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                    _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                }
+                catch (Exception)
+                {
+
+                }
+                
             }
             MyFrame.Navigate(typeof (HomePage));
             base.OnNavigatedTo(e);
