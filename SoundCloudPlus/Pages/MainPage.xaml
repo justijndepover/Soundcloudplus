@@ -180,8 +180,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE713;" />
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
+                                <Button Style="{StaticResource BtnInNav}" Content="&#xE774;" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Activity" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="11">
@@ -190,8 +190,8 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE730;" />
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="About" />
+                                <Button Style="{StaticResource BtnInNav}" Content="&#xE713;" />
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
                     </Grid>
