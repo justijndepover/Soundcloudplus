@@ -96,7 +96,7 @@ namespace ClassLibrary
 
         public async Task<ObservableCollection<Activity>> GetActivities()
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/activities", null, new { limit = 3, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/activities", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Activity> activities = new ObservableCollection<Activity>();
             if (apiResponse.Succes)
             {

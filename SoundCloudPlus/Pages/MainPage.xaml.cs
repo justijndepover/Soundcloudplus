@@ -11,6 +11,7 @@ namespace SoundCloudPlus.Pages
     public sealed partial class MainPage
     {
         private HomePageViewModel _mainPageViewModel;
+        private AcitivityViewModel _activityViewModel;
         public MainPage()
         {
             InitializeComponent();
@@ -61,7 +62,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private void Navigation_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Navigation_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
@@ -118,6 +119,7 @@ namespace SoundCloudPlus.Pages
                 case "activity":
                     if (page?.GetType() != typeof(ActivityPage))
                     {
+                        loadActivityPageResources();
                         MyFrame?.Navigate(typeof(ActivityPage));
                     }
                     break;
@@ -129,5 +131,41 @@ namespace SoundCloudPlus.Pages
                     break;
             }
         }
+
+        #region Activity
+
+        private async void loadActivityPageResources()
+        {
+            if (!App.SoundCloud.IsAuthenticated)
+            {
+                if (await App.SoundCloud.SignIn())
+                {
+                    getActivities();
+                }
+                else
+                {
+                    await new MessageDialog("There was a problem while getting some information.").ShowAsync();
+                }
+            }
+            else
+            {
+                getActivities();
+            }
+        }
+
+        private async void getActivities()
+        {
+            try
+            {
+                _activityViewModel.ActivityCollection = await App.SoundCloud.GetActivities();
+            }
+            catch (Exception e)
+            {
+                string ex = "" + e;
+                await new MessageDialog("There was a problem while getting your activities.").ShowAsync();
+            }
+        }
+
+        #endregion
     }
 }
