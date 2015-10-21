@@ -128,22 +128,6 @@ namespace SoundCloudPlus.Pages
                     }
                     break;
             }
-
-            var currentView = SystemNavigationManager.GetForCurrentView();
-            
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            currentView.BackRequested += backButton_Tapped;
-        }
-
-        private void backButton_Tapped(object sender, BackRequestedEventArgs e)
-        {
-            var backstack = MyFrame.BackStack;
-            Debug.WriteLine(backstack.Count);
-            if (MyFrame.CanGoBack)
-            {
-                e.Handled = true;
-                MyFrame.GoBack();
-            }
         }
     }
 }
