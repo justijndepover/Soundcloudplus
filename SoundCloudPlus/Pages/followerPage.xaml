@@ -8,11 +8,10 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <!--<viewModels:HomePageViewModel x:Key="MainPageViewModel" />-->
         <viewModels:followerViewModel x:Key="followerViewModel" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <TextBlock>Followers</TextBlock>
     </Grid>
 </Page>

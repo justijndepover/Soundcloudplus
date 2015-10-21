@@ -8,11 +8,10 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <!--<viewModels:HomePageViewModel x:Key="MainPageViewModel" />-->
         <viewModels:playlistViewModel x:Key="playlistViewModel" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <TextBlock>Playlists</TextBlock>
     </Grid>
 </Page>

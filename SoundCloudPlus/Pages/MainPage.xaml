@@ -93,7 +93,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="1">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="1" Click="Navigation_Click" Tag="recent">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -104,7 +104,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Recent" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2" Click="Navigation_Click" Tag="artist">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -114,7 +114,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Artists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3" Click="Navigation_Click" Tag="genre">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -124,7 +124,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Genres" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4" Click="Navigation_Click" Tag="following">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -134,7 +134,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5" Click="Navigation_Click" Tag="followers">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -144,7 +144,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="6">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="6" Click="Navigation_Click" Tag="playlist">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -154,7 +154,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="7">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="7" Click="Navigation_Click" Tag="like">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -164,7 +164,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9" Click="Navigation_Click" Tag="profile">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -174,7 +174,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="10">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="10" Click="Navigation_Click" Tag="activity">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -184,7 +184,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Activity" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="11">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="11" Click="Navigation_Click" Tag="setting">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

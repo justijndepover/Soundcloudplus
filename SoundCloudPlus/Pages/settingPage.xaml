@@ -12,6 +12,6 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <TextBlock>Settings</TextBlock>
     </Grid>
 </Page>

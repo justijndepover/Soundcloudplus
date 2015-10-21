@@ -9,15 +9,6 @@ namespace SoundCloudPlus.ViewModels
 {
     public class HomePageViewModel : INotifyPropertyChanged
     {
-        public HomePageViewModel()
-        {
-
-        }
-
-        public RelayCommand ChangePageCommand
-        {
-            get; set;
-        }
         private ObservableCollection<Track> _streamCollection;
         public ObservableCollection<Track> StreamCollection
         {
