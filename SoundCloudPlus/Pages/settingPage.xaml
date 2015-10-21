@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="SoundCloudPlus.Pages.settingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SoundCloudPlus.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <viewModels:settingViewModel x:Key="settingViewModel" />
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    </Grid>
+</Page>

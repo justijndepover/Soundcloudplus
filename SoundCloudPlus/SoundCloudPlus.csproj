@@ -101,15 +101,55 @@
     </Compile>
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
+    <Compile Include="Pages\aboutPage.xaml.cs">
+      <DependentUpon>aboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\artistPage.xaml.cs">
+      <DependentUpon>artistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\followerPage.xaml.cs">
+      <DependentUpon>followerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\followingPage.xaml.cs">
+      <DependentUpon>followingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\genrePage.xaml.cs">
+      <DependentUpon>genrePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\likePage.xaml.cs">
+      <DependentUpon>likePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\playlistPage.xaml.cs">
+      <DependentUpon>playlistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\profilePage.xaml.cs">
+      <DependentUpon>profilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\recentPage.xaml.cs">
+      <DependentUpon>recentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\settingPage.xaml.cs">
+      <DependentUpon>settingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\aboutViewModel.cs" />
+    <Compile Include="ViewModels\artistViewModel.cs" />
+    <Compile Include="ViewModels\followerViewModel.cs" />
+    <Compile Include="ViewModels\followingViewModel.cs" />
+    <Compile Include="ViewModels\genreViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\likeViewModel.cs" />
+    <Compile Include="ViewModels\playlistViewModel.cs" />
+    <Compile Include="ViewModels\profileViewModel.cs" />
+    <Compile Include="ViewModels\recentViewModel.cs" />
+    <Compile Include="ViewModels\settingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -132,13 +172,53 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Pages\aboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\artistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\followerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\followingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\genrePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\likePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\playlistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\profilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\recentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\settingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

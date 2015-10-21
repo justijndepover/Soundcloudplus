@@ -3,11 +3,21 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ClassLibrary.Models;
 using SoundCloudPlus.Annotations;
+using GalaSoft.MvvmLight.Command;
 
 namespace SoundCloudPlus.ViewModels
 {
     public class HomePageViewModel : INotifyPropertyChanged
     {
+        public HomePageViewModel()
+        {
+
+        }
+
+        public RelayCommand ChangePageCommand
+        {
+            get; set;
+        }
         private ObservableCollection<Track> _streamCollection;
         public ObservableCollection<Track> StreamCollection
         {
