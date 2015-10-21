@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ClassLibrary.API;
@@ -65,7 +67,14 @@ namespace ClassLibrary
             {
                 foreach (var item in apiResponse.Data["tracks"])
                 {
-                    tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item.ToString()));
+                    try
+                    {
+                        tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                 }
             }
             return tracks;

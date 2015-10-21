@@ -5,11 +5,11 @@ namespace ClassLibrary.Models
     public class Track
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [JsonProperty("created_at")]
         public string CreatedAt { get; set; }
         [JsonProperty("duration")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
         [JsonProperty("commentable")]
         public bool Commentable { get; set; }
         [JsonProperty("state")]
@@ -57,7 +57,7 @@ namespace ClassLibrary.Models
         [JsonProperty("original_format")]
         public string OriginalFormat { get; set; }
         [JsonProperty("original_content_size")]
-        public int OriginalContentSize { get; set; }
+        public int? OriginalContentSize { get; set; }
         [JsonProperty("license")]
         public string License { get; set; }
         [JsonProperty("uri")]
@@ -71,19 +71,19 @@ namespace ClassLibrary.Models
         [JsonProperty("user")]
         public User User { get; set; }
         [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         [JsonProperty("stream_url")]
         public string StreamUrl { get; set; }
         [JsonProperty("download_url")]
         public string DownloadUrl { get; set; }
         [JsonProperty("playback_count")]
-        public int PlaybackCount { get; set; }
+        public int? PlaybackCount { get; set; }
         [JsonProperty("download_count")]
-        public int DownloadCount { get; set; }
+        public int? DownloadCount { get; set; }
         [JsonProperty("favoritings_count")]
-        public int FavoritingsCount { get; set; }
+        public int? FavoritingsCount { get; set; }
         [JsonProperty("comment_count")]
-        public int CommentCount { get; set; }
+        public int? CommentCount { get; set; }
         [JsonProperty("created_with")]
         public User CreatedWith { get; set; }
         [JsonProperty("attachments_uri")]
