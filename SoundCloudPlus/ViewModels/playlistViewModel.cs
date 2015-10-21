@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class playlistViewModel : INotifyPropertyChanged
+    public class PlaylistViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

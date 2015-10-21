@@ -101,41 +101,41 @@
     </Compile>
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
-    <Compile Include="Pages\activityPage.xaml.cs">
-      <DependentUpon>activityPage.xaml</DependentUpon>
+    <Compile Include="Pages\ActivityPage.xaml.cs">
+      <DependentUpon>ActivityPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\artistPage.xaml.cs">
-      <DependentUpon>artistPage.xaml</DependentUpon>
+    <Compile Include="Pages\ArtistPage.xaml.cs">
+      <DependentUpon>ArtistPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\followerPage.xaml.cs">
-      <DependentUpon>followerPage.xaml</DependentUpon>
+    <Compile Include="Pages\FollowerPage.xaml.cs">
+      <DependentUpon>FollowerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\followingPage.xaml.cs">
-      <DependentUpon>followingPage.xaml</DependentUpon>
+    <Compile Include="Pages\FollowingPage.xaml.cs">
+      <DependentUpon>FollowingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\genrePage.xaml.cs">
-      <DependentUpon>genrePage.xaml</DependentUpon>
+    <Compile Include="Pages\GenrePage.xaml.cs">
+      <DependentUpon>GenrePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\likePage.xaml.cs">
-      <DependentUpon>likePage.xaml</DependentUpon>
+    <Compile Include="Pages\LikePage.xaml.cs">
+      <DependentUpon>LikePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\playlistPage.xaml.cs">
-      <DependentUpon>playlistPage.xaml</DependentUpon>
+    <Compile Include="Pages\PlaylistPage.xaml.cs">
+      <DependentUpon>PlaylistPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\profilePage.xaml.cs">
-      <DependentUpon>profilePage.xaml</DependentUpon>
+    <Compile Include="Pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\recentPage.xaml.cs">
-      <DependentUpon>recentPage.xaml</DependentUpon>
+    <Compile Include="Pages\RecentPage.xaml.cs">
+      <DependentUpon>RecentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\settingPage.xaml.cs">
-      <DependentUpon>settingPage.xaml</DependentUpon>
+    <Compile Include="Pages\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,23 +172,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\activityPage.xaml">
+    <Page Include="Pages\ActivityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\artistPage.xaml">
+    <Page Include="Pages\ArtistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\followerPage.xaml">
+    <Page Include="Pages\FollowerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\followingPage.xaml">
+    <Page Include="Pages\FollowingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\genrePage.xaml">
+    <Page Include="Pages\GenrePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,7 +196,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\likePage.xaml">
+    <Page Include="Pages\LikePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,19 +204,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\playlistPage.xaml">
+    <Page Include="Pages\PlaylistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\profilePage.xaml">
+    <Page Include="Pages\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\recentPage.xaml">
+    <Page Include="Pages\RecentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\settingPage.xaml">
+    <Page Include="Pages\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

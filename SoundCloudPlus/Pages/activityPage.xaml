@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SoundCloudPlus.Pages.activityPage"
+    x:Class="SoundCloudPlus.Pages.ActivityPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SoundCloudPlus.Pages"
@@ -8,7 +8,7 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:acitivityViewModel x:Key="activityViewModels" />
+        <viewModels:AcitivityViewModel x:Key="ActivityViewModels" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock>Activity</TextBlock>

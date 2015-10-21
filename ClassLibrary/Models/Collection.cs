@@ -8,9 +8,9 @@ namespace ClassLibrary.Models
 {
     public class Collection
     {
-        public string type { get; set; }
-        public User user { get; set; }
-        public string uuid { get; set; }
-        public string created_at { get; set; }
+        public string Type { get; set; }
+        public User User { get; set; }
+        public string Uuid { get; set; }
+        public string CreatedAt { get; set; }
     }
 }

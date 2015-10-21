@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SoundCloudPlus.Pages.followerPage"
+    x:Class="SoundCloudPlus.Pages.FollowerPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SoundCloudPlus.Pages"
@@ -8,7 +8,7 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:followerViewModel x:Key="followerViewModel" />
+        <viewModels:FollowerViewModel x:Key="FollowerViewModel" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

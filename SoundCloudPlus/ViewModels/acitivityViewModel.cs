@@ -9,7 +9,7 @@ using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class acitivityViewModel: INotifyPropertyChanged
+    public class AcitivityViewModel: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

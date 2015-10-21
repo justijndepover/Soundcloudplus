@@ -8,7 +8,7 @@ namespace ClassLibrary.Models
 {
     public class Activity
     {
-        public Collection[] collection { get; set; }
-        public string next_href { get; set; }
+        public Collection[] Collection { get; set; }
+        public string NextHref { get; set; }
     }
 }
