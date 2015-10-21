@@ -23,7 +23,7 @@
             <VisualStateGroup x:Name="AdaptiveStates">
                 <VisualState x:Name="Min720State">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
+                        <AdaptiveTrigger MinWindowWidth="1024" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--<Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
@@ -35,7 +35,7 @@
                 </VisualState>
                 <VisualState x:Name="Min320State">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="320" />
+                        <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--<Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
