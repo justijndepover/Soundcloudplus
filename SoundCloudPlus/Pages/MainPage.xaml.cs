@@ -5,7 +5,6 @@ using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
-using Windows.UI.ViewManagement;
 
 namespace SoundCloudPlus.Pages
 {
@@ -15,20 +14,7 @@ namespace SoundCloudPlus.Pages
         public MainPage()
         {
             InitializeComponent();
-            //InitializeTitleBar();
         }
-
-        /*void InitializeTitleBar()
-        {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            // Title bar colors. Alpha must be 255.
-            titleBar.BackgroundColor = new Color() { A = 255, R = 255, G = 102, B = 25 };
-            titleBar.ForegroundColor = new Color() { A = 255, R = 255, G = 255, B = 255 };
-            titleBar.ButtonBackgroundColor = new Color() { A = 255, R = 255, G = 102, B = 25 };
-
-            titleBar.ButtonForegroundColor = new Color() { A = 255, R = 255, G = 255, B = 255 };
-            titleBar.ButtonHoverBackgroundColor = new Color() { A = 255, R = 255, G = 112, B = 41 };
-        }*/
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {

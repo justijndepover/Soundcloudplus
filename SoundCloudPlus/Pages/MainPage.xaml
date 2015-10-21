@@ -8,11 +8,11 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:models="using:ClassLibrary.Models"
-    models:TitleBar.BackgroundColor="#FF6619"
+    models:TitleBar.BackgroundColor="#DE4A00"
     models:TitleBar.ForegroundColor="#FFFFFF"
-    models:TitleBar.ButtonBackgroundColor="#FF6619"
+    models:TitleBar.ButtonBackgroundColor="#DE4A00"
     models:TitleBar.ButtonForegroundColor="#FFFFFF"
-    models:TitleBar.ButtonHoverBackgroundColor="#FF7029"
+    models:TitleBar.ButtonHoverBackgroundColor="#D65E22"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
