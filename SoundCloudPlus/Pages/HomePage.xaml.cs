@@ -33,23 +33,8 @@ namespace SoundCloudPlus.Pages
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
 
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            currentView.BackRequested += CurrentView_BackRequested;
-        }
-
-        private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            if (Frame.CanGoBack) Frame.GoBack();
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            var currentView = SystemNavigationManager.GetForCurrentView();
-
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
-            currentView.BackRequested -= CurrentView_BackRequested;
+            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            Frame.BackStack.Clear();
         }
 
         private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
