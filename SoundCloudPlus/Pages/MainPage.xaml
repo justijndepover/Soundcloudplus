@@ -7,6 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     xmlns:converters="using:SoundCloudPlus.Converters"
+    xmlns:models="using:ClassLibrary.Models"
+    models:TitleBar.BackgroundColor="#FF6619"
+    models:TitleBar.ForegroundColor="#FFFFFF"
+    models:TitleBar.ButtonBackgroundColor="#FF6619"
+    models:TitleBar.ButtonForegroundColor="#FFFFFF"
+    models:TitleBar.ButtonHoverBackgroundColor="#FF7029"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="MainPageViewModel" />

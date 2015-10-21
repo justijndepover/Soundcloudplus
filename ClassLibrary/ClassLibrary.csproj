@@ -116,6 +116,7 @@
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
+    <Compile Include="Models\TitleBar.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

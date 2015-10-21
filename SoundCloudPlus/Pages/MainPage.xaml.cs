@@ -15,10 +15,10 @@ namespace SoundCloudPlus.Pages
         public MainPage()
         {
             InitializeComponent();
-            InitializeTitleBar();
+            //InitializeTitleBar();
         }
 
-        void InitializeTitleBar()
+        /*void InitializeTitleBar()
         {
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             // Title bar colors. Alpha must be 255.
@@ -28,7 +28,7 @@ namespace SoundCloudPlus.Pages
 
             titleBar.ButtonForegroundColor = new Color() { A = 255, R = 255, G = 255, B = 255 };
             titleBar.ButtonHoverBackgroundColor = new Color() { A = 255, R = 255, G = 112, B = 41 };
-        }
+        }*/
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
