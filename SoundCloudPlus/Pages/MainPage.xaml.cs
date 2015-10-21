@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Core;
 
 namespace SoundCloudPlus.Pages
 {
@@ -59,74 +60,84 @@ namespace SoundCloudPlus.Pages
 
         private void Navigation_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var frame = this.SplitViewMenu.Content as Frame;
-            Page page = frame?.Content as Page;
+            Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
             switch (b.Tag.ToString())
             {
                 case "recent":
                     if (page?.GetType() != typeof(recentPage))
                     {
-                        frame.Navigate(typeof(recentPage));
+                        MyFrame.Navigate(typeof(recentPage));
                     }
                     break;
                 case "artist":
                     if (page?.GetType() != typeof(artistPage))
                     {
-                        frame.Navigate(typeof(artistPage));
+                        MyFrame.Navigate(typeof(artistPage));
                     }
                     break;
                 case "genre":
                     if (page?.GetType() != typeof(genrePage))
                     {
-                        frame.Navigate(typeof(genrePage));
+                        MyFrame.Navigate(typeof(genrePage));
                     }
                     break;
                 case "following":
                     if (page?.GetType() != typeof(followingPage))
                     {
-                        frame.Navigate(typeof(followingPage));
+                        MyFrame.Navigate(typeof(followingPage));
                     }
                     break;
                 case "followers":
                     if (page?.GetType() != typeof(followerPage))
                     {
-                        frame.Navigate(typeof(followerPage));
+                        MyFrame.Navigate(typeof(followerPage));
                     }
                     break;
                 case "playlist":
                     if (page?.GetType() != typeof(playlistPage))
                     {
-                        frame.Navigate(typeof(playlistPage));
+                        MyFrame.Navigate(typeof(playlistPage));
                     }
                     break;
                 case "like":
                     if (page?.GetType() != typeof(likePage))
                     {
-                        frame.Navigate(typeof(likePage));
+                        MyFrame.Navigate(typeof(likePage));
                     }
                     break;
                 case "profile":
                     if (page?.GetType() != typeof(profilePage))
                     {
-                        frame.Navigate(typeof(profilePage));
+                        MyFrame.Navigate(typeof(profilePage));
                     }
                     break;
                 case "activity":
                     if (page?.GetType() != typeof(activityPage))
                     {
-                        frame.Navigate(typeof(activityPage));
+                        MyFrame.Navigate(typeof(activityPage));
                     }
                     break;
                 case "setting":
                     if (page?.GetType() != typeof(settingPage))
                     {
-                        frame.Navigate(typeof(settingPage));
+                        MyFrame.Navigate(typeof(settingPage));
                     }
                     break;
                 default:
                     break;
             }
+
+            var currentView = SystemNavigationManager.GetForCurrentView();
+
+            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            currentView.BackRequested += backButton_Tapped;
+        }
+
+        private void backButton_Tapped(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            if (MyFrame.CanGoBack) MyFrame.GoBack();
         }
     }
 }
