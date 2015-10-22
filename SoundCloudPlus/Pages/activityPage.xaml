@@ -8,6 +8,7 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
+        <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
         <viewModels:AcitivityViewModel x:Key="ActivityViewModels" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -31,8 +32,8 @@
                                     </Grid.ColumnDefinitions>
                                     <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png" Height="80" Width="80" Grid.Column="0"></Image>
                                     <StackPanel Grid.Column="1" Orientation="Vertical" Width="150" Height="100" >
-                                        <TextBlock Text="{Binding User.Username}" Margin="5,1,0,1"></TextBlock>
-                                        <TextBlock Text="{Binding User.Fullname}" Margin="5,1,0,1"></TextBlock>
+                                        <TextBlock Text="" Margin="5,1,0,1"></TextBlock>
+                                        <TextBlock Text="" Margin="5,1,0,1"></TextBlock>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Ranks #" Margin="5,1,0,1"></TextBlock>
                                             <TextBlock Text="" Margin="3,1,0,1"></TextBlock>

@@ -94,18 +94,15 @@ namespace ClassLibrary
             return categories;
         }
 
-        public async Task<ObservableCollection<Activity>> GetActivities()
+        public async Task<Activity> GetActivities()
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/activities", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            ObservableCollection<Activity> activities = new ObservableCollection<Activity>();
+            Activity activity = new Activity();
             if (apiResponse.Succes)
             {
-                foreach (var item in apiResponse.Data)
-                {
-                    activities.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Activity>(item.ToString()));
-                }
+                activity = Newtonsoft.Json.JsonConvert.DeserializeObject<Activity>(apiResponse.Data.ToString());
             }
-            return activities;
+            return activity;
         }
 
         public async Task<bool> SignIn()

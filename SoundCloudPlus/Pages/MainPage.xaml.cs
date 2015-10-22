@@ -11,7 +11,6 @@ namespace SoundCloudPlus.Pages
     public sealed partial class MainPage
     {
         private HomePageViewModel _mainPageViewModel;
-        private AcitivityViewModel _activityViewModel;
         public MainPage()
         {
             InitializeComponent();
@@ -157,15 +156,16 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                _activityViewModel.ActivityCollection = await App.SoundCloud.GetActivities();
+                var a = await App.SoundCloud.GetActivities();
+                _mainPageViewModel.ActivityCollection = a;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                string ex = "" + e;
-                await new MessageDialog("There was a problem while getting your activities.").ShowAsync();
+                /*string ex = "" + e;
+                await new MessageDialog("There was a problem while getting your activities.").ShowAsync();*/
+                return;
             }
         }
-
         #endregion
     }
 }

@@ -25,6 +25,13 @@ namespace SoundCloudPlus.ViewModels
             set { _exploreCollection = value; OnPropertyChanged(nameof(ExploreCollection)); }
         }
 
+        private Activity _activityCollection;
+        public Activity ActivityCollection
+        {
+            get { return _activityCollection; }
+            set { _activityCollection = value; OnPropertyChanged(nameof(ActivityCollection)); }
+        }
+
         public Track SelectedExploreTrack
         {
             get { return _selectedExploreTrack; }
