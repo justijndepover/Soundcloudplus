@@ -25,25 +25,8 @@
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Grid Margin="0,5,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png" Height="80" Width="80" Grid.Column="0"></Image>
-                                    <StackPanel Grid.Column="1" Orientation="Vertical" Width="150" Height="100" >
-                                        <TextBlock Text="" Margin="5,1,0,1"></TextBlock>
-                                        <TextBlock Text="" Margin="5,1,0,1"></TextBlock>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Ranks #" Margin="5,1,0,1"></TextBlock>
-                                            <TextBlock Text="" Margin="3,1,0,1"></TextBlock>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Point" Margin="5,1,0,1"></TextBlock>
-                                            <TextBlock Text="" Margin="3,1,0,1"></TextBlock>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
+                                <TextBlock>Username</TextBlock>
+                                <TextBlock Text="{Binding User.Username}"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>

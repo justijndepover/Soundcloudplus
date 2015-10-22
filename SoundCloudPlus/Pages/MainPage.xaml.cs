@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
 using Windows.UI.Core;
+using ClassLibrary.Models;
 
 namespace SoundCloudPlus.Pages
 {
@@ -154,17 +156,27 @@ namespace SoundCloudPlus.Pages
 
         private async void getActivities()
         {
+            Activity a;
             try
             {
-                var a = await App.SoundCloud.GetActivities();
-                _mainPageViewModel.ActivityCollection = a;
+                a = await App.SoundCloud.GetActivities();
+                _mainPageViewModel.ActivityObject = a;
             }
             catch (Exception)
             {
-                /*string ex = "" + e;
-                await new MessageDialog("There was a problem while getting your activities.").ShowAsync();*/
                 return;
             }
+
+            
+            //_mainPageViewModel.ActivityCollection;
+            int l = a.Collection.Count;
+            ObservableCollection<Collection> c = new ObservableCollection<Collection>();
+            for (int i = 0; i < l; i++)
+            {
+                c.Add(a.Collection[i]);
+            }
+            Debug.WriteLine(c);
+            _mainPageViewModel.ActivityCollection = c;
         }
         #endregion
     }
