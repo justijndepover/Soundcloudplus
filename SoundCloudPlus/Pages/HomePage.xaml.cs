@@ -1,40 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+using SoundCloudPlus.ViewModels;
 
 namespace SoundCloudPlus.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class HomePage : Page
     {
+        private HomePageViewModel _homePageViewModel;
         public HomePage()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Frame.BackStack.Clear();
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                _homePageViewModel =
+                    (HomePageViewModel)Resources["HomePageViewModel"];
+                if (App.SoundCloud.IsAuthenticated)
+                {
+                    _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                }   _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+            }
+            base.OnNavigatedTo(e);
         }
 
         private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)

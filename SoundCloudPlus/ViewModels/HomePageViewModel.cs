@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ClassLibrary.Models;
 using SoundCloudPlus.Annotations;
-using GalaSoft.MvvmLight.Command;
 
 namespace SoundCloudPlus.ViewModels
 {
@@ -23,20 +22,6 @@ namespace SoundCloudPlus.ViewModels
         {
             get { return _exploreCollection; }
             set { _exploreCollection = value; OnPropertyChanged(nameof(ExploreCollection)); }
-        }
-
-        private ObservableCollection<Collection> _activityCollection;
-        public ObservableCollection<Collection> ActivityCollection
-        {
-            get { return _activityCollection; }
-            set { _activityCollection = value; OnPropertyChanged(nameof(ActivityCollection)); }
-        }
-
-        private Activity _activityObject;
-        public Activity ActivityObject
-        {
-            get { return _activityObject; }
-            set { _activityObject = value; OnPropertyChanged(nameof(ActivityObject)); }
         }
 
         public Track SelectedExploreTrack

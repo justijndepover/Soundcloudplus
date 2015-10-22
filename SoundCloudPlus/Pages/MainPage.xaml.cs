@@ -5,33 +5,26 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
-using Windows.UI.Core;
 using ClassLibrary.Models;
 
 namespace SoundCloudPlus.Pages
 {
     public sealed partial class MainPage
     {
-        private HomePageViewModel _mainPageViewModel;
+        private MainPageViewModel _mainPageViewModel;
         public MainPage()
         {
             InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             NavigationCacheMode = NavigationCacheMode.Required;
             if (e.NavigationMode != NavigationMode.Back)
             {
+                MyFrame.Navigate(typeof(HomePage));
                 _mainPageViewModel =
-                    (HomePageViewModel)Resources["MainPageViewModel"];
-                if (App.SoundCloud.IsAuthenticated)
-                {
-                    _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                    _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
-                
-                }
-                MyFrame.Navigate(typeof (HomePage));
+                    (MainPageViewModel)Resources["MainPageViewModel"];
             }
             base.OnNavigatedTo(e);
         }
@@ -47,8 +40,8 @@ namespace SoundCloudPlus.Pages
             {
               if (await App.SoundCloud.SignIn())
               {
-                  _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                  _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                  //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                  //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
                 }
               else
               {
@@ -58,8 +51,8 @@ namespace SoundCloudPlus.Pages
             else
             {
                 await new MessageDialog("You are already signed in").ShowAsync();
-                _mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                _mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
         }
 

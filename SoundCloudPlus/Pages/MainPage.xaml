@@ -15,7 +15,7 @@
     models:TitleBar.ButtonForegroundColor="#FFFFFF"
     models:TitleBar.ButtonHoverBackgroundColor="#D65E22"-->
     <Page.Resources>
-        <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
+        <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           DataContext="{StaticResource MainPageViewModel}">

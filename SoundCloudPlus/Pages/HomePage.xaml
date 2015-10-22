@@ -9,12 +9,12 @@
     xmlns:converters="using:SoundCloudPlus.Converters"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
+        <viewModels:HomePageViewModel x:Key="HomePageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
                 <FlipView x:Name="ExploreFlipView" Height="300" RelativePanel.AlignLeftWithPanel="True" ItemsSource="{Binding ExploreCollection}" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
