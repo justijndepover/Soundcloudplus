@@ -17,10 +17,10 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
-                <FlipView x:Name="ExploreFlipView" Background="#FFFF5500" Height="300" RelativePanel.AlignLeftWithPanel="True" ItemsSource="{Binding ExploreCollection}" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
+                <FlipView x:Name="ExploreFlipView" Height="300" RelativePanel.AlignLeftWithPanel="True" ItemsSource="{Binding ExploreCollection}" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
                     <FlipView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Width="300">
                                 <Image x:Name="ExploreUserImage" Source="{Binding User.AvatarUrl, Converter={StaticResource ImageToHighResConverter}}"/>
                                 <Image x:Name="ExploreArtworkImage" Source="{Binding ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}"/>
                                 <Border Background="#3F808080" Height="60" VerticalAlignment="Bottom">

@@ -60,9 +60,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="70" />
+            <RowDefinition Height="64" />
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Background="#22000000">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
@@ -91,7 +91,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE895;"/>
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE895;" FontSize="14"/>
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
