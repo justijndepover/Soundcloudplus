@@ -73,10 +73,9 @@ namespace SoundCloudPlus.Pages
 
         private async void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            MainPageViewModel _mainPageViewModel =
-                    (MainPageViewModel)Resources["MainPageViewModel"];
+            MainPageViewModel a = (MainPageViewModel) this.DataContext;
             Track t = e.ClickedItem as Track;
-            _mainPageViewModel.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
+            a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
         }
     }
 }

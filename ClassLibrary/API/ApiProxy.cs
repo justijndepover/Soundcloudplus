@@ -17,10 +17,11 @@ namespace ClassLibrary.API
 {
     public class ApiProxy
     {
-        public string BaseEndpointUrl { get; } = "https://api-v2.soundcloud.com";
+        public static string NewBasepoint = "https://api-v2.soundcloud.com";
+        public static string OldBasepoint = "https://api.soundcloud.com";
 
         public async Task<ApiResponse> RequestTask(HttpMethod method, string endpoint, object body = null,
-            object queryStringPairs = null, object clientHeaders = null)
+            object queryStringPairs = null, object clientHeaders = null, bool useNewBasepoint = true)
         {
             Dictionary<String, String> dictQueryStringPairs = null;
             if (queryStringPairs != null && queryStringPairs.GetType() == typeof (Dictionary<String, String>))
@@ -48,7 +49,7 @@ namespace ClassLibrary.API
             }
             if (method == HttpMethod.Get)
             {
-                return await Get(endpoint, queryString, clientHeaders);
+                return await Get(endpoint, queryString, clientHeaders, useNewBasepoint);
             }
             else if (method == HttpMethod.Post)
             {
@@ -65,10 +66,18 @@ namespace ClassLibrary.API
             return null;
         }
 
-        private async Task<ApiResponse> Get(string endpoint, string queryString, object queryHeaders = null)
+        private async Task<ApiResponse> Get(string endpoint, string queryString, object queryHeaders = null, bool useNewBasepoint = true)
         {
             var apiResponse = new ApiResponse();
-            var finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            string finalEndpoint;
+            if (useNewBasepoint)
+            {
+                finalEndpoint = (NewBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            }
+            else
+            {
+                finalEndpoint = (OldBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            }
             using (var client = new HttpClient())
             {
                 if (queryHeaders != null)
@@ -99,7 +108,7 @@ namespace ClassLibrary.API
         private async Task<ApiResponse> Post(string endpoint, string queryString, object body, object queryHeaders = null)
         {
             var apiResponse = new ApiResponse();
-            var finalEndpoint = (BaseEndpointUrl + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            var finalEndpoint = (NewBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
             using (var client = new HttpClient())
             {
                 using (var multipartFormDataContent = new MultipartFormDataContent())

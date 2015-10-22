@@ -122,11 +122,11 @@ namespace ClassLibrary
 
         public async Task<Uri> GetMusicFile(int id)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/tracks/"+id+"/streams", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/tracks/"+id+"/streams", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             string mp3 = "";
             if (apiResponse.Succes)
             {
-                mp3 = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(apiResponse.Data["http_mp3_128_url"].ToString());
+                mp3 = apiResponse.Data["http_mp3_128_url"].Value;
             }
             return new Uri(mp3);
         }

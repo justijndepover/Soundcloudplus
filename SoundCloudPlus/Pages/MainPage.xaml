@@ -199,7 +199,7 @@
                 </ScrollViewer>
             </SplitView.Pane>
             <SplitView.Content>
-                <Frame x:Name="MyFrame"></Frame>
+                <Frame x:Name="MyFrame" Loaded="MyFrame_OnLoaded"></Frame>
             </SplitView.Content>
         </SplitView>
         <Grid Grid.Row="2">

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
@@ -58,7 +59,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private async void Navigation_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Navigation_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
@@ -115,7 +116,7 @@ namespace SoundCloudPlus.Pages
                 case "activity":
                     if (page?.GetType() != typeof(ActivityPage))
                     {
-                        loadActivityPageResources();
+                        LoadActivityPageResources();
                         MyFrame?.Navigate(typeof(ActivityPage));
                     }
                     break;
@@ -130,13 +131,13 @@ namespace SoundCloudPlus.Pages
 
         #region Activity
 
-        private async void loadActivityPageResources()
+        private async void LoadActivityPageResources()
         {
             if (!App.SoundCloud.IsAuthenticated)
             {
                 if (await App.SoundCloud.SignIn())
                 {
-                    getActivities();
+                    GetActivities();
                 }
                 else
                 {
@@ -145,11 +146,11 @@ namespace SoundCloudPlus.Pages
             }
             else
             {
-                getActivities();
+                GetActivities();
             }
         }
 
-        private async void getActivities()
+        private async void GetActivities()
         {
             Activity a;
             try
@@ -175,5 +176,12 @@ namespace SoundCloudPlus.Pages
         }
         #endregion
 
+        private void MyFrame_OnLoaded(object sender, RoutedEventArgs e)
+        {
+             var content = MyFrame.Content as FrameworkElement;
+            if (content == null)
+                return;
+            content.DataContext = MyFrame.DataContext;
+        }
     }
 }
