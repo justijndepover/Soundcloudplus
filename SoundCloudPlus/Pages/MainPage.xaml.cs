@@ -172,5 +172,6 @@ namespace SoundCloudPlus.Pages
             _mainPageViewModel.ActivityCollection = c;
         }
         #endregion
+
     }
 }

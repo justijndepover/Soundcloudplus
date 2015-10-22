@@ -203,20 +203,12 @@
             </SplitView.Content>
         </SplitView>
         <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="60" />
-            </Grid.ColumnDefinitions>
-            <Rectangle Grid.ColumnSpan="6" Fill="#EEFF5500" />
-            <Button Style="{StaticResource MediabarButton}" Content="&#xE892;" Grid.Column="1"/>
-            <Button Style="{StaticResource MediabarButton}" Content="&#xE768;" Grid.Column="2"/>
-            <Button Style="{StaticResource MediabarButton}" Content="&#xE893;" Grid.Column="3"/>
-            <Button Style="{StaticResource MediabarButton}" Content="&#xE767;" Grid.Column="4"/>
-            <Button Style="{StaticResource MediabarButton}" Content="&#xE8B1;" Grid.Column="5"/>
+            <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="../Assets/19 - The Chemical Brothers - Go.mp3">
+                <MediaElement.TransportControls>
+
+                    <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True" IsFastForwardButtonVisible="True"/>
+                </MediaElement.TransportControls>
+            </MediaElement>
         </Grid>
     </Grid>
 </Page>
