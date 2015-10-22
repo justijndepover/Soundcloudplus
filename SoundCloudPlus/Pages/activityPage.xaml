@@ -24,9 +24,19 @@
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock>Username</TextBlock>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="AvatarUrl: "></TextBlock>
+                                <Image Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                <TextBlock Text="Username: "></TextBlock>
                                 <TextBlock Text="{Binding User.Username}"></TextBlock>
+                                <TextBlock Text="Type: "></TextBlock>
+                                <TextBlock Text="{Binding Type}"></TextBlock>
+                                <TextBlock Text="CreatedAt: "></TextBlock>
+                                <TextBlock Text="{Binding CreatedAt}"></TextBlock>
+                                <TextBlock Text="Following: "></TextBlock>
+                                <TextBlock Text="{Binding User.FollowingsCount}"></TextBlock>
+                                <TextBlock Text="Link: "></TextBlock>
+                                <TextBlock Text="{Binding User.PermalinkUrl}"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>
