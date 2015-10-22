@@ -8,12 +8,12 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:models="using:ClassLibrary.Models"
-    models:TitleBar.BackgroundColor="#DE4A00"
+    mc:Ignorable="d">
+    <!--models:TitleBar.BackgroundColor="#DE4A00"
     models:TitleBar.ForegroundColor="#FFFFFF"
     models:TitleBar.ButtonBackgroundColor="#DE4A00"
     models:TitleBar.ButtonForegroundColor="#FFFFFF"
-    models:TitleBar.ButtonHoverBackgroundColor="#D65E22"
-    mc:Ignorable="d">
+    models:TitleBar.ButtonHoverBackgroundColor="#D65E22"-->
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
     </Page.Resources>
@@ -60,12 +60,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="70" />
         </Grid.RowDefinitions>
-        <Grid Background="#FFFF5500">
+        <Grid>
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="SoundCloud Plus" Style="{StaticResource AppTitle}" />
         </Grid>
-        <SplitView x:Name="SplitViewMenu" Grid.Row="1" CompactPaneLength="52" DisplayMode="CompactInline">
+        <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="2" CompactPaneLength="52" DisplayMode="CompactInline">
             <SplitView.Pane>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <Grid>
@@ -82,6 +83,7 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
+                            <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
                         <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click" Grid.Row="0">
                             <Grid>
@@ -89,7 +91,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE895;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE895;"/>
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
                             </Grid>
                         </Button>
@@ -99,8 +101,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <!--<Image Source="/Assets/Square44x44Logo.targetsize-24_altform-unplated.png"/>-->
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE8D6;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE8D6;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Recent" />
                             </Grid>
                         </Button>
@@ -110,7 +111,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE2AF;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE2AF;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Artists" />
                             </Grid>
                         </Button>
@@ -120,7 +121,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE1EE;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE1EE;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Genres" />
                             </Grid>
                         </Button>
@@ -130,7 +131,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE748;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE748;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
@@ -140,7 +141,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE748;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE748;" />
                                 <TextBlock Style="{StaticResource TextInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
@@ -150,7 +151,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE142;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE142;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
@@ -160,7 +161,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE006;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE006;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
@@ -170,7 +171,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE156;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE156;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
@@ -180,7 +181,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE774;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE774;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Activity" />
                             </Grid>
                         </Button>
@@ -190,7 +191,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource BtnInNav}" Content="&#xE713;" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE713;" />
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
@@ -201,5 +202,21 @@
                 <Frame x:Name="MyFrame"></Frame>
             </SplitView.Content>
         </SplitView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.ColumnSpan="6" Fill="#EEFF5500" />
+            <Button Style="{StaticResource MediabarButton}" Content="&#xE892;" Grid.Column="1"/>
+            <Button Style="{StaticResource MediabarButton}" Content="&#xE768;" Grid.Column="2"/>
+            <Button Style="{StaticResource MediabarButton}" Content="&#xE893;" Grid.Column="3"/>
+            <Button Style="{StaticResource MediabarButton}" Content="&#xE767;" Grid.Column="4"/>
+            <Button Style="{StaticResource MediabarButton}" Content="&#xE8B1;" Grid.Column="5"/>
+        </Grid>
     </Grid>
 </Page>
