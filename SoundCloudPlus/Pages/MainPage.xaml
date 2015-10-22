@@ -203,10 +203,9 @@
             </SplitView.Content>
         </SplitView>
         <Grid Grid.Row="2">
-            <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="../Assets/19 - The Chemical Brothers - Go.mp3">
+            <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="{Binding PlayingTrack}">
                 <MediaElement.TransportControls>
-
-                    <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True" IsFastForwardButtonVisible="True"/>
+                    <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True"/>
                 </MediaElement.TransportControls>
             </MediaElement>
         </Grid>

@@ -118,5 +118,17 @@ namespace ClassLibrary
             }
             return false;
         }
+
+
+        public async Task<Uri> GetMusicFile(int id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/tracks/"+id+"/streams", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            string mp3 = "";
+            if (apiResponse.Succes)
+            {
+                mp3 = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(apiResponse.Data["http_mp3_128_url"].ToString());
+            }
+            return new Uri(mp3);
+        }
     }
 }

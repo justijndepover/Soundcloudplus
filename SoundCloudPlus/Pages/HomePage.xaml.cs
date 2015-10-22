@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 
 namespace SoundCloudPlus.Pages
@@ -68,6 +69,14 @@ namespace SoundCloudPlus.Pages
             {
                 if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
             }
+        }
+
+        private async void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            MainPageViewModel _mainPageViewModel =
+                    (MainPageViewModel)Resources["MainPageViewModel"];
+            Track t = e.ClickedItem as Track;
+            _mainPageViewModel.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
         }
     }
 }
