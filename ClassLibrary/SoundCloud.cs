@@ -105,16 +105,25 @@ namespace ClassLibrary
             return activity;
         }
 
-        public async Task<Activity> GetFollowings(int userId)
+        public async Task<ObservableCollection<User>> GetFollowings(int userId)
         {
-            //TODO!! method verder uitwerken (Anthony)
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users"+userId+"/followings", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            Activity activity = new Activity();
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/followings", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token },false);
+            ObservableCollection<User> followings = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {
-                activity = Newtonsoft.Json.JsonConvert.DeserializeObject<Activity>(apiResponse.Data.ToString());
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    try
+                    {
+                        followings.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<User>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
             }
-            return activity;
+            return followings;
         }
 
         public async Task<ObservableCollection<Track>> GetLikes(int userId)
