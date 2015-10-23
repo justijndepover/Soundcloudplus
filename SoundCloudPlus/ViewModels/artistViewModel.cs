@@ -1,6 +1,6 @@
-﻿using SoundCloudPlus.Annotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
