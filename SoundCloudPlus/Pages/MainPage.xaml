@@ -196,7 +196,7 @@
             </SplitView.Content>
         </SplitView>
         <Grid Grid.Row="2">
-            <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="{Binding PlayingTrack}">
+            <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="{Binding PlayingTrack}" AudioCategory="BackgroundCapableMedia" CurrentStateChanged="MusicPlayer_OnCurrentStateChanged">
                 <MediaElement.TransportControls>
                     <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True"/>
                 </MediaElement.TransportControls>
