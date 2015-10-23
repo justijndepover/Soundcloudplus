@@ -53,7 +53,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        /*private void TrackLikesGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        private void TrackLikesGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
             ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)LikesGridView.ItemsPanelRoot;
             double screenWidth = e.NewSize.Width;
@@ -69,7 +69,7 @@ namespace SoundCloudPlus.Pages
             MainPageViewModel a = (MainPageViewModel)this.DataContext;
             Track t = e.ClickedItem as Track;
             a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
-        }*/
+        }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
