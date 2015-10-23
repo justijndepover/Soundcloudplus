@@ -105,6 +105,27 @@ namespace ClassLibrary
             return activity;
         }
 
+        public async Task<ObservableCollection<Track>> GetLikes(int userId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<Track> tracklikes = new ObservableCollection<Track>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["tracks"])
+                {
+                    try
+                    {
+                        tracklikes.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return tracklikes;
+        }
+
         public async Task<bool> SignIn()
         {
             if (await ApiProxy.Authenticate())

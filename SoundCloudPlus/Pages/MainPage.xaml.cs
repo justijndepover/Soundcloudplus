@@ -106,6 +106,7 @@ namespace SoundCloudPlus.Pages
                 case "like":
                     if (page?.GetType() != typeof(LikePage))
                     {
+                        LoadLikePageResources();
                         MyFrame?.Navigate(typeof(LikePage));
                     }
                     break;
@@ -183,6 +184,20 @@ namespace SoundCloudPlus.Pages
         }
         #endregion
 
+        #region Likes
+
+        private async void LoadLikePageResources()
+        {
+            getLikes(178017941);
+        }
+
+        private async void getLikes(int userId)
+        {
+            LikeViewModel _likePageViewModel = (LikeViewModel)Resources["LikeViewModel"];
+            _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(userId);
+        }
+
+        #endregion
         private void MyFrame_OnLoaded(object sender, RoutedEventArgs e)
         {
              var content = MyFrame.Content as FrameworkElement;
