@@ -70,22 +70,20 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
-                            <RowDefinition Height="52" />
-                            <RowDefinition Height="52" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click" Grid.Row="0">
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Click="Navigation_Click" Grid.Row="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE895;" FontSize="14"/>
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE80F;" FontSize="14"/>
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Home" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="1" Click="Navigation_Click" Tag="recent">
@@ -98,27 +96,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Recent" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2" Click="Navigation_Click" Tag="artist">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE2AF;" />
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Artists" />
-                            </Grid>
-                        </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3" Click="Navigation_Click" Tag="genre">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE1EE;" />
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Genres" />
-                            </Grid>
-                        </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4" Click="Navigation_Click" Tag="following">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2" Click="Navigation_Click" Tag="following">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -128,7 +106,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5" Click="Navigation_Click" Tag="followers">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3" Click="Navigation_Click" Tag="followers">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -138,7 +116,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="6" Click="Navigation_Click" Tag="playlist">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4" Click="Navigation_Click" Tag="playlist">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -148,7 +126,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="7" Click="Navigation_Click" Tag="like">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5" Click="Navigation_Click" Tag="like">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -158,7 +136,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9" Click="Navigation_Click" Tag="profile">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="7" Click="AccountButton_Click" Tag="profile">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -168,7 +146,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="10" Click="Navigation_Click" Tag="activity">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="8" Click="Navigation_Click" Tag="activity">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -178,7 +156,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Activity" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="11" Click="Navigation_Click" Tag="setting">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9" Click="Navigation_Click" Tag="setting">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
