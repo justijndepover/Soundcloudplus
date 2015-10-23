@@ -105,6 +105,18 @@ namespace ClassLibrary
             return activity;
         }
 
+        public async Task<Activity> GetFollowings(int userId)
+        {
+            //TODO!! method verder uitwerken (Anthony)
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users"+userId+"/followings", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            Activity activity = new Activity();
+            if (apiResponse.Succes)
+            {
+                activity = Newtonsoft.Json.JsonConvert.DeserializeObject<Activity>(apiResponse.Data.ToString());
+            }
+            return activity;
+        }
+
         public async Task<ObservableCollection<Track>> GetLikes(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
