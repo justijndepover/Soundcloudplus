@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SoundCloudPlus.ViewModels;
 using ClassLibrary.Models;
@@ -16,8 +17,9 @@ namespace SoundCloudPlus.Pages
         public MainPage()
         {
             InitializeComponent();
+            MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             //MusicPlayer.Source =
-                //new Uri(@"https://cf-media.sndcdn.com/G0ddTXDYRX48.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vRzBkZFRYRFlSWDQ4LjEyOC5tcDMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE0NDU1NDczNzF9fX1dfQ__&Signature=h5iThUINJUr3cYqfVDT41KAaW9tlX4Gb0EHHDHCxxjHoPyDc8-KSB0XgDzQIESvA2lZhPpjnHYNrVad6XLqmkHv9MU6K3sf6rrLwF3MUWuhVMOoOSAxg777f5TPYkoO7yWhPqGjjZrxDWuCdTljzmdKtLvDGDucr-xqHwZe3VbVzgvld2xIYwaNB8ghZOZSAiq4gkjPoFDmDzEhCtfkbVqM8ryziO5ifI87alSGLXeHIrsV5oWzWwhEyV~zmDs9kdXPiAoL1CuLCNV8ISjJJ9LcuvCwd0xcKBes4Iit5G76c3X7bBD6ATc~z2Xgcy~YQzyNPfoiduoelYCa6ePtAIg__&Key-Pair-Id=APKAJAGZ7VMH2PFPW6UQ");
+            //new Uri(@"https://cf-media.sndcdn.com/G0ddTXDYRX48.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vRzBkZFRYRFlSWDQ4LjEyOC5tcDMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE0NDU1NDczNzF9fX1dfQ__&Signature=h5iThUINJUr3cYqfVDT41KAaW9tlX4Gb0EHHDHCxxjHoPyDc8-KSB0XgDzQIESvA2lZhPpjnHYNrVad6XLqmkHv9MU6K3sf6rrLwF3MUWuhVMOoOSAxg777f5TPYkoO7yWhPqGjjZrxDWuCdTljzmdKtLvDGDucr-xqHwZe3VbVzgvld2xIYwaNB8ghZOZSAiq4gkjPoFDmDzEhCtfkbVqM8ryziO5ifI87alSGLXeHIrsV5oWzWwhEyV~zmDs9kdXPiAoL1CuLCNV8ISjJJ9LcuvCwd0xcKBes4Iit5G76c3X7bBD6ATc~z2Xgcy~YQzyNPfoiduoelYCa6ePtAIg__&Key-Pair-Id=APKAJAGZ7VMH2PFPW6UQ");
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -128,7 +130,7 @@ namespace SoundCloudPlus.Pages
                     break;
             }
 
-            if (this.Width < 720 && SplitViewMenu.IsPaneOpen == true)
+            if (this.ActualWidth < 720 && SplitViewMenu.IsPaneOpen == true)
             {
                 SplitViewMenu.IsPaneOpen = false;
             }
