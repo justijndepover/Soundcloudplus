@@ -26,9 +26,6 @@
                         <AdaptiveTrigger MinWindowWidth="1024" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--<Setter Target="ExploreFlipView.(RelativePanel.LeftOf)" Value="ExploreListView"/>
-                        <Setter Target="ExploreListView.Width" Value="400"/>-->
-
                         <Setter Target="SplitViewMenu.DisplayMode" Value="CompactInline" />
                         <Setter Target="SplitViewMenu.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
@@ -38,10 +35,6 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--<Setter Target="ExploreFlipView.(RelativePanel.AlignRightWithPanel)" Value="True"/>
-                        <Setter Target="ExploreListView.(RelativePanel.Below)" Value="ExploreFlipView"/>
-                        <Setter Target="ExploreListView.(RelativePanel.AlignLeftWithPanel)" Value="True"/>-->
-
                         <Setter Target="SplitViewMenu.DisplayMode" Value="CompactOverlay" />
                         <Setter Target="SplitViewMenu.IsPaneOpen" Value="False" />
                     </VisualState.Setters>

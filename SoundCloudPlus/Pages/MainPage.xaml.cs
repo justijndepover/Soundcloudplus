@@ -127,6 +127,11 @@ namespace SoundCloudPlus.Pages
                     }
                     break;
             }
+
+            if (this.Width < 720 && SplitViewMenu.IsPaneOpen == true)
+            {
+                SplitViewMenu.IsPaneOpen = false;
+            }
         }
 
         #region Activity
