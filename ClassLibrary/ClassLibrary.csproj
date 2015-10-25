@@ -126,9 +126,12 @@
     <Compile Include="Messages\TrackChangedMessage.cs" />
     <Compile Include="Messages\UpdatePlaylistMessage.cs" />
     <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\Collection.cs" />
+    <Compile Include="Models\ActivityCollection.cs" />
+    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
+    <Compile Include="Models\PlaylistCollection.cs" />
+    <Compile Include="Models\PlaylistObject.cs" />
     <Compile Include="Models\TitleBar.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\User.cs" />

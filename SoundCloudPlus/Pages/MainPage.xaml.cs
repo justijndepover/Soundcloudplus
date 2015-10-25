@@ -178,7 +178,7 @@ namespace SoundCloudPlus.Pages
             
             //_mainPageViewModel.ActivityCollection;
             int l = a.Collection.Count;
-            ObservableCollection<Collection> c = new ObservableCollection<Collection>();
+            ObservableCollection<ActivityCollection> c = new ObservableCollection<ActivityCollection>();
             for (int i = 0; i < l; i++)
             {
                 c.Add(a.Collection[i]);

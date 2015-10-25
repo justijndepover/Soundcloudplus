@@ -2,7 +2,7 @@
 
 namespace ClassLibrary.Models
 {
-    public class Collection
+    public class ActivityCollection
     {
         [JsonProperty("type")]
         public string Type { get; set; }
