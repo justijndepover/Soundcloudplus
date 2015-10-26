@@ -183,7 +183,6 @@ namespace SoundCloudPlus.Pages
             {
                 c.Add(a.Collection[i]);
             }
-            Debug.WriteLine(c);
             _mainPageViewModel.ActivityCollection = c;
         }
         #endregion

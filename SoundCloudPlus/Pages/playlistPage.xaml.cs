@@ -1,6 +1,11 @@
-﻿using Windows.UI.Core;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ClassLibrary.Models;
+using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -16,13 +21,34 @@ namespace SoundCloudPlus.Pages
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private PlaylistViewModel _playlistViewModel;
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             currentView.BackRequested += CurrentView_BackRequested;
+
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                _playlistViewModel =
+                    (PlaylistViewModel)Resources["PlaylistViewModel"];
+                if (App.SoundCloud.IsAuthenticated)
+                {
+                    PlaylistObject p = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id);
+                    _playlistViewModel.PlaylistObject = p;
+
+                    int l = p.collection.Count();
+                    ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
+                    for (int i = 0; i < l; i++)
+                    {
+                        c.Add(p.collection[i]);
+                    }
+                    _playlistViewModel.PlaylistCollection = c;
+                }
+            }
+            base.OnNavigatedTo(e);
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)

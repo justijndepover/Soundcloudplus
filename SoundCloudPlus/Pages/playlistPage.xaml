@@ -11,7 +11,33 @@
         <viewModels:PlaylistViewModel x:Key="PlaylistViewModel" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock>Playlists</TextBlock>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <RelativePanel>
+                <TextBlock x:Name="PlaylistTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Playlist" Style="{StaticResource SubTitle}"/>
+                <GridView x:Name="PlaylistGridView" RelativePanel.Below="PlaylistTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Artwork: "></TextBlock>
+                                <Image Source="{Binding playlist.artwork_url}" Style="{StaticResource ImageAlbum}"/>
+                                <TextBlock Text="Username: "></TextBlock>
+                                <TextBlock Text="{Binding user.Username}"></TextBlock>
+                                <TextBlock Text="created_at: "></TextBlock>
+                                <TextBlock Text="{Binding created_at}"></TextBlock>
+                                <TextBlock Text="track count: "></TextBlock>
+                                <TextBlock Text="{Binding playlist.track_count}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
 </Page>

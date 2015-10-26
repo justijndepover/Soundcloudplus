@@ -111,7 +111,7 @@ namespace ClassLibrary
             PlaylistObject pO = new PlaylistObject();
             if (apiResponse.Succes)
             {
-                pO = Newtonsoft.Json.JsonConvert.DeserializeObject<Activity>(apiResponse.Data.ToString());
+                pO = Newtonsoft.Json.JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
             }
             return pO;
         }
