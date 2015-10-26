@@ -4,7 +4,7 @@ using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class ArtistViewModel : INotifyPropertyChanged
+    public class ArtistPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

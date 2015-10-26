@@ -6,7 +6,7 @@ using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class PlaylistViewModel : INotifyPropertyChanged
+    public class PlaylistPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private PlaylistObject _playlistObject;

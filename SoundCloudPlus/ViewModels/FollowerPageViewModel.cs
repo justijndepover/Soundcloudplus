@@ -6,7 +6,7 @@ using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class FollowerViewModel : INotifyPropertyChanged
+    public class FollowerPageViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<User> _followersCollection;
         public ObservableCollection<User> FollowersCollection

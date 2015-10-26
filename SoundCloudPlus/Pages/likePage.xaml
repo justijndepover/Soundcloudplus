@@ -9,7 +9,7 @@
     xmlns:converters="using:SoundCloudPlus.Converters"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:LikeViewModel x:Key="LikeViewModel" />
+        <viewModels:LikePageViewModel x:Key="LikeViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
     </Page.Resources>

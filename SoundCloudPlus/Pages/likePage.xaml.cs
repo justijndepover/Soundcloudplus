@@ -17,7 +17,7 @@ namespace SoundCloudPlus.Pages
         {
             this.InitializeComponent();
         }
-        private LikeViewModel _likePageViewModel;
+        private LikePageViewModel _likePageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -29,7 +29,7 @@ namespace SoundCloudPlus.Pages
             if (e.NavigationMode != NavigationMode.Back)
             {
                 _likePageViewModel =
-                    (LikeViewModel)Resources["LikeViewModel"];
+                    (LikePageViewModel)Resources["LikeViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
                     _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id);

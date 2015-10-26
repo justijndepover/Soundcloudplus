@@ -37,7 +37,7 @@ namespace SoundCloudPlus.Pages
             base.OnNavigatedTo(e);
         }*/
 
-        private FollowerViewModel _followerViewModel;
+        private FollowerPageViewModel _followerViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -49,7 +49,7 @@ namespace SoundCloudPlus.Pages
             if (e.NavigationMode != NavigationMode.Back)
             {
                 _followerViewModel =
-                    (FollowerViewModel)Resources["FollowerViewModel"];
+                    (FollowerPageViewModel)Resources["FollowerViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
                     _followerViewModel.FollowersCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id);

@@ -6,7 +6,7 @@ using ClassLibrary.Models;
 
 namespace SoundCloudPlus.ViewModels
 {
-    public class LikeViewModel : INotifyPropertyChanged
+    public class LikePageViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Track> _trackLikesCollection;
         public ObservableCollection<Track> TrackLikesCollection

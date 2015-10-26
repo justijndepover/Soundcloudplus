@@ -8,7 +8,7 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:ProfileViewModel x:Key="ProfileViewModel" />
+        <viewModels:ProfilePageViewModel x:Key="ProfileViewModel" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

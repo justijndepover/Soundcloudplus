@@ -9,7 +9,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
-        <viewModels:AcitivityViewModel x:Key="ActivityViewModels" />
+        <viewModels:AcitivityPageViewModel x:Key="ActivityViewModels" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">

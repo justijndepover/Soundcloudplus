@@ -8,7 +8,7 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:FollowingViewModel x:Key="FollowingViewModel" />
+        <viewModels:FollowingPageViewModel x:Key="FollowingViewModel" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowingViewModel}">

@@ -21,7 +21,7 @@ namespace SoundCloudPlus.Pages
             this.InitializeComponent();
         }
 
-        private PlaylistViewModel _playlistViewModel;
+        private PlaylistPageViewModel _playlistViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -33,7 +33,7 @@ namespace SoundCloudPlus.Pages
             if (e.NavigationMode != NavigationMode.Back)
             {
                 _playlistViewModel =
-                    (PlaylistViewModel)Resources["PlaylistViewModel"];
+                    (PlaylistPageViewModel)Resources["PlaylistViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
                     PlaylistObject p = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id);

@@ -127,7 +127,6 @@
     <Compile Include="Messages\UpdatePlaylistMessage.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\ActivityCollection.cs" />
-    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\PlaylistCollection.cs" />
