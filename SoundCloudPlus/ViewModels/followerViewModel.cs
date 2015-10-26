@@ -1,11 +1,19 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ClassLibrary.Models;
 using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {
     public class FollowerViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<User> _followersCollection;
+        public ObservableCollection<User> FollowersCollection
+        {
+            get { return _followersCollection; }
+            set { _followersCollection = value; OnPropertyChanged(nameof(FollowersCollection)); }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

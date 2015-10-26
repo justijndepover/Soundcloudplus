@@ -116,6 +116,27 @@ namespace ClassLibrary
             return pO;
         }
 
+        public async Task<ObservableCollection<User>> GetFollowers(int userId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followers/folowed_by/" + userId, null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ObservableCollection<User> followers = new ObservableCollection<User>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    try
+                    {
+                        followers.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<User>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return followers;
+        }
+
         public async Task<ObservableCollection<User>> GetFollowings(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/followings", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token },false);

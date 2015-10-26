@@ -11,7 +11,33 @@
         <viewModels:FollowerViewModel x:Key="FollowerViewModel" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock>Followers</TextBlock>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowerViewModel}">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <RelativePanel>
+                <TextBlock x:Name="FollowerTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Followers" Style="{StaticResource SubTitle}"/>
+                <GridView x:Name="FollowerGridView" RelativePanel.Below="FollowerTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="AvatarUrl: "></TextBlock>
+                                <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                <TextBlock Text="Username: "></TextBlock>
+                                <TextBlock Text="{Binding Username}"></TextBlock>
+                                <TextBlock Text="Following: "></TextBlock>
+                                <TextBlock Text="{Binding FollowingsCount}"></TextBlock>
+                                <TextBlock Text="Link: "></TextBlock>
+                                <TextBlock Text="{Binding PermalinkUrl}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
 </Page>
