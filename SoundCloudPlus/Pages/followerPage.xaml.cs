@@ -54,7 +54,7 @@ namespace SoundCloudPlus.Pages
                     (FollowerPageViewModel)Resources["FollowerViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
-                    _followerViewModel.FollowersCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id);
+                    _followerViewModel.FollowersCollection = await App.SoundCloud.GetFollowers(App.SoundCloud.CurrentUser.Id);
                 }
             }
             base.OnNavigatedTo(e);

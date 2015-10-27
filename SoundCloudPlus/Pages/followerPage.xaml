@@ -25,14 +25,11 @@
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="AvatarUrl: "></TextBlock>
-                                <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
-                                <TextBlock Text="Username: "></TextBlock>
-                                <TextBlock Text="{Binding Username}"></TextBlock>
-                                <TextBlock Text="Following: "></TextBlock>
-                                <TextBlock Text="{Binding FollowingsCount}"></TextBlock>
-                                <TextBlock Text="Link: "></TextBlock>
-                                <TextBlock Text="{Binding PermalinkUrl}"></TextBlock>
+                                <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
+                                <Border Style="{StaticResource BorderStyle2}">
+                                    <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}"></TextBlock>
+                                </Border>
+                                <!--<TextBlock Text="{Binding PermalinkUrl}"></TextBlock>-->
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>
