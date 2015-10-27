@@ -1,6 +1,8 @@
 ﻿using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ClassLibrary.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -38,6 +40,11 @@ namespace SoundCloudPlus.Pages
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
             currentView.BackRequested -= CurrentView_BackRequested;
+        }
+
+        private void ActivityGridView_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Screen.MakeResponsive(e, 200, 400, ActivityGridView);
         }
     }
 }

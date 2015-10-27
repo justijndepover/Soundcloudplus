@@ -15,7 +15,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
                 <TextBlock x:Name="ActivityTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Activity" Style="{StaticResource SubTitle}"/>
-                <GridView x:Name="ActivityGridView" RelativePanel.Below="ActivityTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ActivityCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                <GridView x:Name="ActivityGridView" RelativePanel.Below="ActivityTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ActivityCollection}" SizeChanged="ActivityGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Models;
@@ -64,6 +65,11 @@ namespace SoundCloudPlus.Pages
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
             currentView.BackRequested -= CurrentView_BackRequested;
+        }
+
+        private void PlaylistGridView_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Screen.MakeResponsive(e, 200, 400, PlaylistGridView);
         }
     }
 }

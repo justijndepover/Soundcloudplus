@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Models;
@@ -36,39 +37,12 @@ namespace SoundCloudPlus.Pages
 
         private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
-            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)StreamGridView.ItemsPanelRoot;
-            double screenWidth = e.NewSize.Width;
-            int? itemsNumber = StreamGridView.Items?.Count;
-            if (itemsNumber > 0)
-            {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
-            }
-        }
-
-        private int GetNumberOfColumns(double screenWidth)
-        {
-            int w = 799;
-            int c = 1;
-            while (true)
-            {
-                if (screenWidth <= w)
-                {
-                    return c;
-                }
-                c++;
-                w += 400;
-            }
+            Screen.MakeResponsive(e, 400, 800, StreamGridView);
         }
 
         private void ExploreGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
-            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)ExploreGridView.ItemsPanelRoot;
-            double screenWidth = e.NewSize.Width;
-            int? itemsNumber = ExploreGridView.Items?.Count;
-            if (itemsNumber > 0)
-            {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
-            }
+            Screen.MakeResponsive(e, 400, 800, ExploreGridView);
         }
 
         private async void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)

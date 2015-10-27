@@ -55,13 +55,7 @@ namespace SoundCloudPlus.Pages
 
         private void TrackLikesGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
-            ItemsWrapGrid myItemsPanel = (ItemsWrapGrid)LikesGridView.ItemsPanelRoot;
-            double screenWidth = e.NewSize.Width;
-            int? itemsNumber = LikesGridView.Items?.Count;
-            if (itemsNumber > 0)
-            {
-                if (myItemsPanel != null) myItemsPanel.ItemWidth = (screenWidth / GetNumberOfColumns(screenWidth));
-            }
+            Screen.MakeResponsive(e, 400, 800, LikesGridView);
         }
 
         private async void TrackLikesGridView_OnItemClick(object sender, ItemClickEventArgs e)

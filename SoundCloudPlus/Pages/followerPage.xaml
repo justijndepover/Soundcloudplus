@@ -15,7 +15,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
                 <TextBlock x:Name="FollowerTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Followers" Style="{StaticResource SubTitle}"/>
-                <GridView x:Name="FollowerGridView" RelativePanel.Below="FollowerTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                <GridView x:Name="FollowerGridView" RelativePanel.Below="FollowerTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" SizeChanged="FollowerGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
