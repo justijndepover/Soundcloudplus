@@ -12,6 +12,32 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
-        <TextBlock Text="{Binding UserObject.Username}"></TextBlock>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <RelativePanel>
+                <TextBlock x:Name="ProfileTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Profile" Style="{StaticResource SubTitle}"/>
+                <Border x:Name="ProfileBannerBorder" Background="Gainsboro" RelativePanel.Below="ProfileTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                    <Grid x:Name="ProfileBannerGrid" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.RowSpan="3" Grid.Column="0" Source="{Binding UserObject.AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserObject.FullName}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserObject.Username}"></TextBlock>
+                    </Grid>
+                </Border>
+                <Hub x:Name="ProfileHub" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                    <HubSection Header="All"></HubSection>
+                    <HubSection Header="Tracks"></HubSection>
+                    <HubSection Header="Playlist"></HubSection>
+                    <HubSection Header="Reposts"></HubSection>
+                </Hub>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
 </Page>
