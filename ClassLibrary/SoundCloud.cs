@@ -249,5 +249,16 @@ namespace ClassLibrary
             }
             return new Uri(mp3);
         }
+
+        public async Task<User> GetUser(int id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            User u = new User();
+            if (apiResponse.Succes)
+            {
+                u = apiResponse.Data.Value;
+            }
+            return u;
+        }
     }
 }

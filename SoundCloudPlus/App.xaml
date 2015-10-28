@@ -6,6 +6,21 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--BUTTONS-->
+            <Style TargetType="Button" x:Key="btnProfileMenuActive">
+                <Setter Property="Background" Value="Orange"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+            </Style>
+            <Style TargetType="Button" x:Key="btnProfileMenuInActive">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+            </Style>
+            <Style TargetType="Button" x:Key="btnProfileMenuFunctionButtons">
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
             <Style TargetType="Button" x:Key="BtnNav">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="Width" Value="52"/>
@@ -129,6 +144,10 @@
             </Style>
             
             <!--TEXTBLOCK-->
+            <Style TargetType="TextBlock" x:Key="IconInProfileTextblock">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
             <Style TargetType="TextBlock" x:Key="TextInMenu">
                 <Setter Property="Padding" Value="10, 12, 0, 4"/>
                 <Setter Property="FontSize" Value="15" />

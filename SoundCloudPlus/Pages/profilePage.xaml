@@ -6,9 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    xmlns:converters="using:SoundCloudPlus.Converters"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:ProfilePageViewModel x:Key="ProfilePageViewModel" />
+        <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
+        <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
+        <converters:UserIdToUserName x:Key="UserIdToUserName"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
@@ -32,58 +36,11 @@
                     </Grid>
                 </Border>
                 <StackPanel x:Name="ProfileInformationLeft" Orientation="Horizontal" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                    <Button x:Name="btnAll" Content="All" Click="MenuButton_OnClick"></Button>
-                    <Button x:Name="btnTracks" Content="Tracks" Click="MenuButton_OnClick"></Button>
-                    <Button x:Name="btnPlaylist" Content="Playlist" Click="MenuButton_OnClick"></Button>
-                    <Button x:Name="btnReposts" Content="Reposts" Click="MenuButton_OnClick"></Button>
+                    <Button x:Name="btnAll" Content="All" Click="MenuButton_OnClick" Style="{StaticResource btnProfileMenuActive}"></Button>
+                    <Button x:Name="btnTracks" Content="Tracks" Click="MenuButton_OnClick" Style="{StaticResource btnProfileMenuInActive}"></Button>
+                    <Button x:Name="btnPlaylist" Content="Playlist" Click="MenuButton_OnClick" Style="{StaticResource btnProfileMenuInActive}"></Button>
+                    <Button x:Name="btnReposts" Content="Reposts" Click="MenuButton_OnClick" Style="{StaticResource btnProfileMenuInActive}"></Button>
                 </StackPanel>
-                <GridView x:Name="ProfileGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource BorderStyle1}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Image x:Name="AlbumImage" Source="{Binding }" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Username"></TextBlock>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Title"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="x days"></TextBlock>
-                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="xx:xx:xx"></TextBlock>
-                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="7" Orientation="Horizontal">
-                                        <Button Content="Liked"></Button>
-                                        <Button Content="Repost"></Button>
-                                        <Button Content="Add to playlist"></Button>
-                                        <Button Content="Share"></Button>
-                                        <Button Content="Download"></Button>
-                                        <TextBlock Text="#afgespeeld"></TextBlock>
-                                        <TextBlock Text="#likes"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
                 <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
@@ -113,18 +70,51 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Image x:Name="AlbumImage" Source="{Binding ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Username"></TextBlock>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Title"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="x days"></TextBlock>
-                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="xx:xx:xx"></TextBlock>
-                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="7" Orientation="Horizontal">
-                                        <Button Content="Liked"></Button>
-                                        <Button Content="Repost"></Button>
-                                        <Button Content="Add to playlist"></Button>
-                                        <Button Content="Share"></Button>
-                                        <Button Content="Download"></Button>
-                                        <TextBlock Text="#afgespeeld"></TextBlock>
-                                        <TextBlock Text="#likes"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserId}"></TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Title}"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right"></TextBlock>
+                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right"></TextBlock>
+                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal">
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Liked" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Repost" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE728; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Add to playlist" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE72D; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Share" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE896; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Download" />
+                                            </TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="4" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock>
+                                                <Run Text="   &#xE768; " FontFamily="Segoe MDL2 Assets"/>
+                                                <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
+                                                <Run Text="{Binding FavoritingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                                        </TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -160,18 +150,51 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Image x:Name="AlbumImage" Source="{Binding playlist.artwork_url}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Username"></TextBlock>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Title"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="x days"></TextBlock>
-                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="xx:xx:xx"></TextBlock>
-                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="7" Orientation="Horizontal">
-                                        <Button Content="Liked"></Button>
-                                        <Button Content="Repost"></Button>
-                                        <Button Content="Add to playlist"></Button>
-                                        <Button Content="Share"></Button>
-                                        <Button Content="Download"></Button>
-                                        <TextBlock Text="#afgespeeld"></TextBlock>
-                                        <TextBlock Text="#likes"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding user.Username}"></TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding playlist.title}"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding playlist.created_at}" HorizontalAlignment="Right"></TextBlock>
+                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding playlist.duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right"></TextBlock>
+                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal">
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Liked" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Repost" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE728; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Add to playlist" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE72D; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Share" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE896; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Download" />
+                                            </TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="4" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock>
+                                                <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
+                                                <Run Text="{Binding playlist.reposts_count, Converter={StaticResource IntToMillionConverter}}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
+                                                <Run Text="{Binding playlist.likes_count, Converter={StaticResource IntToMillionConverter}}" />
+                                        </TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -207,18 +230,51 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Image x:Name="AlbumImage" Source="{Binding Track.ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Username"></TextBlock>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Title"></TextBlock>
-                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="x days"></TextBlock>
-                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="xx:xx:xx"></TextBlock>
-                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="7" Orientation="Horizontal">
-                                        <Button Content="Liked"></Button>
-                                        <Button Content="Repost"></Button>
-                                        <Button Content="Add to playlist"></Button>
-                                        <Button Content="Share"></Button>
-                                        <Button Content="Download"></Button>
-                                        <TextBlock Text="#afgespeeld"></TextBlock>
-                                        <TextBlock Text="#likes"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding User.Username}"></TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Track.Title}"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right"></TextBlock>
+                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right"></TextBlock>
+                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal">
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Liked" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Repost" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE728; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Add to playlist" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE72D; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Share" />
+                                            </TextBlock>
+                                        </Button>
+                                        <Button Style="{StaticResource btnProfileMenuFunctionButtons}">
+                                            <TextBlock>
+                                                <Run Text="   &#xE896; " FontFamily="Segoe MDL2 Assets"/>
+                                                 <Run Text="Download" />
+                                            </TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="4" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock>
+                                                <Run Text="   &#xE768; " FontFamily="Segoe MDL2 Assets"/>
+                                                <Run Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
+                                                <Run Text="{Binding Track.FavoritingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                                        </TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Border>
