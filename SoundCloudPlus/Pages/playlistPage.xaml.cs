@@ -38,16 +38,7 @@ namespace SoundCloudPlus.Pages
                     (PlaylistPageViewModel)Resources["PlaylistViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
-                    PlaylistObject p = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id);
-                    _playlistViewModel.PlaylistObject = p;
-
-                    int l = p.collection.Count();
-                    ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
-                    for (int i = 0; i < l; i++)
-                    {
-                        c.Add(p.collection[i]);
-                    }
-                    _playlistViewModel.PlaylistCollection = c;
+                    _playlistViewModel.PlaylistCollection = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id);
                 }
             }
             base.OnNavigatedTo(e);

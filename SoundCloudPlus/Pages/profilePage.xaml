@@ -31,12 +31,59 @@
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserObject.Username}"></TextBlock>
                     </Grid>
                 </Border>
-                <Hub x:Name="ProfileHub" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                    <HubSection Header="All"></HubSection>
-                    <HubSection Header="Tracks"></HubSection>
-                    <HubSection Header="Playlist"></HubSection>
-                    <HubSection Header="Reposts"></HubSection>
-                </Hub>
+                <StackPanel x:Name="ProfileInformationLeft" Orientation="Horizontal" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                    <Button Content="All"></Button>
+                    <Button Content="Tracks"></Button>
+                    <Button Content="Playlist"></Button>
+                    <Button Content="Reposts"></Button>
+                </StackPanel>
+                <GridView x:Name="ProfileGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource BorderStyle1}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Source="{Binding UserObject.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Username"></TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Title"></TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Text="x days"></TextBlock>
+                                    <TextBlock Grid.Row="3" Grid.Column="7" Text="xx:xx:xx"></TextBlock>
+                                    <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="7" Orientation="Horizontal">
+                                        <Button Content="Liked"></Button>
+                                        <Button Content="Repost"></Button>
+                                        <Button Content="Add to playlist"></Button>
+                                        <Button Content="Share"></Button>
+                                        <Button Content="Download"></Button>
+                                        <TextBlock Text="#afgespeeld"></TextBlock>
+                                        <TextBlock Text="#likes"></TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </RelativePanel>
         </ScrollViewer>
     </Grid>

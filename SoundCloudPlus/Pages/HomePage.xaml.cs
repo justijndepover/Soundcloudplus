@@ -1,4 +1,5 @@
-﻿using Windows.UI.Core;
+﻿using System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -31,7 +32,7 @@ namespace SoundCloudPlus.Pages
                 if (App.SoundCloud.IsAuthenticated)
                 {
                     _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                }   _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                }_homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
             base.OnNavigatedTo(e);
         }

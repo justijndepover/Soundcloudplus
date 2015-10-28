@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ClassLibrary.API;
@@ -108,15 +109,40 @@ namespace ClassLibrary
             return activity;
         }
 
-        public async Task<PlaylistObject> GetPlaylists(int userId)
+        public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/playlists/liked_and_owned", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists/liked_and_owned", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             PlaylistObject pO = new PlaylistObject();
             if (apiResponse.Succes)
             {
                 pO = Newtonsoft.Json.JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
             }
-            return pO;
+            //return pO;
+            int l = pO.Collection.Count();
+            ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
+            for (int i = 0; i < l; i++)
+            {
+                c.Add(pO.Collection[i]);
+            }
+            return c;
+        }
+
+        public async Task<ObservableCollection<Track>> GetTracks(int userId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            TrackObject tO = new TrackObject();
+            if (apiResponse.Succes)
+            {
+                tO = Newtonsoft.Json.JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
+            }
+
+            int l = tO.Collection.Count();
+            ObservableCollection<Track> c = new ObservableCollection<Track>();
+            for (int i = 0; i < l; i++)
+            {
+                c.Add(tO.Collection[i]);
+            }
+            return c;
         }
         #endregion
 
@@ -144,7 +170,7 @@ namespace ClassLibrary
 
         public async Task<ObservableCollection<User>> GetFollowings(int userId)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/followings", null, new { limit = 25, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token },false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = 25, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<User> followings = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {

@@ -9,12 +9,6 @@ namespace SoundCloudPlus.ViewModels
     public class PlaylistPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private PlaylistObject _playlistObject;
-        public PlaylistObject PlaylistObject
-        {
-            get { return _playlistObject; }
-            set { _playlistObject = value; OnPropertyChanged(nameof(PlaylistObject)); }
-        }
 
         private ObservableCollection<PlaylistCollection> _playlistCollection;
         public ObservableCollection<PlaylistCollection> PlaylistCollection

@@ -133,6 +133,7 @@
     <Compile Include="Models\PlaylistObject.cs" />
     <Compile Include="Common\TitleBar.cs" />
     <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\TrackObject.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Common\Screen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
