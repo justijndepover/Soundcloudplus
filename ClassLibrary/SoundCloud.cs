@@ -144,6 +144,20 @@ namespace ClassLibrary
             }
             return c;
         }
+
+        public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/profile/soundcloud:users:" + userId + "/reposts", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<RepostCollection> rC = new ObservableCollection<RepostCollection>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    rC.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
+                }
+            }
+            return rC;
+        }
         #endregion
 
         #region Followers/Followings
