@@ -131,10 +131,10 @@
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\PlaylistCollection.cs" />
     <Compile Include="Models\PlaylistObject.cs" />
-    <Compile Include="Models\TitleBar.cs" />
+    <Compile Include="Common\TitleBar.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Screen.cs" />
+    <Compile Include="Common\Screen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoundCloud.cs" />
     <Content Include="Properties\ClassLibrary.rd.xml" />

@@ -8,10 +8,10 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
-        <viewModels:ProfilePageViewModel x:Key="ProfileViewModel" />
+        <viewModels:ProfilePageViewModel x:Key="ProfilePageViewModel" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock>Profile</TextBlock>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
+        <TextBlock Text="{Binding UserObject.Username}"></TextBlock>
     </Grid>
 </Page>

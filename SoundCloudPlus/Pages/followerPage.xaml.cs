@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 
@@ -18,26 +19,6 @@ namespace SoundCloudPlus.Pages
         {
             this.InitializeComponent();
         }
-        /*private FollowingViewModel _followingPageViewModel;
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            var currentView = SystemNavigationManager.GetForCurrentView();
-
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            currentView.BackRequested += CurrentView_BackRequested;
-
-            if (e.NavigationMode != NavigationMode.Back)
-            {
-                _followingPageViewModel =
-                    (FollowingViewModel)Resources["FollowingViewModel"];
-                if (App.SoundCloud.IsAuthenticated)
-                {
-                    _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id);
-                }
-            }
-            base.OnNavigatedTo(e);
-        }*/
 
         private FollowerPageViewModel _followerViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)

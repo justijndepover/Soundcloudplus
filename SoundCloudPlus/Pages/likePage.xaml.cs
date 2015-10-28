@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 
@@ -36,21 +37,6 @@ namespace SoundCloudPlus.Pages
                 }
             }
             base.OnNavigatedTo(e);
-        }
-
-        private int GetNumberOfColumns(double screenWidth)
-        {
-            int w = 799;
-            int c = 1;
-            while (true)
-            {
-                if (screenWidth <= w)
-                {
-                    return c;
-                }
-                c++;
-                w += 400;
-            }
         }
 
         private void TrackLikesGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)

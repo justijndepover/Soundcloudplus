@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,7 +16,7 @@ namespace SoundCloudPlus.Pages
         {
             this.InitializeComponent();
         }
-
+        private ProfilePageViewModel _profilePageViewModel;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -23,6 +24,17 @@ namespace SoundCloudPlus.Pages
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             currentView.BackRequested += CurrentView_BackRequested;
+
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                _profilePageViewModel =
+                    (ProfilePageViewModel)Resources["ProfilePageViewModel"];
+                if (App.SoundCloud.IsAuthenticated)
+                {
+                    _profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
+                }
+            }
+            base.OnNavigatedTo(e);
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)

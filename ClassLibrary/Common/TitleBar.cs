@@ -2,7 +2,7 @@
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace ClassLibrary.Models
+namespace ClassLibrary.Common
 {
     public class TitleBar
     {
