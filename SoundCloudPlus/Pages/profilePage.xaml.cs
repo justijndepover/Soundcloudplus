@@ -65,7 +65,7 @@ namespace SoundCloudPlus.Pages
         
         private void MenuButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
+            /*Button b = sender as Button;
             SolidColorBrush sCoBr = new SolidColorBrush(Colors.Orange);
             ChangeColorButtons();
             switch (b.Name)
@@ -86,14 +86,14 @@ namespace SoundCloudPlus.Pages
                     makeVisibleInvisible(false, false, false, true);
                     b.Background = sCoBr;
                     break;
-            }
+            }*/
         }
 
-        private void ChangeColorButtons()
+       /* private void ChangeColorButtons()
         {
             SolidColorBrush c = new SolidColorBrush(Colors.White);
             btnTracks.Background = btnAll.Background = btnReposts.Background = btnPlaylist.Background = c;
-        }
+        }*/
 
         private void makeVisibleInvisible(bool all, bool trackCollection, bool playlistCollection, bool repostCollection)
         {

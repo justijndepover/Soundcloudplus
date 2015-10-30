@@ -14,115 +14,107 @@
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
     </Page.Resources>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
-                <FlipView x:Name="ExploreFlipView" Height="300" RelativePanel.AlignLeftWithPanel="True" ItemsSource="{Binding ExploreCollection}" SelectedItem="{Binding SelectedExploreTrack, Mode=TwoWay}">
-                    <FlipView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Width="300">
-                                <Image x:Name="ExploreUserImage" Source="{Binding User.AvatarUrl, Converter={StaticResource ImageToHighResConverter}}"/>
-                                <Image x:Name="ExploreArtworkImage" Source="{Binding ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}"/>
-                                <Border Background="#3F808080" Height="60" VerticalAlignment="Bottom">
-                                    <TextBlock x:Name="Control2Text" Text="{Binding Title}"  Foreground="White" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </FlipView.ItemTemplate>
-                </FlipView>
-                <TextBlock x:Name="StreamTitle" RelativePanel.Below="ExploreFlipView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Stream" Style="{StaticResource SubTitle}"/>
-                <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource BorderStyle1}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                        <Image x:Name="StreamItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
-                                        <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
-                                        <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                            <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
-                                        </Grid>
-                                    </Grid>
-                                    <TextBlock x:Name="StreamItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                    <TextBlock x:Name="StreamItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
+                <Pivot x:Name="rootPivot" Title="Home">
+                    <PivotItem Header="Stream">
+                        <!--Pivot content goes here-->
+                        <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource BorderStyle1}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                <Image x:Name="StreamItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
+                                                    <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                                </Grid>
+                                            </Grid>
+                                            <TextBlock x:Name="StreamItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
+                                            <TextBlock x:Name="StreamItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
                                             <Run Text="{Binding User.FullName}"/>
                                             <Run Text="{Binding User.Username}" Foreground="Gray"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="1" Grid.Row="2">
+                                            </TextBlock>
+                                            <TextBlock Grid.Column="1" Grid.Row="2">
                                             <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
                                             <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"/>
                                             <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"/>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-                <TextBlock x:Name="ExploreTitle" RelativePanel.Below="StreamGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Explore" Style="{StaticResource SubTitle}"></TextBlock>
-                <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource BorderStyle1}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                        <Image x:Name="ExploreItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
-                                        <Image x:Name="ExploreItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
-                                        <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                            <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                            </TextBlock>
                                         </Grid>
-                                    </Grid>
-                                    <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                    <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
+                                    </Border>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </PivotItem>
+                    <PivotItem Header="Explore">
+                        <!--Pivot content goes here-->
+                        <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource BorderStyle1}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                <Image x:Name="ExploreItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image x:Name="ExploreItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
+                                                    <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                                </Grid>
+                                            </Grid>
+                                            <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
+                                            <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
                                             <Run Text="{Binding User.FullName}"/>
                                             <Run Text="{Binding User.Username}" Foreground="Gray"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="1" Grid.Row="2">
+                                            </TextBlock>
+                                            <TextBlock Grid.Column="1" Grid.Row="2">
                                             <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
                                             <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"/>
                                             <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"/>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </PivotItem>
+                </Pivot>
             </RelativePanel>
         </ScrollViewer>
     </Grid>
