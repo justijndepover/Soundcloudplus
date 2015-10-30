@@ -179,9 +179,10 @@
             
             <!--GRID-->
             <Style TargetType="Grid" x:Key="GridMusicStyleTop">
-                <Setter Property="Height" Value="100"/>
-                <Setter Property="Width" Value="100"/>
+                <Setter Property="Height" Value="150"/>
+                <Setter Property="Width" Value="150"/>
                 <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Margin" Value="0 0 10 0" />
             </Style>
             <Style TargetType="Grid" x:Key="GridMusicStyleBottom">
                 <Setter Property="VerticalAlignment" Value="Bottom"/>
@@ -190,8 +191,8 @@
 
             <!--IMAGE-->
             <Style TargetType="Image" x:Key="ImageAlbum">
-                <Setter Property="Height" Value="100"/>
-                <Setter Property="Width" Value="100"/>
+                <Setter Property="Height" Value="150"/>
+                <Setter Property="Width" Value="150"/>
             </Style>
             <Style TargetType="Image" x:Key="ImageAlbum200">
                 <Setter Property="Height" Value="200"/>
@@ -202,7 +203,6 @@
             <Style TargetType="Border" x:Key="BorderStyle1">
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="Background" Value="#25808080"/>
-                <Setter Property="Padding" Value="5"/>
             </Style>
             <Style TargetType="Border" x:Key="BorderStyle2">
                 <Setter Property="Background" Value="#FFFF5500"/>
