@@ -16,8 +16,7 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <RelativePanel>
+        <RelativePanel>
                 <TextBlock x:Name="ProfileTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Profile" Style="{StaticResource SubTitle}"/>
                 <Border x:Name="ProfileBannerBorder" Background="Gainsboro" RelativePanel.Below="ProfileTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                     <Grid x:Name="ProfileBannerGrid" HorizontalAlignment="Stretch">
@@ -283,10 +282,12 @@
                 </GridView>-->
                 <Pivot x:Name="rootPivot" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                     <!--<PivotItem Header="All">
-                        --><!--Pivot content goes here--><!--
+                        -->
+                    <!--Pivot content goes here-->
+                    <!--
                     </PivotItem>-->
                     <PivotItem Header="Tracks">
-                        <!--Pivot content goes here-->
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -367,9 +368,10 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
+                    </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="Playlist">
-                        <!--Pivot content goes here-->
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="PlaylistCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="TrackCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -399,7 +401,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Image x:Name="AlbumImage" Source="{Binding playlist.artwork_url}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding user.Username}"></TextBlock>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding playlist.user_id}"></TextBlock>
                                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding playlist.title}"></TextBlock>
                                             <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding playlist.created_at}" HorizontalAlignment="Right"></TextBlock>
                                             <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding playlist.duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right"></TextBlock>
@@ -450,9 +452,10 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
+                    </ScrollViewer>
                     </PivotItem>
-                    <PivotItem Header="Reposts">
-                        <!--Pivot content goes here-->
+                <PivotItem Header="Reposts">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="RepostCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="PlaylistCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding RepostCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -482,7 +485,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Image x:Name="AlbumImage" Source="{Binding Track.ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding User.Username}"></TextBlock>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Track.UserId}"></TextBlock>
                                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Track.Title}"></TextBlock>
                                             <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right"></TextBlock>
                                             <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right"></TextBlock>
@@ -533,9 +536,9 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
+                    </ScrollViewer>
                     </PivotItem>
                 </Pivot>
             </RelativePanel>
-        </ScrollViewer>
     </Grid>
 </Page>
