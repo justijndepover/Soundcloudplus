@@ -39,7 +39,7 @@ namespace SoundCloudPlus.Pages
                     _profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
                     int id = _profilePageViewModel.UserObject.Id;
                     _profilePageViewModel.PlaylistCollection =
-                        await App.SoundCloud.GetPlaylists(id);
+                        await App.SoundCloud.GetOwnPlaylists(id);
                     _profilePageViewModel.RepostCollection =
                         await App.SoundCloud.GetReposts(id);
                     _profilePageViewModel.TrackCollection = await App.SoundCloud.GetTracks(id);
