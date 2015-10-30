@@ -72,6 +72,12 @@ namespace SoundCloudPlus.Pages
             Button b = sender as Button;
             switch (b?.Tag.ToString())
             {
+                case "home":
+                    if (page?.GetType() != typeof(HomePage))
+                    {
+                        MyFrame?.Navigate(typeof(HomePage));
+                    }
+                    break;
                 case "recent":
                     if (page?.GetType() != typeof(RecentPage))
                     {

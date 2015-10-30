@@ -77,14 +77,14 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Click="AccountButton_Click" Grid.Row="0">
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Grid.Row="0" Click="Navigation_Click" Tag="home">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE895;" FontSize="14"/>
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect with SoundCloud" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE80F;" FontSize="14"/>
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Home" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="1" Click="Navigation_Click" Tag="recent">
@@ -177,7 +177,7 @@
         <Grid Grid.Row="2">
             <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="{Binding PlayingTrack}" AudioCategory="BackgroundCapableMedia" CurrentStateChanged="MusicPlayer_OnCurrentStateChanged">
                 <MediaElement.TransportControls>
-                    <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True"/>
+                    <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True" Background="#DDFF5500"/>
                 </MediaElement.TransportControls>
             </MediaElement>
         </Grid>

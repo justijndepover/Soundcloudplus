@@ -2,7 +2,7 @@
     x:Class="SoundCloudPlus.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SoundCloudPlus" > 
+    xmlns:local="using:SoundCloudPlus" >
     <Application.Resources>
         <ResourceDictionary>
             <!--BUTTONS-->
@@ -165,7 +165,7 @@
             <Style TargetType="TextBlock" x:Key="SubTitle">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="TextAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="#FFFF5500"/>
+                <Setter Property="Foreground" Value="#FF5500"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
