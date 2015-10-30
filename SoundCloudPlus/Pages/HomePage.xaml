@@ -12,6 +12,7 @@
         <viewModels:HomePageViewModel x:Key="HomePageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
+        <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
@@ -65,11 +66,11 @@
                                     </TextBlock>
                                     <TextBlock Grid.Column="1" Grid.Row="2">
                                             <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding PlaybackCount}" />
+                                            <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
                                             <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding FavoritingsCount}"/>
+                                            <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"/>
                                             <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding CommentCount}"/>
+                                            <Run Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"/>
                                     </TextBlock>
                                 </Grid>
                             </Border>
@@ -111,11 +112,11 @@
                                     </TextBlock>
                                     <TextBlock Grid.Column="1" Grid.Row="2">
                                             <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding PlaybackCount}" />
+                                            <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
                                             <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding FavoritingsCount}"/>
+                                            <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"/>
                                             <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding CommentCount}"/>
+                                            <Run Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"/>
                                     </TextBlock>
                                 </Grid>
                             </Border>

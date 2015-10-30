@@ -113,7 +113,7 @@
                                         </TextBlock>
                                         <TextBlock>
                                                 <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
-                                                <Run Text="{Binding FavoritingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                                                <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" />
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>
@@ -273,7 +273,7 @@
                                         </TextBlock>
                                         <TextBlock>
                                                 <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
-                                                <Run Text="{Binding Track.FavoritingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                                                <Run Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}" />
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>

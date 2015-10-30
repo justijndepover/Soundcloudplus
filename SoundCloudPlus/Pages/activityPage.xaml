@@ -6,10 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    xmlns:converters1="using:SoundCloudPlus.Converters"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
         <viewModels:AcitivityPageViewModel x:Key="ActivityViewModels" />
+        <converters1:IntToMillionConverter x:Key="IntToMillionConverter"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
@@ -34,7 +36,7 @@
                                 <TextBlock Text="CreatedAt: "></TextBlock>
                                 <TextBlock Text="{Binding CreatedAt}"></TextBlock>
                                 <TextBlock Text="Following: "></TextBlock>
-                                <TextBlock Text="{Binding User.FollowingsCount}"></TextBlock>
+                                <TextBlock Text="{Binding User.FollowingsCount, Converter={StaticResource IntToMillionConverter}}"></TextBlock>
                                 <TextBlock Text="Link: "></TextBlock>
                                 <TextBlock Text="{Binding User.PermalinkUrl}"></TextBlock>
                             </StackPanel>

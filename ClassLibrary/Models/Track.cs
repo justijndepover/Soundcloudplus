@@ -67,6 +67,7 @@ namespace ClassLibrary.Models
         [JsonProperty("artwork_url")]
         public object ArtworkUrl { get; set; }
         [JsonProperty("waveform_url")]
+
         public string WaveformUrl { get; set; }
         [JsonProperty("user")]
         public User User { get; set; }
@@ -80,6 +81,8 @@ namespace ClassLibrary.Models
         public int? PlaybackCount { get; set; }
         [JsonProperty("download_count")]
         public int? DownloadCount { get; set; }
+        [JsonProperty("likes_count")]
+        public int? LikesCount { get; set; }
         [JsonProperty("favoritings_count")]
         public int? FavoritingsCount { get; set; }
         [JsonProperty("comment_count")]

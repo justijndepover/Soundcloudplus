@@ -13,6 +13,7 @@ namespace SoundCloudPlus.Converters
             public object Convert(object value, Type targetType, object parameter, string language)
             {
                 int val = 0;
+                
                 try
                 {
                     val = (int)value;
@@ -32,9 +33,13 @@ namespace SoundCloudPlus.Converters
                 }
                 else if (val > 1000)
                 {
-                    double d = val / 1000;
+                    double d = val/1000;
                     res = Math.Round(d, 2);
                     s = "K";
+                }
+                else
+                {
+                    res = val;
                 }
 
 
