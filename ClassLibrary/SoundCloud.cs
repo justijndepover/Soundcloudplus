@@ -123,9 +123,36 @@ namespace ClassLibrary
             ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
             for (int i = 0; i < l; i++)
             {
+                if (pO.Collection[i].ArtworkUrl == null)
+                {
+                    int pId = pO.Collection[i].Id;
+                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                    pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                }
                 c.Add(pO.Collection[i]);
             }
             return c;
+        }
+
+        public async Task<ObservableCollection<Track>> GetTracksFromPlaylist(int playlistId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/playlists/" + playlistId, null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["tracks"])
+                {
+                    try
+                    {
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return tracks;
         }
 
         public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId)
