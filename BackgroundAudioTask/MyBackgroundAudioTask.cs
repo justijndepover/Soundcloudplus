@@ -35,7 +35,7 @@ namespace BackgroundAudioTask
         #endregion
 
         #region Helper methods
-        Uri GetCurrentTrackId()
+        int? GetCurrentTrackId()
         {
             if (_playbackList == null)
                 return null;
@@ -43,12 +43,12 @@ namespace BackgroundAudioTask
             return GetTrackId(_playbackList.CurrentItem);
         }
 
-        Uri GetTrackId(MediaPlaybackItem item)
+        int? GetTrackId(MediaPlaybackItem item)
         {
             if (item == null)
                 return null; // no track playing
 
-            return item.Source.CustomProperties[TrackIdKey] as Uri;
+            return (int)item.Source.CustomProperties[TrackIdKey];
         }
         #endregion
 
@@ -264,9 +264,10 @@ namespace BackgroundAudioTask
                     var currentTrackPosition = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.Position);
                     if (currentTrackId != null)
                     {
+                        var a = _playbackList.Items.ToList();
                         // Find the index of the item by name
                         var index = _playbackList.Items.ToList().FindIndex(item =>
-                            GetTrackId(item).ToString() == (string)currentTrackId);
+                            GetTrackId(item) == (int)currentTrackId);
 
                         if (currentTrackPosition == null)
                         {
@@ -446,6 +447,7 @@ namespace BackgroundAudioTask
             TrackChangedMessage trackChangedMessage;
             if (MessageService.TryParseMessage(e.Data, out trackChangedMessage))
             {
+                var playback = _playbackList.Items.ToList();
                 var index = _playbackList.Items.ToList().FindIndex(i => (int)i.Source.CustomProperties[TrackIdKey] == trackChangedMessage.TrackId);
                 Debug.WriteLine("Skipping to track " + index);
                 _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
