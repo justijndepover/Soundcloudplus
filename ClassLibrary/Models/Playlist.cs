@@ -4,7 +4,6 @@ namespace ClassLibrary.Models
 {
     public class Playlist
     {
-        
         public int Id { get; set; }
         [JsonProperty("artwork_url")]
         public string ArtworkUrl { get; set; }

@@ -36,7 +36,14 @@ namespace SoundCloudPlus.ViewModels
         {
             get { return _trackCollection; }
             set { _trackCollection = value; OnPropertyChanged(nameof(TrackCollection)); }
-        }    
+        }
+
+        private User _currentUser;
+        public User CurrentUser
+        {
+            get { return _currentUser; }
+            set { _currentUser = value; OnPropertyChanged(nameof(CurrentUser)); }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

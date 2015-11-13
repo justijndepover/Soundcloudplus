@@ -12,7 +12,6 @@
         <viewModels:ProfilePageViewModel x:Key="ProfilePageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
-        <converters:UserIdToUserName x:Key="UserIdToUserName"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
@@ -317,7 +316,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Image x:Name="AlbumImage" Source="{Binding ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserId}" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding User.Username}" />
                                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Title}" />
                                             <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right" />
                                             <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right" />
@@ -401,7 +400,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Image x:Name="AlbumImage" Source="{Binding Playlist.ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Playlist.UserId}" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Playlist.User.Username}" />
                                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Playlist.Title}" />
                                             <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding Playlist.CreatedAt}" HorizontalAlignment="Right" />
                                             <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Playlist.Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right" />
@@ -485,7 +484,7 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Image x:Name="AlbumImage" Source="{Binding Track.ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Track.UserId}" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Track.User.Username}" />
                                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Track.Title}" />
                                             <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right" />
                                             <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right" />
