@@ -1,7 +1,9 @@
-﻿using Windows.UI.Core;
+﻿using System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ClassLibrary.API;
 using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -119,6 +121,20 @@ namespace SoundCloudPlus.Pages
                 {
                     RepostCollectionGridView.Visibility = Visibility.Visible;
                 }
+            }
+        }
+
+        private async void RepostPlaylist(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button) sender;
+            int playlistId = Convert.ToInt32(b.Tag);
+            try
+            {
+                ApiResponse aR = await App.SoundCloud.RepostPlaylist(playlistId);
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
     }

@@ -250,6 +250,18 @@ namespace ClassLibrary
         }
         #endregion
 
+        //PUT /e1/me/playlist_reposts/164963817?client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=ed72175 HTTP/1.1
+        public async Task<ApiResponse> RepostPlaylist(int playlistId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/e1/me/playlist_reposts/"+playlistId, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            
+            if (apiResponse.Succes)
+            {
+                return apiResponse;
+            }
+            return null;
+        }
+
         public async Task<ObservableCollection<Track>> GetLikes(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });

@@ -411,7 +411,7 @@
                                                         <Run Text="Liked" />
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" Click="RepostPlaylist" Tag="{Binding Id}">
                                                     <TextBlock>
                                                         <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
                                                         <Run Text="Repost" />
