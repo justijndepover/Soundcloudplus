@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Media;
@@ -165,21 +166,24 @@ namespace BackgroundAudioTask
         {
             if (item == null)
             {
-                _smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
+                //_smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
                 _smtc.DisplayUpdater.MusicProperties.Title = string.Empty;
                 _smtc.DisplayUpdater.Update();
                 return;
             }
 
-            _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
+            //_smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
             _smtc.DisplayUpdater.Type = MediaPlaybackType.Music;
             _smtc.DisplayUpdater.MusicProperties.Title = item.Source.CustomProperties[TitleKey] as string;
 
-            var albumArtUri = new Uri(item.Source.CustomProperties[AlbumArtKey] as string);
+            var albumArt = item.Source.CustomProperties[AlbumArtKey] as string;
+            Uri albumArtUri = null;
+            if (albumArt != null)
+            {
+                albumArtUri = new Uri(albumArt);
+            }
             if (albumArtUri != null)
                 _smtc.DisplayUpdater.Thumbnail = RandomAccessStreamReference.CreateFromUri(albumArtUri);
-            else
-                _smtc.DisplayUpdater.Thumbnail = null;
 
             _smtc.DisplayUpdater.Update();
         }
@@ -264,7 +268,6 @@ namespace BackgroundAudioTask
                     var currentTrackPosition = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.Position);
                     if (currentTrackId != null)
                     {
-                        var a = _playbackList.Items.ToList();
                         // Find the index of the item by name
                         var index = _playbackList.Items.ToList().FindIndex(item =>
                             GetTrackId(item) == (int)currentTrackId);
@@ -447,11 +450,9 @@ namespace BackgroundAudioTask
             TrackChangedMessage trackChangedMessage;
             if (MessageService.TryParseMessage(e.Data, out trackChangedMessage))
             {
-                var playback = _playbackList.Items.ToList();
                 var index = _playbackList.Items.ToList().FindIndex(i => (int) i.Source.CustomProperties[TrackIdKey] == trackChangedMessage.TrackId);
                 Debug.WriteLine("Skipping to track " + index);
-                _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
-                _playbackList.MoveTo((uint)index);
+                ChangeTrackInPlaylist((uint)index);
 
                 // TODO: Work around playlist bug that doesn't continue playing after a switch; remove later
                 BackgroundMediaPlayer.Current.Play();
@@ -462,6 +463,19 @@ namespace BackgroundAudioTask
             if (MessageService.TryParseMessage(e.Data, out updatePlaylistMessage))
             {
                 CreatePlaybackList(updatePlaylistMessage.Songs);
+            }
+        }
+
+        void ChangeTrackInPlaylist(uint index)
+        {
+            try
+            {
+                _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
+                _playbackList.MoveTo((uint)index);
+            }
+            catch (Exception)
+            {
+                ChangeTrackInPlaylist(index);
             }
         }
 
