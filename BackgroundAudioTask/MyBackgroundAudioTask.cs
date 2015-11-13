@@ -175,7 +175,7 @@ namespace BackgroundAudioTask
             _smtc.DisplayUpdater.Type = MediaPlaybackType.Music;
             _smtc.DisplayUpdater.MusicProperties.Title = item.Source.CustomProperties[TitleKey] as string;
 
-            var albumArtUri = item.Source.CustomProperties[AlbumArtKey] as Uri;
+            var albumArtUri = new Uri(item.Source.CustomProperties[AlbumArtKey] as string);
             if (albumArtUri != null)
                 _smtc.DisplayUpdater.Thumbnail = RandomAccessStreamReference.CreateFromUri(albumArtUri);
             else
@@ -448,7 +448,7 @@ namespace BackgroundAudioTask
             if (MessageService.TryParseMessage(e.Data, out trackChangedMessage))
             {
                 var playback = _playbackList.Items.ToList();
-                var index = _playbackList.Items.ToList().FindIndex(i => (int)i.Source.CustomProperties[TrackIdKey] == trackChangedMessage.TrackId);
+                var index = _playbackList.Items.ToList().FindIndex(i => (int) i.Source.CustomProperties[TrackIdKey] == trackChangedMessage.TrackId);
                 Debug.WriteLine("Skipping to track " + index);
                 _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
                 _playbackList.MoveTo((uint)index);

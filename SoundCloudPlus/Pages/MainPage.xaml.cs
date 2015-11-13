@@ -545,6 +545,7 @@ namespace SoundCloudPlus.Pages
         public void PlayTrack(Track track)
         {
             var song = track;
+            bool trackAlreadyInPlaylist = true;
             if (PlayList == null)
             {
                 PlayList = new List<Track>();
@@ -552,6 +553,7 @@ namespace SoundCloudPlus.Pages
             if (!PlayList.Contains(track))
             {
                 PlayList.Add(track);
+                trackAlreadyInPlaylist = false;
             }
             Debug.WriteLine("Clicked item from App: " + song.Id.ToString());
 
@@ -568,6 +570,10 @@ namespace SoundCloudPlus.Pages
             else
             {
                 // Switch to the selected track
+                if (!trackAlreadyInPlaylist)
+                {
+                    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
+                }
                 MessageService.SendMessageToBackground(new TrackChangedMessage(song.Id));
             }
 
