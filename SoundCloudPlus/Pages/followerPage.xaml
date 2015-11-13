@@ -24,13 +24,15 @@
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
-                                <Border Style="{StaticResource BorderStyle2}">
-                                    <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}" />
-                                </Border>
-                                <!--<TextBlock Text="{Binding PermalinkUrl}"></TextBlock>-->
-                            </StackPanel>
+                            <Button Padding="0" Click="onAvatarClick" Tag="{Binding Id}">
+                                <StackPanel Orientation="Vertical">
+                                    <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
+                                    <Border Style="{StaticResource BorderStyle2}">
+                                        <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}" />
+                                    </Border>
+                                    <!--<TextBlock Text="{Binding PermalinkUrl}"></TextBlock>-->
+                                </StackPanel>
+                            </Button>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>

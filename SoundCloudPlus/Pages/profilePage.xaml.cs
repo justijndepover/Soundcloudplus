@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Security.Authentication.OnlineId;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,6 +16,14 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class ProfilePage : Page
     {
+        private int _userId;
+
+        public int UserId
+        {
+            get { return _userId; }
+            set { _userId = value; }
+        }
+
         public ProfilePage()
         {
             InitializeComponent();
@@ -34,8 +43,8 @@ namespace SoundCloudPlus.Pages
                     (ProfilePageViewModel)Resources["ProfilePageViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
-                    _profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
-                    int id = _profilePageViewModel.UserObject.Id;
+                    //_profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
+                    int id = UserId;
                     _profilePageViewModel.PlaylistCollection =
                         await App.SoundCloud.GetOwnPlaylists(id);
                     _profilePageViewModel.RepostCollection =
@@ -128,11 +137,12 @@ namespace SoundCloudPlus.Pages
         {
             Button b = (Button) sender;
             int playlistId = Convert.ToInt32(b.Tag);
+            //repost niet mogelijk bij eigen user!!
             try
             {
                 ApiResponse aR = await App.SoundCloud.RepostPlaylist(playlistId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return;
             }

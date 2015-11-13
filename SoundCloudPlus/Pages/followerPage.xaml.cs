@@ -59,5 +59,10 @@ namespace SoundCloudPlus.Pages
         {
             Screen.MakeResponsive(e, 200, 400, FollowerGridView);
         }
+
+        private void onAvatarClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
