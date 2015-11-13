@@ -12,6 +12,7 @@
 using System.Diagnostics;
 using Windows.Foundation.Collections;
 using Windows.Media.Playback;
+using Newtonsoft.Json;
 
 namespace ClassLibrary.Messages
 {
@@ -38,16 +39,16 @@ namespace ClassLibrary.Messages
         public static void SendMessageToForeground<T>(T message)
         {
             var payload = new ValueSet();
-            payload.Add(MessageService.MessageType, typeof(T).FullName);
-            payload.Add(MessageService.MessageBody, Newtonsoft.Json.JsonConvert.SerializeObject(message));
+            payload.Add(MessageType, typeof(T).FullName);
+            payload.Add(MessageBody, JsonConvert.SerializeObject(message));
             BackgroundMediaPlayer.SendMessageToForeground(payload);
         }
     
         public static void SendMessageToBackground<T>(T message)
         {
             var payload = new ValueSet();
-            payload.Add(MessageService.MessageType, typeof(T).FullName);
-            payload.Add(MessageService.MessageBody, Newtonsoft.Json.JsonConvert.SerializeObject(message));
+            payload.Add(MessageType, typeof(T).FullName);
+            payload.Add(MessageBody, JsonConvert.SerializeObject(message));
             BackgroundMediaPlayer.SendMessageToBackground(payload);
         }
 
@@ -59,8 +60,8 @@ namespace ClassLibrary.Messages
             message = default(T);
 
             // Get message payload
-            if (valueSet.TryGetValue(MessageService.MessageType, out messageTypeValue)
-                && valueSet.TryGetValue(MessageService.MessageBody, out messageBodyValue))
+            if (valueSet.TryGetValue(MessageType, out messageTypeValue)
+                && valueSet.TryGetValue(MessageBody, out messageBodyValue))
             {
                 // Validate type
                 if ((string)messageTypeValue != typeof(T).FullName)
@@ -69,7 +70,7 @@ namespace ClassLibrary.Messages
                     return false;
                 }
 
-                message = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(messageBodyValue.ToString());
+                message = JsonConvert.DeserializeObject<T>(messageBodyValue.ToString());
                 return true;
             }
 

@@ -110,6 +110,7 @@
     <Compile Include="API\ApiProxy.cs" />
     <Compile Include="API\ApiResponse.cs" />
     <Compile Include="Common\ApplicationSettingsConstants.cs" />
+    <Compile Include="Common\ApplicationSettingsHelper.cs" />
     <Compile Include="Common\AppState.cs" />
     <Compile Include="Common\AsyncHelper.cs" />
     <Compile Include="Common\BackgroundTaskState.cs" />

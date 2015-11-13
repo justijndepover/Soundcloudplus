@@ -1,11 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using Windows.UI;
-using Windows.UI.Core;
+﻿using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -19,7 +15,7 @@ namespace SoundCloudPlus.Pages
     {
         public ProfilePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
         private ProfilePageViewModel _profilePageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -95,7 +91,7 @@ namespace SoundCloudPlus.Pages
             btnTracks.Background = btnAll.Background = btnReposts.Background = btnPlaylist.Background = c;
         }*/
 
-        private void makeVisibleInvisible(bool all, bool trackCollection, bool playlistCollection, bool repostCollection)
+        private void MakeVisibleInvisible(bool all, bool trackCollection, bool playlistCollection, bool repostCollection)
         {
             if (all)
             {

@@ -25,14 +25,14 @@
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="Artwork: "></TextBlock>
-                                <Image Source="{Binding playlist.artwork_url}" Style="{StaticResource ImageAlbum}"/>
-                                <TextBlock Text="Username: "></TextBlock>
-                                <TextBlock Text="{Binding user.Username}"></TextBlock>
-                                <TextBlock Text="created_at: "></TextBlock>
-                                <TextBlock Text="{Binding created_at}"></TextBlock>
-                                <TextBlock Text="track count: "></TextBlock>
-                                <TextBlock Text="{Binding playlist.track_count}"></TextBlock>
+                                <TextBlock Text="Artwork: " />
+                                <Image Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                <TextBlock Text="Username: " />
+                                <TextBlock Text="{Binding User.Username}" />
+                                <TextBlock Text="created_at: " />
+                                <TextBlock Text="{Binding CreatedAt}" />
+                                <TextBlock Text="track count: " />
+                                <TextBlock Text="{Binding Playlist.TrackCount}" />
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>

@@ -13,7 +13,7 @@ namespace SoundCloudPlus.Pages
     {
         public ArtistPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -1,12 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using Windows.UI.Core;
+﻿using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
-using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -20,7 +16,7 @@ namespace SoundCloudPlus.Pages
     {
         public PlaylistPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private PlaylistPageViewModel _playlistViewModel;

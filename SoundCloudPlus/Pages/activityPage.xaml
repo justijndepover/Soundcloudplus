@@ -27,18 +27,18 @@
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="AvatarUrl: "></TextBlock>
+                                <TextBlock Text="AvatarUrl: " />
                                 <Image Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
-                                <TextBlock Text="Username: "></TextBlock>
-                                <TextBlock Text="{Binding User.Username}"></TextBlock>
-                                <TextBlock Text="Type: "></TextBlock>
-                                <TextBlock Text="{Binding Type}"></TextBlock>
-                                <TextBlock Text="CreatedAt: "></TextBlock>
-                                <TextBlock Text="{Binding CreatedAt}"></TextBlock>
-                                <TextBlock Text="Following: "></TextBlock>
-                                <TextBlock Text="{Binding User.FollowingsCount, Converter={StaticResource IntToMillionConverter}}"></TextBlock>
-                                <TextBlock Text="Link: "></TextBlock>
-                                <TextBlock Text="{Binding User.PermalinkUrl}"></TextBlock>
+                                <TextBlock Text="Username: " />
+                                <TextBlock Text="{Binding User.Username}" />
+                                <TextBlock Text="Type: " />
+                                <TextBlock Text="{Binding Type}" />
+                                <TextBlock Text="CreatedAt: " />
+                                <TextBlock Text="{Binding CreatedAt}" />
+                                <TextBlock Text="Following: " />
+                                <TextBlock Text="{Binding User.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                                <TextBlock Text="Link: " />
+                                <TextBlock Text="{Binding User.PermalinkUrl}" />
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>

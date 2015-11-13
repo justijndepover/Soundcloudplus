@@ -226,6 +226,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundAudioTask\BackgroundAudioTask.csproj">
+      <Project>{da8612e3-8a05-47d4-a5a3-ed13ce3e220a}</Project>
+      <Name>BackgroundAudioTask</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
       <Project>{21d8dd89-f4df-4890-b414-6dfdb15424e9}</Project>
       <Name>ClassLibrary</Name>

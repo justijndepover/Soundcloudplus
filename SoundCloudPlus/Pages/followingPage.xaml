@@ -27,7 +27,7 @@
                             <StackPanel Orientation="Vertical">
                                 <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
                                 <Border Style="{StaticResource BorderStyle2}">
-                                    <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}"></TextBlock>
+                                    <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}" />
                                 </Border>
                                 <!--<TextBlock Text="{Binding PermalinkUrl}"></TextBlock>-->
                             </StackPanel>

@@ -17,7 +17,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
-                <Pivot x:Name="rootPivot" Title="Home">
+                <Pivot x:Name="RootPivot" Title="Home">
                     <PivotItem Header="Stream">
                         <!--Pivot content goes here-->
                         <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">

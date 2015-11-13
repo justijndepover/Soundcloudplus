@@ -6,19 +6,19 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--BUTTONS-->
-            <Style TargetType="Button" x:Key="btnProfileMenuActive">
+            <Style TargetType="Button" x:Key="BtnProfileMenuActive">
                 <Setter Property="Background" Value="Orange"/>
                 <Setter Property="Margin" Value="0,0,10,0"/>
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="FontWeight" Value="Normal"/>
             </Style>
-            <Style TargetType="Button" x:Key="btnProfileMenuInActive">
+            <Style TargetType="Button" x:Key="BtnProfileMenuInActive">
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="Margin" Value="0,0,10,0"/>
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="FontWeight" Value="Normal"/>
             </Style>
-            <Style TargetType="Button" x:Key="btnProfileMenuFunctionButtons">
+            <Style TargetType="Button" x:Key="BtnProfileMenuFunctionButtons">
                 <Setter Property="Background" Value="Transparent"/>
             </Style>
             <Style TargetType="Button" x:Key="BtnNav">
@@ -60,8 +60,8 @@
                 <Setter Property="BorderBrush" Value="Transparent" />
             </Style>
             <Style TargetType="Button" x:Key="ButtonsInMenu">
-                <Setter Property="Foreground" Value="#4C4C4C"></Setter>
-                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="Foreground" Value="#4C4C4C" />
+                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 <Setter Property="FontSize" Value="20"/>

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -112,7 +113,7 @@ namespace SoundCloudPlus
                          
             SuspensionManager.RegisterFrame(RootFrame, "AppFrame");
 
-            RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+            RootFrame.Language = ApplicationLanguages.Languages[0];
 
             RootFrame.NavigationFailed += OnNavigationFailed;
             

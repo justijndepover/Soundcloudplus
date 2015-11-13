@@ -19,12 +19,12 @@ namespace ClassLibrary.Messages
     {
         public AppSuspendedMessage()
         {
-            this.Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now;
         }
 
         public AppSuspendedMessage(DateTime timestamp)
         {
-            this.Timestamp = timestamp;
+            Timestamp = timestamp;
         }
 
         [DataMember]

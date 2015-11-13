@@ -183,15 +183,15 @@
                 </ScrollViewer>
             </SplitView.Pane>
             <SplitView.Content>
-                <Frame x:Name="MyFrame" Loaded="MyFrame_OnLoaded"></Frame>
+                <Frame x:Name="MyFrame" Loaded="MyFrame_OnLoaded" />
             </SplitView.Content>
         </SplitView>
         <Grid Grid.Row="2">
-            <MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="{Binding PlayingTrack}" AudioCategory="BackgroundCapableMedia" CurrentStateChanged="MusicPlayer_OnCurrentStateChanged">
+            <!--<MediaElement x:Name="MusicPlayer" AreTransportControlsEnabled="True" Source="{Binding PlayingTrack}">
                 <MediaElement.TransportControls>
                     <MediaTransportControls IsFullWindowButtonVisible="False" IsCompact="True" Background="#DDFF5500"/>
                 </MediaElement.TransportControls>
-            </MediaElement>
+            </MediaElement>-->
         </Grid>
     </Grid>
 </Page>

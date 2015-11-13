@@ -19,12 +19,12 @@ namespace ClassLibrary.Messages
     {
         public AppResumedMessage()
         {
-            this.Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now;
         }
 
         public AppResumedMessage(DateTime timestamp)
         {
-            this.Timestamp = timestamp;
+            Timestamp = timestamp;
         }
 
         [DataMember]

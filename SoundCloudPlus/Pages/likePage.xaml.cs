@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
@@ -16,7 +17,7 @@ namespace SoundCloudPlus.Pages
     {
         public LikePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
         private LikePageViewModel _likePageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -39,16 +40,16 @@ namespace SoundCloudPlus.Pages
             base.OnNavigatedTo(e);
         }
 
-        private void TrackLikesGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        private void TrackLikesGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, LikesGridView);
         }
 
-        private async void TrackLikesGridView_OnItemClick(object sender, ItemClickEventArgs e)
+        private void TrackLikesGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            MainPageViewModel a = (MainPageViewModel)this.DataContext;
+            MainPageViewModel a = (MainPageViewModel)DataContext;
             Track t = e.ClickedItem as Track;
-            a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
+            //a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)

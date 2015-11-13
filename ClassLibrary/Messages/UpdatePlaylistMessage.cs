@@ -9,7 +9,7 @@ namespace ClassLibrary.Messages
     {
         public UpdatePlaylistMessage(List<Track> songs)
         {
-            this.Songs = songs;
+            Songs = songs;
         }
 
         [DataMember]

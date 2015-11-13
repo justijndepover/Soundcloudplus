@@ -8,6 +8,7 @@ using ClassLibrary.API;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
 using Enough.Storage;
+using Newtonsoft.Json;
 
 namespace ClassLibrary
 {
@@ -54,7 +55,7 @@ namespace ClassLibrary
                 {
                     if (item["type"].ToString().Contains("track"))
                     {
-                        tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
                     }
                 }
             }
@@ -71,7 +72,7 @@ namespace ClassLibrary
                 {
                     try
                     {
-                        tracks.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item.ToString()));
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
                     }
                     catch (Exception ex)
                     {
@@ -92,7 +93,7 @@ namespace ClassLibrary
             {
                 foreach (var item in apiResponse.Data["music"])
                 {
-                    categories.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<string>(item.ToString()));
+                    categories.Add(JsonConvert.DeserializeObject<string>(item.ToString()));
                 }
             }
             return categories;
@@ -104,7 +105,7 @@ namespace ClassLibrary
             Activity activity = new Activity();
             if (apiResponse.Succes)
             {
-                activity = Newtonsoft.Json.JsonConvert.DeserializeObject<Activity>(apiResponse.Data.ToString());
+                activity = JsonConvert.DeserializeObject<Activity>(apiResponse.Data.ToString());
             }
             return activity;
         }
@@ -115,7 +116,7 @@ namespace ClassLibrary
             PlaylistObject pO = new PlaylistObject();
             if (apiResponse.Succes)
             {
-                pO = Newtonsoft.Json.JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
             }
             //return pO;
             int l = pO.Collection.Count();
@@ -133,7 +134,7 @@ namespace ClassLibrary
             PlaylistObject pO = new PlaylistObject();
             if (apiResponse.Succes)
             {
-                pO = Newtonsoft.Json.JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
             }
             //return pO;
             int l = pO.Collection.Count();
@@ -151,7 +152,7 @@ namespace ClassLibrary
             TrackObject tO = new TrackObject();
             if (apiResponse.Succes)
             {
-                tO = Newtonsoft.Json.JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
+                tO = JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
             }
 
             int l = tO.Collection.Count();
@@ -171,7 +172,7 @@ namespace ClassLibrary
             {
                 foreach (var item in apiResponse.Data["collection"])
                 {
-                    rC.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
+                    rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
                 }
             }
             return rC;
@@ -189,7 +190,7 @@ namespace ClassLibrary
                 {
                     try
                     {
-                        followers.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<User>(item.ToString()));
+                        followers.Add(JsonConvert.DeserializeObject<User>(item.ToString()));
                     }
                     catch (Exception ex)
                     {
@@ -210,7 +211,7 @@ namespace ClassLibrary
                 {
                     try
                     {
-                        followings.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<User>(item.ToString()));
+                        followings.Add(JsonConvert.DeserializeObject<User>(item.ToString()));
                     }
                     catch (Exception ex)
                     {
@@ -232,7 +233,7 @@ namespace ClassLibrary
                 {
                     try
                     {
-                        tracklikes.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Track>(item.ToString()));
+                        tracklikes.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
                     }
                     catch (Exception ex)
                     {
@@ -250,7 +251,7 @@ namespace ClassLibrary
                 Token = await StorageHelper.TryLoadObjectAsync<string>("token");
                 ApiResponse apiResponse =
                     await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new {oauth_token = Token});
-                CurrentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
+                CurrentUser = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
                 await StorageHelper.SaveObjectAsync(CurrentUser, "currentUser");
                 return true;
             }

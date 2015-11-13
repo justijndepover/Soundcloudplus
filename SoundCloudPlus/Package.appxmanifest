@@ -21,7 +21,7 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="SoundCloudPlus.SoundCloudPlus">
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundAudioTask.MyBackgroundAudioTask">
           <BackgroundTasks>
             <Task Type="audio" />
           </BackgroundTasks>

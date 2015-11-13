@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -22,9 +23,9 @@ namespace SoundCloudPlus.ViewModels
             set { _activityCollection = value; OnPropertyChanged(nameof(ActivityCollection)); }
         }
 
-        private Uri _playingTrack;
+        private Track _playingTrack;
 
-        public Uri PlayingTrack
+        public Track PlayingTrack
         {
             get { return _playingTrack; }
             set { _playingTrack = value; OnPropertyChanged(nameof(PlayingTrack)); }

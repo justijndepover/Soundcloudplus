@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using SoundCloudPlus.Annotations;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ClassLibrary.Models;
+using SoundCloudPlus.Annotations;
 
 namespace SoundCloudPlus.ViewModels
 {

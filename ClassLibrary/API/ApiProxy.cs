@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 using Enough.Storage;
 using Newtonsoft.Json;
-using HttpClient = System.Net.Http.HttpClient;
-using HttpMethod = System.Net.Http.HttpMethod;
-using HttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace ClassLibrary.API
 {
@@ -51,11 +48,11 @@ namespace ClassLibrary.API
             {
                 return await Get(endpoint, queryString, clientHeaders, useNewBasepoint);
             }
-            else if (method == HttpMethod.Post)
+            if (method == HttpMethod.Post)
             {
                 return await Post(endpoint, queryString, body, clientHeaders);
             }
-            else if (method == HttpMethod.Put)
+            if (method == HttpMethod.Put)
             {
                 //return await Put(endpoint, queryString, jsonBody);
             }
@@ -148,11 +145,11 @@ namespace ClassLibrary.API
 
         public async Task<bool> Authenticate()
         {
-            var callbackUrl = WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
+            var callbackUrl = new Uri("https://soundcloud.com/soundcloud-callback.html"); //WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
             var requestUrl = new UriBuilder("https://soundcloud.com/connect")
             {
                 Query =
-                    "client_id=776ca412db7b101b1602c6a67b1a0579&response_type=code_and_token&scope=non-expiring&display=popup&state=null&redirect_uri=" +
+                    "client_id=776ca412db7b101b1602c6a67b1a0579&response_type=code_and_token&scope=non-expiring&display=popup&redirect_uri=" +
                     callbackUrl
             };
             try

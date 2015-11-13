@@ -1,7 +1,7 @@
-﻿using System;
-using Windows.UI.Core;
+﻿using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
@@ -14,8 +14,8 @@ namespace SoundCloudPlus.Pages
         private HomePageViewModel _homePageViewModel;
         public HomePage()
         {
-            this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -37,21 +37,19 @@ namespace SoundCloudPlus.Pages
             base.OnNavigatedTo(e);
         }
 
-        private void StreamGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        private void StreamGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, StreamGridView);
         }
 
-        private void ExploreGridView_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        private void ExploreGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, ExploreGridView);
         }
-
-        private async void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
+        private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            MainPageViewModel a = (MainPageViewModel) this.DataContext;
-            Track t = e.ClickedItem as Track;
-            a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
+            MainPage mainPage = MainPage.Current;
+            mainPage.PlayTrack(e.ClickedItem as Track);
         }
     }
 }
