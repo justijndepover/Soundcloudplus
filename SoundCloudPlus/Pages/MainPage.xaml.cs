@@ -584,6 +584,7 @@ namespace SoundCloudPlus.Pages
                 CurrentPlayer.Play();
             }
         }
+
         #region Button and Control Click Event Handlers
 
         /// <summary>
