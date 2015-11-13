@@ -176,7 +176,17 @@
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
-            
+
+            <Style TargetType="TextBlock" x:Key="SongTitle">
+                <Setter Property="TextWrapping" Value="WrapWholeWords" />
+                <Setter Property="Margin" Value="8 8 8 0" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="SongArtist">
+                <Setter Property="TextWrapping" Value="WrapWholeWords" />
+                <Setter Property="Margin" Value="8 8 8 0" />
+            </Style>
             <!--GRID-->
             <Style TargetType="Grid" x:Key="GridMusicStyleTop">
                 <Setter Property="Height" Value="150"/>

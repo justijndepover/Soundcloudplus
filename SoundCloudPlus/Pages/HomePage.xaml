@@ -32,26 +32,27 @@
                                     <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="150"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="40"/>
+                                                <RowDefinition Height="40"/>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="20"/>
                                             </Grid.RowDefinitions>
-                                        <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                        <Grid Grid.Column="0" Grid.RowSpan="4" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
                                             <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
                                                 <Grid Style="{StaticResource GridMusicStyleBottom}">
                                                     <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>
                                             </Grid>
-                                            <TextBlock x:Name="StreamItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                            <TextBlock x:Name="StreamItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
+                                            <TextBlock x:Name="StreamItemTitle" Text="{Binding Title}" Style="{StaticResource SongTitle}" Grid.Column="1" Grid.Row="0"/>
+                                            <TextBlock x:Name="StreamItemArtist" Grid.Column="1" Style="{StaticResource SongArtist}" Grid.Row="1">
                                             <Run Text="{Binding User.FullName}"/>
                                             <Run Text="{Binding User.Username}" Foreground="Gray"/>
                                             </TextBlock>
-                                            <TextBlock Grid.Column="1" Grid.Row="2">
+                                            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">
                                             <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
                                             <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
                                             <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
@@ -94,8 +95,8 @@
                                                     <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>
                                             </Grid>
-                                            <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                            <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
+                                            <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Style="{StaticResource SongTitle}" Grid.Column="1" Grid.Row="0"/>
+                                            <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" Style="{StaticResource SongArtist}" Grid.Row="1">
                                             <Run Text="{Binding User.FullName}"/>
                                             <Run Text="{Binding User.Username}" Foreground="Gray"/>
                                             </TextBlock>
