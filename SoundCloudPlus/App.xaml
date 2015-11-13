@@ -179,14 +179,30 @@
 
             <Style TargetType="TextBlock" x:Key="SongTitle">
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />
-                <Setter Property="Margin" Value="8 8 8 0" />
-                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Padding" Value="8 8 8 0" />
+                <!--<Setter Property="FontSize" Value="20" />-->
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="TextTrimming" Value="WordEllipsis" />
             </Style>
 
             <Style TargetType="TextBlock" x:Key="SongArtist">
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />
-                <Setter Property="Margin" Value="8 8 8 0" />
+                <Setter Property="Padding" Value="8 8 8 0" />
+                <Setter Property="TextTrimming" Value="WordEllipsis" />
             </Style>
+
+            <Style TargetType="TextBlock" x:Key="SongControlButton">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Padding" Value="8 3 4 0" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="SongControlText" >
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Padding" Value="0 0 8 0" />
+            </Style>
+            
             <!--GRID-->
             <Style TargetType="Grid" x:Key="GridMusicStyleTop">
                 <Setter Property="Height" Value="150"/>
