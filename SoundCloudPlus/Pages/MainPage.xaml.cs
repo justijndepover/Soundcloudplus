@@ -30,6 +30,7 @@ namespace SoundCloudPlus.Pages
         private Dictionary<string, BitmapImage> albumArtCache = new Dictionary<string, BitmapImage>();
         const int RPC_S_SERVER_UNAVAILABLE = -2147023174; // 0x800706BA
         public List<Track> PlayList { get; set; }
+        public Track CurrentTrack { get; set; }
 
         /// <summary>
         /// Gets the information about background task is running or not by reading the setting saved by background task.
@@ -512,12 +513,12 @@ namespace SoundCloudPlus.Pages
                         Debug.Assert(track.Id != null, "track.Id != null");
                         return track.Id.Value.Equals(trackChangedMessage.TrackId.Value);
                     });
-
-                    // Update list UI
-                    //playlistView.SelectedIndex = songIndex;
+                    MainPageViewModel m = MainPage.Current._mainPageViewModel;
+                    m.PlayingTrack = song.First<Track>();
 
                     // Update the album art
                     //albumArt.Source = albumArtCache[song.AlbumArtUri.ToString()];
+                    //CurrentTrack.ArtworkUrl = "";
 
                     // Update song title
                     //txtCurrentTrack.Text = song.Title;
@@ -669,11 +670,11 @@ namespace SoundCloudPlus.Pages
         {
             if (state == MediaPlayerState.Playing)
             {
-                //playButton.Content = "| |";     // Change to pause button
+                //playbuttonicon.Glyph = "| |";     // Change to pause button
             }
             else
             {
-                //playButton.Content = ">";     // Change to play button
+                //playbuttonicon.Glyph = ">";     // Change to play button
             }
         }
 
