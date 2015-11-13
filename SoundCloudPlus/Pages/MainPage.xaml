@@ -203,7 +203,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{Binding PlayingTrack.User.FullName}" Style="{StaticResource MusicControlArtistText}" />
+                <TextBlock Grid.Row="0" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource MusicControlArtistText}" />
                 <TextBlock Grid.Row="1" Text="{Binding PlayingTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
             </Grid>
 

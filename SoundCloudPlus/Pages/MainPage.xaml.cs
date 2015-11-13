@@ -514,7 +514,8 @@ namespace SoundCloudPlus.Pages
                         return track.Id.Value.Equals(trackChangedMessage.TrackId.Value);
                     });
                     MainPageViewModel m = MainPage.Current._mainPageViewModel;
-                    m.PlayingTrack = song.First<Track>();
+                    m.PlayingTrack = song.SingleOrDefault<Track>();
+                    //m.PlayingTrack = song.First<Track>();
 
                     // Update the album art
                     //albumArt.Source = albumArtCache[song.AlbumArtUri.ToString()];

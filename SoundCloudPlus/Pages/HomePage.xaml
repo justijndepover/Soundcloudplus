@@ -46,9 +46,9 @@
                                                         <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                     </Grid>
                                                 </Grid>
-                                                <TextBlock x:Name="StreamItemTitle" Text="{Binding Title}" Style="{StaticResource SongTitle}" Grid.Column="1" Grid.Row="0"/>
-                                                <TextBlock x:Name="StreamItemArtist" Grid.Column="1" Style="{StaticResource SongArtist}" Grid.Row="1">
-                                                    <Run Text="{Binding User.Username}" Foreground="Gray"/>
+                                                <TextBlock x:Name="StreamItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                                <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                    <Run Text="{Binding Title}" Foreground="Gray"/>
                                                 </TextBlock>
                                                 <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
                                                     <TextBlock Text="&#xE768;" Style="{StaticResource SongControlButton}"/>
@@ -95,9 +95,9 @@
                                                         <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                     </Grid>
                                                 </Grid>
-                                                <TextBlock x:Name="ExploreItemTitle" Text="{Binding Title}" Style="{StaticResource SongTitle}" Grid.Column="1" Grid.Row="0"/>
-                                                <TextBlock x:Name="ExploreItemArtist" Grid.Column="1" Style="{StaticResource SongArtist}" Grid.Row="1">
-                                                <Run Text="{Binding User.Username}" Foreground="Gray"/>
+                                                <TextBlock x:Name="ExploreItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                                <TextBlock x:Name="ExploreItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                <Run Text="{Binding Title}" Foreground="Gray"/>
                                                 </TextBlock>
                                                 <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
                                                     <TextBlock Text="&#xE768;" Style="{StaticResource SongControlButton}"/>
