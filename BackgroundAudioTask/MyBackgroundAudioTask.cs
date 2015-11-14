@@ -357,8 +357,15 @@ namespace BackgroundAudioTask
         /// </summary>
         private void SkipToPrevious()
         {
-            _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
-            _playbackList.MovePrevious();
+            try
+            {
+                _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
+                _playbackList.MovePrevious();
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("ERROR");
+            }
 
             // TODO: Work around playlist bug that doesn't continue playing after a switch; remove later
             BackgroundMediaPlayer.Current.Play();
@@ -369,8 +376,15 @@ namespace BackgroundAudioTask
         /// </summary>
         private void SkipToNext()
         {
-            _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
-            _playbackList.MoveNext();
+            try
+            {
+                _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
+                _playbackList.MoveNext();
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("ERROR");
+            }
 
             // TODO: Work around playlist bug that doesn't continue playing after a switch; remove later
             BackgroundMediaPlayer.Current.Play();
