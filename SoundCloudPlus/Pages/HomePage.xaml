@@ -16,7 +16,7 @@
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <RelativePanel>
-                <Pivot x:Name="RootPivot" Title="Home">
+                <Pivot x:Name="RootPivot" Title="Home" Style="{StaticResource PivotTitle}">
                     <PivotItem Header="Stream">
                         <!--Pivot content goes here-->
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">

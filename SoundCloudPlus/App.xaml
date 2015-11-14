@@ -244,11 +244,17 @@
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
             <Style TargetType="TextBlock" x:Key="SubTitle">
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="TextAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="#FF5500"/>
-                <Setter Property="FontSize" Value="18"/>
-                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="TextAlignment" Value="Left"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Margin" Value="8 0 0 0" />
+            </Style>
+            <Style TargetType="Pivot" x:Key="PivotTitle" >
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Margin" Value="8 0 0 0" />
             </Style>
             <Style TargetType="TextBlock" x:Key="FollowerName">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
