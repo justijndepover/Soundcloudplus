@@ -31,6 +31,14 @@ namespace SoundCloudPlus.Pages
         const int RPC_S_SERVER_UNAVAILABLE = -2147023174; // 0x800706BA
         public List<Track> PlayList { get; set; }
         public Track CurrentTrack { get; set; }
+        private int _userId;
+
+        public int UserId
+        {
+            get { return _userId; }
+            set { _userId = value; }
+        }
+
 
         /// <summary>
         /// Gets the information about background task is running or not by reading the setting saved by background task.
@@ -111,6 +119,32 @@ namespace SoundCloudPlus.Pages
             }
         }
 
+        public void Navigate(object sender, string destination)
+        {
+            Page page = MyFrame?.Content as Page;
+            Button b = sender as Button;
+            switch (destination)
+            {
+                case "home":
+                    if (page?.GetType() != typeof (HomePage))
+                    {
+                        MyFrame?.Navigate(typeof (HomePage));
+                    }
+                    break;
+                case "profile":
+                    if (page?.GetType() != typeof (ProfilePage))
+                    {
+                        UserId = (int)b.Tag;
+                        MyFrame?.Navigate(typeof (ProfilePage));
+                    }
+                    break;
+            }
+            if (ActualWidth < 720 && SplitViewMenu.IsPaneOpen)
+            {
+                SplitViewMenu.IsPaneOpen = false;
+            }
+        }
+
         private void Navigation_Click(object sender, RoutedEventArgs e)
         {
             Page page = MyFrame?.Content as Page;
@@ -166,8 +200,9 @@ namespace SoundCloudPlus.Pages
                     }
                     break;
                 case "profile":
-                    if (page?.GetType() != typeof(ProfilePage))
+                    if (true)
                     {
+                        UserId = 0;
                         MyFrame?.Navigate(typeof(ProfilePage));
                     }
                     break;

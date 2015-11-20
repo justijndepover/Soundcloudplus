@@ -43,13 +43,25 @@ namespace SoundCloudPlus.Pages
                     (ProfilePageViewModel)Resources["ProfilePageViewModel"];
                 if (App.SoundCloud.IsAuthenticated)
                 {
-                    //_profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
-                    int id = UserId;
-                    _profilePageViewModel.PlaylistCollection =
+                    
+                    int id = MainPage.Current.UserId;
+                    if (id == 0)
+                    {
+                        _profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
+                        id = _profilePageViewModel.UserObject.Id;
+                    }
+                    try
+                    {
+                        _profilePageViewModel.PlaylistCollection =
                         await App.SoundCloud.GetOwnPlaylists(id);
-                    _profilePageViewModel.RepostCollection =
-                        await App.SoundCloud.GetReposts(id);
-                    _profilePageViewModel.TrackCollection = await App.SoundCloud.GetTracks(id);
+                        _profilePageViewModel.RepostCollection =
+                            await App.SoundCloud.GetReposts(id);
+                        _profilePageViewModel.TrackCollection = await App.SoundCloud.GetTracks(id);
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
                 }
             }
             base.OnNavigatedTo(e);

@@ -9,6 +9,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:FollowerPageViewModel x:Key="FollowerViewModel" />
+        <local:MainPage x:Key="MainPage"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowerViewModel}">
