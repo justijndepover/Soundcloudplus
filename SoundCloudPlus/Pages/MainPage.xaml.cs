@@ -32,6 +32,7 @@ namespace SoundCloudPlus.Pages
         public List<Track> PlayList { get; set; }
         public Track CurrentTrack { get; set; }
         private int _userId;
+        public String PageTitle = "test";
 
         public int UserId
         {
@@ -88,6 +89,7 @@ namespace SoundCloudPlus.Pages
                 MyFrame.Navigate(typeof(HomePage));
                 _mainPageViewModel =
                     (MainPageViewModel)Resources["MainPageViewModel"];
+                _mainPageViewModel.PageTitle = "Home";
             }
             base.OnNavigatedTo(e);
         }
@@ -123,17 +125,20 @@ namespace SoundCloudPlus.Pages
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
+            MainPageViewModel m = MainPage.Current._mainPageViewModel;
             switch (destination)
             {
                 case "home":
                     if (page?.GetType() != typeof (HomePage))
                     {
+                        m.PageTitle = "Home";
                         MyFrame?.Navigate(typeof (HomePage));
                     }
                     break;
                 case "profile":
                     if (page?.GetType() != typeof (ProfilePage))
                     {
+                        m.PageTitle = "Profile";
                         UserId = (int)b.Tag;
                         MyFrame?.Navigate(typeof (ProfilePage));
                     }
@@ -149,59 +154,69 @@ namespace SoundCloudPlus.Pages
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
+            MainPageViewModel m = MainPage.Current._mainPageViewModel;
             switch (b?.Tag.ToString())
             {
                 case "home":
                     if (page?.GetType() != typeof(HomePage))
                     {
+                        m.PageTitle = "Home";
                         MyFrame?.Navigate(typeof(HomePage));
                     }
                     break;
                 case "recent":
                     if (page?.GetType() != typeof(RecentPage))
                     {
+                        m.PageTitle = "Recent";
                         MyFrame?.Navigate(typeof(RecentPage));
                     }
                     break;
                 case "artist":
                     if (page?.GetType() != typeof(ArtistPage))
                     {
+                        m.PageTitle = "Artist";
                         MyFrame?.Navigate(typeof(ArtistPage));
                     }
                     break;
                 case "genre":
                     if (page?.GetType() != typeof(GenrePage))
                     {
+                        m.PageTitle = "Genre";
                         MyFrame?.Navigate(typeof(GenrePage));
                     }
                     break;
                 case "following":
                     if (page?.GetType() != typeof(FollowingPage))
                     {
+                        m.PageTitle = "Following";
                         MyFrame?.Navigate(typeof(FollowingPage));
                     }
                     break;
                 case "followers":
                     if (page?.GetType() != typeof(FollowerPage))
                     {
+                        m.PageTitle = "Followers";
                         MyFrame?.Navigate(typeof(FollowerPage));
                     }
                     break;
                 case "playlist":
                     if (page?.GetType() != typeof(PlaylistPage))
                     {
+                        m.PageTitle = "Playlist";
                         MyFrame?.Navigate(typeof(PlaylistPage));
                     }
                     break;
                 case "like":
                     if (page?.GetType() != typeof(LikePage))
                     {
+                        m.PageTitle = "Like";
                         MyFrame?.Navigate(typeof(LikePage));
                     }
                     break;
                 case "profile":
                     if (true)
                     {
+                        m.PageTitle = "Profile";
                         UserId = 0;
                         MyFrame?.Navigate(typeof(ProfilePage));
                     }
@@ -209,6 +224,7 @@ namespace SoundCloudPlus.Pages
                 case "activity":
                     if (page?.GetType() != typeof(ActivityPage))
                     {
+                        m.PageTitle = "Activity";
                         LoadActivityPageResources();
                         MyFrame?.Navigate(typeof(ActivityPage));
                     }
@@ -216,6 +232,7 @@ namespace SoundCloudPlus.Pages
                 case "setting":
                     if (page?.GetType() != typeof(SettingPage))
                     {
+                        m.PageTitle = "Setting";
                         MyFrame?.Navigate(typeof(SettingPage));
                     }
                     break;

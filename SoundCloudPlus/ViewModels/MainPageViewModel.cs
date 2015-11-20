@@ -31,6 +31,14 @@ namespace SoundCloudPlus.ViewModels
             set { _playingTrack = value; OnPropertyChanged(nameof(PlayingTrack)); }
         }
 
+        private string _pageTitle;
+
+        public string PageTitle
+        {
+            get { return _pageTitle; }
+            set { _pageTitle = value; OnPropertyChanged(nameof(PageTitle)); }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
