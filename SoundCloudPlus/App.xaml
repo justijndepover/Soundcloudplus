@@ -224,6 +224,84 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="Button" x:Key="btnFollower">
+                <Setter Property="Margin" Value="0 0 8 8" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="none" />
+                                                </ObjectAnimationUsingKeyFrames>-->
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+        							Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+        							Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="ContentPresenter"
+        			BorderBrush="Transparent"
+        			BorderThickness="0"
+        			Content="{TemplateBinding Content}"
+        			ContentTransitions="{TemplateBinding ContentTransitions}"
+        			ContentTemplate="{TemplateBinding ContentTemplate}"
+        			Padding="{TemplateBinding Padding}"
+        			HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+        			VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+        			AutomationProperties.AccessibilityView="Raw"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!--TEXTBLOCK-->
             <Style TargetType="TextBlock" x:Key="IconInProfileTextblock">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
@@ -242,6 +320,8 @@
             <Style TargetType="TextBlock" x:Key="AudioDuration">
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0 4 0 4" />
+                <Setter Property="FontWeight" Value="Light" />
             </Style>
             <Style TargetType="TextBlock" x:Key="SubTitle">
                 <Setter Property="TextAlignment" Value="Left"/>
@@ -261,7 +341,8 @@
                 <Setter Property="TextAlignment" Value="Center"/>
                 <Setter Property="Foreground" Value="#FFFFFF"/>
                 <Setter Property="FontSize" Value="15"/>
-                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="0 4 0 4" />
+                <Setter Property="FontWeight" Value="Light" />
             </Style>
 
             <Style TargetType="TextBlock" x:Key="SongTitle">
@@ -329,8 +410,16 @@
                 <Setter Property="Width" Value="150"/>
             </Style>
             <Style TargetType="Image" x:Key="ImageAlbum200">
-                <Setter Property="Height" Value="2000"/>
-                <Setter Property="Width" Value="2000"/>
+                <Setter Property="Height" Value="200"/>
+                <Setter Property="Width" Value="200"/>
+            </Style>
+            <Style TargetType="Image" x:Key="ImageFollower">
+                <Setter Property="Height" Value="200"/>
+                <Setter Property="Width" Value="200"/>
+            </Style>
+            <Style TargetType="Image" x:Key="ImageProfile">
+                <Setter Property="Height" Value="200"/>
+                <Setter Property="Width" Value="200"/>
             </Style>
             <Style TargetType="Image" x:Key="MusicControlImage">
                 <Setter Property="Height" Value="52" />
@@ -345,7 +434,8 @@
                 <Setter Property="Background" Value="#25808080"/>
             </Style>
             <Style TargetType="Border" x:Key="BorderStyle2">
-                <Setter Property="Background" Value="#FFFF5500"/>
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Background" Value="Transparent"/>
             </Style>
 
             <!-- RELATIVE PANEL -->
