@@ -14,6 +14,7 @@ namespace SoundCloudPlus.Pages
         public ArtistPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

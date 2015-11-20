@@ -14,6 +14,7 @@ namespace SoundCloudPlus.Pages
         public GenrePage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

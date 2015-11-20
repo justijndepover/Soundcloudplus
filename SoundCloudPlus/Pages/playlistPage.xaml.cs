@@ -17,6 +17,7 @@ namespace SoundCloudPlus.Pages
         public PlaylistPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         private PlaylistPageViewModel _playlistViewModel;

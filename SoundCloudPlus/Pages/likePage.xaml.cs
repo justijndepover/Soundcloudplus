@@ -18,6 +18,7 @@ namespace SoundCloudPlus.Pages
         public LikePage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
         private LikePageViewModel _likePageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)

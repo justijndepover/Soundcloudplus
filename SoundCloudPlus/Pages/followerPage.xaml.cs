@@ -17,6 +17,7 @@ namespace SoundCloudPlus.Pages
         public FollowerPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         private FollowerPageViewModel _followerViewModel;

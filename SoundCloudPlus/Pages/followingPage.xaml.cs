@@ -17,6 +17,7 @@ namespace SoundCloudPlus.Pages
         public FollowingPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
         private FollowingPageViewModel _followingPageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
