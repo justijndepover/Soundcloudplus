@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.Security.Authentication.OnlineId;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -46,16 +47,9 @@ namespace SoundCloudPlus.Pages
                 {
                     
                     int id = MainPage.Current.UserId;
-                    if (id == 0)
-                    {
-                        _profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
-                        id = _profilePageViewModel.UserObject.Id;
-                    }
-                    else
-                    {
-                        _profilePageViewModel.UserObject = await App.SoundCloud.GetUser(id);
-                    }
 
+                    _profilePageViewModel.UserObject = await App.SoundCloud.GetUser(id);
+                    
                     try
                     {
                         _profilePageViewModel.PlaylistCollection =
@@ -75,6 +69,9 @@ namespace SoundCloudPlus.Pages
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
+            List<int> l = MainPage.Current.UserIdHistory;
+            int prevId = l[l.Count - 1];
+            MainPage.Current.UserId = prevId;
             if (Frame.CanGoBack) Frame.GoBack();
         }
 
@@ -89,36 +86,7 @@ namespace SoundCloudPlus.Pages
         }
         
         private void MenuButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            /*Button b = sender as Button;
-            SolidColorBrush sCoBr = new SolidColorBrush(Colors.Orange);
-            ChangeColorButtons();
-            switch (b.Name)
-            {
-                case "btnAll":
-                    makeVisibleInvisible(true, false, false, false);
-                    b.Background = sCoBr;
-                    break;
-                case "btnTracks":
-                    makeVisibleInvisible(false, true, false, false);
-                    b.Background = sCoBr;
-                    break;
-                case "btnPlaylist":
-                    makeVisibleInvisible(false, false, true, false);
-                    b.Background = sCoBr;
-                    break;
-                case "btnReposts":
-                    makeVisibleInvisible(false, false, false, true);
-                    b.Background = sCoBr;
-                    break;
-            }*/
-        }
-
-       /* private void ChangeColorButtons()
-        {
-            SolidColorBrush c = new SolidColorBrush(Colors.White);
-            btnTracks.Background = btnAll.Background = btnReposts.Background = btnPlaylist.Background = c;
-        }*/
+        {}
 
         private void MakeVisibleInvisible(bool all, bool trackCollection, bool playlistCollection, bool repostCollection)
         {

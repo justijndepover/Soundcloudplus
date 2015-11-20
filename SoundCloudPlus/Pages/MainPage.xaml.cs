@@ -40,6 +40,7 @@ namespace SoundCloudPlus.Pages
             set { _userId = value; }
         }
 
+        public List<int> UserIdHistory { get; set; }
 
         /// <summary>
         /// Gets the information about background task is running or not by reading the setting saved by background task.
@@ -77,6 +78,7 @@ namespace SoundCloudPlus.Pages
             NavigationCacheMode = NavigationCacheMode.Required;
             Current = this;
             backgroundAudioTaskStarted = new AutoResetEvent(false);
+            UserIdHistory = new List<int>();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -139,8 +141,10 @@ namespace SoundCloudPlus.Pages
                     if (page?.GetType() != typeof (ProfilePage))
                     {
                         m.PageTitle = "Profile";
-                        UserId = (int)b.Tag;
+                        int id = (int)b.Tag;
+                        UserId = id;
                         MyFrame?.Navigate(typeof (ProfilePage));
+                        UserIdHistory.Add(id);
                     }
                     break;
             }
@@ -217,8 +221,10 @@ namespace SoundCloudPlus.Pages
                     if (true)
                     {
                         m.PageTitle = "Profile";
-                        UserId = 0;
+                        int id = App.SoundCloud.CurrentUser.Id;
+                        UserId = id;
                         MyFrame?.Navigate(typeof(ProfilePage));
+                        UserIdHistory.Add(id);
                     }
                     break;
                 case "activity":
