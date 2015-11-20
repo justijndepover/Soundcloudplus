@@ -5,14 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Windows.Foundation;
-using Windows.Media;
 using Windows.Media.Playback;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
@@ -27,12 +24,12 @@ namespace SoundCloudPlus.Pages
         private MainPageViewModel _mainPageViewModel;
         private AutoResetEvent backgroundAudioTaskStarted;
         private bool isMyBackgroundTaskRunning = false;
-        private Dictionary<string, BitmapImage> albumArtCache = new Dictionary<string, BitmapImage>();
         const int RPC_S_SERVER_UNAVAILABLE = -2147023174; // 0x800706BA
         public List<Track> PlayList { get; set; }
         public Track CurrentTrack { get; set; }
         private int _userId;
         public String PageTitle = "test";
+        DispatcherTimer _playbackTimer = new DispatcherTimer();
 
         public int UserId
         {
@@ -79,6 +76,15 @@ namespace SoundCloudPlus.Pages
             Current = this;
             backgroundAudioTaskStarted = new AutoResetEvent(false);
             UserIdHistory = new List<int>();
+            _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
+            _playbackTimer.Tick += _playbackTimer_Tick;
+        }
+
+        private void _playbackTimer_Tick(object sender, object e)
+        {
+            var position = CurrentPlayer.Position;
+            PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
+            PlayerProgressBar.Value = (position.TotalMilliseconds - 0) / (CurrentPlayer.NaturalDuration.TotalMilliseconds - 0) * (100 - 0) + 0;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -329,7 +335,6 @@ namespace SoundCloudPlus.Pages
             get
             {
                 MediaPlayer mp = null;
-
                 try
                 {
                     mp = BackgroundMediaPlayer.Current;
@@ -380,67 +385,6 @@ namespace SoundCloudPlus.Pages
                 }
             }
         }
-        /*
-
-        public Scenario1()
-        {
-            this.InitializeComponent();
-
-            // Always use the cached page
-            this.NavigationCacheMode = NavigationCacheMode.Required;
-
-            // Create a static song list
-            InitializeSongs();
-
-            // Setup the initialization lock
-            backgroundAudioTaskStarted = new AutoResetEvent(false);
-        }
-
-        void InitializeSongs()
-        {
-            // Album art attribution
-            // Ring01.jpg      | Autumn Yellow Leaves           | George Hodan
-            // Ring02.jpg      | Abstract Background            | Larisa Koshkina
-            // Ring03Part1.jpg | Snow Covered Mountains         | Petr Kratochvil
-            // Ring03Part2.jpg | Tropical Beach With Palm Trees | Petr Kratochvil
-            // Ring03Part3.jpg | Alyssum Background             | Anne Lowe
-
-            // Initialize the playlist data/view model.
-            // In a production app your data would be sourced from a data store or service.
-
-            // Add complete tracks
-            var song1 = new SongModel();
-            song1.Title = "Ring 1";
-            song1.MediaUri = new Uri("ms-appx:///Assets/Media/Ring01.wma");
-            song1.AlbumArtUri = new Uri("ms-appx:///Assets/Media/Ring01.jpg");
-            playlistView.Songs.Add(song1);
-
-            var song2 = new SongModel();
-            song2.Title = "Ring 2";
-            song2.MediaUri = new Uri("ms-appx:///Assets/Media/Ring02.wma");
-            song2.AlbumArtUri = new Uri("ms-appx:///Assets/Media/Ring02.jpg");
-            playlistView.Songs.Add(song2);
-
-            // Add gapless
-            for (int i = 1; i <= 3; ++i)
-            {
-                var segment = new SongModel();
-                segment.Title = "Ring 3 Part " + i;
-                segment.MediaUri = new Uri("ms-appx:///Assets/Media/Ring03Part" + i + ".wma");
-                segment.AlbumArtUri = new Uri("ms-appx:///Assets/Media/Ring03Part" + i + ".jpg");
-                playlistView.Songs.Add(segment);
-            }
-
-            // Pre-cache all album art to facilitate smooth gapless transitions.
-            // A production app would have a more sophisticated object cache.
-            foreach (var song in playlistView.Songs)
-            {
-                var bitmap = new BitmapImage();
-                bitmap.UriSource = song.AlbumArtUri;
-                albumArtCache[song.AlbumArtUri.ToString()] = bitmap;
-            }
-        }*/
-
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             if (isMyBackgroundTaskRunning)
@@ -730,10 +674,12 @@ namespace SoundCloudPlus.Pages
         {
             if (state == MediaPlayerState.Playing)
             {
+                _playbackTimer.Start();
                 //playbuttonicon.Glyph = "| |";     // Change to pause button
             }
             else
             {
+                _playbackTimer.Stop();
                 //playbuttonicon.Glyph = ">";     // Change to play button
             }
         }

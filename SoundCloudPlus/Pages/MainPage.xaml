@@ -187,7 +187,7 @@
                 <Frame x:Name="MyFrame" Loaded="MyFrame_OnLoaded" />
             </SplitView.Content>
         </SplitView>
-        <Grid Grid.Row="2" Style="{StaticResource MusicControl}">
+        <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70" />
                 <ColumnDefinition Width="300" />
@@ -208,8 +208,8 @@
                 <TextBlock Grid.Row="1" Text="{Binding PlayingTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
             </Grid>
 
-            <TextBlock Text="0:00" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
-            <ProgressBar Grid.Column="3" Margin="30 0"/>
+            <TextBlock x:Name="PlayerPosition" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
+            <ProgressBar x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0"/>
             <TextBlock Text="{Binding PlayingTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
             <Button Grid.Column="5" Style="{StaticResource IconInMusicControl}" Click="prevButton_Click">
                 <FontIcon Glyph="&#xE892;" />

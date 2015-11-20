@@ -10,6 +10,7 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml;
 using ClassLibrary.API;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
