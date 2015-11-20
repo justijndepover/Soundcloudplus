@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Media;
@@ -16,6 +15,7 @@ using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using Newtonsoft.Json;
+// ReSharper disable AccessToDisposedClosure
 
 namespace BackgroundAudioTask
 {
@@ -78,10 +78,7 @@ namespace BackgroundAudioTask
 
             // Read persisted state of foreground app
             var value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.AppState);
-            if (value == null)
-                _foregroundAppState = AppState.Unknown;
-            else
-                _foregroundAppState = EnumHelper.Parse<AppState>(value.ToString());
+            _foregroundAppState = value == null ? AppState.Unknown : EnumHelper.Parse<AppState>(value.ToString());
 
             // Add handlers for MediaPlayer
             BackgroundMediaPlayer.Current.CurrentStateChanged += Current_CurrentStateChanged;
@@ -174,6 +171,7 @@ namespace BackgroundAudioTask
 
             //_smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
             _smtc.DisplayUpdater.Type = MediaPlaybackType.Music;
+            // ReSharper disable once AssignNullToNotNullAttribute
             _smtc.DisplayUpdater.MusicProperties.Title = item.Source.CustomProperties[TitleKey] as string;
 
             var albumArt = item.Source.CustomProperties[AlbumArtKey] as string;
@@ -285,7 +283,7 @@ namespace BackgroundAudioTask
                         {
                             // Play from exact position otherwise
                             TypedEventHandler<MediaPlaybackList, CurrentMediaPlaybackItemChangedEventArgs> handler = null;
-                            handler = (MediaPlaybackList list, CurrentMediaPlaybackItemChangedEventArgs args) =>
+                            handler = (list, args) =>
                             {
                                 if (args.NewItem == _playbackList.Items[index])
                                 {
@@ -485,7 +483,7 @@ namespace BackgroundAudioTask
             try
             {
                 _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
-                _playbackList.MoveTo((uint)index);
+                _playbackList.MoveTo(index);
             }
             catch (Exception)
             {
@@ -502,17 +500,19 @@ namespace BackgroundAudioTask
             // Make a new list and enable looping
             _playbackList = new MediaPlaybackList();
             _playbackList.AutoRepeatEnabled = true;
-
-            // Add playback items to the list
-            foreach (var song in songs)
+            if (songs!= null)
             {
-                if (song.Id != null)
+                // Add playback items to the list
+                foreach (var song in songs)
                 {
-                    var source = MediaSource.CreateFromUri(GetMusicFile(song.Id.Value));
-                    source.CustomProperties[TrackIdKey] = song.Id;
-                    source.CustomProperties[TitleKey] = song.Title;
-                    source.CustomProperties[AlbumArtKey] = song.ArtworkUrl;
-                    _playbackList.Items.Add(new MediaPlaybackItem(source));
+                    if (song.Id != null)
+                    {
+                        var source = MediaSource.CreateFromUri(GetMusicFile(song.Id.Value));
+                        source.CustomProperties[TrackIdKey] = song.Id;
+                        source.CustomProperties[TitleKey] = song.Title;
+                        source.CustomProperties[AlbumArtKey] = song.ArtworkUrl;
+                        _playbackList.Items.Add(new MediaPlaybackItem(source));
+                    }
                 }
             }
 
@@ -533,7 +533,11 @@ namespace BackgroundAudioTask
             //https://api.soundcloud.com/tracks/230486064/streams?client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=592bdb4
             using (HttpClient client = new HttpClient())
             {
-                var response = AsyncHelper.RunSync(() => client.GetAsync("https://api.soundcloud.com/tracks/" + id + "/streams?client_id=" + _clientId));
+                var response = AsyncHelper.RunSync(() =>
+                {
+                    Debug.Assert(client != null, "client != null");
+                    return client.GetAsync("https://api.soundcloud.com/tracks/" + id + "/streams?client_id=" + _clientId);
+                });
                 if (response.IsSuccessStatusCode)
                 {
                     ApiResponse apiResponse = new ApiResponse

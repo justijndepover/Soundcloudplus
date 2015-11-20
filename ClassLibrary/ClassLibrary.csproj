@@ -43,7 +43,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
