@@ -58,5 +58,13 @@ namespace SoundCloudPlus.Pages
         {
             Screen.MakeResponsive(e, 200, 400, FollowingGridView);
         }
+
+        private void onAvatarClick(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            int userId = (int)b.Tag;
+
+            MainPage.Current.Navigate(sender, "profile");
+        }
     }
 }

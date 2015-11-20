@@ -64,14 +64,8 @@ namespace SoundCloudPlus.Pages
         {
             Button b = sender as Button;
             int userId = (int)b.Tag;
-            MainPage _main =
-                    MainPage.Current;
-          //  _main.Navigate(sender, "profile"); 
-                _main.Navigate(sender, "profile");
-            /* if (page?.GetType() != typeof(ProfilePage))
-             {
-                 MyFrame?.Navigate(typeof(ProfilePage));
-             }*/
+
+            MainPage.Current.Navigate(sender, "profile");
         }
     }
 }
