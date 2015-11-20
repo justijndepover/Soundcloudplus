@@ -14,7 +14,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowerViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <RelativePanel>
+            <RelativePanel Style="{StaticResource RelativePanelMargin}">
                  <GridView x:Name="FollowerGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" SizeChanged="FollowerGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
