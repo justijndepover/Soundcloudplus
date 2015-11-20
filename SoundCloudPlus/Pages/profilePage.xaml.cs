@@ -27,6 +27,7 @@ namespace SoundCloudPlus.Pages
         public ProfilePage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
         private ProfilePageViewModel _profilePageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -50,6 +51,11 @@ namespace SoundCloudPlus.Pages
                         _profilePageViewModel.UserObject = App.SoundCloud.CurrentUser;
                         id = _profilePageViewModel.UserObject.Id;
                     }
+                    else
+                    {
+                        _profilePageViewModel.UserObject = await App.SoundCloud.GetUser(id);
+                    }
+
                     try
                     {
                         _profilePageViewModel.PlaylistCollection =

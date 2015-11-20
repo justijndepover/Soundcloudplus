@@ -308,13 +308,15 @@ namespace ClassLibrary
             return new Uri(mp3);
         }
 
+        ///profile/soundcloud:users:26691406?keepBlocked=true&limit=10&offset=0&linked_partitioning=1&client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=eef6f5d HTTP/1.1
+        //https://api.soundcloud.com/users/178017941
         public async Task<User> GetUser(int id)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             User u = new User();
             if (apiResponse.Succes)
             {
-                u = apiResponse.Data.Value;
+                u = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
             }
             return u;
         }
