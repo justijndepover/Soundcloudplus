@@ -31,34 +31,32 @@
                             <Border Style="{StaticResource BorderStyle1}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="150"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="78"/>
+                                        <RowDefinition Height="22"/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                        <Image x:Name="TrackLikesItemUserImage" Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
                                         <Image x:Name="TrackLikesItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
                                         <Grid Style="{StaticResource GridMusicStyleBottom}">
                                             <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                         </Grid>
                                     </Grid>
-                                    <TextBlock x:Name="TrackLikesItemTitle" Text="{Binding Title}" Grid.Column="1" TextWrapping="Wrap" Grid.Row="0"/>
-                                    <TextBlock x:Name="TrackLikesItemArtist" Grid.Column="1" TextWrapping="Wrap" Grid.Row="1">
-                                            <Run Text="{Binding User.FullName}"/>
-                                            <Run Text="{Binding User.Username}" Foreground="Gray"/>
+                                    <TextBlock x:Name="TrackLikesItemArtist" Grid.Column="1"  Grid.Row="0" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" />
+                                    <TextBlock x:Name="TrackLikesItemTitle" Grid.Column="1" Grid.Row="1" Style="{StaticResource SongTitle}">
+                                        <Run Text="{Binding Title}" Foreground="Gray"/>
                                     </TextBlock>
-                                    <TextBlock Grid.Column="1" Grid.Row="2">
-                                            <Run Text="&#xE768;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding PlaybackCount , Converter={StaticResource IntToMillionConverter}}" />
-                                            <Run Text="  &#xE006;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"/>
-                                            <Run Text="  &#xE134;" FontFamily="Segoe MDL2 Assets"/>
-                                            <Run Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"/>
-                                    </TextBlock>
+                                    <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
+                                        <TextBlock Text="&#xE768;" Style="{StaticResource SongControlButton}"/>
+                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                        <TextBlock Text="&#xE006;" Style="{StaticResource SongControlButton}"/>
+                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                        <TextBlock Text="&#xE134;" Style="{StaticResource SongControlButton}"/>
+                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </DataTemplate>
