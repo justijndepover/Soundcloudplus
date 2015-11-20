@@ -14,8 +14,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowingViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel>
-                <TextBlock x:Name="FollowingTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Text="Following" Style="{StaticResource SubTitle}"/>
-                <GridView x:Name="FollowingGridView" RelativePanel.Below="FollowingTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                <GridView x:Name="FollowingGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
