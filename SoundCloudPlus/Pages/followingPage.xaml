@@ -14,13 +14,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowingViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <GridView x:Name="FollowingGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        </Style>
-                    </GridView.ItemContainerStyle>
+                <GridView x:Name="FollowingGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Button Padding="0" Click="onAvatarClick" Tag="{Binding Id}" Style="{StaticResource btnFollower}">
