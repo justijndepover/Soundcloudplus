@@ -47,6 +47,11 @@
                     <VisualState.Setters>
                         <Setter Target="SplitViewMenu.DisplayMode" Value="Overlay" />
                         <Setter Target="SplitViewMenu.IsPaneOpen" Value="false" />
+                        <Setter Target="PlayerProgressBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="PlayerDuration.Visibility" Value="Collapsed" />
+                        <Setter Target="PlayerPosition.Visibility" Value="Collapsed" />
+                        <Setter Target="GridRow.Width" Value="*" />
+                        <Setter Target="GridRow2.Width" Value="*" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -190,10 +195,10 @@
         <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="52" />
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition x:Name="GridRow" Width="52" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="52" />
+                <ColumnDefinition x:Name="GridRow2" Width="52" />
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
@@ -209,8 +214,8 @@
             </Grid>
 
             <TextBlock x:Name="PlayerPosition" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
-            <ProgressBar x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0"/>
-            <TextBlock Text="{Binding PlayingTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
+            <ProgressBar x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0" IsEnabled="True"/>
+            <TextBlock x:Name="PlayerDuration" Text="{Binding PlayingTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
             <Button Grid.Column="5" Style="{StaticResource IconInMusicControl}" Click="prevButton_Click">
                 <FontIcon Glyph="&#xE892;" />
             </Button>
