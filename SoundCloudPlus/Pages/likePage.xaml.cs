@@ -39,6 +39,7 @@ namespace SoundCloudPlus.Pages
                 }
             }
             base.OnNavigatedTo(e);
+            
         }
 
         private void TrackLikesGridView_SizeChanged(object sender, SizeChangedEventArgs e)
