@@ -15,6 +15,8 @@ using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
+using TilesAndNotifications.Services;
+using Windows.UI.Notifications;
 
 namespace SoundCloudPlus.Pages
 {
@@ -28,7 +30,7 @@ namespace SoundCloudPlus.Pages
         public List<Track> PlayList { get; set; }
         public Track CurrentTrack { get; set; }
         private int _userId;
-        public String PageTitle = "test";
+        public String PageTitle;
         DispatcherTimer _playbackTimer = new DispatcherTimer();
 
         public int UserId
@@ -517,6 +519,7 @@ namespace SoundCloudPlus.Pages
                     });
                     MainPageViewModel m = MainPage.Current._mainPageViewModel;
                     m.PlayingTrack = song.SingleOrDefault<Track>();
+                    UpdateLiveTile(m.PlayingTrack);
                     //m.PlayingTrack = song.First<Track>();
 
                     // Update the album art
@@ -542,6 +545,22 @@ namespace SoundCloudPlus.Pages
                 backgroundAudioTaskStarted.Set();
                 return;
             }
+        }
+
+        void UpdateLiveTile(Track t)
+        {
+            try
+            {
+                //live tile titel updaten
+                var xmlDoc = TileService.CreateTiles(t);
+                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+                TileNotification notification = new TileNotification(xmlDoc); updater.Update(notification);
+            }
+            catch (Exception)
+            {
+
+            }
+            
         }
 
         #endregion
@@ -675,11 +694,13 @@ namespace SoundCloudPlus.Pages
             if (state == MediaPlayerState.Playing)
             {
                 _playbackTimer.Start();
+                playbuttonicon.Glyph = "\ue769";
                 //playbuttonicon.Glyph = "| |";     // Change to pause button
             }
             else
             {
                 _playbackTimer.Stop();
+                playbuttonicon.Glyph = "\ue768";
                 //playbuttonicon.Glyph = ">";     // Change to play button
             }
         }
