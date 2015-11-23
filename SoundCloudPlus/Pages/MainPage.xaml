@@ -50,8 +50,10 @@
                         <Setter Target="PlayerProgressBar.Visibility" Value="Collapsed"/>
                         <Setter Target="PlayerDuration.Visibility" Value="Collapsed" />
                         <Setter Target="PlayerPosition.Visibility" Value="Collapsed" />
-                        <Setter Target="GridRow.Width" Value="*" />
-                        <Setter Target="GridRow2.Width" Value="*" />
+                        <Setter Target="GridRow.Width" Value="0" />
+                        <Setter Target="GridRow2.Width" Value="0" />
+                        <Setter Target="GridRowTitle.Width" Value="*" />
+                        <Setter Target="GridRowProgress.Width" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -195,9 +197,9 @@
         <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="280" />
+                <ColumnDefinition x:Name="GridRowTitle" Width="280" />
                 <ColumnDefinition x:Name="GridRow" Width="52" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition x:Name="GridRowProgress" Width="*" />
                 <ColumnDefinition x:Name="GridRow2" Width="52" />
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
