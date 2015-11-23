@@ -86,7 +86,14 @@ namespace SoundCloudPlus.Pages
         {
             var position = CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
-            PlayerProgressBar.Value = (position.TotalMilliseconds - 0) / (CurrentPlayer.NaturalDuration.TotalMilliseconds - 0) * (100 - 0) + 0;
+            try
+            {
+                PlayerProgressBar.Value = (position.TotalMilliseconds - 0) / (CurrentPlayer.NaturalDuration.TotalMilliseconds - 0) * (100 - 0) + 0;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Error: Progressbar value is NaN");
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
