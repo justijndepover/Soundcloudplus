@@ -1,4 +1,7 @@
-﻿using Windows.UI.Core;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -50,6 +53,50 @@ namespace SoundCloudPlus.Pages
         {
             MainPage mainPage = MainPage.Current;
             mainPage.PlayTrack(e.ClickedItem as Track);
+        }
+
+        private void ScrollViewerExplore_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            // TODO: Laad nieuwe items in wanneer scrollviewer op einde is...
+            //_homePageViewModel.ExploreCollection
+            //throw new System.NotImplementedException();
+            var verticalOffset = svExplore.VerticalOffset;
+            var maxVerticalOffset = svExplore.ScrollableHeight; //sv.ExtentHeight - sv.ViewportHeight;
+
+            if (maxVerticalOffset < 0 ||
+                verticalOffset == maxVerticalOffset)
+            {
+                // Scrolled to bottom
+                //_homePageViewModel.ExploreCollection += await App.SoundCloud.GetExplore()
+            }
+            else
+            {
+                // Not scrolled to bottom
+            }
+        }
+
+        private async void ScrollViewerStream_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            // TODO: Laad nieuwe items in wanneer scrollviewer op einde is...
+            //_homePageViewModel.StreamCollection
+            //throw new System.NotImplementedException();
+            Task t = Task.Run((Action) StreamScroller);
+        }
+
+        private async void StreamScroller()
+        {
+            var verticalOffset = svExplore.VerticalOffset;
+            var maxVerticalOffset = svExplore.ScrollableHeight; //sv.ExtentHeight - sv.ViewportHeight;
+
+            if (maxVerticalOffset < 0 || verticalOffset == maxVerticalOffset)
+            {
+                // Scrolled to bottom
+                ObservableCollection<Track> newCollection = await App.SoundCloud.GetStream(App.SoundCloud.GetStreamNextHref().Replace("https://api-v2.soundcloud.com", ""));
+                foreach (var track in newCollection)
+                {
+                    _homePageViewModel.StreamCollection.Add(track);
+                }
+            }
         }
     }
 }

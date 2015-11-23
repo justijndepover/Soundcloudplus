@@ -16,6 +16,7 @@ namespace ClassLibrary
     {
         private static string ClientId { get; } = "776ca412db7b101b1602c6a67b1a0579";
         private static string ClientSecret { get; } = "2a1fb6127a52a2ef55dcfa5474baa9d5";
+        private string StreamNextHref = "";
         private string Code { get; set; }
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
@@ -47,7 +48,7 @@ namespace ClassLibrary
         #region Stream / Explore
         public async Task<ObservableCollection<Track>> GetStream()
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = 10, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = 20, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
@@ -58,8 +59,32 @@ namespace ClassLibrary
                         tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
                     }
                 }
+                StreamNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
+        }
+
+        public async Task<ObservableCollection<Track>> GetStream(string nextHref)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    if (item["type"].ToString().Contains("track"))
+                    {
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                    }
+                }
+                StreamNextHref = apiResponse.Data["next_href"];
+            }
+            return tracks;
+        }
+
+        public string GetStreamNextHref()
+        {
+            return StreamNextHref;
         }
 
         public async Task<ObservableCollection<Track>> GetExplore()
