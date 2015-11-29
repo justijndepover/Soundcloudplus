@@ -30,7 +30,7 @@ namespace ClassLibrary
             LoadSettings();
         }
 
-        private void LoadSettings()
+        private async void LoadSettings()
         {
             //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
             CurrentUser = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<User>("currentUser"));
@@ -42,7 +42,7 @@ namespace ClassLibrary
             }
             else
             {
-                IsAuthenticated = false;
+                IsAuthenticated = await SignIn();
             }
         }
 

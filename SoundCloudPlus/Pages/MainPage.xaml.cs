@@ -127,9 +127,10 @@ namespace SoundCloudPlus.Pages
             {
               if (await App.SoundCloud.SignIn())
               {
+                  App.SoundCloud.IsAuthenticated = true;
                   //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
                   //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
-                }
+              }
               else
               {
                   await new MessageDialog("There was a problem signing you in").ShowAsync();
@@ -800,7 +801,7 @@ namespace SoundCloudPlus.Pages
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-
+            MyFrame?.Navigate(typeof(SearchPage), args.ChosenSuggestion);
         }
 
         private async void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
