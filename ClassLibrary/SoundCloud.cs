@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -344,6 +345,35 @@ namespace ClassLibrary
                 u = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
             }
             return u;
+        }
+        public async Task<ObservableCollection<Track>> Search(string query)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/search", null, new { q=query, facet="model", limit="10", offset = "0", client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    if (item["type"].ToString().Contains("track"))
+                    {
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                    }
+                }
+            }
+            return tracks;
+        }
+        public async Task<ObservableCollection<String>> AutoSuggest(string query)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/search/autocomplete", null, new { q = query, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<String> results = new ObservableCollection<String>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["results"])
+                {
+                    results.Add(item["output"].ToString());
+                }
+            }
+            return results;
         }
     }
 }

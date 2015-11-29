@@ -103,6 +103,11 @@ namespace SoundCloudPlus.Pages
             ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Active.ToString());
             if (e.NavigationMode != NavigationMode.Back)
             {
+                if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
+                { 
+                    // Start task
+                    StartBackgroundAudioTask();
+                }
                 MyFrame.Navigate(typeof(HomePage));
                 _mainPageViewModel =
                     (MainPageViewModel)Resources["MainPageViewModel"];
@@ -792,5 +797,20 @@ namespace SoundCloudPlus.Pages
             }
         }
         #endregion
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+
+        }
+
+        private async void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                string value = SearchBox.Text;
+                SearchBox.ItemsSource = await App.SoundCloud.AutoSuggest(value);
+                SearchBox.IsSuggestionListOpen = true;
+            }
+        }
     }
 }

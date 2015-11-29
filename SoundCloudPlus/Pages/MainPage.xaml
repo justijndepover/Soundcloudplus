@@ -66,6 +66,7 @@
         <Grid Background="#22000000">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="{Binding PageTitle}" Style="{StaticResource AppTitle}" />
+            <AutoSuggestBox x:Name="SearchBox" HorizontalAlignment="Right" Width="150" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged" />
         </Grid>
         <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="2" CompactPaneLength="52" DisplayMode="CompactInline">
             <SplitView.Pane>
