@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -383,9 +382,9 @@ namespace ClassLibrary
             {
                 foreach (var item in apiResponse.Data["collection"])
                 {
-                    if (item["type"].ToString().Contains("track"))
+                    if (item["kind"].ToString().Contains("track"))
                     {
-                        tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
                     }
                 }
             }

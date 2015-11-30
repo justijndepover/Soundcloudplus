@@ -546,7 +546,15 @@ namespace BackgroundAudioTask
                         Data = JsonConvert.DeserializeObject<dynamic>(AsyncHelper.RunSync(() => response.Content.ReadAsStringAsync()))
                     };
 
-                    string mp3 = apiResponse.Data["http_mp3_128_url"].Value;
+                    string mp3;
+                    try
+                    {
+                        mp3 = apiResponse.Data["http_mp3_128_url"].Value;
+                    }
+                    catch (Exception)
+                    {
+                        mp3 = apiResponse.Data["hls_mp3_128_url"].Value;
+                    }
                     return new Uri(mp3);
                 }
             }
