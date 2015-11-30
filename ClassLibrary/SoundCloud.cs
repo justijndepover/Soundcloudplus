@@ -18,6 +18,7 @@ namespace ClassLibrary
         private static string ClientId { get; } = "776ca412db7b101b1602c6a67b1a0579";
         private static string ClientSecret { get; } = "2a1fb6127a52a2ef55dcfa5474baa9d5";
         private string StreamNextHref = "";
+        private string ExploreNextHref = "";
         private string Code { get; set; }
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
@@ -90,7 +91,7 @@ namespace ClassLibrary
 
         public async Task<ObservableCollection<Track>> GetExplore()
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 20, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
@@ -105,8 +106,36 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
+                ExploreNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
+        }
+
+        public async Task<ObservableCollection<Track>> GetExplore(string nextHref)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["tracks"])
+                {
+                    try
+                    {
+                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
+                ExploreNextHref = apiResponse.Data["next_href"];
+            }
+            return tracks;
+        }
+
+        public string GetExploreNextHref()
+        {
+            return ExploreNextHref;
         }
         #endregion
 
