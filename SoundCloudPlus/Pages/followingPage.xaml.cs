@@ -27,10 +27,11 @@ namespace SoundCloudPlus.Pages
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
+            initBwFollowing();
         }
 
-        #region BackgroundWorkerStream
-        private void initBwStream()
+        #region BackgroundWorkerFollowing
+        private void initBwFollowing()
         {
             bwFollowing.DoWork += BwFollowing_DoWork;
             bwFollowing.WorkerSupportsCancellation = true;
@@ -45,6 +46,7 @@ namespace SoundCloudPlus.Pages
                 {
                     _followingPageViewModel.FollowingsCollection.Add(u);
                 }
+                newFollowingCollection.Clear();
             }
             catch (Exception) { }
 
@@ -106,13 +108,13 @@ namespace SoundCloudPlus.Pages
             MainPage.Current.Navigate(sender, "profile");
         }
 
-        #region StreamScroller
+        #region FollowingScroller
         private async void FollowingScroller()
         {
-            var e = App.SoundCloud.GetStreamNextHref();
+            var e = App.SoundCloud.GetFollowingNextHref();
             if (e != null)
             {
-                var b = e.Replace("https://api-v2.soundcloud.com", "");
+                var b = e.Replace("https://api.soundcloud.com", "");
                 ObservableCollection<User> newCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id, b);
                 newFollowingCollection = newCollection;
             }

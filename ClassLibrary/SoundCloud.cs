@@ -320,7 +320,7 @@ namespace ClassLibrary
         #region Followings
         public async Task<ObservableCollection<User>> GetFollowings(int userId)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = 3, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<User> followings = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {
@@ -342,7 +342,7 @@ namespace ClassLibrary
 
         public async Task<ObservableCollection<User>> GetFollowings(int userId, string nextHref)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<User> followings = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {
@@ -360,6 +360,11 @@ namespace ClassLibrary
                 FollowingNextHref = apiResponse.Data["next_href"];
             }
             return followings;
+        }
+
+        public string GetFollowingNextHref()
+        {
+            return FollowingNextHref;
         }
         #endregion
 
