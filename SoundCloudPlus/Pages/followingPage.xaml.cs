@@ -113,8 +113,8 @@ namespace SoundCloudPlus.Pages
             if (e != null)
             {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
-                //ObservableCollection<User> newCollection = await App.SoundCloud.GetStream(b);
-                //newFollowingCollection = newCollection;
+                ObservableCollection<User> newCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id, b);
+                newFollowingCollection = newCollection;
             }
         }
 

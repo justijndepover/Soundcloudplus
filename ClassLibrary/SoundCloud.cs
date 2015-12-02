@@ -18,6 +18,7 @@ namespace ClassLibrary
         private static string ClientSecret { get; } = "2a1fb6127a52a2ef55dcfa5474baa9d5";
         private string StreamNextHref = "";
         private string ExploreNextHref = "";
+        private string FollowingNextHref = "";
         private string Code { get; set; }
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
@@ -46,7 +47,7 @@ namespace ClassLibrary
             }
         }
 
-        #region Stream / Explore
+        #region Stream
         public async Task<ObservableCollection<Track>> GetStream()
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = 20, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -87,7 +88,9 @@ namespace ClassLibrary
         {
             return StreamNextHref;
         }
+        #endregion
 
+        #region Explore
         public async Task<ObservableCollection<Track>> GetExplore()
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 20, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -138,7 +141,7 @@ namespace ClassLibrary
         }
         #endregion
 
-        #region Categories/Activities/Playlists
+        #region Categories
         public async Task<ObservableCollection<string>> GetCategories()
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/categories", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -152,7 +155,9 @@ namespace ClassLibrary
             }
             return categories;
         }
+        #endregion
 
+        #region Activities
         public async Task<Activity> GetActivities()
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/activities", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -163,7 +168,9 @@ namespace ClassLibrary
             }
             return activity;
         }
+        #endregion
 
+        #region Playlist
         public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists", null, new { representation = "speedy", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -227,6 +234,20 @@ namespace ClassLibrary
             return c;
         }
 
+        //PUT /e1/me/playlist_reposts/164963817?client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=ed72175 HTTP/1.1
+        public async Task<ApiResponse> RepostPlaylist(int playlistId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/e1/me/playlist_reposts/" + playlistId, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+
+            if (apiResponse.Succes)
+            {
+                return apiResponse;
+            }
+            return null;
+        }
+        #endregion
+
+        #region Tracks
         public async Task<ObservableCollection<Track>> GetTracks(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -245,6 +266,19 @@ namespace ClassLibrary
             return c;
         }
 
+        public async Task<Uri> GetMusicFile(int id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/tracks/" + id + "/streams", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            string mp3 = "";
+            if (apiResponse.Succes)
+            {
+                mp3 = apiResponse.Data["http_mp3_128_url"].Value;
+            }
+            return new Uri(mp3);
+        }
+        #endregion
+
+        #region Reposts
         public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/profile/soundcloud:users:" + userId + "/reposts", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -260,7 +294,7 @@ namespace ClassLibrary
         }
         #endregion
 
-        #region Followers/Followings
+        #region Followers
         public async Task<ObservableCollection<User>> GetFollowers(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followers", null, new { keepBlocked = true, limit = 25, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -281,10 +315,12 @@ namespace ClassLibrary
             }
             return followers;
         }
+        #endregion
 
+        #region Followings
         public async Task<ObservableCollection<User>> GetFollowings(int userId)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = 25, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = 3, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<User> followings = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {
@@ -299,23 +335,35 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
+                FollowingNextHref = apiResponse.Data["next_href"];
+            }
+            return followings;
+        }
+
+        public async Task<ObservableCollection<User>> GetFollowings(int userId, string nextHref)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<User> followings = new ObservableCollection<User>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    try
+                    {
+                        followings.Add(JsonConvert.DeserializeObject<User>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
+                FollowingNextHref = apiResponse.Data["next_href"];
             }
             return followings;
         }
         #endregion
 
-        //PUT /e1/me/playlist_reposts/164963817?client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=ed72175 HTTP/1.1
-        public async Task<ApiResponse> RepostPlaylist(int playlistId)
-        {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/e1/me/playlist_reposts/"+playlistId, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            
-            if (apiResponse.Succes)
-            {
-                return apiResponse;
-            }
-            return null;
-        }
-
+        #region Likes
         public async Task<ObservableCollection<Track>> GetLikes(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -336,7 +384,9 @@ namespace ClassLibrary
             }
             return tracklikes;
         }
+        #endregion
 
+        #region SignIn + User
         public async Task<bool> SignIn()
         {
             if (await ApiProxy.Authenticate())
@@ -351,17 +401,6 @@ namespace ClassLibrary
             return false;
         }
 
-        public async Task<Uri> GetMusicFile(int id)
-        {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/tracks/"+id+"/streams", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
-            string mp3 = "";
-            if (apiResponse.Succes)
-            {
-                mp3 = apiResponse.Data["http_mp3_128_url"].Value;
-            }
-            return new Uri(mp3);
-        }
-
         ///profile/soundcloud:users:26691406?keepBlocked=true&limit=10&offset=0&linked_partitioning=1&client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=eef6f5d HTTP/1.1
         //https://api.soundcloud.com/users/178017941
         public async Task<User> GetUser(int id)
@@ -374,6 +413,9 @@ namespace ClassLibrary
             }
             return u;
         }
+        #endregion
+
+        #region Search + AutoSuggest
         public async Task<ObservableCollection<Track>> Search(string query)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/search", null, new { q=query, facet="model", limit="10", offset = "0", client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -403,5 +445,6 @@ namespace ClassLibrary
             }
             return results;
         }
+        #endregion
     }
 }
