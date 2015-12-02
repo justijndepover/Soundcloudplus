@@ -12,7 +12,7 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowingViewModel}">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="svFollowing" VerticalScrollBarVisibility="Hidden" ViewChanged="SvFollowing_OnViewChanged">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <GridView x:Name="FollowingGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
                     <GridView.ItemTemplate>
