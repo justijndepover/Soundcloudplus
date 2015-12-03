@@ -285,7 +285,7 @@
                     <!--
                     </PivotItem>-->
                     <PivotItem Header="Tracks">
-                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="svProfileTracks" ViewChanged="SvProfileTracks_OnViewChanged" VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -369,7 +369,7 @@
                     </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="Playlist">
-                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="svProfilePlaylist" ViewChanged="SvProfilePlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="PlaylistCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="TrackCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -452,8 +452,8 @@
                         </GridView>
                     </ScrollViewer>
                     </PivotItem>
-                <PivotItem Header="Reposts">
-                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <PivotItem Header="Reposts">
+                    <ScrollViewer x:Name="svProfileRepost" ViewChanged="SvProfileRepost_OnViewChanged" VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="RepostCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="PlaylistCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding RepostCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">

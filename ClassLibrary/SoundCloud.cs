@@ -170,29 +170,80 @@ namespace ClassLibrary
         #endregion
 
         #region Playlist
-        public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId)
-        {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists", null, new { representation = "speedy", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            PlaylistObject pO = new PlaylistObject();
-            if (apiResponse.Succes)
+
+        #region ProfilePlaylist
+            private string ProfilePlaylistNextHref = "";
+            public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId)
             {
-                pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
-            }
-            //return pO;
-            int l = pO.Collection.Count();
-            ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
-            for (int i = 0; i < l; i++)
-            {
-                if (pO.Collection[i].ArtworkUrl == null)
+                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists", null, new { representation = "speedy", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+                PlaylistObject pO = new PlaylistObject();
+                if (apiResponse.Succes)
                 {
-                    int pId = pO.Collection[i].Id;
-                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
-                    pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
                 }
-                c.Add(pO.Collection[i]);
+                //return pO;
+                int l = pO.Collection.Count();
+                ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
+                for (int i = 0; i < l; i++)
+                {
+                    if (pO.Collection[i].ArtworkUrl == null)
+                    {
+                        int pId = pO.Collection[i].Id;
+                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                    }
+                    c.Add(pO.Collection[i]);
+                }
+                object nhref = pO.NextHref;
+                if (nhref != null)
+                {
+                    PlaylistNextHref = nhref.ToString();
+                }
+                else
+                {
+                    PlaylistNextHref = "";
+                }
+                return c;
             }
-            return c;
-        }
+
+            public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId, string nextHref)
+            {
+                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+                PlaylistObject pO = new PlaylistObject();
+                if (apiResponse.Succes)
+                {
+                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                }
+                //return pO;
+                int l = pO.Collection.Count();
+                ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
+                for (int i = 0; i < l; i++)
+                {
+                    if (pO.Collection[i].ArtworkUrl == null)
+                    {
+                        int pId = pO.Collection[i].Id;
+                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                    }
+                    c.Add(pO.Collection[i]);
+                }
+                object nhref = pO.NextHref;
+                if (nhref != null)
+                {
+                    PlaylistNextHref = nhref.ToString();
+                }
+                else
+                {
+                    PlaylistNextHref = "";
+                }
+                return c;
+            }
+
+            public string GetProfilePlaylistNextHref()
+            {
+                return ProfilePlaylistNextHref;
+            }
+        #endregion
 
         public async Task<ObservableCollection<Track>> GetTracksFromPlaylist(int playlistId)
         {
@@ -291,6 +342,8 @@ namespace ClassLibrary
         #endregion
 
         #region Tracks
+
+        private string ProfileTracksNextHref = "";
         public async Task<ObservableCollection<Track>> GetTracks(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -306,7 +359,48 @@ namespace ClassLibrary
             {
                 c.Add(tO.Collection[i]);
             }
+            object nhref = tO.NextHref;
+            if (nhref != null)
+            {
+                ProfileTracksNextHref = nhref.ToString();
+            }
+            else
+            {
+                ProfileTracksNextHref = "";
+            }
             return c;
+        }
+
+        public async Task<ObservableCollection<Track>> GetTracks(int userId, string nextHref)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            TrackObject tO = new TrackObject();
+            if (apiResponse.Succes)
+            {
+                tO = JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
+            }
+
+            int l = tO.Collection.Count();
+            ObservableCollection<Track> c = new ObservableCollection<Track>();
+            for (int i = 0; i < l; i++)
+            {
+                c.Add(tO.Collection[i]);
+            }
+            object nhref = tO.NextHref;
+            if (nhref != null)
+            {
+                ProfileTracksNextHref = nhref.ToString();
+            }
+            else
+            {
+                ProfileTracksNextHref = "";
+            }
+            return c;
+        }
+
+        public string GetProfileTrackNextHref()
+        {
+            return ProfileTracksNextHref;
         }
 
         public async Task<Uri> GetMusicFile(int id)
@@ -322,6 +416,7 @@ namespace ClassLibrary
         #endregion
 
         #region Reposts
+        private string RepostNextHref = "";
         public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/profile/soundcloud:users:" + userId + "/reposts", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -332,8 +427,28 @@ namespace ClassLibrary
                 {
                     rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
                 }
+                RepostNextHref = apiResponse.Data["next_href"];
             }
             return rC;
+        }
+
+        public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId, string nextHref)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<RepostCollection> rC = new ObservableCollection<RepostCollection>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
+                }
+                RepostNextHref = apiResponse.Data["next_href"];
+            }
+            return rC;
+        }
+        public string GetProfileRepostNextHref()
+        {
+            return RepostNextHref;
         }
         #endregion
 

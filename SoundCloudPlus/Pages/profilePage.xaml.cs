@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.API;
+using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -17,6 +20,21 @@ namespace SoundCloudPlus.Pages
     public sealed partial class ProfilePage : Page
     {
         private int _userId;
+        private BackgroundWorker bwProfileTrack = new BackgroundWorker();
+        private BackgroundWorker bwProfilePlaylist = new BackgroundWorker();
+        private BackgroundWorker bwRepost = new BackgroundWorker();
+        private ObservableCollection<Track> newProfileTrackCollection = new ObservableCollection<Track>();
+
+        private ObservableCollection<PlaylistCollection> newProfilePlaylistCollection =
+            new ObservableCollection<PlaylistCollection>();
+
+        private ObservableCollection<RepostCollection> newProfileRepostCollection = new ObservableCollection<RepostCollection>();   
+        private double verticalOffsetProfileTrack;
+        private double verticalOffsetProfilePlaylist;
+        private double verticalOffsetProfileRepost;
+        private double maxVerticalOffsetProfileTrack;
+        private double maxVerticalOffsetProfilePlaylist;
+        private double maxVerticalOffsetProfileRepost;
 
         public int UserId
         {
@@ -28,7 +46,130 @@ namespace SoundCloudPlus.Pages
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
+            initBwProfileTrack();
+            initBwProfilePlaylist();
+            initBwProfileRepost();
         }
+        #region BackgroundWorkerProfileTrack
+        private void initBwProfileTrack()
+        {
+            bwProfileTrack.DoWork += BwProfileTrack_DoWork;
+            bwProfileTrack.WorkerSupportsCancellation = true;
+            bwProfileTrack.RunWorkerCompleted += BwProfileTrack_RunWorkerCompleted; ;
+        }
+
+        private void BwProfileTrack_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                foreach (Track t in newProfileTrackCollection)
+                {
+                    _profilePageViewModel.TrackCollection.Add(t);
+                }
+                newProfileTrackCollection.Clear();
+            }
+            catch (Exception){ }
+            bwProfileTrack.CancelAsync();
+        }
+
+        private void BwProfileTrack_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ProfileTrackScroller();
+        }
+        #endregion
+        #region ProfileTrackScroller
+        private async void ProfileTrackScroller()
+        {
+            var e = App.SoundCloud.GetProfileTrackNextHref();
+            if (e != null)
+            {
+                var b = e.Replace("https://api-v2.soundcloud.com", "");
+                ObservableCollection<Track> newCollection = await App.SoundCloud.GetTracks(App.SoundCloud.CurrentUser.Id, b);
+                newProfileTrackCollection = newCollection;
+            }
+        }
+        #endregion
+
+        #region BackgroundWorkerProfilePlaylist
+        private void initBwProfilePlaylist()
+        {
+            bwProfilePlaylist.DoWork += BwProfilePlaylist_DoWork;
+            bwProfilePlaylist.WorkerSupportsCancellation = true;
+            bwProfilePlaylist.RunWorkerCompleted += BwProfilePlaylist_RunWorkerCompleted;
+        }
+
+        private void BwProfilePlaylist_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                foreach (PlaylistCollection pc in newProfilePlaylistCollection)
+                {
+                    _profilePageViewModel.PlaylistCollection.Add(pc);
+                }
+                newProfileTrackCollection.Clear();
+            }
+            catch (Exception) { }
+            bwProfilePlaylist.CancelAsync();
+        }
+
+        private void BwProfilePlaylist_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ProfilePlaylistScroller();
+        }
+        #endregion
+        #region ProfilePlaylistScroller
+        private async void ProfilePlaylistScroller()
+        {
+            var e = App.SoundCloud.GetProfilePlaylistNextHref();
+            if (e != null)
+            {
+                var b = e.Replace("https://api-v2.soundcloud.com", "");
+                ObservableCollection<PlaylistCollection> newCollection = await App.SoundCloud.GetOwnPlaylists(App.SoundCloud.CurrentUser.Id, b);
+                newProfilePlaylistCollection = newCollection;
+            }
+        }
+        #endregion
+
+        #region BackgroundWorkerProfileTrack
+        private void initBwProfileRepost()
+        {
+            bwRepost.DoWork += BwRepost_DoWork;
+            bwRepost.WorkerSupportsCancellation = true;
+            bwRepost.RunWorkerCompleted += BwRepost_RunWorkerCompleted;
+        }
+
+        private void BwRepost_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                foreach (RepostCollection rc in newProfileRepostCollection)
+                {
+                    _profilePageViewModel.RepostCollection.Add(rc);
+                }
+                newProfileRepostCollection.Clear();
+            }
+            catch (Exception) { }
+            bwRepost.CancelAsync();
+        }
+
+        private void BwRepost_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ProfileRepostScroller();
+        }
+        #endregion
+        #region ProfileRepostScroller
+        private async void ProfileRepostScroller()
+        {
+            var e = App.SoundCloud.GetProfilePlaylistNextHref();
+            if (e != null)
+            {
+                var b = e.Replace("https://api-v2.soundcloud.com", "");
+                ObservableCollection<RepostCollection> newCollection = await App.SoundCloud.GetReposts(App.SoundCloud.CurrentUser.Id, b);
+                newProfileRepostCollection = newCollection;
+            }
+        }
+        #endregion
+
         private ProfilePageViewModel _profilePageViewModel;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -126,6 +267,21 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
             }
+        }
+
+        private void SvProfileTracks_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+                
+        }
+
+        private void SvProfilePlaylist_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SvProfileRepost_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
