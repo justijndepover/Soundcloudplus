@@ -1,20 +1,13 @@
-﻿using ClassLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using TilesAndNotifications.Models;
+﻿using System.Xml.Linq;
 using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
+using ClassLibrary.Models;
 
 namespace TilesAndNotifications.Services
 {
     public class TileService
     {
 
-        public static Windows.Data.Xml.Dom.XmlDocument CreateTiles(Track t)
+        public static XmlDocument CreateTiles(Track t)
         {
             XDocument xDoc = new XDocument(
                 new XElement("tile", new XAttribute("version", 3),
@@ -102,7 +95,7 @@ namespace TilesAndNotifications.Services
                     )
                 )
             );
-            Windows.Data.Xml.Dom.XmlDocument xmlDoc = new Windows.Data.Xml.Dom.XmlDocument();
+            XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xDoc.ToString());
             return xmlDoc;
         }

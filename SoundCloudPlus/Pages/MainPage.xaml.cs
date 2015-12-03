@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Media.Playback;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +18,6 @@ using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 using TilesAndNotifications.Services;
-using Windows.UI.Notifications;
 
 namespace SoundCloudPlus.Pages
 {
@@ -24,20 +25,15 @@ namespace SoundCloudPlus.Pages
     {
         public static MainPage Current;
         private MainPageViewModel _mainPageViewModel;
-        private AutoResetEvent backgroundAudioTaskStarted;
-        private bool isMyBackgroundTaskRunning = false;
-        const int RPC_S_SERVER_UNAVAILABLE = -2147023174; // 0x800706BA
+        private readonly AutoResetEvent _backgroundAudioTaskStarted;
+        private bool _isMyBackgroundTaskRunning;
+        const int RpcSServerUnavailable = -2147023174; // 0x800706BA
         public List<Track> PlayList { get; set; }
         public Track CurrentTrack { get; set; }
-        private int _userId;
-        public String PageTitle;
-        DispatcherTimer _playbackTimer = new DispatcherTimer();
+        public string PageTitle;
+        readonly DispatcherTimer _playbackTimer = new DispatcherTimer();
 
-        public int UserId
-        {
-            get { return _userId; }
-            set { _userId = value; }
-        }
+        public int UserId { get; set; }
 
         public List<int> UserIdHistory { get; set; }
 
@@ -49,7 +45,7 @@ namespace SoundCloudPlus.Pages
         {
             get
             {
-                if (isMyBackgroundTaskRunning)
+                if (_isMyBackgroundTaskRunning)
                     return true;
 
                 string value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.BackgroundTaskState) as string;
@@ -57,18 +53,15 @@ namespace SoundCloudPlus.Pages
                 {
                     return false;
                 }
-                else
+                try
                 {
-                    try
-                    {
-                        isMyBackgroundTaskRunning = EnumHelper.Parse<BackgroundTaskState>(value) == BackgroundTaskState.Running;
-                    }
-                    catch (ArgumentException)
-                    {
-                        isMyBackgroundTaskRunning = false;
-                    }
-                    return isMyBackgroundTaskRunning;
+                    _isMyBackgroundTaskRunning = EnumHelper.Parse<BackgroundTaskState>(value) == BackgroundTaskState.Running;
                 }
+                catch (ArgumentException)
+                {
+                    _isMyBackgroundTaskRunning = false;
+                }
+                return _isMyBackgroundTaskRunning;
             }
         }
         public MainPage()
@@ -76,7 +69,7 @@ namespace SoundCloudPlus.Pages
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
             Current = this;
-            backgroundAudioTaskStarted = new AutoResetEvent(false);
+            _backgroundAudioTaskStarted = new AutoResetEvent(false);
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;
@@ -148,7 +141,7 @@ namespace SoundCloudPlus.Pages
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
-            MainPageViewModel m = MainPage.Current._mainPageViewModel;
+            MainPageViewModel m = Current._mainPageViewModel;
             switch (destination)
             {
                 case "home":
@@ -162,10 +155,13 @@ namespace SoundCloudPlus.Pages
                     if (page?.GetType() != typeof (ProfilePage))
                     {
                         m.PageTitle = "Profile";
-                        int id = (int)b.Tag;
-                        UserId = id;
-                        MyFrame?.Navigate(typeof (ProfilePage));
-                        UserIdHistory.Add(id);
+                        if (b?.Tag != null)
+                        {
+                            int id = (int)b.Tag;
+                            UserId = id;
+                            MyFrame?.Navigate(typeof (ProfilePage));
+                            UserIdHistory.Add(id);
+                        }
                     }
                     break;
             }
@@ -179,7 +175,7 @@ namespace SoundCloudPlus.Pages
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
-            MainPageViewModel m = MainPage.Current._mainPageViewModel;
+            MainPageViewModel m = Current._mainPageViewModel;
             switch (b?.Tag.ToString())
             {
                 case "home":
@@ -356,7 +352,7 @@ namespace SoundCloudPlus.Pages
                 }
                 catch (Exception ex)
                 {
-                    if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
+                    if (ex.HResult == RpcSServerUnavailable)
                     {
                         // The foreground app uses RPC to communicate with the background process.
                         // If the background process crashes or is killed for any reason RPC_S_SERVER_UNAVAILABLE
@@ -381,8 +377,8 @@ namespace SoundCloudPlus.Pages
         private void ResetAfterLostBackground()
         {
             BackgroundMediaPlayer.Shutdown();
-            isMyBackgroundTaskRunning = false;
-            backgroundAudioTaskStarted.Reset();
+            _isMyBackgroundTaskRunning = false;
+            _backgroundAudioTaskStarted.Reset();
             //prevButton.IsEnabled = true;
             //nextButton.IsEnabled = true;
             ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Unknown.ToString());
@@ -394,7 +390,7 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
+                if (ex.HResult == RpcSServerUnavailable)
                 {
                     throw new Exception("Failed to get a MediaPlayer instance.");
                 }
@@ -402,7 +398,7 @@ namespace SoundCloudPlus.Pages
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            if (isMyBackgroundTaskRunning)
+            if (_isMyBackgroundTaskRunning)
             {
                 RemoveMediaPlayerEventHandlers();
                 ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
@@ -415,14 +411,13 @@ namespace SoundCloudPlus.Pages
         /// <summary>
         /// Read persisted current track information from application settings
         /// </summary>
-        private Uri GetCurrentTrackIdAfterAppResume()
-        {
-            object value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.TrackId);
-            if (value != null)
-                return new Uri((String)value);
-            else
-                return null;
-        }
+        //private Uri GetCurrentTrackIdAfterAppResume()
+        //{
+        //    object value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.TrackId);
+        //    if (value != null)
+        //        return new Uri((String)value);
+        //    return null;
+        //}
 
         /// <summary>
         /// Sends message to background informing app has resumed
@@ -443,15 +438,9 @@ namespace SoundCloudPlus.Pages
 
                 UpdateTransportControls(CurrentPlayer.CurrentState);
 
-                var trackId = GetCurrentTrackIdAfterAppResume();
+                //var trackId = GetCurrentTrackIdAfterAppResume();
                 //txtCurrentTrack.Text = trackId == null ? string.Empty : playlistView.GetSongById(trackId).Title;
                 //txtCurrentState.Text = CurrentPlayer.CurrentState.ToString();
-            }
-            else
-            {
-                //playButton.Content = ">";     // Change to play button
-                //txtCurrentTrack.Text = string.Empty;
-                //txtCurrentState.Text = "Background Task Not Running";
             }
         }
 
@@ -460,7 +449,7 @@ namespace SoundCloudPlus.Pages
         /// Stop clock and slider when suspending
         /// Unsubscribe handlers for MediaPlayer events
         /// </summary>
-        void ForegroundApp_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        void ForegroundApp_Suspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
@@ -492,7 +481,7 @@ namespace SoundCloudPlus.Pages
         async void MediaPlayer_CurrentStateChanged(MediaPlayer sender, object args)
         {
             var currentState = sender.CurrentState; // cache outside of completion or you might get a different value
-            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 // Update state label
                 //txtCurrentState.Text = currentState.ToString();
@@ -511,7 +500,7 @@ namespace SoundCloudPlus.Pages
             if (MessageService.TryParseMessage(e.Data, out trackChangedMessage))
             {
                 // When foreground app is active change track based on background message
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                 {
                     // If playback stopped then clear the UI
                     if (!trackChangedMessage.TrackId.HasValue)
@@ -530,8 +519,8 @@ namespace SoundCloudPlus.Pages
                         Debug.Assert(track.Id != null, "track.Id != null");
                         return track.Id.Value.Equals(trackChangedMessage.TrackId.Value);
                     });
-                    MainPageViewModel m = MainPage.Current._mainPageViewModel;
-                    m.PlayingTrack = song.SingleOrDefault<Track>();
+                    MainPageViewModel m = Current._mainPageViewModel;
+                    m.PlayingTrack = song.SingleOrDefault();
                     UpdateLiveTile(m.PlayingTrack);
                     //m.PlayingTrack = song.First<Track>();
 
@@ -555,8 +544,7 @@ namespace SoundCloudPlus.Pages
                 // StartBackgroundAudioTask is waiting for this signal to know when the task is up and running
                 // and ready to receive messages
                 Debug.WriteLine("BackgroundAudioTask started");
-                backgroundAudioTaskStarted.Set();
-                return;
+                _backgroundAudioTaskStarted.Set();
             }
         }
 
@@ -569,11 +557,10 @@ namespace SoundCloudPlus.Pages
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
                 TileNotification notification = new TileNotification(xmlDoc); updater.Update(notification);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
             }
-            
         }
 
         #endregion
@@ -591,7 +578,7 @@ namespace SoundCloudPlus.Pages
                 PlayList.Add(track);
                 trackAlreadyInPlaylist = false;
             }
-            Debug.WriteLine("Clicked item from App: " + song.Id.ToString());
+            Debug.WriteLine("Clicked item from App: " + song.Id);
 
             // Start the background task if it wasn't running
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
@@ -678,27 +665,6 @@ namespace SoundCloudPlus.Pages
             //nextButton.IsEnabled = false;
         }
 
-        private void speedButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Create menu and add commands
-            var popupMenu = new PopupMenu();
-
-            popupMenu.Commands.Add(new UICommand("4.0x", command => CurrentPlayer.PlaybackRate = 4.0));
-            popupMenu.Commands.Add(new UICommand("2.0x", command => CurrentPlayer.PlaybackRate = 2.0));
-            popupMenu.Commands.Add(new UICommand("1.5x", command => CurrentPlayer.PlaybackRate = 1.5));
-            popupMenu.Commands.Add(new UICommand("1.0x", command => CurrentPlayer.PlaybackRate = 1.0));
-            popupMenu.Commands.Add(new UICommand("0.5x", command => CurrentPlayer.PlaybackRate = 0.5));
-
-            // Get button transform and then offset it by half the button
-            // width to center. This will show the popup just above the button.
-            var button = (Button)sender;
-            var transform = button.TransformToVisual(null);
-            var point = transform.TransformPoint(new Point(button.Width / 2, 0));
-
-            // Show popup
-            var ignoreAsyncResult = popupMenu.ShowAsync(point);
-
-        }
         #endregion Button Click Event Handlers
 
         #region Media Playback Helper methods
@@ -723,14 +689,14 @@ namespace SoundCloudPlus.Pages
         /// </summary>
         private void RemoveMediaPlayerEventHandlers()
         {
-            CurrentPlayer.CurrentStateChanged -= this.MediaPlayer_CurrentStateChanged;
+            CurrentPlayer.CurrentStateChanged -= MediaPlayer_CurrentStateChanged;
             try
             {
                 BackgroundMediaPlayer.MessageReceivedFromBackground -= BackgroundMediaPlayer_MessageReceivedFromBackground;
             }
             catch (Exception ex)
             {
-                if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
+                if (ex.HResult == RpcSServerUnavailable)
                 {
                     // do nothing
                 }
@@ -746,7 +712,7 @@ namespace SoundCloudPlus.Pages
         /// </summary>
         private void AddMediaPlayerEventHandlers()
         {
-            CurrentPlayer.CurrentStateChanged += this.MediaPlayer_CurrentStateChanged;
+            CurrentPlayer.CurrentStateChanged += MediaPlayer_CurrentStateChanged;
 
             try
             {
@@ -754,7 +720,7 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
+                if (ex.HResult == RpcSServerUnavailable)
                 {
                     // Internally MessageReceivedFromBackground calls Current which can throw RPC_S_SERVER_UNAVAILABLE
                     ResetAfterLostBackground();
@@ -769,11 +735,11 @@ namespace SoundCloudPlus.Pages
         {
             AddMediaPlayerEventHandlers();
 
-            var startResult = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            var startResult = Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
-                bool result = backgroundAudioTaskStarted.WaitOne(10000);
+                bool result = _backgroundAudioTaskStarted.WaitOne(10000);
                 //Send message to initiate playback
-                if (result == true)
+                if (result)
                 {
                     MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
                     MessageService.SendMessageToBackground(new StartPlaybackMessage());
@@ -783,7 +749,7 @@ namespace SoundCloudPlus.Pages
                     throw new Exception("Background Audio Task didn't start in expected time");
                 }
             });
-            startResult.Completed = new AsyncActionCompletedHandler(BackgroundTaskInitializationCompleted);
+            startResult.Completed = BackgroundTaskInitializationCompleted;
         }
 
         private void BackgroundTaskInitializationCompleted(IAsyncAction action, AsyncStatus status)
@@ -794,7 +760,7 @@ namespace SoundCloudPlus.Pages
             }
             else if (status == AsyncStatus.Error)
             {
-                Debug.WriteLine("Background Audio Task could not initialized due to an error ::" + action.ErrorCode.ToString());
+                Debug.WriteLine("Background Audio Task could not initialized due to an error ::" + action.ErrorCode);
             }
         }
         #endregion

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TilesAndNotifications.Models
+﻿namespace TilesAndNotifications.Models
 {
     public class PrimaryTile
     {

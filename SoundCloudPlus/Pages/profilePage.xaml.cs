@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.Security.Authentication.OnlineId;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -126,7 +125,6 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                return;
             }
         }
     }
