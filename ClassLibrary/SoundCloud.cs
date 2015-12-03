@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 
 namespace ClassLibrary
 {
+    ///TODO: Testen followers/ Playlists/ Likes/ Profile: (Track + Playlist + Repost)
+    /// Testen of de items worden toegevoegd wanneer je op het einde van de lijst zit?
     public class SoundCloud
     {
         private static string ClientId { get; } = "776ca412db7b101b1602c6a67b1a0579";
