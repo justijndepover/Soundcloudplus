@@ -20,6 +20,7 @@ namespace ClassLibrary
         private string ExploreNextHref = "";
         private string FollowingNextHref = "";
         private string FollowerNextHref = "";
+        private string PlaylistNextHref = "";
         private string Code { get; set; }
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
@@ -216,24 +217,67 @@ namespace ClassLibrary
             }
             return tracks;
         }
+        
+        #region Playlists_Page
+            public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId)
+            {
+                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists/liked_and_owned", null, new { keepBlocked = true, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+                PlaylistObject pO = new PlaylistObject();
+                if (apiResponse.Succes)
+                {
+                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                }
+                //return pO;
+                int l = pO.Collection.Count();
+                ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
+                for (int i = 0; i < l; i++)
+                {
+                    c.Add(pO.Collection[i]);
+                }
+                object nhref = pO.NextHref;
+                if (nhref != null)
+                {
+                    PlaylistNextHref = nhref.ToString();
+                }
+                else
+                {
+                    PlaylistNextHref = "";
+                }
+                return c;
+            }
 
-        public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId)
-        {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists/liked_and_owned", null, new { keepBlocked = true, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            PlaylistObject pO = new PlaylistObject();
-            if (apiResponse.Succes)
+            public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId, string nextHref)
             {
-                pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+                PlaylistObject pO = new PlaylistObject();
+                if (apiResponse.Succes)
+                {
+                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                }
+                //return pO;
+                int l = pO.Collection.Count();
+                ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
+                for (int i = 0; i < l; i++)
+                {
+                    c.Add(pO.Collection[i]);
+                }
+                object nhref = pO.NextHref;
+                if (nhref != null)
+                {
+                    PlaylistNextHref = nhref.ToString();
+                }
+                else
+                {
+                    PlaylistNextHref = "";
+                }
+                return c;
             }
-            //return pO;
-            int l = pO.Collection.Count();
-            ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
-            for (int i = 0; i < l; i++)
+
+            public string GetPlaylistNextHref()
             {
-                c.Add(pO.Collection[i]);
+                return PlaylistNextHref;
             }
-            return c;
-        }
+        #endregion
 
         //PUT /e1/me/playlist_reposts/164963817?client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=ed72175 HTTP/1.1
         public async Task<ApiResponse> RepostPlaylist(int playlistId)

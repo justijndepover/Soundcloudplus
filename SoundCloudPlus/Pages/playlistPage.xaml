@@ -12,7 +12,7 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="svPlaylist" ViewChanged="SvPlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <GridView x:Name="PlaylistGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" SizeChanged="PlaylistGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
