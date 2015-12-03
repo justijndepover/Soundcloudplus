@@ -19,6 +19,7 @@ namespace ClassLibrary
         private string StreamNextHref = "";
         private string ExploreNextHref = "";
         private string FollowingNextHref = "";
+        private string FollowerNextHref = "";
         private string Code { get; set; }
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
@@ -312,8 +313,35 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
+                FollowerNextHref = apiResponse.Data["next_href"];
             }
             return followers;
+        }
+
+        public async Task<ObservableCollection<User>> GetFollowers(int userId, string nextHref)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ObservableCollection<User> followers = new ObservableCollection<User>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    try
+                    {
+                        followers.Add(JsonConvert.DeserializeObject<User>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
+                }
+                FollowerNextHref = apiResponse.Data["next_href"];
+            }
+            return followers;
+        }
+        public string GetFollowerNextHref()
+        {
+            return FollowerNextHref;
         }
         #endregion
 

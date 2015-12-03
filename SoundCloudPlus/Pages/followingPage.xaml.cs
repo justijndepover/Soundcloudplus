@@ -21,8 +21,8 @@ namespace SoundCloudPlus.Pages
     {
         private BackgroundWorker bwFollowing = new BackgroundWorker();
         private ObservableCollection<User> newFollowingCollection = new ObservableCollection<User>();
-        private double verticalOffsetStream;
-        private double maxVerticalOffsetStream;
+        private double verticalOffsetFollowing;
+        private double maxVerticalOffsetFollowing;
         public FollowingPage()
         {
             InitializeComponent();
@@ -123,10 +123,10 @@ namespace SoundCloudPlus.Pages
         private void SvFollowing_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is...
-            verticalOffsetStream = svFollowing.VerticalOffset;
-            maxVerticalOffsetStream = svFollowing.ScrollableHeight;
+            verticalOffsetFollowing = svFollowing.VerticalOffset;
+            maxVerticalOffsetFollowing = svFollowing.ScrollableHeight;
 
-            if (maxVerticalOffsetStream < 0 || verticalOffsetStream == maxVerticalOffsetStream)
+            if (maxVerticalOffsetFollowing < 0 || verticalOffsetFollowing == maxVerticalOffsetFollowing)
             {
                 if (bwFollowing.IsBusy == false)
                 {
