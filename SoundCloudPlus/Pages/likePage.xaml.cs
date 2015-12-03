@@ -1,4 +1,7 @@
-﻿using Windows.UI.Core;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -15,12 +18,76 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class LikePage : Page
     {
+        private BackgroundWorker bwLike = new BackgroundWorker();
+        private ObservableCollection<Track> newLikeCollection = new ObservableCollection<Track>();
+        private double verticalOffsetLike;
+        private double maxVerticalOffsetLike;
+        private LikePageViewModel _likePageViewModel;
         public LikePage()
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
+            initBwLike();
         }
-        private LikePageViewModel _likePageViewModel;
+        #region BackgroundWorkerLike
+        private void initBwLike()
+        {
+            bwLike.DoWork += BwLike_DoWork;
+            bwLike.WorkerSupportsCancellation = true;
+            bwLike.RunWorkerCompleted += BwLike_RunWorkerCompleted;
+        }
+
+        private void BwLike_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                foreach (Track t in newLikeCollection)
+                {
+                    _likePageViewModel.TrackLikesCollection.Add(t);
+                }
+                newLikeCollection.Clear();
+            }
+            catch (Exception){ }
+
+            bwLike.CancelAsync();
+        }
+
+        private void BwLike_DoWork(object sender, DoWorkEventArgs e)
+        {
+            LikeScroller();
+        }
+
+        #endregion
+
+        #region LikeScroller
+
+        private async void LikeScroller()
+        {
+            var e = App.SoundCloud.GetFollowingNextHref();
+            if (e != null)
+            {
+                var b = e.Replace("https://api-v2.soundcloud.com", "");
+                ObservableCollection<Track> newCollection =
+                    await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id, b);
+                newLikeCollection = newCollection;
+            }
+        }
+        private void SvLikes_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            // Laad nieuwe items in wanneer scrollviewer op einde is...
+            verticalOffsetLike = svLikes.VerticalOffset;
+            maxVerticalOffsetLike = svLikes.ScrollableHeight;
+
+            if (maxVerticalOffsetLike < 0 || verticalOffsetLike == maxVerticalOffsetLike)
+            {
+                if (bwLike.IsBusy == false)
+                {
+                    bwLike.RunWorkerAsync();
+                }
+            }
+        }
+        #endregion
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
