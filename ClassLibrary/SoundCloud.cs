@@ -561,15 +561,21 @@ namespace ClassLibrary
         private string LikesNextHref = "";
         public async Task<ObservableCollection<Track>> GetLikes(int userId)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/track_likes", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracklikes = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                foreach (var item in apiResponse.Data["tracks"])
+                foreach (var item in apiResponse.Data["collection"])
                 {
                     try
                     {
-                        tracklikes.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
+                        Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
+                        if (t.ArtworkUrl == null)
+                        {
+                            User u = await GetUser(t.User.Id);
+                            t.ArtworkUrl = u.AvatarUrl;
+                        }
+                        tracklikes.Add(t);
                     }
                     catch (Exception ex)
                     {
@@ -587,11 +593,17 @@ namespace ClassLibrary
             ObservableCollection<Track> tracklikes = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                foreach (var item in apiResponse.Data["tracks"])
+                foreach (var item in apiResponse.Data["collection"])
                 {
                     try
                     {
-                        tracklikes.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
+                        Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
+                        if (t.ArtworkUrl == null)
+                        {
+                            User u = await GetUser(t.User.Id);
+                            t.ArtworkUrl = u.AvatarUrl;
+                        }
+                        tracklikes.Add(t);
                     }
                     catch (Exception ex)
                     {
