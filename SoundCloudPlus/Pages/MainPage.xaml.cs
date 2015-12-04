@@ -522,6 +522,11 @@ namespace SoundCloudPlus.Pages
                     MainPageViewModel m = Current._mainPageViewModel;
                     m.PlayingTrack = song.SingleOrDefault();
                     UpdateLiveTile(m.PlayingTrack);
+
+                    if(m.PlayingTrack != null)
+                    {
+                        MusicPlayerControl.Visibility = Visibility.Visible;
+                    }
                     //m.PlayingTrack = song.First<Track>();
 
                     // Update the album art

@@ -195,7 +195,7 @@
                 <Frame x:Name="MyFrame" Loaded="MyFrame_OnLoaded" />
             </SplitView.Content>
         </SplitView>
-        <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}">
+        <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70" />
                 <ColumnDefinition x:Name="GridRowTitle" Width="280" />
