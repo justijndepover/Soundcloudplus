@@ -65,7 +65,7 @@ namespace SoundCloudPlus.Pages
 
         private async void FollowerScroller()
         {
-            var e = App.SoundCloud.GetFollowingNextHref();
+            var e = App.SoundCloud.GetFollowerNextHref();
             if (e != null)
             {
                 var b = e.Replace("https://api.soundcloud.com", "");

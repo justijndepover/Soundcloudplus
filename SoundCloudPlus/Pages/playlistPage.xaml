@@ -6,9 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    xmlns:converters="using:SoundCloudPlus.Converters"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:PlaylistPageViewModel x:Key="PlaylistViewModel" />
+        <converters:TrackCountConverter x:Key="TrackCountConverter"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
@@ -43,15 +45,18 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"/>
-                                        <RowDefinition Height="78"/>
-                                        <RowDefinition Height="22"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="50"/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
                                         <Image x:Name="StreamItemArtworkImage" Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
                                     </Grid>
-                                    <TextBlock x:Name="StreamItemArtist" Text="{Binding Playlist.Title}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
-                                    <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
-                                                    <Run Text="{Binding Playlist.User}" Foreground="Gray"/>
+                                    <TextBlock x:Name="PlaylistArtist" Text="{Binding Playlist.Title}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                    <TextBlock x:Name="PlaylistUser" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                        <Run Text="{Binding Playlist.User.Username}" Foreground="Gray"/>
+                                    </TextBlock>
+                                    <TextBlock x:Name="PlaylistCount" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="2">
+                                        <Run Text="{Binding Playlist.TrackCount, Converter={StaticResource TrackCountConverter}}" Foreground="Gray"/>
                                     </TextBlock>
                                 </Grid>
                             </Border>
