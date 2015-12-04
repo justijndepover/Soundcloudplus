@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace ClassLibrary
 {
-    ///TODO: Testen followers/ Playlists/ Likes/ Profile: (Track + Playlist + Repost)
+    ///TODO: Testen followers/ Playlists/ Profile: (Track + Playlist + Repost)
     /// Testen of de items worden toegevoegd wanneer je op het einde van de lijst zit?
     public class SoundCloud
     {
