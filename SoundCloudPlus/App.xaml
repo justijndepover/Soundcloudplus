@@ -30,7 +30,7 @@
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="BorderBrush" Value="Transparent" />
             </Style>
-            <Style TargetType="Button" x:Key="BtnInNav">
+            <!--<Style TargetType="Button" x:Key="BtnInNav">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="Width" Value="36"/>
                 <Setter Property="Height" Value="36"/>
@@ -39,7 +39,7 @@
                 <Setter Property="Margin" Value="0 4 4 4" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="BorderBrush" Value="Transparent" />
-            </Style>
+            </Style>-->
             <Style TargetType="FontIcon" x:Key="IconInNav">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="FontSize" Value="14"/>
@@ -47,6 +47,7 @@
                 <Setter Property="Height" Value="36"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="Margin" Value="0 4 4 4" />
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}" />
             </Style>
             <Style TargetType="Button" x:Key="MediabarButton">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
@@ -278,6 +279,7 @@
                 <Setter Property="TextWrapping" Value="WrapWholeWords" />
                 <Setter Property="Padding" Value="8 8 8 0" />
                 <Setter Property="TextTrimming" Value="WordEllipsis" />
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}" />
             </Style>
 
             <Style TargetType="TextBlock" x:Key="SongArtist">
@@ -285,6 +287,7 @@
                 <Setter Property="Padding" Value="8 8 8 0" />
                 <Setter Property="TextTrimming" Value="WordEllipsis" />
                 <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}" />
             </Style>
 
             <Style TargetType="TextBlock" x:Key="SongControlButton">
