@@ -320,6 +320,20 @@
                 <Setter Property="TextTrimming" Value="WordEllipsis"/>
             </Style>
 
+            <Style TargetType="TextBlock" x:Key="ProfileName">
+                <Setter Property="FontSize" Value="30" />
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
+                <Setter Property="Margin" Value="8 0 0 0"/>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="ProfileFullName">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
+                <Setter Property="Margin" Value="8 0 0 0"/>
+            </Style>
+
             <!--GRID-->
             <Style TargetType="Grid" x:Key="GridMusicStyleTop">
                 <Setter Property="Height" Value="150"/>
@@ -350,7 +364,7 @@
                 <Setter Property="Width" Value="200"/>
             </Style>
             <Style TargetType="Image" x:Key="ImageProfile">
-                <Setter Property="Height" Value="200"/>
+                <Setter Property="Height" Value="2000"/>
                 <Setter Property="Width" Value="200"/>
             </Style>
             <Style TargetType="Image" x:Key="MusicControlImage">
@@ -373,6 +387,60 @@
             <!-- RELATIVE PANEL -->
             <Style TargetType="RelativePanel" x:Key="RelativePanelMargin">
                 <Setter Property="Margin" Value="20 20 20 0" />
+            </Style>
+            
+            <!--AUTOSUGGESTBOX-->
+            <Style TargetType="AutoSuggestBox" x:Key="SearchBox">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="8 0 8 0" />
+                <Setter Property="PlaceholderText" Value="Search" />
+                <Setter Property="QueryIcon" Value="Find" />
+                <Setter Property="Background" Value="AliceBlue" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="AutoSuggestBox">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="Orientation">
+                                        <VisualState x:Name="Landscape"/>
+                                        <VisualState x:Name="Portrait"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <TextBox x:Name="TextBox"
+        			Style="{TemplateBinding TextBoxStyle}" 
+        			PlaceholderText="{TemplateBinding PlaceholderText}"
+        			Header="{TemplateBinding Header}"
+        			Width="{TemplateBinding Width}"
+        			ScrollViewer.BringIntoViewOnFocusChange="False"
+        			Canvas.ZIndex="0"
+        			Margin="0"
+        			DesiredCandidateWindowAlignment="BottomEdge"/>
+                                <Popup x:Name="SuggestionsPopup">
+                                    <Border x:Name="SuggestionsContainer">
+                                        <Border.RenderTransform>
+                                            <TranslateTransform x:Name="UpwardTransform"/>
+                                        </Border.RenderTransform>
+                                        <ListView x:Name="SuggestionsList"
+        					Background="White"
+        					BorderThickness="0,0,0,1"
+        					BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+        					DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+        					IsItemClickEnabled="True"
+        					ItemTemplate="{TemplateBinding ItemTemplate}"
+        					ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+        					ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+        					MaxHeight="{ThemeResource AutoSuggestListMaxHeight}"
+        					Margin="{ThemeResource AutoSuggestListMargin}">
+                                            <ListView.ItemContainerTransitions>
+                                                <TransitionCollection />
+                                            </ListView.ItemContainerTransitions>
+                                        </ListView>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
           
         </ResourceDictionary>

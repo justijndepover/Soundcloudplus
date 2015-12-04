@@ -28,6 +28,8 @@
                     <VisualState.Setters>
                         <Setter Target="SplitViewMenu.DisplayMode" Value="CompactInline" />
                         <Setter Target="SplitViewMenu.IsPaneOpen" Value="True" />
+                        <Setter Target="SearchButton.Visibility" Value="Collapsed" />
+                        <Setter Target="SearchBox.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Min320State">
@@ -37,6 +39,8 @@
                     <VisualState.Setters>
                         <Setter Target="SplitViewMenu.DisplayMode" Value="CompactOverlay" />
                         <Setter Target="SplitViewMenu.IsPaneOpen" Value="False" />
+                        <Setter Target="SearchButton.Visibility" Value="Visible" />
+                        <Setter Target="SearchBox.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultState">
@@ -65,9 +69,8 @@
         <Grid Background="{StaticResource MenuFlyoutItemFocusedBackgroundThemeBrush}">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="{Binding PageTitle}" Style="{StaticResource AppTitle}" />
-            <AutoSuggestBox x:Name="SearchBox" HorizontalAlignment="Right" Width="150" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged" />
         </Grid>
-        <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="2" CompactPaneLength="52" DisplayMode="CompactInline">
+        <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="2" CompactPaneLength="52" DisplayMode="CompactInline" PaneClosed="SplitViewMenu_PaneClosed" >
             <SplitView.Pane>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <Grid>
@@ -86,25 +89,24 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Grid.Row="0" Click="Navigation_Click" Tag="home">
+                        <AutoSuggestBox x:Name="SearchBox" Style="{StaticResource SearchBox}" Grid.Row="0" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged" />
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="SearchButton" Grid.Row="0" Click="SearchButton_Click" Visibility="Collapsed">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE80F;" FontSize="14"/>
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Home" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE71E;" />
                             </Grid>
                         </Button>
-                    
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="1" Click="Navigation_Click" Tag="recent">
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Grid.Row="1" Click="Navigation_Click" Tag="home">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE8D6;" />
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Recent" />
+                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE80F;"/>
+                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Home" />
                             </Grid>
                         </Button>
                         <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2" Click="Navigation_Click" Tag="following">

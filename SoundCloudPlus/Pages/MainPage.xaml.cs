@@ -112,6 +112,16 @@ namespace SoundCloudPlus.Pages
         private void NavButton_Click(object sender, RoutedEventArgs e)
         {
             SplitViewMenu.IsPaneOpen = !SplitViewMenu.IsPaneOpen;
+            if (SplitViewMenu.IsPaneOpen == true)
+            {
+                SearchBox.Visibility = Visibility.Visible;
+                SearchButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                SearchBox.Visibility = Visibility.Collapsed;
+                SearchButton.Visibility = Visibility.Visible;
+            }
         }
 
         private async void AccountButton_Click(object sender, RoutedEventArgs e)
@@ -783,6 +793,20 @@ namespace SoundCloudPlus.Pages
                 SearchBox.ItemsSource = await App.SoundCloud.AutoSuggest(value);
                 SearchBox.IsSuggestionListOpen = true;
             }
+        }
+
+        private void SplitViewMenu_PaneClosed(SplitView sender, object args)
+        {
+            SearchBox.Visibility = Visibility.Collapsed;
+            SearchButton.Visibility = Visibility.Visible;
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            SplitViewMenu.IsPaneOpen = true;
+            SearchBox.Visibility = Visibility.Visible;
+            SearchButton.Visibility = Visibility.Collapsed;
+            SearchBox.Focus(FocusState.Keyboard);
         }
     }
 }
