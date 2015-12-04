@@ -22,7 +22,7 @@
                         </Style>
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
-                        <DataTemplate>
+                        <!--<DataTemplate>
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="Artwork: " />
                                 <Image Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
@@ -33,6 +33,28 @@
                                 <TextBlock Text="track count: " />
                                 <TextBlock Text="{Binding Playlist.TrackCount}" />
                             </StackPanel>
+                        </DataTemplate>-->
+                        <DataTemplate>
+                            <Border Style="{StaticResource BorderStyle1}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="78"/>
+                                        <RowDefinition Height="22"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                        <Image x:Name="StreamItemArtworkImage" Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                    </Grid>
+                                    <TextBlock x:Name="StreamItemArtist" Text="{Binding Playlist.Title}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                    <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                    <Run Text="{Binding Playlist.User}" Foreground="Gray"/>
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>

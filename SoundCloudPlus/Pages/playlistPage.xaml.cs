@@ -127,7 +127,7 @@ namespace SoundCloudPlus.Pages
 
         private void PlaylistGridView_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Screen.MakeResponsive(e, 200, 400, PlaylistGridView);
+            Screen.MakeResponsive(e, 400, 800, PlaylistGridView);
         }
 
         
