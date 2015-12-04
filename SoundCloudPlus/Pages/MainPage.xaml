@@ -18,8 +18,7 @@
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          DataContext="{StaticResource MainPageViewModel}">
+    <Grid DataContext="{StaticResource MainPageViewModel}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">
                 <VisualState x:Name="Min720State">
@@ -63,7 +62,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="64" />
         </Grid.RowDefinitions>
-        <Grid Background="#22000000">
+        <Grid Background="{StaticResource AppBarBackgroundThemeBrush}">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="{Binding PageTitle}" Style="{StaticResource AppTitle}" />
             <AutoSuggestBox x:Name="SearchBox" HorizontalAlignment="Right" Width="150" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged" />

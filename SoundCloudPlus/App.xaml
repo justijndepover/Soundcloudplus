@@ -233,15 +233,17 @@
             <Style TargetType="TextBlock" x:Key="IconInProfileTextblock">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}" />
             </Style>
             <Style TargetType="TextBlock" x:Key="TextInMenu">
                 <Setter Property="Padding" Value="10, 12, 0, 4"/>
                 <Setter Property="FontSize" Value="15" />
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}" />
             </Style>
             <Style TargetType="TextBlock" x:Key="AppTitle">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
                 <Setter Property="FontWeight" Value="Bold" />
             </Style>
             <Style TargetType="TextBlock" x:Key="AudioDuration">
