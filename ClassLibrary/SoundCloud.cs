@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using ClassLibrary.API;
 using ClassLibrary.Common;
@@ -14,7 +16,7 @@ namespace ClassLibrary
 {
     ///TODO: Testen followers/ Playlists/ Profile: (Track + Playlist + Repost)
     /// Testen of de items worden toegevoegd wanneer je op het einde van de lijst zit?
-    public class SoundCloud
+    public class SoundCloud : INotifyPropertyChanged
     {
         private static string ClientId { get; } = "776ca412db7b101b1602c6a67b1a0579";
         private static string ClientSecret { get; } = "2a1fb6127a52a2ef55dcfa5474baa9d5";
@@ -23,11 +25,18 @@ namespace ClassLibrary
         private ApiProxy ApiProxy { get; }
         public User CurrentUser { get; set; }
         public bool IsAuthenticated { get; set; }
+        private AudioPlayer _audioPlayer;
+        public AudioPlayer AudioPlayer
+        {
+            get { return _audioPlayer; }
+            set { _audioPlayer = value; OnPropertyChanged(nameof(AudioPlayer)); }
+        }
 
         public SoundCloud()
         {
             ApiProxy = new ApiProxy();
             LoadSettings();
+            AudioPlayer = new AudioPlayer();
         }
 
         private async void LoadSettings()
@@ -681,5 +690,11 @@ namespace ClassLibrary
             return results;
         }
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

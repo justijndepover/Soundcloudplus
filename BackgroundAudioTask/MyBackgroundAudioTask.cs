@@ -47,10 +47,7 @@ namespace BackgroundAudioTask
 
         int? GetTrackId(MediaPlaybackItem item)
         {
-            if (item == null)
-                return null; // no track playing
-
-            return (int)item.Source.CustomProperties[TrackIdKey];
+            return (int?) item?.Source.CustomProperties[TrackIdKey];
         }
         #endregion
 
@@ -421,7 +418,7 @@ namespace BackgroundAudioTask
                 Debug.WriteLine("App suspending"); // App is suspended, you can save your task state at this point
                 _foregroundAppState = AppState.Suspended;
                 var currentTrackId = GetCurrentTrackId();
-                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, currentTrackId == null ? null : currentTrackId.ToString());
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, currentTrackId?.ToString());
                 return;
             }
 
@@ -499,8 +496,7 @@ namespace BackgroundAudioTask
         void CreatePlaybackList(IEnumerable<Track> songs)
         {
             // Make a new list and enable looping
-            _playbackList = new MediaPlaybackList();
-            _playbackList.AutoRepeatEnabled = true;
+            _playbackList = new MediaPlaybackList {AutoRepeatEnabled = true};
             if (songs!= null)
             {
                 // Add playback items to the list
@@ -531,7 +527,6 @@ namespace BackgroundAudioTask
 
         public Uri GetMusicFile(int id)
         {
-            //https://api.soundcloud.com/tracks/230486064/streams?client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=592bdb4
             using (HttpClient client = new HttpClient())
             {
                 var response = AsyncHelper.RunSync(() =>

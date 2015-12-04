@@ -104,7 +104,6 @@ namespace SoundCloudPlus.Pages
         {
             Button b = sender as Button;
             int userId = (int)b.Tag;
-
             MainPage.Current.Navigate(sender, "profile");
         }
 

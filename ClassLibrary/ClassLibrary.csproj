@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="API\ApiProxy.cs" />
     <Compile Include="API\ApiResponse.cs" />
+    <Compile Include="AudioPlayer.cs" />
     <Compile Include="Common\ApplicationSettingsConstants.cs" />
     <Compile Include="Common\ApplicationSettingsHelper.cs" />
     <Compile Include="Common\AppState.cs" />
