@@ -75,7 +75,16 @@ namespace ClassLibrary
         public AudioPlayer()
         {
             _backgroundAudioTaskStarted = new AutoResetEvent(false);
-            StartBackgroundAudioTask();
+            // Start the background task if it wasn't running
+            if (!IsMyBackgroundTaskRunning)
+            {
+                Debug.WriteLine(" - - - - - - - - BackgroundTask is not running");
+                StartBackgroundAudioTask();
+            }
+            else
+            {
+                Debug.WriteLine(" - - - - - - - - BackgroundTask is running");
+            }
         }
         private async void ResetAfterLostBackground()
         {
