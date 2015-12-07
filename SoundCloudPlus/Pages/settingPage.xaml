@@ -16,7 +16,7 @@
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Settings" Style="{StaticResource PageTitle}" />
                 <TextBlock x:Name="Background" RelativePanel.Below="PageTitle" Text="Background" Style="{StaticResource SubTitle}" />
-                <ComboBox RelativePanel.Below="Background" Margin="0 8" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox x:Name="cboTheme" RelativePanel.Below="Background" Margin="0 8" SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem>Default</ComboBoxItem>
                     <ComboBoxItem>Light</ComboBoxItem>
                     <ComboBoxItem>Dark</ComboBoxItem>

@@ -47,7 +47,7 @@ namespace SoundCloudPlus.Pages
 
         private async void LoadTheme()
         {
-            App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<SoundCloudPlus.App.RootFrame.RequestedTheme>();
+            App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<ElementTheme>();
         }
 
         private void _playbackTimer_Tick(object sender, object e)

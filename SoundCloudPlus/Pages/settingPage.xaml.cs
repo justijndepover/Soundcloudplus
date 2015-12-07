@@ -1,4 +1,5 @@
 ﻿using Enough.Storage;
+using SoundCloudPlus.ViewModels;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,6 +18,24 @@ namespace SoundCloudPlus.Pages
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
+            SetThemeIndex();
+        }
+
+        private void SetThemeIndex()
+        {
+            ElementTheme e = App.RootFrame.RequestedTheme;
+            if(e == ElementTheme.Light)
+            {
+                cboTheme.SelectedIndex = 1;
+            }
+            else if(e == ElementTheme.Dark)
+            {
+                cboTheme.SelectedIndex = 2;
+            }
+            else
+            {
+                cboTheme.SelectedIndex = 0;
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
