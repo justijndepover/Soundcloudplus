@@ -100,7 +100,7 @@ namespace SoundCloudPlus.Pages
             {
                 _likePageViewModel =
                     (LikePageViewModel)Resources["LikeViewModel"];
-                if (await App.SoundCloud.IsAuthenticated())
+                if (App.SoundCloud.IsAuthenticated)
                 {
                     _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id);
                 }

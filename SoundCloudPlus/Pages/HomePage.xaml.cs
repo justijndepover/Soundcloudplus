@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -100,11 +101,14 @@ namespace SoundCloudPlus.Pages
             {
                 _homePageViewModel =
                     (HomePageViewModel)Resources["HomePageViewModel"];
-                while (!await App.SoundCloud.IsAuthenticated())
+                while (!App.SoundCloud.IsAuthenticated)
                 {
                     new ManualResetEvent(false).WaitOne(1000);
                 }
-                _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                if (App.SoundCloud.IsAuthenticated)
+                {
+                    _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                }
                 _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
             base.OnNavigatedTo(e);

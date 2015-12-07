@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Windows.UI.Core;
+﻿using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -34,7 +33,7 @@ namespace SoundCloudPlus.Pages
             {
                 _searchPageViewModel =
                     (SearchPageViewModel)Resources["SearchPageViewModel"];
-                if (await App.SoundCloud.IsAuthenticated())
+                if (App.SoundCloud.IsAuthenticated)
                 {
                     _searchPageViewModel.TrackSearchCollection = await App.SoundCloud.Search(e.Parameter as string);
                 }

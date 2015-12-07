@@ -24,6 +24,7 @@ namespace ClassLibrary
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
         public User CurrentUser { get; set; }
+        public bool IsAuthenticated { get; set; }
         private AudioPlayer _audioPlayer;
         public AudioPlayer AudioPlayer
         {
@@ -34,11 +35,11 @@ namespace ClassLibrary
         public SoundCloud()
         {
             ApiProxy = new ApiProxy();
-            AsyncHelper.RunSync(IsAuthenticated);
+            LoadSettings();
             AudioPlayer = new AudioPlayer();
         }
 
-        public async Task<bool> IsAuthenticated()
+        private async void LoadSettings()
         {
             //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
             CurrentUser = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<User>("currentUser"));
@@ -46,9 +47,12 @@ namespace ClassLibrary
             Token = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("token"));
             if (CurrentUser != null && Code != null && Token != null)
             {
-                return true;
+                IsAuthenticated = true;
             }
-            return await SignIn();
+            else
+            {
+                IsAuthenticated = await SignIn();
+            }
         }
 
         #region Stream

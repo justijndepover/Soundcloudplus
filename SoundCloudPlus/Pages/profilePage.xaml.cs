@@ -183,7 +183,7 @@ namespace SoundCloudPlus.Pages
             {
                 _profilePageViewModel =
                     (ProfilePageViewModel)Resources["ProfilePageViewModel"];
-                if (await App.SoundCloud.IsAuthenticated())
+                if (App.SoundCloud.IsAuthenticated)
                 {
                     
                     int id = MainPage.Current.UserId;
