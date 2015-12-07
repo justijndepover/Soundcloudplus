@@ -118,8 +118,7 @@ namespace SoundCloudPlus.Pages
         }
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            MainPage mainPage = MainPage.Current;
-            mainPage.PlayTrack(e.ClickedItem as Track);
+            App.SoundCloud.AudioPlayer.PlayTrack(e.ClickedItem as Track);
         }
 
         #region StreamScroller

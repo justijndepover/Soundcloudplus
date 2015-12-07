@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:PlaylistPageViewModel x:Key="PlaylistViewModel" />
-        <converters:TrackCountConverter x:Key="TrackCountConverter"/>
+        <!--<converters:TrackCountConverter x:Key="TrackCountConverter"/>-->
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
