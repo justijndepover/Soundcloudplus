@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:PlaylistPageViewModel x:Key="PlaylistViewModel" />
-        <!--<converters:TrackCountConverter x:Key="TrackCountConverter"/>-->
+        <converters:TrackCountConverter x:Key="TrackCountConverter"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
@@ -24,18 +24,6 @@
                         </Style>
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
-                        <!--<DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="Artwork: " />
-                                <Image Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
-                                <TextBlock Text="Username: " />
-                                <TextBlock Text="{Binding User.Username}" />
-                                <TextBlock Text="created_at: " />
-                                <TextBlock Text="{Binding CreatedAt}" />
-                                <TextBlock Text="track count: " />
-                                <TextBlock Text="{Binding Playlist.TrackCount}" />
-                            </StackPanel>
-                        </DataTemplate>-->
                         <DataTemplate>
                             <Border Style="{StaticResource BorderStyle1}">
                                 <Grid>

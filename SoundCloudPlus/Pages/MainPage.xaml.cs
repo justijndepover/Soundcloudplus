@@ -17,6 +17,7 @@ using ClassLibrary.Models;
 using Enough.Storage;
 using SoundCloudPlus.ViewModels;
 using TilesAndNotifications.Services;
+using Windows.UI.ViewManagement;
 
 namespace SoundCloudPlus.Pages
 {
@@ -41,6 +42,8 @@ namespace SoundCloudPlus.Pages
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;
+            var appView = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView();
+            appView.Title = "some title...";
         }
 
         private void _playbackTimer_Tick(object sender, object e)
