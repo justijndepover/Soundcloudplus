@@ -1,4 +1,5 @@
-﻿using Windows.UI.Core;
+﻿using Enough.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -42,17 +43,23 @@ namespace SoundCloudPlus.Pages
             currentView.BackRequested -= CurrentView_BackRequested;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox c = sender as ComboBox;
             if(c.SelectedIndex == 0)
             {
-                App.RootFrame.RequestedTheme = ElementTheme.Light;
+                App.RootFrame.RequestedTheme = ElementTheme.Default;
             }
             else if(c.SelectedIndex == 1)
             {
+                App.RootFrame.RequestedTheme = ElementTheme.Light;
+            }
+            else if (c.SelectedIndex == 2)
+            {
                 App.RootFrame.RequestedTheme = ElementTheme.Dark;
             }
+
+            await StorageHelper.SaveObjectAsync(App.RootFrame.RequestedTheme);
         }
     }
 }

@@ -37,11 +37,17 @@ namespace SoundCloudPlus.Pages
         public MainPage()
         {
             InitializeComponent();
+            LoadTheme();
             Current = this;
             NavigationCacheMode = NavigationCacheMode.Required;
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;
+        }
+
+        private async void LoadTheme()
+        {
+            App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<SoundCloudPlus.App.RootFrame.RequestedTheme>();
         }
 
         private void _playbackTimer_Tick(object sender, object e)
