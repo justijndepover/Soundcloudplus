@@ -102,7 +102,6 @@
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
-    <Compile Include="Converters\TrackCountConverter.cs" />
     <Compile Include="Pages\ActivityPage.xaml.cs">
       <DependentUpon>ActivityPage.xaml</DependentUpon>
     </Compile>

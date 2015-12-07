@@ -12,7 +12,7 @@ namespace SoundCloudPlus.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             int val = (int)value;
-            if (val < 2)
+            if(val < 2)
             {
                 return val + " Track";
             }
