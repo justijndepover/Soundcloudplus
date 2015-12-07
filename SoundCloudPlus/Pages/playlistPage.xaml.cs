@@ -102,7 +102,7 @@ namespace SoundCloudPlus.Pages
             {
                 _playlistViewModel =
                     (PlaylistPageViewModel)Resources["PlaylistViewModel"];
-                if (App.SoundCloud.IsAuthenticated)
+                if (await App.SoundCloud.IsAuthenticated())
                 {
                     _playlistViewModel.PlaylistCollection = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id);
                 }

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 using Windows.ApplicationModel;
-using Windows.Foundation;
+using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
@@ -16,6 +14,7 @@ using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
+using Enough.Storage;
 using SoundCloudPlus.ViewModels;
 using TilesAndNotifications.Services;
 
@@ -63,7 +62,7 @@ namespace SoundCloudPlus.Pages
             Application.Current.Suspending += ForegroundApp_Suspending;
             Application.Current.Resuming += ForegroundApp_Resuming;
             await
-                Enough.Storage.StorageHelper.SaveObjectAsync(AppState.Active.ToString(),
+                StorageHelper.SaveObjectAsync(AppState.Active.ToString(),
                     ApplicationSettingsConstants.AppState);
             if (e.NavigationMode != NavigationMode.Back)
             {
@@ -79,7 +78,7 @@ namespace SoundCloudPlus.Pages
         private async void CurrentPlayer_CurrentStateChanged(MediaPlayer sender, object args)
         {
             var currentState = sender.CurrentState; // cache outside of completion or you might get a different value
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 UpdateTransportControls(currentState);
             });
@@ -88,7 +87,7 @@ namespace SoundCloudPlus.Pages
         private void NavButton_Click(object sender, RoutedEventArgs e)
         {
             SplitViewMenu.IsPaneOpen = !SplitViewMenu.IsPaneOpen;
-            if (SplitViewMenu.IsPaneOpen == true)
+            if (SplitViewMenu.IsPaneOpen)
             {
                 SearchBox.Visibility = Visibility.Visible;
                 SearchButton.Visibility = Visibility.Collapsed;
@@ -102,11 +101,10 @@ namespace SoundCloudPlus.Pages
 
         private async void AccountButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!App.SoundCloud.IsAuthenticated)
+            if (!await App.SoundCloud.IsAuthenticated())
             {
               if (await App.SoundCloud.SignIn())
               {
-                  App.SoundCloud.IsAuthenticated = true;
                   //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
                   //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
               }
@@ -255,7 +253,7 @@ namespace SoundCloudPlus.Pages
 
         private async void LoadActivityPageResources()
         {
-            if (!App.SoundCloud.IsAuthenticated)
+            if (!await App.SoundCloud.IsAuthenticated())
             {
                 if (await App.SoundCloud.SignIn())
                 {
@@ -323,7 +321,7 @@ namespace SoundCloudPlus.Pages
         {
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
             {
-                await Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundTaskState.Running.ToString(), ApplicationSettingsConstants.BackgroundTaskState);
+                await StorageHelper.SaveObjectAsync(BackgroundTaskState.Running.ToString(), ApplicationSettingsConstants.BackgroundTaskState);
             }
 
             base.OnNavigatedFrom(e);
@@ -332,7 +330,7 @@ namespace SoundCloudPlus.Pages
         #region Foreground App Lifecycle Handlers
         async void ForegroundApp_Resuming(object sender, object e)
         {
-            await Enough.Storage.StorageHelper.SaveObjectAsync(AppState.Active.ToString(), ApplicationSettingsConstants.AppState);
+            await StorageHelper.SaveObjectAsync(AppState.Active.ToString(), ApplicationSettingsConstants.AppState);
 
             // Verify the task is running
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
@@ -358,7 +356,7 @@ namespace SoundCloudPlus.Pages
                 App.SoundCloud.AudioPlayer.RemoveMediaPlayerEventHandlers();
                 MessageService.SendMessageToBackground(new AppSuspendedMessage());
             }
-            await Enough.Storage.StorageHelper.SaveObjectAsync(AppState.Suspended.ToString(), ApplicationSettingsConstants.AppState);
+            await StorageHelper.SaveObjectAsync(AppState.Suspended.ToString(), ApplicationSettingsConstants.AppState);
 
             deferral.Complete();
         }

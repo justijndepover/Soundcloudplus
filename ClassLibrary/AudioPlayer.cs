@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Media.Playback;
 using Windows.UI.Core;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
+using Enough.Storage;
 
 namespace ClassLibrary
 {
@@ -26,7 +28,7 @@ namespace ClassLibrary
                 string value =
                     AsyncHelper.RunSync(
                         () =>
-                            Enough.Storage.StorageHelper.TryLoadObjectAsync<string>(
+                            StorageHelper.TryLoadObjectAsync<string>(
                                 ApplicationSettingsConstants.BackgroundTaskState));
                 if (value == null)
                 {
@@ -91,7 +93,7 @@ namespace ClassLibrary
             BackgroundMediaPlayer.Shutdown();
             _backgroundAudioTaskStarted.Reset();
             await
-                Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundTaskState.Unknown.ToString(),
+                StorageHelper.SaveObjectAsync(BackgroundTaskState.Unknown.ToString(),
                     ApplicationSettingsConstants.BackgroundTaskState);
 
             try
@@ -110,7 +112,7 @@ namespace ClassLibrary
         {
             AddMediaPlayerEventHandlers();
 
-            var startResult = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            var startResult = CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 bool result = _backgroundAudioTaskStarted.WaitOne(10000);
                 //Send message to initiate playback
@@ -175,7 +177,7 @@ namespace ClassLibrary
             TrackChangedMessage trackChangedMessage;
             if (MessageService.TryParseMessage(e.Data, out trackChangedMessage))
             {
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                 {
                     if (!trackChangedMessage.TrackId.HasValue)
                     {
@@ -217,9 +219,9 @@ namespace ClassLibrary
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
                 // First update the persisted start track
-                await Enough.Storage.StorageHelper.SaveObjectAsync(song.Id, ApplicationSettingsConstants.TrackId);
+                await StorageHelper.SaveObjectAsync(song.Id, ApplicationSettingsConstants.TrackId);
                 await
-                    Enough.Storage.StorageHelper.SaveObjectAsync(new TimeSpan().ToString(),
+                    StorageHelper.SaveObjectAsync(new TimeSpan().ToString(),
                         ApplicationSettingsConstants.Position);
 
                 // Start task
