@@ -23,7 +23,11 @@ namespace ClassLibrary
             {
                 bool isMyBackgroundTaskRunning;
 
-                string value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.BackgroundTaskState) as string;
+                string value =
+                    AsyncHelper.RunSync(
+                        () =>
+                            Enough.Storage.StorageHelper.TryLoadObjectAsync<string>(
+                                ApplicationSettingsConstants.BackgroundTaskState));
                 if (value == null)
                 {
                     return false;
@@ -38,7 +42,6 @@ namespace ClassLibrary
                 }
                 return isMyBackgroundTaskRunning;
             }
-            set { throw new NotImplementedException(); }
         }
         public MediaPlayer CurrentPlayer
         {
@@ -74,15 +77,13 @@ namespace ClassLibrary
             _backgroundAudioTaskStarted = new AutoResetEvent(false);
             StartBackgroundAudioTask();
         }
-        private void ResetAfterLostBackground()
+        private async void ResetAfterLostBackground()
         {
             BackgroundMediaPlayer.Shutdown();
-            IsMyBackgroundTaskRunning = false;
             _backgroundAudioTaskStarted.Reset();
-            //prevButton.IsEnabled = true;
-            //nextButton.IsEnabled = true;
-            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Unknown.ToString());
-            //playButton.Content = "| |";
+            await
+                Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundTaskState.Unknown.ToString(),
+                    ApplicationSettingsConstants.BackgroundTaskState);
 
             try
             {
@@ -188,7 +189,7 @@ namespace ClassLibrary
                 _backgroundAudioTaskStarted.Set();
             }
         }
-        public void PlayTrack(Track track)
+        public async void PlayTrack(Track track)
         {
             var song = track;
             bool trackAlreadyInPlaylist = true;
@@ -207,8 +208,10 @@ namespace ClassLibrary
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
                 // First update the persisted start track
-                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, song.Id);
-                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.Position, new TimeSpan().ToString());
+                await Enough.Storage.StorageHelper.SaveObjectAsync(song.Id, ApplicationSettingsConstants.TrackId);
+                await
+                    Enough.Storage.StorageHelper.SaveObjectAsync(new TimeSpan().ToString(),
+                        ApplicationSettingsConstants.Position);
 
                 // Start task
                 StartBackgroundAudioTask();
