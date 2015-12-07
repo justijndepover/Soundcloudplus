@@ -58,13 +58,11 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Application.Current.Suspending += ForegroundApp_Suspending;
             Application.Current.Resuming += ForegroundApp_Resuming;
-            await
-                Enough.Storage.StorageHelper.SaveObjectAsync(AppState.Active.ToString(),
-                    ApplicationSettingsConstants.AppState);
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Active.ToString());
             if (e.NavigationMode != NavigationMode.Back)
             {
                 MyFrame.Navigate(typeof(HomePage));
@@ -319,20 +317,20 @@ namespace SoundCloudPlus.Pages
             content.DataContext = MyFrame.DataContext;
         }
         
-        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
             {
-                await Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundTaskState.Running.ToString(), ApplicationSettingsConstants.BackgroundTaskState);
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
             }
 
             base.OnNavigatedFrom(e);
         }
 
         #region Foreground App Lifecycle Handlers
-        async void ForegroundApp_Resuming(object sender, object e)
+        void ForegroundApp_Resuming(object sender, object e)
         {
-            await Enough.Storage.StorageHelper.SaveObjectAsync(AppState.Active.ToString(), ApplicationSettingsConstants.AppState);
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Active.ToString());
 
             // Verify the task is running
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
@@ -350,7 +348,7 @@ namespace SoundCloudPlus.Pages
                 //txtCurrentState.Text = CurrentPlayer.CurrentState.ToString();
             }
         }
-        async void ForegroundApp_Suspending(object sender, SuspendingEventArgs e)
+        void ForegroundApp_Suspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
@@ -358,7 +356,7 @@ namespace SoundCloudPlus.Pages
                 App.SoundCloud.AudioPlayer.RemoveMediaPlayerEventHandlers();
                 MessageService.SendMessageToBackground(new AppSuspendedMessage());
             }
-            await Enough.Storage.StorageHelper.SaveObjectAsync(AppState.Suspended.ToString(), ApplicationSettingsConstants.AppState);
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Suspended.ToString());
 
             deferral.Complete();
         }
@@ -441,7 +439,7 @@ namespace SoundCloudPlus.Pages
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            MyFrame?.Navigate(typeof(SearchPage), args.QueryText);
+            MyFrame?.Navigate(typeof(SearchPage), args.ChosenSuggestion);
         }
 
         private async void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

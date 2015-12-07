@@ -3,7 +3,7 @@ using Windows.Storage;
 
 namespace ClassLibrary.Common
 {
-    public class ApplicationSettingHelper
+    public class ApplicationSettingsHelper
     {
         /// <summary>
         /// Function to read a setting value and clear it after reading it

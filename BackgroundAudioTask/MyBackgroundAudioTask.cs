@@ -75,7 +75,7 @@ namespace BackgroundAudioTask
             _smtc.IsPreviousEnabled = true;
 
             // Read persisted state of foreground app
-            var value = AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.TryLoadObjectAsync<object>(ApplicationSettingsConstants.AppState));
+            var value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.AppState);
             _foregroundAppState = value == null ? AppState.Unknown : EnumHelper.Parse<AppState>(value.ToString());
 
             // Add handlers for MediaPlayer
@@ -88,9 +88,7 @@ namespace BackgroundAudioTask
             if (_foregroundAppState != AppState.Suspended)
                 MessageService.SendMessageToForeground(new BackgroundAudioTaskStartedMessage());
 
-            AsyncHelper.RunSync(() =>
-                Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundTaskState.Running.ToString(),
-                    ApplicationSettingsConstants.BackgroundTaskState));
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
 
             _deferral = taskInstance.GetDeferral(); // This must be retrieved prior to subscribing to events below which use it
 
@@ -127,10 +125,10 @@ namespace BackgroundAudioTask
                 _backgroundTaskStarted.Reset();
 
                 // save state
-                AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.SaveObjectAsync(GetCurrentTrackId() == null ? null : GetCurrentTrackId().ToString(), ApplicationSettingsConstants.TrackId));
-                AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundMediaPlayer.Current.Position.ToString(), ApplicationSettingsConstants.Position));
-                AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.SaveObjectAsync(BackgroundTaskState.Canceled.ToString(), ApplicationSettingsConstants.BackgroundTaskState));
-                AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.SaveObjectAsync(Enum.GetName(typeof(AppState), _foregroundAppState), ApplicationSettingsConstants.AppState));
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, GetCurrentTrackId() == null ? null : GetCurrentTrackId().ToString());
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.Position, BackgroundMediaPlayer.Current.Position.ToString());
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Canceled.ToString());
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, Enum.GetName(typeof(AppState), _foregroundAppState));
 
                 // unsubscribe from list changes
                 if (_playbackList != null)
@@ -262,11 +260,8 @@ namespace BackgroundAudioTask
                     _playbackStartedPreviously = true;
 
                     // If the task was cancelled we would have saved the current track and its position. We will try playback from there.
-                    var currentTrackId = AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.TryLoadObjectAsync<object>(ApplicationSettingsConstants.TrackId));
-                    var currentTrackPosition =
-                        AsyncHelper.RunSync(() =>
-                            Enough.Storage.StorageHelper.TryLoadObjectAsync<object>(
-                                ApplicationSettingsConstants.Position));
+                    var currentTrackId = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.TrackId);
+                    var currentTrackPosition = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.Position);
                     if (currentTrackId != null)
                     {
                         // Find the index of the item by name
@@ -350,7 +345,7 @@ namespace BackgroundAudioTask
             if (_foregroundAppState == AppState.Active)
                 MessageService.SendMessageToForeground(new TrackChangedMessage(currentTrackId));
             else
-                AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.SaveObjectAsync(currentTrackId, TrackIdKey));
+                ApplicationSettingsHelper.SaveSettingsValue(TrackIdKey, currentTrackId);
         }
 
         /// <summary>
@@ -423,7 +418,7 @@ namespace BackgroundAudioTask
                 Debug.WriteLine("App suspending"); // App is suspended, you can save your task state at this point
                 _foregroundAppState = AppState.Suspended;
                 var currentTrackId = GetCurrentTrackId();
-                AsyncHelper.RunSync(() => Enough.Storage.StorageHelper.SaveObjectAsync(currentTrackId?.ToString(), ApplicationSettingsConstants.TrackId));
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, currentTrackId?.ToString());
                 return;
             }
 
