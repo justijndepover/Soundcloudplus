@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +25,7 @@ namespace ClassLibrary.Common
                 catch (Exception e)
                 {
                     synch.InnerException = e;
-                    Debug.WriteLine(e.Message);
+                    throw;
                 }
                 finally
                 {

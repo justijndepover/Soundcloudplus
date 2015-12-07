@@ -58,6 +58,9 @@ namespace ClassLibrary
                 {
                     if (ex.HResult == RpcSServerUnavailable)
                     {
+                        // The foreground app uses RPC to communicate with the background process.
+                        // If the background process crashes or is killed for any reason RPC_S_SERVER_UNAVAILABLE
+                        // is returned when calling Current.
                         ResetAfterLostBackground();
                         StartBackgroundAudioTask();
                     }
@@ -74,6 +77,16 @@ namespace ClassLibrary
         public AudioPlayer()
         {
             _backgroundAudioTaskStarted = new AutoResetEvent(false);
+            // Start the background task if it wasn't running
+            if (!IsMyBackgroundTaskRunning)
+            {
+                Debug.WriteLine(" - - - - - - - - BackgroundTask is not running");
+                StartBackgroundAudioTask();
+            }
+            else
+            {
+                Debug.WriteLine(" - - - - - - - - BackgroundTask is running");
+            }
         }
         private async void ResetAfterLostBackground()
         {
@@ -101,19 +114,17 @@ namespace ClassLibrary
 
             var startResult = CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
-                MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
-                MessageService.SendMessageToBackground(new StartPlaybackMessage());
-                //bool result = _backgroundAudioTaskStarted.WaitOne(10000);
-                ////Send message to initiate playback
-                //if (result)
-                //{
-                //    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
-                //    MessageService.SendMessageToBackground(new StartPlaybackMessage());
-                //}
-                //else
-                //{
-                //    throw new Exception("Background Audio Task didn't start in expected time");
-                //}
+                bool result = _backgroundAudioTaskStarted.WaitOne(10000);
+                //Send message to initiate playback
+                if (result)
+                {
+                    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
+                    MessageService.SendMessageToBackground(new StartPlaybackMessage());
+                }
+                else
+                {
+                    throw new Exception("Background Audio Task didn't start in expected time");
+                }
             });
             startResult.Completed = BackgroundTaskInitializationCompleted;
         }
@@ -204,7 +215,6 @@ namespace ClassLibrary
             }
             Debug.WriteLine("Clicked item from App: " + song.Id);
 
-            Debug.WriteLine(CurrentPlayer.CurrentState);
             // Start the background task if it wasn't running
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
@@ -213,7 +223,8 @@ namespace ClassLibrary
                 await
                     StorageHelper.SaveObjectAsync(new TimeSpan().ToString(),
                         ApplicationSettingsConstants.Position);
-                
+
+                // Start task
                 StartBackgroundAudioTask();
             }
             else
