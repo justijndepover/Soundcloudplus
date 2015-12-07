@@ -12,30 +12,52 @@
         <viewModels:ProfilePageViewModel x:Key="ProfilePageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
+        <converters:TimePassedConverter x:Key="TimePassedConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
         <RelativePanel>
-            <TextBlock x:Name="PageTitle" Text="Profile" Style="{StaticResource PageTitle}" />
-                <Border x:Name="ProfileBannerBorder" RelativePanel.Below="PageTitle" Background="Gainsboro" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                    <Grid x:Name="ProfileBannerGrid" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Image Grid.RowSpan="3" Grid.Column="0" Source="{Binding UserObject.AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserObject.FullName}" Style="{StaticResource ProfileName}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UserObject.Username}" Style="{StaticResource ProfileFullName}"/>
-                    </Grid>
-                </Border>
-            <Pivot x:Name="RootPivot" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <Border x:Name="ProfileBannerBorder" Background="{StaticResource SoundcloudOrange}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <Grid x:Name="ProfileBannerGrid" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="85"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.RowSpan="4" Grid.Column="0" Source="{Binding UserObject.AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.FullName}" Style="{StaticResource ProfileName}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.Username}" Style="{StaticResource ProfileFullName}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}">
+                        <StackPanel>
+                            <TextBlock Text="Followers"/>
+                            <TextBlock Text="{Binding UserObject.FollowersCount, Converter={StaticResource IntToMillionConverter}}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource btnProfileMeta}">
+                        <StackPanel>
+                            <TextBlock Text="Following" />
+                            <TextBlock Text="{Binding UserObject.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource btnProfileMeta}">
+                        <StackPanel>
+                            <TextBlock Text="Tracks" />
+                            <TextBlock Text="{Binding UserObject.TrackCount, Converter={StaticResource IntToMillionConverter}}" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+            <Pivot x:Name="RootPivot" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Style="{StaticResource PivotTitle}">
                 <PivotItem Header="Tracks">
                     <ScrollViewer x:Name="svProfileTracks" ViewChanged="SvProfileTracks_OnViewChanged" VerticalScrollBarVisibility="Hidden">
-                        <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="TrackCollectionGridView_SizeChanged">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
                                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -47,68 +69,70 @@
                                     <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="150"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="78"/>
+                                                <RowDefinition Height="22"/>
                                             </Grid.RowDefinitions>
-                                            <Image x:Name="AlbumImage" Source="{Binding ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding User.Username}" />
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Title}" />
-                                            <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right" />
-                                            <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right" />
-                                            <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal">
+                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
+                                                    <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                                </Grid>
+                                            </Grid>
+                                            <TextBlock x:Name="StreamItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                            <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                    <Run Text="{Binding Title}" Foreground="Gray"/>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
+                                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <TextBlock>
-                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Liked" />
+                                                        <Run Text="&#xE006;"/>
+                                                        <Run Text="Like" />
                                                     </TextBlock>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <TextBlock>
-                                                <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Repost" />
+                                                        <Run Text="&#xE8EB;"/>
+                                                        <Run Text="Repost" />
                                                     </TextBlock>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <TextBlock>
-                                                <Run Text="   &#xE728; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Add to playlist" />
+                                                        <Run Text="&#xE728;"/>
+                                                        <Run Text="Add to playlist" />
                                                     </TextBlock>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <TextBlock>
-                                                <Run Text="   &#xE72D; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Share" />
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
-                                                <Run Text="   &#xE896; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Download" />
+                                                        <Run Text="&#xE72D;"/>
+                                                        <Run Text="Share" />
                                                     </TextBlock>
                                                 </Button>
                                             </StackPanel>
-                                            <StackPanel Grid.Row="4" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <TextBlock>
-                                                <Run Text="   &#xE768; " FontFamily="Segoe MDL2 Assets"/>
-                                                <Run Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
-                                                </TextBlock>
-                                                <TextBlock>
-                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
-                                                <Run Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" />
-                                                </TextBlock>
+                                            <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <StackPanel>
+                                                        <TextBlock Text="&#xE768;" Style="{StaticResource SongControlButton}"/>
+                                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <StackPanel>
+                                                        <TextBlock Text="&#xE006;" Style="{StaticResource SongControlButton}"/>
+                                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <StackPanel>
+                                                        <TextBlock Text="&#xE134;" Style="{StaticResource SongControlButton}"/>
+                                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Grid>
                                     </Border>

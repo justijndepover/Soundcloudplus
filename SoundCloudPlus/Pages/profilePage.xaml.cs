@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using ClassLibrary.API;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
+using ClassLibrary.Common;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -282,6 +283,11 @@ namespace SoundCloudPlus.Pages
         private void SvProfileRepost_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void TrackCollectionGridView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Screen.MakeResponsive(e, 400, 800, TrackCollectionGridView);
         }
     }
 }

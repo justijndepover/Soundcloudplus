@@ -42,6 +42,9 @@
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>
+                    <GridView.Footer>
+                        <Grid Height="52" />
+                    </GridView.Footer>
                 </GridView>
             </RelativePanel>
         </ScrollViewer>

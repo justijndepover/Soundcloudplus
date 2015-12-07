@@ -63,7 +63,10 @@
                                         </Border>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
-                            </GridView>
+                            <GridView.Footer>
+                                <Grid Height="52" />
+                            </GridView.Footer>
+                        </GridView>
                         </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="Explore">
@@ -112,7 +115,10 @@
                                         </Border>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
-                            </GridView>
+                            <GridView.Footer>
+                                <Grid Height="52" />
+                            </GridView.Footer>
+                        </GridView>
                         </ScrollViewer>
                     </PivotItem>
                 </Pivot>
