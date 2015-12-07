@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -39,6 +40,19 @@ namespace SoundCloudPlus.Pages
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
             currentView.BackRequested -= CurrentView_BackRequested;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox c = sender as ComboBox;
+            if(c.SelectedIndex == 0)
+            {
+                App.RootFrame.RequestedTheme = ElementTheme.Light;
+            }
+            else if(c.SelectedIndex == 1)
+            {
+                App.RootFrame.RequestedTheme = ElementTheme.Dark;
+            }
         }
     }
 }

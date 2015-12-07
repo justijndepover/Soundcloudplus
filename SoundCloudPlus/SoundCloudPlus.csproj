@@ -137,16 +137,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\TileService.cs" />
     <Compile Include="ViewModels\AcitivityPageViewModel.cs" />
-    <Compile Include="ViewModels\ArtistPageViewModel.cs" />
     <Compile Include="ViewModels\FollowerPageViewModel.cs" />
     <Compile Include="ViewModels\FollowingPageViewModel.cs" />
-    <Compile Include="ViewModels\GenrePageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\LikePageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlaylistPageViewModel.cs" />
     <Compile Include="ViewModels\ProfilePageViewModel.cs" />
-    <Compile Include="ViewModels\RecentPageViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
   </ItemGroup>

@@ -247,8 +247,8 @@
             <Style TargetType="TextBlock" x:Key="PageTitle">
                 <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
                 <Setter Property="FontWeight" Value="Light" />
-                <Setter Property="FontSize" Value="20" />
-                <Setter Property="Margin" Value="0 8" />
+                <Setter Property="FontSize" Value="32" />
+                <Setter Property="Margin" Value="0 0 0 20" />
             </Style>
             <Style TargetType="TextBlock" x:Key="AppTitle">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -264,10 +264,10 @@
             </Style>
             <Style TargetType="TextBlock" x:Key="SubTitle">
                 <Setter Property="TextAlignment" Value="Left"/>
-                <Setter Property="Foreground" Value="Black"/>
-                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
+                <Setter Property="FontSize" Value="24"/>
                 <Setter Property="FontWeight" Value="Light" />
-                <Setter Property="Margin" Value="8 0 0 0" />
+                <Setter Property="Margin" Value="0 0 0 8" />
             </Style>
             <Style TargetType="Pivot" x:Key="PivotTitle" >
                 <Setter Property="Foreground" Value="Black"/>

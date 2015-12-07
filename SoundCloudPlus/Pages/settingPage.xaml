@@ -11,7 +11,16 @@
         <viewModels:SettingPageViewModel x:Key="SettingViewModel" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="PageTitle" Text="Activity" Style="{StaticResource PageTitle}" Margin="8" />
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource SettingViewModel}">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <RelativePanel Style="{StaticResource RelativePanelMargin}">
+                <TextBlock x:Name="PageTitle" Text="Settings" Style="{StaticResource PageTitle}" />
+                <TextBlock x:Name="Background" RelativePanel.Below="PageTitle" Text="Background" Style="{StaticResource SubTitle}" />
+                <ComboBox RelativePanel.Below="Background" Margin="0 8" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem>Light</ComboBoxItem>
+                    <ComboBoxItem>Dark</ComboBoxItem>
+                </ComboBox>
+            </RelativePanel>
+        </ScrollViewer>
     </Grid>
 </Page>
