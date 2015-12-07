@@ -16,7 +16,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
         <ScrollViewer x:Name="svPlaylist" ViewChanged="SvPlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <GridView x:Name="PlaylistGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" SizeChanged="PlaylistGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                <TextBlock x:Name="PageTitle" Text="Playlists" Style="{StaticResource PageTitle}" />
+                <GridView x:Name="PlaylistGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" SizeChanged="PlaylistGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />

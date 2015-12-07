@@ -16,7 +16,8 @@
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <RelativePanel>
-                <Pivot x:Name="RootPivot" Style="{StaticResource PivotTitle}">
+            <TextBlock x:Name="PageTitle" Text="Home" Style="{StaticResource PageTitle}" Margin="8" />
+                <Pivot x:Name="RootPivot" Style="{StaticResource PivotTitle}" RelativePanel.Below="PageTitle">
                     <PivotItem Header="Stream">
                         <!--Pivot content goes here-->
                         <ScrollViewer x:Name="svSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">

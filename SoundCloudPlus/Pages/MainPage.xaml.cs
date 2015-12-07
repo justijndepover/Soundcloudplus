@@ -42,8 +42,6 @@ namespace SoundCloudPlus.Pages
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;
-            var appView = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView();
-            appView.Title = "some title...";
         }
 
         private void _playbackTimer_Tick(object sender, object e)
@@ -168,27 +166,6 @@ namespace SoundCloudPlus.Pages
                     {
                         _mainPageViewModel.PageTitle = "Home";
                         MyFrame?.Navigate(typeof(HomePage));
-                    }
-                    break;
-                case "recent":
-                    if (page?.GetType() != typeof(RecentPage))
-                    {
-                        _mainPageViewModel.PageTitle = "Recent";
-                        MyFrame?.Navigate(typeof(RecentPage));
-                    }
-                    break;
-                case "artist":
-                    if (page?.GetType() != typeof(ArtistPage))
-                    {
-                        _mainPageViewModel.PageTitle = "Artist";
-                        MyFrame?.Navigate(typeof(ArtistPage));
-                    }
-                    break;
-                case "genre":
-                    if (page?.GetType() != typeof(GenrePage))
-                    {
-                        _mainPageViewModel.PageTitle = "Genre";
-                        MyFrame?.Navigate(typeof(GenrePage));
                     }
                     break;
                 case "following":

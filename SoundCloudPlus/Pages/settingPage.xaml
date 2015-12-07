@@ -12,6 +12,6 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock>Settings</TextBlock>
+        <TextBlock x:Name="PageTitle" Text="Activity" Style="{StaticResource PageTitle}" Margin="8" />
     </Grid>
 </Page>

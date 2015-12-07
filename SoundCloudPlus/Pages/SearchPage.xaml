@@ -18,7 +18,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource SearchPageViewModel}">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <GridView x:Name="SearchGridView" IsItemClickEnabled="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackSearchCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="SearchGridView_SizeChanged" ItemClick="SearchGridView_ItemClick">
+                <TextBlock x:Name="PageTitle" Text="Search Result" Style="{StaticResource PageTitle}" />
+                <GridView x:Name="SearchGridView" RelativePanel.Below="PageTitle" IsItemClickEnabled="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackSearchCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="SearchGridView_SizeChanged" ItemClick="SearchGridView_ItemClick">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />

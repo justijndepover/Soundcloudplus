@@ -66,7 +66,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="64" />
         </Grid.RowDefinitions>
-        <Grid Background="{StaticResource MenuFlyoutItemFocusedBackgroundThemeBrush}">
+        <Grid Background="{StaticResource SoundcloudOrange}" Visibility="Collapsed">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="{Binding PageTitle}" Style="{StaticResource AppTitle}" />
         </Grid>
@@ -81,7 +81,7 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
-
+                            <RowDefinition Height="52" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
@@ -89,8 +89,9 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <AutoSuggestBox x:Name="SearchBox" Style="{StaticResource SearchBox}" Grid.Row="0" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged" />
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="SearchButton" Grid.Row="0" Click="SearchButton_Click" Visibility="Collapsed">
+                        <Button x:Name="NavButton2" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
+                        <AutoSuggestBox x:Name="SearchBox" Style="{StaticResource SearchBox}" Grid.Row="1" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged"/>
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="SearchButton" Grid.Row="1" Click="SearchButton_Click" Visibility="Collapsed"  ToolTipService.ToolTip="Search">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -99,7 +100,7 @@
                                 <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE71E;" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Grid.Row="1" Click="Navigation_Click" Tag="home">
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Grid.Row="2" Click="Navigation_Click" Tag="home" ToolTipService.ToolTip="Home">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -109,7 +110,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Home" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="2" Click="Navigation_Click" Tag="following">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3" Click="Navigation_Click" Tag="following"  ToolTipService.ToolTip="Following">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -119,7 +120,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Following" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="3" Click="Navigation_Click" Tag="followers">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4" Click="Navigation_Click" Tag="followers"  ToolTipService.ToolTip="Followers">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -129,7 +130,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}"  Grid.Column="1" Text="Followers" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="4" Click="Navigation_Click" Tag="playlist">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5" Click="Navigation_Click" Tag="playlist" ToolTipService.ToolTip="Playlists">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -139,7 +140,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Playlists" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="5" Click="Navigation_Click" Tag="like">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="6" Click="Navigation_Click" Tag="like" ToolTipService.ToolTip="Likes">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -149,7 +150,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Grid.Row="7" Click="AccountButton_Click" Tag="account">
+                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Grid.Row="8" Click="AccountButton_Click" Tag="account"  ToolTipService.ToolTip="Connect to soundcloud">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -159,7 +160,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect to soundcloud" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="8" Click="Navigation_Click" Tag="profile">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9" Click="Navigation_Click" Tag="profile"  ToolTipService.ToolTip="Profile">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -169,7 +170,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9" Click="Navigation_Click" Tag="activity">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="10" Click="Navigation_Click" Tag="activity"  ToolTipService.ToolTip="Activity">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -179,7 +180,7 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Activity" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="10" Click="Navigation_Click" Tag="setting">
+                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="11" Click="Navigation_Click" Tag="setting"  ToolTipService.ToolTip="Settings">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

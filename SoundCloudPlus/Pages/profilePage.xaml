@@ -16,7 +16,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
         <RelativePanel>
-                <Border x:Name="ProfileBannerBorder" Background="Gainsboro" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <TextBlock x:Name="PageTitle" Text="Profile" Style="{StaticResource PageTitle}" />
+                <Border x:Name="ProfileBannerBorder" RelativePanel.Below="PageTitle" Background="Gainsboro" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                     <Grid x:Name="ProfileBannerGrid" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>

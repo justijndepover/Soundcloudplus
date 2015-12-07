@@ -14,7 +14,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowingViewModel}">
         <ScrollViewer x:Name="svFollowing" VerticalScrollBarVisibility="Hidden" ViewChanged="SvFollowing_OnViewChanged">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <GridView x:Name="FollowingGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
+                <TextBlock x:Name="PageTitle" Text="Following" Style="{StaticResource PageTitle}" />
+                <GridView x:Name="FollowingGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Button Padding="0" Click="onAvatarClick" Tag="{Binding Id}" Style="{StaticResource btnFollower}">

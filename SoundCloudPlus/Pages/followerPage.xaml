@@ -11,11 +11,11 @@
         <viewModels:FollowerPageViewModel x:Key="FollowerViewModel" />
         <local:MainPage x:Key="MainPage"/>
     </Page.Resources>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowerViewModel}">
         <ScrollViewer x:Name="svFollower" ViewChanged="SvFollower_OnViewChanged" VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <GridView x:Name="FollowerGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" SizeChanged="FollowerGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
+                <TextBlock x:Name="PageTitle" Text="Followers" Style="{StaticResource PageTitle}" />
+                <GridView x:Name="FollowerGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" SizeChanged="FollowerGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Button Padding="0" Click="onAvatarClick" Tag="{Binding Id}" Style="{StaticResource btnFollower}">
