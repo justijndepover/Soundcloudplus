@@ -71,6 +71,11 @@
         <Grid x:Name="mobileNavBar" Visibility="Collapsed" Background="{ThemeResource ToggleButtonPointerOverBackgroundThemeBrush}">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="{Binding PageTitle}" Style="{StaticResource AppTitle}" />
+            <Grid Width="60" Height="25" HorizontalAlignment="Right" Margin="0 0 8 0">
+                <Border Background="Red" Padding="0" CornerRadius="3">
+                    <TextBlock Text="Beta" Style="{StaticResource beta}" />
+                </Border>
+            </Grid>
         </Grid>
         <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="2" CompactPaneLength="52" DisplayMode="CompactInline" PaneClosed="SplitViewMenu_PaneClosed" >
             <SplitView.Pane>
