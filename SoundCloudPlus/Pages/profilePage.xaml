@@ -74,8 +74,8 @@
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50"/>
-                                                <RowDefinition Height="78"/>
-                                                <RowDefinition Height="22"/>
+                                                <RowDefinition Height="68"/>
+                                                <RowDefinition Height="32"/>
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
                                                 <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
@@ -89,48 +89,45 @@
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
                                             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
                                                         <Run Text="&#xE006;"/>
-                                                        <Run Text="Like" />
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Repost">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
                                                         <Run Text="&#xE8EB;"/>
-                                                        <Run Text="Repost" />
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Add to playlist">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
                                                         <Run Text="&#xE728;"/>
-                                                        <Run Text="Add to playlist" />
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Share">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
                                                         <Run Text="&#xE72D;"/>
-                                                        <Run Text="Share" />
                                                     </TextBlock>
                                                 </Button>
                                             </StackPanel>
+
                                             <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <StackPanel>
-                                                        <TextBlock Text="&#xE768;" Style="{StaticResource SongControlButton}"/>
-                                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}"/>
+                                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <StackPanel>
-                                                        <TextBlock Text="&#xE006;" Style="{StaticResource SongControlButton}"/>
-                                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
+                                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <StackPanel>
-                                                        <TextBlock Text="&#xE134;" Style="{StaticResource SongControlButton}"/>
-                                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}"/>
+                                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -227,7 +224,7 @@
                     </PivotItem>
                     <PivotItem Header="Reposts">
                     <ScrollViewer x:Name="svProfileRepost" ViewChanged="SvProfileRepost_OnViewChanged" VerticalScrollBarVisibility="Hidden">
-                        <GridView x:Name="RepostCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="PlaylistCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding RepostCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView x:Name="RepostCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="PlaylistCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding RepostCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="RepostCollectionGridView_SizeChanged">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
                                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -239,68 +236,67 @@
                                     <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="150"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="68"/>
+                                                <RowDefinition Height="32"/>
                                             </Grid.RowDefinitions>
-                                            <Image x:Name="AlbumImage" Source="{Binding Track.ArtworkUrl}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource ImageAlbum}"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Track.User.Username}" />
-                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Track.Title}" />
-                                            <TextBlock Grid.Row="1" Grid.Column="7" Text="{Binding CreatedAt}" HorizontalAlignment="Right" />
-                                            <TextBlock Grid.Row="3" Grid.Column="7" Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" HorizontalAlignment="Right" />
-                                            <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal">
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
-                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Liked" />
+                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding Track.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
+                                                    <TextBlock Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                                </Grid>
+                                            </Grid>
+                                            <TextBlock x:Name="StreamItemArtist" Text="{Binding Track.User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                            <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                    <Run Text="{Binding Track.Title}" Foreground="Gray"/>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
+                                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
+                                                        <Run Text="&#xE006;"/>
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
-                                                <Run Text="   &#xE8EB; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Repost" />
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Repost">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
+                                                        <Run Text="&#xE8EB;"/>
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
-                                                <Run Text="   &#xE728; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Add to playlist" />
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Add to playlist">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
+                                                        <Run Text="&#xE728;"/>
                                                     </TextBlock>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
-                                                <Run Text="   &#xE72D; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Share" />
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <TextBlock>
-                                                <Run Text="   &#xE896; " FontFamily="Segoe MDL2 Assets"/>
-                                                 <Run Text="Download" />
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Share">
+                                                    <TextBlock Style="{StaticResource FunctionIcon}">
+                                                        <Run Text="&#xE72D;"/>
                                                     </TextBlock>
                                                 </Button>
                                             </StackPanel>
-                                            <StackPanel Grid.Row="4" Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <TextBlock>
-                                                <Run Text="   &#xE768; " FontFamily="Segoe MDL2 Assets"/>
-                                                <Run Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}" />
-                                                </TextBlock>
-                                                <TextBlock>
-                                                <Run Text="   &#xE006; " FontFamily="Segoe MDL2 Assets"/>
-                                                <Run Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}" />
-                                                </TextBlock>
+
+                                            <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}"/>
+                                                        <TextBlock Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
+                                                        <TextBlock Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}"/>
+                                                        <TextBlock Text="{Binding Track.CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Grid>
                                     </Border>

@@ -13,6 +13,13 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
+            
+            <!--POPUP-->
+            <Style TargetType="Button" x:Key="BtnProfilePopup" >
+                <Setter Property="Foreground" Value="{ThemeResource DefaultTextForegroundThemeBrush}" />
+                <Setter Property="Margin" Value="8" />
+            </Style>
+            
             <!--BUTTONS-->
             <Style TargetType="Button" x:Key="BtnProfileMenuActive">
                 <Setter Property="Background" Value="Orange"/>
@@ -28,9 +35,9 @@
             </Style>
             <Style TargetType="Button" x:Key="BtnProfileMenuFunctionButtons">
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -46,7 +53,7 @@
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
         							Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundThemeBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
         							Storyboard.TargetProperty="Foreground">
@@ -505,6 +512,15 @@
                 <Setter Property="VerticalAlignment" Value="Top"/>
                 <Setter Property="Foreground" Value="white"/>
                 <Setter Property="Margin" Value="20 0 0 0"/>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="FunctionText">
+                <Setter Property="Padding" Value="0 5 8 4" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="FunctionIcon">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+                <Setter Property="Padding" Value="8" />
             </Style>
             
             <!--GRID-->

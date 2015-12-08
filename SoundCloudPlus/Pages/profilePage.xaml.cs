@@ -289,5 +289,10 @@ namespace SoundCloudPlus.Pages
         {
             Screen.MakeResponsive(e, 400, 800, TrackCollectionGridView);
         }
+
+        private void RepostCollectionGridView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Screen.MakeResponsive(e, 400, 800, RepostCollectionGridView);
+        }
     }
 }
