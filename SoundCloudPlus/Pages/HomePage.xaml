@@ -15,6 +15,25 @@
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStatesInFrame">
+                <VisualState x:Name="Min320State">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitle.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <RelativePanel>
             <TextBlock x:Name="PageTitle" Text="Home" Style="{StaticResource PageTitle}" Margin="20" />
                 <Pivot x:Name="RootPivot" Style="{StaticResource PivotTitle}" RelativePanel.Below="PageTitle">

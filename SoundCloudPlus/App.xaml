@@ -402,8 +402,7 @@
             <Style TargetType="TextBlock" x:Key="AppTitle">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Foreground" Value="{ThemeResource DefaultTextForegroundThemeBrush}"/>
             </Style>
             <Style TargetType="TextBlock" x:Key="AudioDuration">
                 <Setter Property="Foreground" Value="White"/>
