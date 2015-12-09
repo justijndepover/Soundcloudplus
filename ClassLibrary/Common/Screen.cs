@@ -46,10 +46,10 @@ namespace ClassLibrary.Common
             }
         }
 
-        public static int getLimitItems(double screenHeight, double screenWidth, int itemWidth, int minItemWidth)
+        public static int getLimitItems(double screenHeight, double screenWidth, int itemWidth, int minItemWidth, int itemHeight, int minItemHeight)
         {
             int cols = GetNumberOfColumns(screenWidth, itemWidth, minItemWidth);
-            int rows = GetNumberOfRows(screenHeight, itemWidth, minItemWidth);
+            int rows = GetNumberOfRows(screenHeight, itemHeight, minItemHeight);
             return (int)((cols*rows)*1.5);
         }
     }
