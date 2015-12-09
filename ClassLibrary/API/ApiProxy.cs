@@ -6,7 +6,10 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Security.Authentication.Web;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Enough.Storage;
 using Newtonsoft.Json;
 
@@ -86,22 +89,36 @@ namespace ClassLibrary.API
                         client.DefaultRequestHeaders.Add(property.Name, val.ToString());
                     }
                 }
-
-                HttpResponseMessage response = await client.GetAsync(finalEndpoint);
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    apiResponse.Succes = true;
-                    apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());                  
+                    HttpResponseMessage response = await client.GetAsync(finalEndpoint);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        apiResponse.Succes = true;
+                        apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());                  
+                    }
+                    else
+                    {
+                        apiResponse.Succes = false;
+                        await StorageHelper.DeleteObjectAsync<string>("code");
+                        await StorageHelper.DeleteObjectAsync<string>("token");
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    apiResponse.Succes = false;
-                    await StorageHelper.DeleteObjectAsync<string>("code");
-                    await StorageHelper.DeleteObjectAsync<string>("token");
+                    MessageDialog md = new MessageDialog("Please check your internet connection", "Sorry, we encountered an error");
+                    md.Commands.Add(new UICommand("Close", Action));
+                    await md.ShowAsync();
                 }
             }
             return apiResponse;
         }
+
+        private void Action(IUICommand command)
+        {
+            Application.Current.Exit();
+        }
+
         private async Task<ApiResponse> Post(string endpoint, string queryString, object body, object queryHeaders = null)
         {
             var apiResponse = new ApiResponse();
