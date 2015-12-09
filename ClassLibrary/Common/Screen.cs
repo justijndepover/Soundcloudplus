@@ -30,5 +30,27 @@ namespace ClassLibrary.Common
                 w += itemWidth;
             }
         }
+
+        private static int GetNumberOfRows(double screenHeight, int itemWidth, int minItemWidth)
+        {
+            int w = minItemWidth - 1;
+            int c = 1;
+            while (true)
+            {
+                if (screenHeight <= w)
+                {
+                    return c;
+                }
+                c++;
+                w += itemWidth;
+            }
+        }
+
+        public static int getLimitItems(double screenHeight, double screenWidth, int itemWidth, int minItemWidth)
+        {
+            int cols = GetNumberOfColumns(screenWidth, itemWidth, minItemWidth);
+            int rows = GetNumberOfRows(screenHeight, itemWidth, minItemWidth);
+            return (int)((cols*rows)*1.5);
+        }
     }
 }

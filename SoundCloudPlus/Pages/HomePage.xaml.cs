@@ -104,6 +104,7 @@ namespace SoundCloudPlus.Pages
                 {
                     new ManualResetEvent(false).WaitOne(1000);
                 }
+                int limit = Screen.getLimitItems(this.Height, this.Width, 400, 800);
                 _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream();
                 _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
