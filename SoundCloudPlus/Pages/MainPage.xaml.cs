@@ -407,18 +407,20 @@ namespace SoundCloudPlus.Pages
 
         private void UpdateTransportControls(MediaPlayerState state)
         {
+            _mainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.PlayList[0];
             if (state == MediaPlayerState.Playing)
             {
                 MusicPlayerControl.Visibility = Visibility.Visible;
                 _playbackTimer.Start();
                 playbuttonicon.Glyph = "\ue769";
-                playbuttonicon.Glyph = "| |";     // Change to pause button
+                
+                //playbuttonicon.Glyph = "| |";     // Change to pause button
             }
             else
             {
                 _playbackTimer.Stop();
                 playbuttonicon.Glyph = "\ue768";
-                playbuttonicon.Glyph = ">";     // Change to play button
+                //playbuttonicon.Glyph = ">";     // Change to play button
             }
         }
         #endregion Button Click Event Handlers
