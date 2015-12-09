@@ -162,16 +162,6 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Likes" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="AccountButton" Grid.Row="8" Click="AccountButton_Click" Tag="account"  ToolTipService.ToolTip="Connect to soundcloud">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE895;" FontSize="14"/>
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Connect to soundcloud" />
-                            </Grid>
-                        </Button>
                         <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="9" Click="Navigation_Click" Tag="profile"  ToolTipService.ToolTip="Profile">
                             <Grid>
                                 <Grid.ColumnDefinitions>

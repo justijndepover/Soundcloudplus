@@ -74,7 +74,6 @@ namespace SoundCloudPlus.Pages
                     await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, b);
                     newPlaylistCollection = newCollection;
                 }
-                
             }
         }
         private void SvPlaylist_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
