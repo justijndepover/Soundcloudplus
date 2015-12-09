@@ -104,21 +104,32 @@ namespace SoundCloudPlus.Pages
                 {
                     new ManualResetEvent(false).WaitOne(1000);
                 }
-                //int limit = Screen.getLimitItems(this.Height, this.Width, 400, 800);
-                _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+
+                UpdateStreamExploreCollection();
             }
             base.OnNavigatedTo(e);
+        }
+
+        private async void UpdateStreamExploreCollection()
+        {
+            var bounds = Window.Current.Bounds;
+            double height = bounds.Height;
+            double width = bounds.Width;
+            int limit = Screen.getLimitItems(height, width, 400, 800);
+            _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
+            _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
         }
 
         private void StreamGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, StreamGridView);
+            UpdateStreamExploreCollection();
         }
 
         private void ExploreGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, ExploreGridView);
+            UpdateStreamExploreCollection();
         }
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
@@ -134,16 +145,18 @@ namespace SoundCloudPlus.Pages
 
             if (maxVerticalOffsetStream < 0 || verticalOffsetStream == maxVerticalOffsetStream)
             {
-                if (bwStream.IsBusy == false) {
+                if (bwStream.IsBusy == false)
+                {
                     bwStream.RunWorkerAsync();
-                }  
+                }
             }
         }
-        
+
         private async void StreamScroller()
         {
             var e = App.SoundCloud.GetStreamNextHref();
-            if (e != null) {
+            if (e != null)
+            {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
                 ObservableCollection<Track> newCollection = await App.SoundCloud.GetStream(b);
                 newStreamCollection = newCollection;

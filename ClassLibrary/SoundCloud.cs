@@ -53,9 +53,9 @@ namespace ClassLibrary
 
         #region Stream
         private string StreamNextHref = "";
-        public async Task<ObservableCollection<Track>> GetStream()
+        public async Task<ObservableCollection<Track>> GetStream(int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = 20, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = limitValue, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
@@ -97,9 +97,9 @@ namespace ClassLibrary
 
         #region Explore
         private string ExploreNextHref = "";
-        public async Task<ObservableCollection<Track>> GetExplore()
+        public async Task<ObservableCollection<Track>> GetExplore(int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = 20, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
