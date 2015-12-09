@@ -123,13 +123,11 @@ namespace SoundCloudPlus.Pages
         private void StreamGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, StreamGridView);
-            UpdateStreamExploreCollection();
         }
 
         private void ExploreGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, ExploreGridView);
-            UpdateStreamExploreCollection();
         }
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
