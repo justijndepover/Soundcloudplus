@@ -68,9 +68,13 @@ namespace SoundCloudPlus.Pages
             if (e != null)
             {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
-                ObservableCollection<PlaylistCollection> newCollection =
+                if (b != "")
+                {
+                    ObservableCollection<PlaylistCollection> newCollection =
                     await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, b);
-                newPlaylistCollection = newCollection;
+                    newPlaylistCollection = newCollection;
+                }
+                
             }
         }
         private void SvPlaylist_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
