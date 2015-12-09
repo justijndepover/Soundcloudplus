@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Security.Authentication.Web;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
