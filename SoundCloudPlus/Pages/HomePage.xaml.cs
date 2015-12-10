@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace SoundCloudPlus.Pages
 {
@@ -189,5 +191,14 @@ namespace SoundCloudPlus.Pages
             }
         }
         #endregion
+
+        private void LikeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Style = Application.Current.Resources["BtnLikeActive"] as Style;
+
+            TextBlock txb = (TextBlock)b.Content;
+            txb.Text = "\ue0a5";
+        }
     }
 }

@@ -73,15 +73,13 @@
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
                                             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like">
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like" Click="LikeButton_Click">
                                                     <TextBlock Style="{StaticResource FunctionIcon}">
                                                         <Run Text="&#xE006;"/>
                                                     </TextBlock>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Repost">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE8EB;"/>
-                                                    </TextBlock>
+                                                    <TextBlock Style="{StaticResource FunctionIcon}" Text="&#xE8EB;"/>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Add to playlist">
                                                     <TextBlock Style="{StaticResource FunctionIcon}">
