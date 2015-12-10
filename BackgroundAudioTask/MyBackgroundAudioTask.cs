@@ -59,6 +59,8 @@ namespace BackgroundAudioTask
         /// <param name="taskInstance"></param>
         public void Run(IBackgroundTaskInstance taskInstance)
         {
+            try
+            {
             Debug.WriteLine("Background Audio Task " + taskInstance.Task.Name + " starting...");
 
             // Initialize SystemMediaTransportControls (SMTC) for integration with
@@ -101,6 +103,12 @@ namespace BackgroundAudioTask
             // Associate a cancellation and completed handlers with the background task.
             taskInstance.Task.Completed += TaskCompleted;
             taskInstance.Canceled += OnCanceled; // event may raise immediately before continung thread excecution so must be at the end
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>

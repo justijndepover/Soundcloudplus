@@ -1,0 +1,2 @@
+MainPackage=C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\bin\x86\Release\SoundCloudPlus_0.1.1.0_x86.appx
+SymbolPackage=C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\AppPackages\SoundCloudPlus_0.1.1.0_Test\SoundCloudPlus_0.1.1.0_x86.appxsym
