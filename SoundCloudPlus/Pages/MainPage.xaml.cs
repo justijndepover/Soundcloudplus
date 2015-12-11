@@ -251,7 +251,7 @@ namespace SoundCloudPlus.Pages
             {
                 if (await App.SoundCloud.SignIn())
                 {
-                    GetActivities();
+                    UpdateActivityCollection();
                 }
                 else
                 {
@@ -260,16 +260,32 @@ namespace SoundCloudPlus.Pages
             }
             else
             {
-                GetActivities();
+                UpdateActivityCollection();
             }
         }
 
-        private async void GetActivities()
+        private async void UpdateActivityCollection()
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                GetActivities(limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
+        }
+
+        private async void GetActivities(int limit)
         {
             Activity a;
             try
             {
-                a = await App.SoundCloud.GetActivities();
+                a = await App.SoundCloud.GetActivities(limit);
                 _mainPageViewModel.ActivityObject = a;
             }
             catch (Exception)

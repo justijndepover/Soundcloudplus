@@ -164,9 +164,9 @@ namespace ClassLibrary
         #endregion
 
         #region Activities
-        public async Task<Activity> GetActivities()
+        public async Task<Activity> GetActivities(int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/activities", null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/activities", null, new { limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             Activity activity = new Activity();
             if (apiResponse.Succes)
             {
