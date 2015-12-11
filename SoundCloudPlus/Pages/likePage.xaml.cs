@@ -102,11 +102,27 @@ namespace SoundCloudPlus.Pages
                     (LikePageViewModel)Resources["LikeViewModel"];
                 if (await App.SoundCloud.IsAuthenticated())
                 {
-                    _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id);
+                    UpdateLikeCollection();
                 }
             }
             base.OnNavigatedTo(e);
             
+        }
+
+        private async void UpdateLikeCollection()
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id, limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
         }
 
         private void TrackLikesGridView_SizeChanged(object sender, SizeChangedEventArgs e)

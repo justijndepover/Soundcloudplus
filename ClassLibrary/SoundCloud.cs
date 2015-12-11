@@ -564,9 +564,9 @@ namespace ClassLibrary
 
         #region Likes
         private string LikesNextHref = "";
-        public async Task<ObservableCollection<Track>> GetLikes(int userId)
+        public async Task<ObservableCollection<Track>> GetLikes(int userId, int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/track_likes", null, new { tag = "out-of-experiment", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/"+userId+"/track_likes", null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracklikes = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
