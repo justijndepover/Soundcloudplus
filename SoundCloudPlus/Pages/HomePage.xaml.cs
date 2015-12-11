@@ -21,7 +21,7 @@ namespace SoundCloudPlus.Pages
         private HomePageViewModel _homePageViewModel;
         private BackgroundWorker bwExplore = new BackgroundWorker();
         private BackgroundWorker bwStream = new BackgroundWorker();
-        private ObservableCollection<Track> newStreamCollection = new ObservableCollection<Track>();
+        private ObservableCollection<StreamCollection> newStreamCollection = new ObservableCollection<StreamCollection>();
         private ObservableCollection<Track> newExploreCollection = new ObservableCollection<Track>();
         private double verticalOffsetStream;
         private double verticalOffsetExplore;
@@ -49,9 +49,9 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                foreach (Track t in newStreamCollection)
+                foreach (StreamCollection s in newStreamCollection)
                 {
-                    _homePageViewModel.StreamCollection.Add(t);
+                    _homePageViewModel.StreamCollection.Add(s);
                 }
             }
             catch (Exception) { }
@@ -162,7 +162,8 @@ namespace SoundCloudPlus.Pages
         }
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            App.SoundCloud.AudioPlayer.PlayTrack(e.ClickedItem as Track);
+            StreamCollection s = e.ClickedItem as StreamCollection;
+            App.SoundCloud.AudioPlayer.PlayTrack(s.Track as Track);
         }
 
         #region StreamScroller
@@ -187,7 +188,7 @@ namespace SoundCloudPlus.Pages
             if (e != null)
             {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
-                ObservableCollection<Track> newCollection = await App.SoundCloud.GetStream(b);
+                ObservableCollection<StreamCollection> newCollection = await App.SoundCloud.GetStream(b);
                 newStreamCollection = newCollection;
             }
         }

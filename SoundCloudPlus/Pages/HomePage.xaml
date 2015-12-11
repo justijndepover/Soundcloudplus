@@ -57,16 +57,16 @@
                                                 <RowDefinition Height="32"/>
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding Track.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
                                                 <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                                    <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                                    <TextBlock Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>
                                             </Grid>
-                                            <TextBlock x:Name="StreamItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                            <TextBlock x:Name="StreamItemArtist" Text="{Binding Track.User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
                                             <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
-                                                    <Run Text="{Binding Title}" Foreground="Gray"/>
+                                                    <Run Text="{Binding Track.Title}" Foreground="Gray"/>
                                             </TextBlock>
-                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Track.CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
                                             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like" Click="LikeButton_Click">
                                                     <TextBlock Style="{StaticResource FunctionIcon}">
@@ -92,19 +92,19 @@
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}"/>
-                                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                        <TextBlock Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
-                                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                        <TextBlock Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}"/>
-                                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                        <TextBlock Text="{Binding Track.CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
