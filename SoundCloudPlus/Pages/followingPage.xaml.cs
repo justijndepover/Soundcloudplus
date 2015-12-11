@@ -89,8 +89,6 @@ namespace SoundCloudPlus.Pages
                 double width = bounds.Width;
                 int limit = Screen.getLimitItems(height, width, 200, 400, 200, 400);
                 _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id, limit);
-                //_homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
-                //_homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
             }
             catch (Exception)
             {

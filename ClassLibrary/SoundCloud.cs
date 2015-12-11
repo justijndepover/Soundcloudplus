@@ -461,9 +461,9 @@ namespace ClassLibrary
 
         #region Followers
         private string FollowerNextHref = "";
-        public async Task<ObservableCollection<User>> GetFollowers(int userId)
+        public async Task<ObservableCollection<User>> GetFollowers(int userId, int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followers", null, new { keepBlocked = true, limit = 40, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followers", null, new { keepBlocked = true, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<User> followers = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {
