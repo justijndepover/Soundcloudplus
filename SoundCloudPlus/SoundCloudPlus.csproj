@@ -159,7 +159,6 @@
     <None Include="SoundCloudPlus_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\19 - The Chemical Brothers - Go.mp3" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\StoreLogo.scale-200.png" />

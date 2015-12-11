@@ -210,19 +210,19 @@
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding PlayingTrack.ArtworkUrl, Mode=TwoWay}" Style="{StaticResource MusicControlImage}"></Image>
+            <Image Source="{Binding CurrentTrack.ArtworkUrl, Mode=TwoWay}" Style="{StaticResource MusicControlImage}"></Image>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{Binding PlayingTrack.User.Username, Mode=TwoWay}" Style="{StaticResource MusicControlArtistText}" />
-                <TextBlock Grid.Row="1" Text="{Binding PlayingTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
+                <TextBlock Grid.Row="0" Text="{Binding CurrentTrack.User.Username, Mode=TwoWay}" Style="{StaticResource MusicControlArtistText}" />
+                <TextBlock Grid.Row="1" Text="{Binding CurrentTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
             </Grid>
 
             <TextBlock x:Name="PlayerPosition" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
             <ProgressBar x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0" IsEnabled="True"/>
-            <TextBlock x:Name="PlayerDuration" Text="{Binding PlayingTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
+            <TextBlock x:Name="PlayerDuration" Text="{Binding CurrentTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
             <Button Grid.Column="5" Style="{StaticResource IconInMusicControl}" Click="prevButton_Click">
                 <FontIcon Glyph="&#xE892;" />
             </Button>

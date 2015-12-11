@@ -21,6 +21,7 @@ namespace ClassLibrary
         private const int RpcSServerUnavailable = -2147023174; // 0x800706BA
         private readonly AutoResetEvent _backgroundAudioTaskStarted;
         public List<Track> PlayList { get; set; }
+        public Track CurrentTrack { get; set; }
         public bool IsMyBackgroundTaskRunning
         {
             get
@@ -175,11 +176,11 @@ namespace ClassLibrary
                         return;
                     }
                     
-                    var song = PlayList.Where(track =>
+                    CurrentTrack = PlayList.Where(track =>
                     {
                         Debug.Assert(track.Id != null, "track.Id != null");
                         return track.Id.Value.Equals(trackChangedMessage.TrackId.Value);
-                    });
+                    }).FirstOrDefault();
                 });
                 return;
             }

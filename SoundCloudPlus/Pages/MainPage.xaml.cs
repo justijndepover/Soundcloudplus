@@ -23,8 +23,6 @@ namespace SoundCloudPlus.Pages
     {
         public static MainPage Current;
         private MainPageViewModel _mainPageViewModel;
-        public List<Track> PlayList { get; set; }
-        public Track CurrentTrack { get; set; }
         public string PageTitle;
         readonly DispatcherTimer _playbackTimer = new DispatcherTimer();
 
@@ -48,7 +46,7 @@ namespace SoundCloudPlus.Pages
             App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<ElementTheme>();
         }
 
-        private async void _playbackTimer_Tick(object sender, object e)
+        private void _playbackTimer_Tick(object sender, object e)
         {
             var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
@@ -76,6 +74,7 @@ namespace SoundCloudPlus.Pages
                     MyFrame.Navigate(typeof(HomePage));
                     _mainPageViewModel =
                         (MainPageViewModel)Resources["MainPageViewModel"];
+                    MusicPlayerControl.DataContext = App.SoundCloud.AudioPlayer;
                     _mainPageViewModel.PageTitle = "Home";
                     App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                 }
@@ -108,28 +107,6 @@ namespace SoundCloudPlus.Pages
             {
                 SearchBox.Visibility = Visibility.Collapsed;
                 SearchButton.Visibility = Visibility.Visible;
-            }
-        }
-
-        private async void AccountButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!await App.SoundCloud.IsAuthenticated())
-            {
-                if (await App.SoundCloud.SignIn())
-                {
-                    //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                    //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
-                }
-                else
-                {
-                    await new MessageDialog("There was a problem signing you in").ShowAsync();
-                }
-            }
-            else
-            {
-                await new MessageDialog("You are already signed in").ShowAsync();
-                //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
             }
         }
 
@@ -293,7 +270,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private async void UpdateActivityCollection()
+        private void UpdateActivityCollection()
         {
             try
             {
