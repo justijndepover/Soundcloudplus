@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -102,9 +103,22 @@ namespace SoundCloudPlus.Pages
             {
                 _homePageViewModel =
                     (HomePageViewModel)Resources["HomePageViewModel"];
-                while (!await App.SoundCloud.IsAuthenticated())
+                int attempts = 0;
+                try
                 {
-                    new ManualResetEvent(false).WaitOne(1000);
+                    while (!await App.SoundCloud.IsAuthenticated())
+                    {
+                        if (attempts == 2)
+                        {
+                            Application.Current.Exit();
+                        }
+                        attempts = attempts + 1;
+                        new ManualResetEvent(false).WaitOne(1000);
+                    }
+                }
+                catch (Exception)
+                {
+                    Application.Current.Exit();
                 }
 
                 UpdateStreamExploreCollection();
@@ -114,12 +128,19 @@ namespace SoundCloudPlus.Pages
 
         private async void UpdateStreamExploreCollection()
         {
-            var bounds = Window.Current.Bounds;
-            double height = bounds.Height;
-            double width = bounds.Width;
-            int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
-            _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
-            _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
+                _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
         }
 
         private void StreamGridView_SizeChanged(object sender, SizeChangedEventArgs e)

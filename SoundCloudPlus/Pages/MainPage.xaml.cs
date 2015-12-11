@@ -73,11 +73,18 @@ namespace SoundCloudPlus.Pages
                     ApplicationSettingsConstants.AppState);
             if (e.NavigationMode != NavigationMode.Back)
             {
-                MyFrame.Navigate(typeof(HomePage));
-                _mainPageViewModel =
-                    (MainPageViewModel)Resources["MainPageViewModel"];
-                _mainPageViewModel.PageTitle = "Home";
-                App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                try
+                {
+                    MyFrame.Navigate(typeof(HomePage));
+                    _mainPageViewModel =
+                        (MainPageViewModel)Resources["MainPageViewModel"];
+                    _mainPageViewModel.PageTitle = "Home";
+                    App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                }
+                catch (Exception)
+                {
+                    Application.Current.Exit();
+                }
             }
             base.OnNavigatedTo(e);
         }
