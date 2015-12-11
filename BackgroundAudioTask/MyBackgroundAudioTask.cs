@@ -495,6 +495,7 @@ namespace BackgroundAudioTask
             try
             {
                 _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
+                MessageService.SendMessageToForeground(new TrackChangedMessage((int) index));
                 _playbackList.MoveTo(index);
             }
             catch (Exception)

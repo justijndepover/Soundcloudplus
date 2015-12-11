@@ -18,7 +18,6 @@ using ClassLibrary.Models;
 using Enough.Storage;
 using SoundCloudPlus.ViewModels;
 using TilesAndNotifications.Services;
-using Windows.UI.ViewManagement;
 
 namespace SoundCloudPlus.Pages
 {
@@ -51,7 +50,7 @@ namespace SoundCloudPlus.Pages
             App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<ElementTheme>();
         }
 
-        private void _playbackTimer_Tick(object sender, object e)
+        private async void _playbackTimer_Tick(object sender, object e)
         {
             var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
