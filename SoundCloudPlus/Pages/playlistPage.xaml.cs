@@ -107,10 +107,26 @@ namespace SoundCloudPlus.Pages
                     (PlaylistPageViewModel)Resources["PlaylistViewModel"];
                 if (await App.SoundCloud.IsAuthenticated())
                 {
-                    _playlistViewModel.PlaylistCollection = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id);
+                    UpdatePlaylistCollection();
                 }
             }
             base.OnNavigatedTo(e);
+        }
+
+        private async void UpdatePlaylistCollection()
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                _playlistViewModel.PlaylistCollection = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)

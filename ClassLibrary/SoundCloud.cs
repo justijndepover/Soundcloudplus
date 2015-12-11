@@ -275,9 +275,9 @@ namespace ClassLibrary
 
         #region Playlists_Page
             private string PlaylistNextHref = "";
-            public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId)
+            public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId, int limitValue)
             {
-                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists/liked_and_owned", null, new { keepBlocked = true, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists/liked_and_owned", null, new { keepBlocked = true, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
                 PlaylistObject pO = new PlaylistObject();
                 if (apiResponse.Succes)
                 {
