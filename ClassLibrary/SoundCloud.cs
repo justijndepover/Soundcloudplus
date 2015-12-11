@@ -77,7 +77,7 @@ namespace ClassLibrary
                 foreach (var item in apiResponse.Data["collection"])
                 {
 
-                    tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
+                    tracks.Add(JsonConvert.DeserializeObject<StreamCollection>(item.ToString()));
 
                 }
                 StreamNextHref = apiResponse.Data["next_href"];
