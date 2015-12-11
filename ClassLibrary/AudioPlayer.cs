@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -16,12 +18,18 @@ using TilesAndNotifications.Services;
 
 namespace ClassLibrary
 {
-    public class AudioPlayer
+    public class AudioPlayer : INotifyPropertyChanged
     {
         private const int RpcSServerUnavailable = -2147023174; // 0x800706BA
         private readonly AutoResetEvent _backgroundAudioTaskStarted;
+        private Track _currentTrack;
         public List<Track> PlayList { get; set; }
-        public Track CurrentTrack { get; set; }
+        public Track CurrentTrack
+        {
+            get { return _currentTrack; }
+            set { _currentTrack = value; OnPropertyChanged(nameof(CurrentTrack)); }
+        }
+
         public bool IsMyBackgroundTaskRunning
         {
             get
@@ -248,6 +256,12 @@ namespace ClassLibrary
             {
                 CurrentPlayer.Play();
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
