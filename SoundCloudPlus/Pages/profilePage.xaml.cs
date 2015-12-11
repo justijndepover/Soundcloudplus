@@ -8,9 +8,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.API;
-using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
+using ClassLibrary.Common;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,7 +30,7 @@ namespace SoundCloudPlus.Pages
         private ObservableCollection<PlaylistCollection> newProfilePlaylistCollection =
             new ObservableCollection<PlaylistCollection>();
 
-        private ObservableCollection<RepostCollection> newProfileRepostCollection = new ObservableCollection<RepostCollection>();   
+        private ObservableCollection<RepostCollection> newProfileRepostCollection = new ObservableCollection<RepostCollection>();
         private double verticalOffsetProfileTrack;
         private double verticalOffsetProfilePlaylist;
         private double verticalOffsetProfileRepost;
@@ -70,7 +70,7 @@ namespace SoundCloudPlus.Pages
                 }
                 newProfileTrackCollection.Clear();
             }
-            catch (Exception){ }
+            catch (Exception) { }
             bwProfileTrack.CancelAsync();
         }
 
@@ -187,7 +187,7 @@ namespace SoundCloudPlus.Pages
                     (ProfilePageViewModel)Resources["ProfilePageViewModel"];
                 if (await App.SoundCloud.IsAuthenticated())
                 {
-                    
+
                     int id = MainPage.Current.UserId;
 
                     _profilePageViewModel.UserObject = await App.SoundCloud.GetUser(id);
@@ -269,12 +269,12 @@ namespace SoundCloudPlus.Pages
             var currentView = SystemNavigationManager.GetForCurrentView();
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            
+
             currentView.BackRequested -= CurrentView_BackRequested;
         }
-        
+
         private void MenuButton_OnClick(object sender, RoutedEventArgs e)
-        {}
+        { }
 
         private void MakeVisibleInvisible(bool all, bool trackCollection, bool playlistCollection, bool repostCollection)
         {
@@ -309,7 +309,7 @@ namespace SoundCloudPlus.Pages
 
         private async void RepostPlaylist(object sender, RoutedEventArgs e)
         {
-            Button b = (Button) sender;
+            Button b = (Button)sender;
             int playlistId = Convert.ToInt32(b.Tag);
             //repost niet mogelijk bij eigen user!!
             try
@@ -324,17 +324,17 @@ namespace SoundCloudPlus.Pages
 
         private void SvProfileTracks_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-                
+
         }
 
         private void SvProfilePlaylist_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void SvProfileRepost_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void TrackCollectionGridView_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -345,6 +345,27 @@ namespace SoundCloudPlus.Pages
         private void RepostCollectionGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, RepostCollectionGridView);
+        }
+
+        private void btnFollowers_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            
+            int userId = UserId;
+            if (userId == 0)
+            {
+                userId = App.SoundCloud.CurrentUser.Id;
+            }
+            b.Tag = userId;
+            MainPage.Current.Navigate(sender, "followers");
+        }
+
+        private void btnFollowing_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            int userId = UserId;
+            b.Tag = userId;
+            MainPage.Current.Navigate(sender, "following");
         }
     }
 }

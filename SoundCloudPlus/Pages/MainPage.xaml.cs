@@ -17,8 +17,6 @@ using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using Enough.Storage;
 using SoundCloudPlus.ViewModels;
-using TilesAndNotifications.Services;
-using TileService = SoundCloudPlus.services.TileService;
 
 namespace SoundCloudPlus.Pages
 {
@@ -51,7 +49,7 @@ namespace SoundCloudPlus.Pages
             App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<ElementTheme>();
         }
 
-        private void _playbackTimer_Tick(object sender, object e)
+        private async void _playbackTimer_Tick(object sender, object e)
         {
             var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
@@ -118,15 +116,15 @@ namespace SoundCloudPlus.Pages
         {
             if (!await App.SoundCloud.IsAuthenticated())
             {
-              if (await App.SoundCloud.SignIn())
-              {
-                  //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
-                  //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
-              }
-              else
-              {
-                  await new MessageDialog("There was a problem signing you in").ShowAsync();
-              }
+                if (await App.SoundCloud.SignIn())
+                {
+                    //_mainPageViewModel.StreamCollection = await App.SoundCloud.GetStream();
+                    //_mainPageViewModel.ExploreCollection = await App.SoundCloud.GetExplore();
+                }
+                else
+                {
+                    await new MessageDialog("There was a problem signing you in").ShowAsync();
+                }
             }
             else
             {
@@ -143,21 +141,47 @@ namespace SoundCloudPlus.Pages
             switch (destination)
             {
                 case "home":
-                    if (page?.GetType() != typeof (HomePage))
+                    if (page?.GetType() != typeof(HomePage))
                     {
                         _mainPageViewModel.PageTitle = "Home";
-                        MyFrame?.Navigate(typeof (HomePage));
+                        MyFrame?.Navigate(typeof(HomePage));
                     }
                     break;
                 case "profile":
-                    if (page?.GetType() != typeof (ProfilePage))
+                    if (page?.GetType() != typeof(ProfilePage))
                     {
                         _mainPageViewModel.PageTitle = "Profile";
                         if (b?.Tag != null)
                         {
                             int id = (int)b.Tag;
                             UserId = id;
-                            MyFrame?.Navigate(typeof (ProfilePage));
+                            MyFrame?.Navigate(typeof(ProfilePage));
+                            UserIdHistory.Add(id);
+                        }
+                    }
+                    break;
+                case "followers":
+                    if (page?.GetType() != typeof(FollowerPage))
+                    {
+                        _mainPageViewModel.PageTitle = "Followers";
+                        if (b?.Tag != null)
+                        {
+                            int id = (int)b.Tag;
+                            UserId = id;
+                            MyFrame?.Navigate(typeof(FollowerPage));
+                            UserIdHistory.Add(id);
+                        }
+                    }
+                    break;
+                case "following":
+                    if (page?.GetType() != typeof(FollowingPage))
+                    {
+                        _mainPageViewModel.PageTitle = "Following";
+                        if (b?.Tag != null)
+                        {
+                            int id = (int)b.Tag;
+                            UserId = id;
+                            MyFrame?.Navigate(typeof(FollowingPage));
                             UserIdHistory.Add(id);
                         }
                     }
@@ -186,14 +210,20 @@ namespace SoundCloudPlus.Pages
                     if (page?.GetType() != typeof(FollowingPage))
                     {
                         _mainPageViewModel.PageTitle = "Following";
+                        int id = App.SoundCloud.CurrentUser.Id;
+                        UserId = id;
                         MyFrame?.Navigate(typeof(FollowingPage));
+                        UserIdHistory.Add(id);
                     }
                     break;
                 case "followers":
                     if (page?.GetType() != typeof(FollowerPage))
                     {
                         _mainPageViewModel.PageTitle = "Followers";
+                        int id = App.SoundCloud.CurrentUser.Id;
+                        UserId = id;
                         MyFrame?.Navigate(typeof(FollowerPage));
+                        UserIdHistory.Add(id);
                     }
                     break;
                 case "playlist":
@@ -264,7 +294,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private void UpdateActivityCollection()
+        private async void UpdateActivityCollection()
         {
             try
             {
@@ -293,7 +323,7 @@ namespace SoundCloudPlus.Pages
                 return;
             }
 
-            
+
             //_mainPageViewModel.ActivityCollection;
             int l = a.Collection.Count;
             ObservableCollection<ActivityCollection> c = new ObservableCollection<ActivityCollection>();
@@ -321,12 +351,12 @@ namespace SoundCloudPlus.Pages
         #endregion
         private void MyFrame_OnLoaded(object sender, RoutedEventArgs e)
         {
-             var content = MyFrame.Content as FrameworkElement;
+            var content = MyFrame.Content as FrameworkElement;
             if (content == null)
                 return;
             content.DataContext = MyFrame.DataContext;
         }
-        
+
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
@@ -371,10 +401,9 @@ namespace SoundCloudPlus.Pages
             deferral.Complete();
         }
         #endregion
-        
 
         #region Button and Control Click Event Handlers
-        
+
         private void prevButton_Click(object sender, RoutedEventArgs e)
         {
             MessageService.SendMessageToBackground(new SkipPreviousMessage());
