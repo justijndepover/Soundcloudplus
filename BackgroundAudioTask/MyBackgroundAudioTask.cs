@@ -297,7 +297,7 @@ namespace BackgroundAudioTask
                             TypedEventHandler<MediaPlaybackList, CurrentMediaPlaybackItemChangedEventArgs> handler = null;
                             handler = (list, args) =>
                             {
-                                if (args.NewItem == _playbackList.Items[index])
+                                if (index != -1 && args.NewItem == _playbackList.Items[index])
                                 {
                                     // Unsubscribe because this only had to run once for this item
                                     _playbackList.CurrentItemChanged -= handler;

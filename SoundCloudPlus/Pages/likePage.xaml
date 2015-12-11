@@ -39,12 +39,6 @@
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Likes" Style="{StaticResource PageTitle}" />
                 <GridView x:Name="LikesGridView" RelativePanel.Below="PageTitle" IsItemClickEnabled="True" ItemClick="TrackLikesGridView_OnItemClick" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackLikesCollection}" SizeChanged="TrackLikesGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource BorderStyle1}">

@@ -42,12 +42,7 @@
                         <!--Pivot content goes here-->
                         <ScrollViewer x:Name="svSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">
                             <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                                <GridView.ItemContainerStyle>
-                                    <Style TargetType="GridViewItem">
-                                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    </Style>
-                                </GridView.ItemContainerStyle>
+                               
                                 <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle1}">
