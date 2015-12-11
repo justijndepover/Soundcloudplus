@@ -210,13 +210,13 @@
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding PlayingTrack.ArtworkUrl}" Style="{StaticResource MusicControlImage}"></Image>
+            <Image Source="{Binding PlayingTrack.ArtworkUrl, Mode=TwoWay}" Style="{StaticResource MusicControlImage}"></Image>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource MusicControlArtistText}" />
+                <TextBlock Grid.Row="0" Text="{Binding PlayingTrack.User.Username, Mode=TwoWay}" Style="{StaticResource MusicControlArtistText}" />
                 <TextBlock Grid.Row="1" Text="{Binding PlayingTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
             </Grid>
 

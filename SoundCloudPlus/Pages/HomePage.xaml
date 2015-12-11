@@ -142,7 +142,7 @@
                                                 <RowDefinition Height="32"/>
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl, Mode=TwoWay}" Style="{StaticResource ImageAlbum}"/>
                                                 <Grid Style="{StaticResource GridMusicStyleBottom}">
                                                     <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>

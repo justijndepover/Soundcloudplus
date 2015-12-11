@@ -11,6 +11,7 @@ using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Media;
 
 namespace SoundCloudPlus.Pages
@@ -110,20 +111,27 @@ namespace SoundCloudPlus.Pages
                     {
                         if (attempts == 2)
                         {
-                            Application.Current.Exit();
+                            MessageDialog md = new MessageDialog("Please check your internet connection", "Sorry, we encountered an error");
+                            md.Commands.Add(new UICommand("Close", Action));
+                            await md.ShowAsync();
                         }
                         attempts = attempts + 1;
                         new ManualResetEvent(false).WaitOne(1000);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Application.Current.Exit();
+                    Debug.WriteLine(ex.Message);
                 }
 
                 UpdateStreamExploreCollection();
             }
             base.OnNavigatedTo(e);
+        }
+
+        private void Action(IUICommand command)
+        {
+            Application.Current.Exit();
         }
 
         private async void UpdateStreamExploreCollection()
@@ -137,9 +145,9 @@ namespace SoundCloudPlus.Pages
                 _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
                 _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                Debug.WriteLine(ex.Message);
             }
         }
 

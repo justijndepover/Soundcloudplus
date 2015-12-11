@@ -734,12 +734,8 @@
                             Padding="{TemplateBinding Padding}" 
                             PointerOverBackgroundMargin="1" 
                             PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                            PointerOverBackground="Red" 
                             ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                            SelectedPointerOverBorderBrush="Cyan" 
                             SelectionCheckMarkVisualEnabled="True" 
-                            SelectedForeground="Purple"
-                            SelectedPointerOverBackground="Green" 
                             SelectedBorderThickness="0"
                             SelectedBackground="Transparent" 
                             VerticalContentAlignment="Stretch"/>
