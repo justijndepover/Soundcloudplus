@@ -8,8 +8,8 @@ namespace SoundCloudPlus.ViewModels
 {
     public class HomePageViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Track> _streamCollection;
-        public ObservableCollection<Track> StreamCollection
+        private ObservableCollection<StreamCollection> _streamCollection;
+        public ObservableCollection<StreamCollection> StreamCollection
         {
             get { return _streamCollection; }
             set { _streamCollection = value; OnPropertyChanged(nameof(StreamCollection)); }

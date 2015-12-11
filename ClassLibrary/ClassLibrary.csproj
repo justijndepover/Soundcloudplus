@@ -136,6 +136,7 @@
     <Compile Include="Common\TitleBar.cs" />
     <Compile Include="Models\PrimaryTile.cs" />
     <Compile Include="Models\RepostCollection.cs" />
+    <Compile Include="Models\StreamCollection.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\TrackObject.cs" />
     <Compile Include="Models\User.cs" />
