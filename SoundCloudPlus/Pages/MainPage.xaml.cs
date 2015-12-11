@@ -7,7 +7,6 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
 using Windows.UI.Core;
-using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
