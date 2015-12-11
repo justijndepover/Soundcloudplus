@@ -118,6 +118,7 @@
     <Compile Include="Common\ContinuationManager.cs" />
     <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Common\TileService.cs" />
     <Compile Include="Messages\AppResumedMessage.cs" />
     <Compile Include="Messages\AppSuspendedMessage.cs" />
     <Compile Include="Messages\BackgroundAudioTaskStartedMessage.cs" />

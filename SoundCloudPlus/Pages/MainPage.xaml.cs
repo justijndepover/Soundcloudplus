@@ -18,6 +18,7 @@ using ClassLibrary.Models;
 using Enough.Storage;
 using SoundCloudPlus.ViewModels;
 using TilesAndNotifications.Services;
+using TileService = SoundCloudPlus.services.TileService;
 
 namespace SoundCloudPlus.Pages
 {
@@ -50,7 +51,7 @@ namespace SoundCloudPlus.Pages
             App.RootFrame.RequestedTheme = await StorageHelper.TryLoadObjectAsync<ElementTheme>();
         }
 
-        private async void _playbackTimer_Tick(object sender, object e)
+        private void _playbackTimer_Tick(object sender, object e)
         {
             var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
@@ -263,7 +264,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private async void UpdateActivityCollection()
+        private void UpdateActivityCollection()
         {
             try
             {
@@ -370,22 +371,6 @@ namespace SoundCloudPlus.Pages
             deferral.Complete();
         }
         #endregion
-
-
-        void UpdateLiveTile(Track t)
-        {
-            try
-            {
-                var xmlDoc = TileService.CreateTiles(t);
-                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
-                TileNotification notification = new TileNotification(xmlDoc); updater.Update(notification);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
         
 
         #region Button and Control Click Event Handlers

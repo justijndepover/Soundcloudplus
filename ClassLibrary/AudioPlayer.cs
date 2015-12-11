@@ -7,10 +7,12 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Media.Playback;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using Enough.Storage;
+using TilesAndNotifications.Services;
 
 namespace ClassLibrary
 {
@@ -189,10 +191,25 @@ namespace ClassLibrary
                 _backgroundAudioTaskStarted.Set();
             }
         }
+        void UpdateLiveTile(Track t)
+        {
+            try
+            {
+                var xmlDoc = TileService.CreateTiles(t);
+                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+                TileNotification notification = new TileNotification(xmlDoc); updater.Update(notification);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
         public async void PlayTrack(Track track)
         {
             var song = track;
             bool trackAlreadyInPlaylist = true;
+            UpdateLiveTile(track);
             if (PlayList == null)
             {
                 PlayList = new List<Track>();
