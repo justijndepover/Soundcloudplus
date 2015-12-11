@@ -512,9 +512,9 @@ namespace ClassLibrary
 
         #region Followings
         private string FollowingNextHref = "";
-        public async Task<ObservableCollection<User>> GetFollowings(int userId)
+        public async Task<ObservableCollection<User>> GetFollowings(int userId, int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = 40, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<User> followings = new ObservableCollection<User>();
             if (apiResponse.Succes)
             {

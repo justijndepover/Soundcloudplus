@@ -74,12 +74,30 @@ namespace SoundCloudPlus.Pages
                     (FollowingPageViewModel)Resources["FollowingViewModel"];
                 if (await App.SoundCloud.IsAuthenticated())
                 {
-                    _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id);
+                    UpdateFollowingCollection();
                 }
             }
             base.OnNavigatedTo(e);
         }
-        
+
+        private async void UpdateFollowingCollection()
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 200, 400, 200, 400);
+                _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id, limit);
+                //_homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
+                //_homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
+        }
+
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (Frame.CanGoBack) Frame.GoBack();
