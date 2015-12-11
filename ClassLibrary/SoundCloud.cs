@@ -180,9 +180,9 @@ namespace ClassLibrary
 
         #region ProfilePlaylist
             private string ProfilePlaylistNextHref = "";
-            public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId)
+            public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId, int limitValue)
             {
-                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists", null, new { representation = "speedy", limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+                ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists", null, new { representation = "speedy", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
                 PlaylistObject pO = new PlaylistObject();
                 if (apiResponse.Succes)
                 {
@@ -351,9 +351,9 @@ namespace ClassLibrary
         #region Tracks
 
         private string ProfileTracksNextHref = "";
-        public async Task<ObservableCollection<Track>> GetTracks(int userId)
+        public async Task<ObservableCollection<Track>> GetTracks(int userId, int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             TrackObject tO = new TrackObject();
             if (apiResponse.Succes)
             {
@@ -424,9 +424,9 @@ namespace ClassLibrary
 
         #region Reposts
         private string RepostNextHref = "";
-        public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId)
+        public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId, int limitValue)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/profile/soundcloud:users:" + userId + "/reposts", null, new { keepBlocked = false, limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/profile/soundcloud:users:" + userId + "/reposts", null, new { keepBlocked = false, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<RepostCollection> rC = new ObservableCollection<RepostCollection>();
             if (apiResponse.Succes)
             {

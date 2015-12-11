@@ -192,18 +192,68 @@ namespace SoundCloudPlus.Pages
 
                     _profilePageViewModel.UserObject = await App.SoundCloud.GetUser(id);
 
-                    try { _profilePageViewModel.PlaylistCollection = await App.SoundCloud.GetOwnPlaylists(id); }
+                    try { UpdatePlaylistCollection(id); }
                     catch (Exception) { _profilePageViewModel.PlaylistCollection = null; }
 
-                    try { _profilePageViewModel.RepostCollection = await App.SoundCloud.GetReposts(id); }
+                    try { UpdateRepostCollection(id); }
                     catch (Exception) { _profilePageViewModel.RepostCollection = null; }
 
-                    try { _profilePageViewModel.TrackCollection = await App.SoundCloud.GetTracks(id); }
+                    try { UpdateTrackCollection(id); }
                     catch (Exception) { _profilePageViewModel.TrackCollection = null; }
                 }
             }
             base.OnNavigatedTo(e);
         }
+
+        #region UpdateCollection
+        private async void UpdatePlaylistCollection(int id)
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                _profilePageViewModel.PlaylistCollection = await App.SoundCloud.GetOwnPlaylists(id, limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
+        }
+
+        private async void UpdateTrackCollection(int id)
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                _profilePageViewModel.TrackCollection = await App.SoundCloud.GetTracks(id, limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
+        }
+
+        private async void UpdateRepostCollection(int id)
+        {
+            try
+            {
+                var bounds = Window.Current.Bounds;
+                double height = bounds.Height;
+                double width = bounds.Width;
+                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                _profilePageViewModel.RepostCollection = await App.SoundCloud.GetReposts(id, limit);
+            }
+            catch (Exception)
+            {
+                Application.Current.Exit();
+            }
+        }
+        #endregion
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
