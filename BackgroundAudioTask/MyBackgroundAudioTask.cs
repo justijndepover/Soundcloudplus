@@ -10,6 +10,7 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using ClassLibrary.API;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
@@ -519,11 +520,15 @@ namespace BackgroundAudioTask
                 {
                     if (song.Id != null)
                     {
-                        var source = MediaSource.CreateFromUri(GetMusicFile(song.Id.Value));
-                        source.CustomProperties[TrackIdKey] = song.Id;
-                        source.CustomProperties[TitleKey] = song.Title;
-                        source.CustomProperties[AlbumArtKey] = song.ArtworkUrl;
-                        _playbackList.Items.Add(new MediaPlaybackItem(source));
+                        var file = GetMusicFile(song.Id.Value);
+                        if (file != null)
+                        {
+                            var source = MediaSource.CreateFromUri(file);
+                            source.CustomProperties[TrackIdKey] = song.Id;
+                            source.CustomProperties[TitleKey] = song.Title;
+                            source.CustomProperties[AlbumArtKey] = song.ArtworkUrl;
+                            _playbackList.Items.Add(new MediaPlaybackItem(source));
+                        }
                     }
                 }
             }
@@ -563,7 +568,16 @@ namespace BackgroundAudioTask
                     }
                     catch (Exception)
                     {
-                        mp3 = apiResponse.Data["hls_mp3_128_url"].Value;
+                        try
+                        {
+                            mp3 = apiResponse.Data["hls_mp3_128_url"].Value;
+                        }
+                        catch (Exception)
+                        {
+                            MessageDialog md = new MessageDialog("Sorry, we can't play this song. It is DRM protected");
+                            md.ShowAsync();
+                            return null;
+                        }
                     }
                     return new Uri(mp3);
                 }
