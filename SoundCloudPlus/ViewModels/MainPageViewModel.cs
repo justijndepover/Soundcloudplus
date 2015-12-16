@@ -37,6 +37,15 @@ namespace SoundCloudPlus.ViewModels
             set { _pageTitle = value; OnPropertyChanged(nameof(PageTitle)); }
         }
 
+        private User _loggedInUser;
+
+        public User LoggedInUser
+        {
+            get { return _loggedInUser; }
+            set { _loggedInUser = value; OnPropertyChanged(nameof(LoggedInUser)); }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -169,6 +169,12 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE156;" />
+                                
+                                <Ellipse Width="32" Height="32" Margin="0 4 4 4">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding LoggedInUser.AvatarUrl}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="My profile" />
                             </Grid>
                         </Button>

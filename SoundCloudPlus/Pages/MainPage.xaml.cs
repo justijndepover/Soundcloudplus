@@ -39,6 +39,21 @@ namespace SoundCloudPlus.Pages
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;
+            LoadUserAvatar();
+        }
+
+        private async void LoadUserAvatar()
+        {
+            User s = await StorageHelper.TryLoadObjectAsync<User>("currentUser");
+            try
+            {
+                _mainPageViewModel.LoggedInUser = s;
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
         }
 
         private async void LoadTheme()
