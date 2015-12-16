@@ -56,6 +56,7 @@
                         <Setter Target="GridRow.Width" Value="0" />
                         <Setter Target="GridRow2.Width" Value="0" />
                         <Setter Target="GridRowTitle.Width" Value="*" />
+                        <Setter Target="GridRowTitle2.Width" Value="*" />
                         <Setter Target="GridRowProgress.Width" Value="0" />
                         <Setter Target="mobileNavBar.Visibility" Value="Visible" />
                         <Setter Target="MenuButtonRow.Height" Value="0" />
@@ -216,15 +217,22 @@
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding CurrentTrack.ArtworkUrl, Mode=TwoWay}" Style="{StaticResource MusicControlImage}"></Image>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{Binding CurrentTrack.User.Username, Mode=TwoWay}" Style="{StaticResource MusicControlArtistText}" />
-                <TextBlock Grid.Row="1" Text="{Binding CurrentTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
-            </Grid>
+            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CurrentSong}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition x:Name="GridRowTitle2" Width="280" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.RowSpan="2" Source="{Binding CurrentTrack.ArtworkUrl, Mode=TwoWay}" Style="{StaticResource MusicControlImage}"></Image>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentTrack.User.Username, Mode=TwoWay}" Style="{StaticResource MusicControlArtistText}" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CurrentTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
+                </Grid>
+            </Button>
+            
 
             <TextBlock x:Name="PlayerPosition" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
             <ProgressBar x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0" IsEnabled="True"/>
