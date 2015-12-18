@@ -20,6 +20,7 @@ using SoundCloudPlus.ViewModels;
 
 namespace SoundCloudPlus.Pages
 {
+
     public sealed partial class MainPage
     {
         public static MainPage Current;
