@@ -88,29 +88,7 @@
                                                     <Run Text="{Binding Title}" Foreground="Gray"/>
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
-                                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE006;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Repost">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE8EB;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Add to playlist">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE728;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Share">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE72D;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                            </StackPanel>
-
+                                            
                                             <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <StackPanel Orientation="Horizontal">
@@ -255,28 +233,6 @@
                                                     <Run Text="{Binding Track.Title}" Foreground="Gray"/>
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
-                                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Like">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE006;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Repost">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE8EB;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Add to playlist">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE728;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" ToolTipService.ToolTip="Share">
-                                                    <TextBlock Style="{StaticResource FunctionIcon}">
-                                                        <Run Text="&#xE72D;"/>
-                                                    </TextBlock>
-                                                </Button>
-                                            </StackPanel>
 
                                             <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">

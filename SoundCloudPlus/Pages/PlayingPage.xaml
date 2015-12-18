@@ -4,14 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SoundCloudPlus.Pages"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Page.Resources>
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
+        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
     </Page.Resources>
-    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource MainPageViewModel}">
+    <Grid x:Name="LayoutRoot" DataContext="{StaticResource MainPageViewModel}">
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}">
+            </ImageBrush>
+        </Grid.Background>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStatesInFrame">
                 <VisualState x:Name="Min320State">
@@ -34,7 +40,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Currently Playing" Style="{StaticResource PageTitle}" />
-                <Image Source="{Binding PlayingTrack.ArtworkUrl}" RelativePanel.Below="PageTitle" Style="{StaticResource ImageAlbum200}"/>
+                <Image Source="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}" RelativePanel.Below="PageTitle" Style="{StaticResource ImageAlbum200}"/>
                 
                 <Grid RelativePanel.Below="PageTitle">
                     <Grid.RowDefinitions>
