@@ -234,8 +234,6 @@
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CurrentTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
                 </Grid>
             </Button>
-            
-
             <TextBlock x:Name="PlayerPosition" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
             <Slider x:Name="PlayerProgressBar" VerticalAlignment="Center" Grid.Column="3" Margin="30 0" IsEnabled="True" ThumbToolTipValueConverter="{StaticResource IntToTimeConverter}" ValueChanged="PlayerProgressBar_OnValueChanged" Style="{StaticResource AudioPlayerSlider}"/>
             <TextBlock x:Name="PlayerDuration" Text="{Binding CurrentTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
