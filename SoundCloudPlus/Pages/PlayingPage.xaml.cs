@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SoundCloudPlus.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,6 +22,7 @@ namespace SoundCloudPlus.Pages
 {
     public sealed partial class PlayingPage : Page
     {
+        private MainPageViewModel _mainPageViewModel;
         public PlayingPage()
         {
             this.InitializeComponent();
@@ -32,6 +35,19 @@ namespace SoundCloudPlus.Pages
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             currentView.BackRequested += CurrentView_BackRequested;
+
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                try
+                {
+                    _mainPageViewModel = MainPage.Current._mainPageViewModel;
+                    LayoutRoot.DataContext = _mainPageViewModel;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
