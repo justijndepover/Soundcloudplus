@@ -7,7 +7,7 @@ namespace SoundCloudPlus.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int val = (int)value;
+            int val = System.Convert.ToInt32(value);
             DateTime time = new DateTime();
             time = time.AddMilliseconds(val);
             return time.ToString("mm:ss");
