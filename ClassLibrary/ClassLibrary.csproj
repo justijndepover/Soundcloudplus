@@ -115,7 +115,6 @@
     <Compile Include="Common\AppState.cs" />
     <Compile Include="Common\AsyncHelper.cs" />
     <Compile Include="Common\BackgroundTaskState.cs" />
-    <Compile Include="Common\BlurImage.cs" />
     <Compile Include="Common\ContinuationManager.cs" />
     <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Common\SuspensionManager.cs" />

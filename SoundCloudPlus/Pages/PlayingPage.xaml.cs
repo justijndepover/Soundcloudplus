@@ -36,9 +36,6 @@ namespace SoundCloudPlus.Pages
                 {
                     _mainPageViewModel = MainPage.Current._mainPageViewModel;
                     LayoutRoot.DataContext = _mainPageViewModel;
-                    Image k = new Image();
-                    k.Source = new BitmapImage() {UriSource = new Uri("ms-appx:///Assets/test.png", UriKind.Absolute) };
-                    blurImage.Source = await BlurImage.BlurOutImage(k);
                 }
                 catch (Exception ex)
                 {
