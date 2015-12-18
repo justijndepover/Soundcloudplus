@@ -182,31 +182,50 @@ namespace ClassLibrary
             PlaylistObject pO = new PlaylistObject();
             if (apiResponse.Succes)
             {
-                pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                try
+                {
+                    if (pO.Collection[0].Playlist.ArtworkUrl != null)
+                    {
+                        pO.Collection[0].Playlist.ArtworkUrl = pO.Collection[0].Playlist.User.AvatarUrl;
+                    }
+                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
             }
             //return pO;
             int l = pO.Collection.Count();
             ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
-            for (int i = 0; i < l; i++)
+
+            if (l == 0)
             {
-                if (pO.Collection[i].ArtworkUrl == null)
-                {
-                    int pId = pO.Collection[i].Id;
-                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
-                    pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
-                }
-                c.Add(pO.Collection[i]);
-            }
-            object nhref = pO.NextHref;
-            if (nhref != null)
-            {
-                PlaylistNextHref = nhref.ToString();
+                return c;
             }
             else
             {
-                PlaylistNextHref = "";
+                for (int i = 0; i < l; i++)
+                {
+                    if (pO.Collection[i].ArtworkUrl == null)
+                    {
+                        int pId = pO.Collection[i].Id;
+                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                    }
+                    c.Add(pO.Collection[i]);
+                }
+                object nhref = pO.NextHref;
+                if (nhref != null)
+                {
+                    PlaylistNextHref = nhref.ToString();
+                }
+                else
+                {
+                    PlaylistNextHref = "";
+                }
+                return c;
             }
-            return c;
         }
 
         public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId, string nextHref)
@@ -220,26 +239,34 @@ namespace ClassLibrary
             //return pO;
             int l = pO.Collection.Count();
             ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
-            for (int i = 0; i < l; i++)
+
+            if (l == 0)
             {
-                if (pO.Collection[i].ArtworkUrl == null)
-                {
-                    int pId = pO.Collection[i].Id;
-                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
-                    pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
-                }
-                c.Add(pO.Collection[i]);
-            }
-            object nhref = pO.NextHref;
-            if (nhref != null)
-            {
-                PlaylistNextHref = nhref.ToString();
+                return c;
             }
             else
             {
-                PlaylistNextHref = "";
+                for (int i = 0; i < l; i++)
+                {
+                    if (pO.Collection[i].ArtworkUrl == null)
+                    {
+                        int pId = pO.Collection[i].Id;
+                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                    }
+                    c.Add(pO.Collection[i]);
+                }
+                object nhref = pO.NextHref;
+                if (nhref != null)
+                {
+                    PlaylistNextHref = nhref.ToString();
+                }
+                else
+                {
+                    PlaylistNextHref = "";
+                }
+                return c;
             }
-            return c;
         }
 
         public string GetProfilePlaylistNextHref()
@@ -279,11 +306,25 @@ namespace ClassLibrary
             {
                 pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
             }
+            
             //return pO;
             int l = pO.Collection.Count();
             ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
             for (int i = 0; i < l; i++)
             {
+                try
+                {
+                    if (pO.Collection[i].ArtworkUrl == null)
+                    {
+                        int pId = pO.Collection[i].Id;
+                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
                 c.Add(pO.Collection[i]);
             }
             object nhref = pO.NextHref;
@@ -354,30 +395,43 @@ namespace ClassLibrary
             if (apiResponse.Succes)
             {
                 tO = JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
-                
-                if (tO.Collection[0].ArtworkUrl == null)
+                try
                 {
-                    User u = await GetUser(tO.Collection[0].User.Id);
-                    tO.Collection[0].ArtworkUrl = u.AvatarUrl;
+                    if (tO.Collection[0].ArtworkUrl == null)
+                    {
+                        User u = await GetUser(tO.Collection[0].User.Id);
+                        tO.Collection[0].ArtworkUrl = u.AvatarUrl;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
                 }
             }
 
             int l = tO.Collection.Count();
             ObservableCollection<Track> c = new ObservableCollection<Track>();
-            for (int i = 0; i < l; i++)
+            if (l == 0)
             {
-                c.Add(tO.Collection[i]);
-            }
-            object nhref = tO.NextHref;
-            if (nhref != null)
-            {
-                ProfileTracksNextHref = nhref.ToString();
+                return c;
             }
             else
             {
-                ProfileTracksNextHref = "";
+                for (int i = 0; i < l; i++)
+                {
+                    c.Add(tO.Collection[i]);
+                }
+                object nhref = tO.NextHref;
+                if (nhref != null)
+                {
+                    ProfileTracksNextHref = nhref.ToString();
+                }
+                else
+                {
+                    ProfileTracksNextHref = "";
+                }
+                return c;
             }
-            return c;
         }
 
         public async Task<ObservableCollection<Track>> GetTracks(int userId, string nextHref)
