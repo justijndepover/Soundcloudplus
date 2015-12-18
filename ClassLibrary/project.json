@@ -2,7 +2,8 @@
   "dependencies": {
     "Enough.Storage": "2.2.1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "Newtonsoft.Json": "7.0.1"
+    "Newtonsoft.Json": "7.0.1",
+    "Win2D.uwp": "1.10.0"
   },
   "frameworks": {
     "uap10.0": {}
