@@ -19,7 +19,6 @@
             <ImageBrush ImageSource="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}">
             </ImageBrush>
         </Grid.Background>
-        <Image Width="500" Height="500"/>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStatesInFrame">
                 <VisualState x:Name="Min320State">
