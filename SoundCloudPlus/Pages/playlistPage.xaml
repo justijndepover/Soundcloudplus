@@ -13,7 +13,7 @@
         <converters:TrackCountConverter x:Key="TrackCountConverter"/>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource PlaylistViewModel}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStatesInFrame">
                 <VisualState x:Name="Min320State">
