@@ -10,6 +10,7 @@ using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
@@ -63,9 +64,11 @@ namespace SoundCloudPlus.Pages
         {
             var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
+            PlayerProgressBar.Maximum = App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
             try
             {
-                PlayerProgressBar.Value = (position.TotalMilliseconds - 0) / (App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds - 0) * (100 - 0) + 0;
+                PlayerProgressBar.Value = position.TotalMilliseconds;
+                //PlayerProgressBar.Value = (position.TotalMilliseconds - 0) / (App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds - 0) * (100 - 0) + 0;
             }
             catch (Exception)
             {
@@ -485,6 +488,15 @@ namespace SoundCloudPlus.Pages
             SearchBox.Visibility = Visibility.Visible;
             SearchButton.Visibility = Visibility.Collapsed;
             SearchBox.Focus(FocusState.Keyboard);
+        }
+
+        private void PlayerProgressBar_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (e.NewValue > (e.OldValue + 2000) || e.NewValue < (e.OldValue - 2000))
+            {
+                TimeSpan newPos = TimeSpan.FromMilliseconds(e.NewValue);
+                App.SoundCloud.AudioPlayer.CurrentPlayer.Position = newPos;
+            }
         }
     }
 }
