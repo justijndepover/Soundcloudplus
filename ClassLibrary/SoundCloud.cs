@@ -354,6 +354,12 @@ namespace ClassLibrary
             if (apiResponse.Succes)
             {
                 tO = JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
+                
+                if (tO.Collection[0].ArtworkUrl == null)
+                {
+                    User u = await GetUser(tO.Collection[0].User.Id);
+                    tO.Collection[0].ArtworkUrl = u.AvatarUrl;
+                }
             }
 
             int l = tO.Collection.Count();
