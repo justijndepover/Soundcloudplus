@@ -12,12 +12,14 @@
     <Page.Resources>
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
+        <converters:IntToMillionConverter x:Key="IntToMillionConverter" />
     </Page.Resources>
     <Grid x:Name="LayoutRoot" DataContext="{StaticResource MainPageViewModel}">
         <Grid.Background>
             <ImageBrush ImageSource="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}">
             </ImageBrush>
         </Grid.Background>
+        <Image Width="500" Height="500"/>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStatesInFrame">
                 <VisualState x:Name="Min320State">
@@ -39,21 +41,42 @@
         </VisualStateManager.VisualStateGroups>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <TextBlock x:Name="PageTitle" Text="Currently Playing" Style="{StaticResource PageTitle}" />
-                <Image Source="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}" RelativePanel.Below="PageTitle" Style="{StaticResource ImageAlbum200}"/>
+                <TextBlock x:Name="PageTitle" Text="Now Playing" Style="{StaticResource PageTitle}" />
                 
-                <Grid RelativePanel.Below="PageTitle">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                <Grid HorizontalAlignment="Stretch" RelativePanel.Below="PageTitle">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70" />
-                        <ColumnDefinition x:Name="GridRowTitle2" Width="280" />
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.RowSpan="2" Source="{Binding CurrentTrack.ArtworkUrl, Mode=TwoWay}" Style="{StaticResource MusicControlImage}"></Image>
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentTrack.User.Username, Mode=TwoWay}" Style="{StaticResource MusicControlArtistText}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CurrentTrack.Title}" Style="{StaticResource MusicControlTitelText}" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="85"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.RowSpan="4" Grid.Column="0" Source="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum200}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource CurrentlyPlayingName}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding PlayingTrack.Title}" Style="{StaticResource CurrentlyPlayingTitle}"/>
+                    <!--<Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
+                        <StackPanel>
+                            <TextBlock Text="Followers"/>
+                            <TextBlock Text="{Binding UserObject.FollowersCount, Converter={StaticResource IntToMillionConverter}}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="btnFollowing_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
+                        <StackPanel>
+                            <TextBlock Text="Following" />
+                            <TextBlock Text="{Binding UserObject.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource btnProfileMeta}">
+                        <StackPanel>
+                            <TextBlock Text="Tracks" />
+                            <TextBlock Text="{Binding CurrentUser.Id, Converter={StaticResource IntToMillionConverter}}" />
+                        </StackPanel>
+                    </Button>-->
                 </Grid>
             </RelativePanel>
         </ScrollViewer>

@@ -13,6 +13,7 @@
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
         <converters:TimePassedConverter x:Key="TimePassedConverter" />
+        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ProfilePageViewModel}">
@@ -31,7 +32,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="5"/>
                     </Grid.RowDefinitions>
-                    <Image Grid.RowSpan="4" Grid.Column="0" Source="{Binding UserObject.AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
+                    <Image Grid.RowSpan="4" Grid.Column="0" Source="{Binding UserObject.AvatarUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum200}"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.FullName}" Style="{StaticResource ProfileName}"/>
                     <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.Username}" Style="{StaticResource ProfileFullName}"/>
                     <Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">

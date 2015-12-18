@@ -261,7 +261,7 @@ namespace SoundCloudPlus.Pages
                 case "currentsong":
                     if (page?.GetType() != typeof(PlayingPage))
                     {
-                        _mainPageViewModel.PageTitle = "Currently playing";
+                        _mainPageViewModel.PageTitle = "Now playing";
                         MyFrame?.Navigate(typeof(PlayingPage));
                     }
                     break;
