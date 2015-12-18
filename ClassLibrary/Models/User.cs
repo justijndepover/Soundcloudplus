@@ -35,14 +35,14 @@ namespace ClassLibrary.Models
         [JsonProperty("online")]
         public bool Online { get; set; }
         [JsonProperty("track_count")]
-        public int TrackCount { get; set; }
+        public int? TrackCount { get; set; }
         [JsonProperty("playlist_count")]
-        public int PlaylistCount { get; set; }
+        public int? PlaylistCount { get; set; }
         [JsonProperty("followers_count")]
-        public int FollowersCount { get; set; }
+        public int? FollowersCount { get; set; }
         [JsonProperty("followings_count")]
-        public int FollowingsCount { get; set; }
+        public int? FollowingsCount { get; set; }
         [JsonProperty("public_favorites_count")]
-        public int PublicFavoritesCount { get; set; }
+        public int? PublicFavoritesCount { get; set; }
     }
 }
