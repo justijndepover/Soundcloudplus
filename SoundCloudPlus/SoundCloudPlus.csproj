@@ -103,7 +103,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BlurOutImage.cs" />
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
@@ -164,6 +163,7 @@
     <None Include="SoundCloudPlus_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\test.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\StoreLogo.scale-200.png" />

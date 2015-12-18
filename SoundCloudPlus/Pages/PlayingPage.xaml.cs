@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -35,7 +36,9 @@ namespace SoundCloudPlus.Pages
                 {
                     _mainPageViewModel = MainPage.Current._mainPageViewModel;
                     LayoutRoot.DataContext = _mainPageViewModel;
-                    blurImage.Source = await BlurImage.BlurOutImage(_mainPageViewModel.PlayingTrack.ArtworkUrl as Image);
+                    Image k = new Image();
+                    k.Source = new BitmapImage() {UriSource = new Uri("ms-appx:///Assets/test.png", UriKind.Absolute) };
+                    blurImage.Source = await BlurImage.BlurOutImage(k);
                 }
                 catch (Exception ex)
                 {
