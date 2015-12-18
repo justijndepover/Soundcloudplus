@@ -8,12 +8,14 @@
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:models="using:ClassLibrary.Models"
-    mc:Ignorable="d">
-    <!--models:TitleBar.BackgroundColor="#DE4A00"
-    models:TitleBar.ForegroundColor="#FFFFFF"
-    models:TitleBar.ButtonBackgroundColor="#DE4A00"
-    models:TitleBar.ButtonForegroundColor="#FFFFFF"
-    models:TitleBar.ButtonHoverBackgroundColor="#D65E22"-->
+    xmlns:common="using:ClassLibrary.Common"
+    mc:Ignorable="d"
+    common:TitleBar.BackgroundColor="{ThemeResource SystemChromeMediumColor}"
+    common:TitleBar.ForegroundColor="{ThemeResource SystemBaseHighColor}"
+    common:TitleBar.ButtonBackgroundColor="{ThemeResource SystemChromeMediumColor}"
+    common:TitleBar.ButtonForegroundColor="{ThemeResource SystemBaseHighColor}"
+    common:TitleBar.ButtonHoverBackgroundColor="{ThemeResource SystemChromeLowColor}"
+    common:TitleBar.ButtonHoverForegroundColor="{ThemeResource SystemBaseHighColor}">
     <Page.Resources>
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>

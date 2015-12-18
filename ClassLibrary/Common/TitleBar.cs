@@ -130,5 +130,30 @@ namespace ClassLibrary.Common
             titleBar.ButtonHoverBackgroundColor = color;
         }
         #endregion
+
+        #region ButtonHoverForeground
+        public static readonly DependencyProperty ButtonHoverForegroundColorProperty =
+            DependencyProperty.RegisterAttached("ButtonHoverForegroundColor", typeof(Color),
+            typeof(TitleBar),
+            new PropertyMetadata(null, OnButtonHoverForegroundColorPropertyChanged));
+
+        public static Color GetButtonHoverForegroundColor(DependencyObject d)
+        {
+            return (Color)d.GetValue(ButtonHoverForegroundColorProperty);
+        }
+
+        public static void SetButtonHoverForegroundColor(DependencyObject d, Color value)
+        {
+            d.SetValue(ButtonHoverForegroundColorProperty, value);
+        }
+
+        private static void OnButtonHoverForegroundColorPropertyChanged(DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
+        {
+            var color = (Color)e.NewValue;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonHoverForegroundColor = color;
+        }
+        #endregion
     }
 }
