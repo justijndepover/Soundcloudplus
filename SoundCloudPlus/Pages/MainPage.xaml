@@ -219,7 +219,7 @@
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CurrentSong}">
+            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CurrentSong}" Click="Navigation_Click" Tag="currentsong">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />

@@ -39,12 +39,11 @@ namespace SoundCloudPlus.Pages
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;
-            LoadUserAvatar();
         }
 
-        private async void LoadUserAvatar()
+        private void LoadUserAvatar()
         {
-            User s = await StorageHelper.TryLoadObjectAsync<User>("currentUser");
+            User s = App.SoundCloud.CurrentUser;
             try
             {
                 _mainPageViewModel.LoggedInUser = s;
@@ -52,8 +51,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
 
-            }
-           
+            }         
         }
 
         private async void LoadTheme()
@@ -92,6 +90,7 @@ namespace SoundCloudPlus.Pages
                     MusicPlayerControl.DataContext = App.SoundCloud.AudioPlayer;
                     _mainPageViewModel.PageTitle = "Home";
                     App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                    LoadUserAvatar();
                 }
                 catch (Exception ex)
                 {
@@ -254,6 +253,13 @@ namespace SoundCloudPlus.Pages
                     {
                         _mainPageViewModel.PageTitle = "Setting";
                         MyFrame?.Navigate(typeof(SettingPage));
+                    }
+                    break;
+                case "currentsong":
+                    if (page?.GetType() != typeof(PlayingPage))
+                    {
+                        _mainPageViewModel.PageTitle = "Currently playing";
+                        MyFrame?.Navigate(typeof(PlayingPage));
                     }
                     break;
             }
