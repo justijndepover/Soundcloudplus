@@ -63,7 +63,7 @@ namespace SoundCloudPlus.Pages
         private void _playbackTimer_Tick(object sender, object e)
         {
             var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
-            PlayerPosition.Text = position.Minutes + ":" + position.Seconds;
+            PlayerPosition.Text = position.Minutes.ToString("00") + ":" + position.Seconds.ToString("00");
             PlayerProgressBar.Maximum = App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
             try
             {

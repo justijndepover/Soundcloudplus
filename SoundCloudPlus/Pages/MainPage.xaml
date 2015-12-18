@@ -237,7 +237,7 @@
             
 
             <TextBlock x:Name="PlayerPosition" Grid.Column="2" Style="{StaticResource MusicControlDurationText}"/>
-            <Slider x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0" IsEnabled="True" ValueChanged="PlayerProgressBar_OnValueChanged"/>
+            <Slider x:Name="PlayerProgressBar" Grid.Column="3" Margin="30 0" IsEnabled="True" IsThumbToolTipEnabled="False" ValueChanged="PlayerProgressBar_OnValueChanged"/>
             <TextBlock x:Name="PlayerDuration" Text="{Binding CurrentTrack.Duration, Converter={StaticResource IntToTimeConverter}}" Grid.Column="4" Style="{StaticResource MusicControlDurationText}"/>
             <Button Grid.Column="5" Style="{StaticResource IconInMusicControl}" Click="prevButton_Click">
                 <FontIcon Glyph="&#xE892;" />
