@@ -72,15 +72,16 @@ namespace SoundCloudPlus.Pages
             {
                 _followingPageViewModel =
                     (FollowingPageViewModel)Resources["FollowingViewModel"];
+                int uId = MainPage.Current.UserId;
                 if (await App.SoundCloud.IsAuthenticated())
                 {
-                    UpdateFollowingCollection();
+                    UpdateFollowingCollection(uId);
                 }
             }
             base.OnNavigatedTo(e);
         }
 
-        private async void UpdateFollowingCollection()
+        private async void UpdateFollowingCollection(int id)
         {
             try
             {
@@ -88,7 +89,7 @@ namespace SoundCloudPlus.Pages
                 double height = bounds.Height;
                 double width = bounds.Width;
                 int limit = Screen.getLimitItems(height, width, 200, 400, 200, 400);
-                _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id, limit);
+                _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(id, limit);
             }
             catch (Exception)
             {

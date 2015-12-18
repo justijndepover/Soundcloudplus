@@ -34,13 +34,13 @@
                     <Image Grid.RowSpan="4" Grid.Column="0" Source="{Binding UserObject.AvatarUrl}" Style="{StaticResource ImageAlbum200}"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.FullName}" Style="{StaticResource ProfileName}"/>
                     <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.Username}" Style="{StaticResource ProfileFullName}"/>
-                    <Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}">
+                    <Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
                         <StackPanel>
                             <TextBlock Text="Followers"/>
                             <TextBlock Text="{Binding UserObject.FollowersCount, Converter={StaticResource IntToMillionConverter}}" />
                         </StackPanel>
                     </Button>
-                    <Button Click="btnFollowing_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource btnProfileMeta}">
+                    <Button Click="btnFollowing_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
                         <StackPanel>
                             <TextBlock Text="Following" />
                             <TextBlock Text="{Binding UserObject.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />

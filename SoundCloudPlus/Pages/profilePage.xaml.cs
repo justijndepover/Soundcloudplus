@@ -350,7 +350,10 @@ namespace SoundCloudPlus.Pages
         private void btnFollowers_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
-            
+            if (b.Tag != null)
+            {
+                UserId = (int) b.Tag;
+            }
             int userId = UserId;
             if (userId == 0)
             {
@@ -363,7 +366,15 @@ namespace SoundCloudPlus.Pages
         private void btnFollowing_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
+            if (b.Tag != null)
+            {
+                UserId = (int)b.Tag;
+            }
             int userId = UserId;
+            if (userId == 0)
+            {
+                userId = App.SoundCloud.CurrentUser.Id;
+            }
             b.Tag = userId;
             MainPage.Current.Navigate(sender, "following");
         }
