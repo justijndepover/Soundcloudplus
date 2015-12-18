@@ -23,7 +23,7 @@ namespace SoundCloudPlus.Pages
     public sealed partial class MainPage
     {
         public static MainPage Current;
-        private MainPageViewModel _mainPageViewModel;
+        public MainPageViewModel _mainPageViewModel;
         public string PageTitle;
         readonly DispatcherTimer _playbackTimer = new DispatcherTimer();
 
