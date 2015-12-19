@@ -8,7 +8,15 @@ namespace SoundCloudPlus.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             string source = (string) value;
-            return source.Replace("large.jpg", "t500x500.jpg");
+            try
+            {
+                return source.Replace("large.jpg", "t500x500.jpg");
+            }
+            catch
+            {
+                return null;
+            }
+            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
