@@ -35,19 +35,19 @@
                     <Image Grid.RowSpan="4" Grid.Column="0" Source="{Binding UserObject.AvatarUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum200}"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.FullName}" Style="{StaticResource ProfileName}"/>
                     <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding UserObject.Username}" Style="{StaticResource ProfileFullName}"/>
-                    <Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
+                    <Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource BtnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
                         <StackPanel>
                             <TextBlock Text="Followers"/>
                             <TextBlock Text="{Binding UserObject.FollowersCount, Converter={StaticResource IntToMillionConverter}}" />
                         </StackPanel>
                     </Button>
-                    <Button Click="btnFollowing_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
+                    <Button Click="btnFollowing_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource BtnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
                         <StackPanel>
                             <TextBlock Text="Following" />
                             <TextBlock Text="{Binding UserObject.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />
                         </StackPanel>
                     </Button>
-                    <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource btnProfileMeta}">
+                    <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource BtnProfileMeta}">
                         <StackPanel>
                             <TextBlock Text="Tracks" />
                             <TextBlock Text="{Binding CurrentUser.Id, Converter={StaticResource IntToMillionConverter}}" />
@@ -57,7 +57,7 @@
             </Border>
             <Pivot x:Name="RootPivot" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Style="{StaticResource PivotTitle}">
                 <PivotItem Header="Tracks">
-                    <ScrollViewer x:Name="svProfileTracks" ViewChanged="SvProfileTracks_OnViewChanged" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="SvProfileTracks" ViewChanged="SvProfileTracks_OnViewChanged" VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="TrackCollectionGridView_SizeChanged">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -118,7 +118,7 @@
                     </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="Playlist">
-                    <ScrollViewer x:Name="svProfilePlaylist" ViewChanged="SvProfilePlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="SvProfilePlaylist" ViewChanged="SvProfilePlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="PlaylistCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="TrackCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -202,7 +202,7 @@
                     </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="Reposts">
-                    <ScrollViewer x:Name="svProfileRepost" ViewChanged="SvProfileRepost_OnViewChanged" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="SvProfileRepost" ViewChanged="SvProfileRepost_OnViewChanged" VerticalScrollBarVisibility="Hidden">
                         <GridView x:Name="RepostCollectionGridView" Visibility="Visible" IsItemClickEnabled="True" RelativePanel.Below="PlaylistCollectionGridView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding RepostCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="RepostCollectionGridView_SizeChanged">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">

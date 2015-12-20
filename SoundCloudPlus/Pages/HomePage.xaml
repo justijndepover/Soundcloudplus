@@ -40,7 +40,7 @@
                 <Pivot x:Name="RootPivot" Style="{StaticResource PivotTitle}" RelativePanel.Below="PageTitle">
                     <PivotItem Header="Stream">
                         <!--Pivot content goes here-->
-                        <ScrollViewer x:Name="svSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">
+                        <ScrollViewer x:Name="SvSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">
                             <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                                
                                 <GridView.ItemTemplate>
@@ -101,7 +101,7 @@
                     </PivotItem>
                     <PivotItem Header="Explore">
                         <!--Pivot content goes here-->
-                        <ScrollViewer x:Name="svExplore" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerExplore_OnViewChanged">
+                        <ScrollViewer x:Name="SvExplore" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerExplore_OnViewChanged">
                             <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                                 <GridView.ItemContainerStyle>
                                     <Style TargetType="GridViewItem">

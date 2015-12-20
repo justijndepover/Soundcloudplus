@@ -31,13 +31,13 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <ScrollViewer x:Name="svFollowing" VerticalScrollBarVisibility="Hidden" ViewChanged="SvFollowing_OnViewChanged">
+        <ScrollViewer x:Name="SvFollowing" VerticalScrollBarVisibility="Hidden" ViewChanged="SvFollowing_OnViewChanged">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Following" Style="{StaticResource PageTitle}" />
                 <GridView x:Name="FollowingGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" SizeChanged="FollowingGridView_OnSizeChanged" ItemsSource="{Binding FollowingsCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Button Padding="0" Click="onAvatarClick" Tag="{Binding Id}" Style="{StaticResource btnFollower}">
+                            <Button Padding="0" Click="OnAvatarClick" Tag="{Binding Id}" Style="{StaticResource BtnFollower}">
                                 <Grid>
                                     <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageFollower}"/>
                                     <Grid Style="{StaticResource GridMusicStyleBottom}">

@@ -33,7 +33,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <ScrollViewer x:Name="svPlaylist" ViewChanged="SvPlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="SvPlaylist" ViewChanged="SvPlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Playlists" Style="{StaticResource PageTitle}" />
                 <GridView x:Name="PlaylistGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" SizeChanged="PlaylistGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">

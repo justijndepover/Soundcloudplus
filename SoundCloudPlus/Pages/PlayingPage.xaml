@@ -15,10 +15,6 @@
         <converters:IntToMillionConverter x:Key="IntToMillionConverter" />
     </Page.Resources>
     <Grid x:Name="LayoutRoot" DataContext="{StaticResource MainPageViewModel}">
-        <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}">
-            </ImageBrush>
-        </Grid.Background>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStatesInFrame">
                 <VisualState x:Name="Min320State">
@@ -38,10 +34,9 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-
-
                 <StackPanel>
                     <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingArtist}">
                         <TextBlock x:Name="PlayingArtist" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource CurrentlyPlayingName}"/>
@@ -69,7 +64,7 @@
                             <TextBlock Text="{Binding CurrentUser.Id, Converter={StaticResource IntToMillionConverter}}" />
                         </StackPanel>
                     </Button>-->
-                </StackPanel>
+                    </StackPanel>
             </RelativePanel>
         </ScrollViewer>
     </Grid>

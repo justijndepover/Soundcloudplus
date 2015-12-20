@@ -46,7 +46,7 @@ namespace ClassLibrary.Common
             }
         }
 
-        public static int getLimitItems(double screenHeight, double screenWidth, int itemWidth, int minItemWidth, int itemHeight, int minItemHeight)
+        public static int GetLimitItems(double screenHeight, double screenWidth, int itemWidth, int minItemWidth, int itemHeight, int minItemHeight)
         {
             int cols = GetNumberOfColumns(screenWidth, itemWidth, minItemWidth);
             int rows = GetNumberOfRows(screenHeight, itemHeight, minItemHeight);

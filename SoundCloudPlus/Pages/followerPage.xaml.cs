@@ -18,40 +18,40 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class FollowerPage : Page
     {
-        private BackgroundWorker bwFollower = new BackgroundWorker();
-        private ObservableCollection<User> newFollowerCollection = new ObservableCollection<User>();
-        private double verticalOffsetFollower;
-        private double maxVerticalOffsetFollower;
+        private BackgroundWorker _bwFollower = new BackgroundWorker();
+        private ObservableCollection<User> _newFollowerCollection = new ObservableCollection<User>();
+        private double _verticalOffsetFollower;
+        private double _maxVerticalOffsetFollower;
         private FollowerPageViewModel _followerViewModel;
         public FollowerPage()
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            initBwFollower();
+            InitBwFollower();
         }
 
         #region BackgroundWorkerFollower
 
-        private void initBwFollower()
+        private void InitBwFollower()
         {
-            bwFollower.DoWork += BwFollower_DoWork;
-            bwFollower.WorkerSupportsCancellation = true;
-            bwFollower.RunWorkerCompleted += BwFollower_RunWorkerCompleted;
+            _bwFollower.DoWork += BwFollower_DoWork;
+            _bwFollower.WorkerSupportsCancellation = true;
+            _bwFollower.RunWorkerCompleted += BwFollower_RunWorkerCompleted;
         }
 
         private void BwFollower_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             try
             {
-                foreach (User u in newFollowerCollection)
+                foreach (User u in _newFollowerCollection)
                 {
                     _followerViewModel.FollowersCollection.Add(u);
                 }
-                newFollowerCollection.Clear();
+                _newFollowerCollection.Clear();
             }
             catch (Exception) { }
 
-            bwFollower.CancelAsync();
+            _bwFollower.CancelAsync();
         }
 
         private void BwFollower_DoWork(object sender, DoWorkEventArgs e)
@@ -70,21 +70,21 @@ namespace SoundCloudPlus.Pages
             {
                 var b = e.Replace("https://api.soundcloud.com", "");
                 ObservableCollection<User> newCollection = await App.SoundCloud.GetFollowers(App.SoundCloud.CurrentUser.Id, b);
-                newFollowerCollection = newCollection;
+                _newFollowerCollection = newCollection;
             }
         }
 
         private void SvFollower_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is...
-            verticalOffsetFollower = svFollower.VerticalOffset;
-            maxVerticalOffsetFollower = svFollower.ScrollableHeight;
+            _verticalOffsetFollower = SvFollower.VerticalOffset;
+            _maxVerticalOffsetFollower = SvFollower.ScrollableHeight;
 
-            if (maxVerticalOffsetFollower < 0 || verticalOffsetFollower == maxVerticalOffsetFollower)
+            if (_maxVerticalOffsetFollower < 0 || _verticalOffsetFollower == _maxVerticalOffsetFollower)
             {
-                if (bwFollower.IsBusy == false)
+                if (_bwFollower.IsBusy == false)
                 {
-                    bwFollower.RunWorkerAsync();
+                    _bwFollower.RunWorkerAsync();
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace SoundCloudPlus.Pages
                 var bounds = Window.Current.Bounds;
                 double height = bounds.Height;
                 double width = bounds.Width;
-                int limit = Screen.getLimitItems(height, width, 200, 400, 200, 400);
+                int limit = Screen.GetLimitItems(height, width, 200, 400, 200, 400);
                 _followerViewModel.FollowersCollection = await App.SoundCloud.GetFollowers(id, limit);
             }
             catch (Exception)
@@ -148,7 +148,7 @@ namespace SoundCloudPlus.Pages
             Screen.MakeResponsive(e, 200, 400, FollowerGridView);
         }
 
-        private void onAvatarClick(object sender, RoutedEventArgs e)
+        private void OnAvatarClick(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             int userId = (int)b.Tag;

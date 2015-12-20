@@ -25,15 +25,15 @@ namespace SoundCloudPlus.Pages
             ElementTheme e = App.RootFrame.RequestedTheme;
             if(e == ElementTheme.Light)
             {
-                cboTheme.SelectedIndex = 1;
+                CboTheme.SelectedIndex = 1;
             }
             else if(e == ElementTheme.Dark)
             {
-                cboTheme.SelectedIndex = 2;
+                CboTheme.SelectedIndex = 2;
             }
             else
             {
-                cboTheme.SelectedIndex = 0;
+                CboTheme.SelectedIndex = 0;
             }
         }
 

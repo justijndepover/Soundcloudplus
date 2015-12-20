@@ -71,12 +71,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="64" />
         </Grid.RowDefinitions>
-        <Grid x:Name="mobileNavBar" Visibility="Collapsed" Background="{ThemeResource ToggleButtonPointerOverBackgroundThemeBrush}">
+        <Grid x:Name="MobileNavBar" Visibility="Collapsed" Background="{ThemeResource ToggleButtonPointerOverBackgroundThemeBrush}">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
             <TextBlock Text="{Binding PageTitle}" Style="{StaticResource AppTitle}" />
             <Grid Width="60" Height="25" HorizontalAlignment="Right" Margin="0 0 8 0">
                 <Border Background="#C82C24" Padding="0" CornerRadius="3">
-                    <TextBlock Text="Beta" Style="{StaticResource beta}" />
+                    <TextBlock Text="Beta" Style="{StaticResource Beta}" />
                 </Border>
             </Grid>
         </Grid>
@@ -102,7 +102,7 @@
                         <Button x:Name="NavButton2" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
                         <Grid Width="60" Height="25" HorizontalAlignment="Right" Margin="0 0 8 0">
                             <Border Background="#C82C24" Padding="0" CornerRadius="3">
-                                <TextBlock Text="Beta" Style="{StaticResource beta}" />
+                                <TextBlock Text="Beta" Style="{StaticResource Beta}" />
                             </Border>
                         </Grid>
                         <AutoSuggestBox x:Name="SearchBox" Style="{StaticResource SearchBox}" Grid.Row="1" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged"/>
@@ -241,7 +241,7 @@
                 <FontIcon Glyph="&#xE892;" />
             </Button>
             <Button Grid.Column="6" Style="{StaticResource IconInMusicControl}" Click="playButton_Click">
-                <FontIcon Name="playbuttonicon" Glyph="&#xE768;" />
+                <FontIcon Name="Playbuttonicon" Glyph="&#xE768;" />
             </Button>
             <Button Grid.Column="7" Style="{StaticResource IconInMusicControl}" Click="nextButton_Click">
                 <FontIcon Glyph="&#xE893;" />

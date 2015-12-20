@@ -18,38 +18,38 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class LikePage : Page
     {
-        private BackgroundWorker bwLike = new BackgroundWorker();
-        private ObservableCollection<Track> newLikeCollection = new ObservableCollection<Track>();
-        private double verticalOffsetLike;
-        private double maxVerticalOffsetLike;
+        private BackgroundWorker _bwLike = new BackgroundWorker();
+        private ObservableCollection<Track> _newLikeCollection = new ObservableCollection<Track>();
+        private double _verticalOffsetLike;
+        private double _maxVerticalOffsetLike;
         private LikePageViewModel _likePageViewModel;
         public LikePage()
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            initBwLike();
+            InitBwLike();
         }
         #region BackgroundWorkerLike
-        private void initBwLike()
+        private void InitBwLike()
         {
-            bwLike.DoWork += BwLike_DoWork;
-            bwLike.WorkerSupportsCancellation = true;
-            bwLike.RunWorkerCompleted += BwLike_RunWorkerCompleted;
+            _bwLike.DoWork += BwLike_DoWork;
+            _bwLike.WorkerSupportsCancellation = true;
+            _bwLike.RunWorkerCompleted += BwLike_RunWorkerCompleted;
         }
 
         private void BwLike_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             try
             {
-                foreach (Track t in newLikeCollection)
+                foreach (Track t in _newLikeCollection)
                 {
                     _likePageViewModel.TrackLikesCollection.Add(t);
                 }
-                newLikeCollection.Clear();
+                _newLikeCollection.Clear();
             }
             catch (Exception){ }
 
-            bwLike.CancelAsync();
+            _bwLike.CancelAsync();
         }
 
         private void BwLike_DoWork(object sender, DoWorkEventArgs e)
@@ -69,20 +69,20 @@ namespace SoundCloudPlus.Pages
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
                 ObservableCollection<Track> newCollection =
                     await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id, b);
-                newLikeCollection = newCollection;
+                _newLikeCollection = newCollection;
             }
         }
         private void SvLikes_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is...
-            verticalOffsetLike = svLikes.VerticalOffset;
-            maxVerticalOffsetLike = svLikes.ScrollableHeight;
+            _verticalOffsetLike = SvLikes.VerticalOffset;
+            _maxVerticalOffsetLike = SvLikes.ScrollableHeight;
 
-            if (maxVerticalOffsetLike < 0 || verticalOffsetLike == maxVerticalOffsetLike)
+            if (_maxVerticalOffsetLike < 0 || _verticalOffsetLike == _maxVerticalOffsetLike)
             {
-                if (bwLike.IsBusy == false)
+                if (_bwLike.IsBusy == false)
                 {
-                    bwLike.RunWorkerAsync();
+                    _bwLike.RunWorkerAsync();
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace SoundCloudPlus.Pages
                 var bounds = Window.Current.Bounds;
                 double height = bounds.Height;
                 double width = bounds.Width;
-                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id, limit);
             }
             catch (Exception)

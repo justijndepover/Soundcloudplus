@@ -19,38 +19,38 @@ namespace SoundCloudPlus.Pages
     /// 
     public sealed partial class FollowingPage : Page
     {
-        private BackgroundWorker bwFollowing = new BackgroundWorker();
-        private ObservableCollection<User> newFollowingCollection = new ObservableCollection<User>();
-        private double verticalOffsetFollowing;
-        private double maxVerticalOffsetFollowing;
+        private BackgroundWorker _bwFollowing = new BackgroundWorker();
+        private ObservableCollection<User> _newFollowingCollection = new ObservableCollection<User>();
+        private double _verticalOffsetFollowing;
+        private double _maxVerticalOffsetFollowing;
         public FollowingPage()
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            initBwFollowing();
+            InitBwFollowing();
         }
 
         #region BackgroundWorkerFollowing
-        private void initBwFollowing()
+        private void InitBwFollowing()
         {
-            bwFollowing.DoWork += BwFollowing_DoWork;
-            bwFollowing.WorkerSupportsCancellation = true;
-            bwFollowing.RunWorkerCompleted += BwFollowing_RunWorkerCompleted;
+            _bwFollowing.DoWork += BwFollowing_DoWork;
+            _bwFollowing.WorkerSupportsCancellation = true;
+            _bwFollowing.RunWorkerCompleted += BwFollowing_RunWorkerCompleted;
         }
 
         private void BwFollowing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             try
             {
-                foreach (User u in newFollowingCollection)
+                foreach (User u in _newFollowingCollection)
                 {
                     _followingPageViewModel.FollowingsCollection.Add(u);
                 }
-                newFollowingCollection.Clear();
+                _newFollowingCollection.Clear();
             }
             catch (Exception) { }
 
-            bwFollowing.CancelAsync();
+            _bwFollowing.CancelAsync();
         }
 
         private void BwFollowing_DoWork(object sender, DoWorkEventArgs e)
@@ -88,7 +88,7 @@ namespace SoundCloudPlus.Pages
                 var bounds = Window.Current.Bounds;
                 double height = bounds.Height;
                 double width = bounds.Width;
-                int limit = Screen.getLimitItems(height, width, 200, 400, 200, 400);
+                int limit = Screen.GetLimitItems(height, width, 200, 400, 200, 400);
                 _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(id, limit);
             }
             catch (Exception)
@@ -117,7 +117,7 @@ namespace SoundCloudPlus.Pages
             Screen.MakeResponsive(e, 200, 400, FollowingGridView);
         }
 
-        private void onAvatarClick(object sender, RoutedEventArgs e)
+        private void OnAvatarClick(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             int userId = (int)b.Tag;
@@ -132,21 +132,21 @@ namespace SoundCloudPlus.Pages
             {
                 var b = e.Replace("https://api.soundcloud.com", "");
                 ObservableCollection<User> newCollection = await App.SoundCloud.GetFollowings(App.SoundCloud.CurrentUser.Id, b);
-                newFollowingCollection = newCollection;
+                _newFollowingCollection = newCollection;
             }
         }
 
         private void SvFollowing_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is...
-            verticalOffsetFollowing = svFollowing.VerticalOffset;
-            maxVerticalOffsetFollowing = svFollowing.ScrollableHeight;
+            _verticalOffsetFollowing = SvFollowing.VerticalOffset;
+            _maxVerticalOffsetFollowing = SvFollowing.ScrollableHeight;
 
-            if (maxVerticalOffsetFollowing < 0 || verticalOffsetFollowing == maxVerticalOffsetFollowing)
+            if (_maxVerticalOffsetFollowing < 0 || _verticalOffsetFollowing == _maxVerticalOffsetFollowing)
             {
-                if (bwFollowing.IsBusy == false)
+                if (_bwFollowing.IsBusy == false)
                 {
-                    bwFollowing.RunWorkerAsync();
+                    _bwFollowing.RunWorkerAsync();
                 }
             }
         }

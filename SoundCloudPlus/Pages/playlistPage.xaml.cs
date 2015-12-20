@@ -18,25 +18,25 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class PlaylistPage : Page
     {
-        private BackgroundWorker bwPlaylist = new BackgroundWorker();
-        private ObservableCollection<PlaylistCollection> newPlaylistCollection = new ObservableCollection<PlaylistCollection>();
-        private double verticalOffsetPlaylist;
-        private double maxVerticalOffsetPlaylist;
+        private BackgroundWorker _bwPlaylist = new BackgroundWorker();
+        private ObservableCollection<PlaylistCollection> _newPlaylistCollection = new ObservableCollection<PlaylistCollection>();
+        private double _verticalOffsetPlaylist;
+        private double _maxVerticalOffsetPlaylist;
         private FollowerPageViewModel _followerViewModel;
         public PlaylistPage()
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            initBwPlaylist();
+            InitBwPlaylist();
         }
 
         #region BackgroundWorkerPlaylist
 
-        private void initBwPlaylist()
+        private void InitBwPlaylist()
         {
-            bwPlaylist.DoWork += BwPlaylist_DoWork;
-            bwPlaylist.WorkerSupportsCancellation = true;
-            bwPlaylist.RunWorkerCompleted += BwPlaylist_RunWorkerCompleted; ;
+            _bwPlaylist.DoWork += BwPlaylist_DoWork;
+            _bwPlaylist.WorkerSupportsCancellation = true;
+            _bwPlaylist.RunWorkerCompleted += BwPlaylist_RunWorkerCompleted; ;
         }
 
         private void BwPlaylist_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -48,14 +48,14 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                foreach (PlaylistCollection pC in newPlaylistCollection)
+                foreach (PlaylistCollection pC in _newPlaylistCollection)
                 {
                     _playlistViewModel.PlaylistCollection.Add(pC);
                 }
-                newPlaylistCollection.Clear();
+                _newPlaylistCollection.Clear();
             }
             catch (Exception){}
-            bwPlaylist.CancelAsync();
+            _bwPlaylist.CancelAsync();
         }
 
         #endregion
@@ -72,21 +72,21 @@ namespace SoundCloudPlus.Pages
                 {
                     ObservableCollection<PlaylistCollection> newCollection =
                     await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, b);
-                    newPlaylistCollection = newCollection;
+                    _newPlaylistCollection = newCollection;
                 }
             }
         }
         private void SvPlaylist_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is ...
-            verticalOffsetPlaylist = svPlaylist.VerticalOffset;
-            maxVerticalOffsetPlaylist = svPlaylist.ScrollableHeight;
+            _verticalOffsetPlaylist = SvPlaylist.VerticalOffset;
+            _maxVerticalOffsetPlaylist = SvPlaylist.ScrollableHeight;
 
-            if (maxVerticalOffsetPlaylist < 0 || verticalOffsetPlaylist == maxVerticalOffsetPlaylist)
+            if (_maxVerticalOffsetPlaylist < 0 || _verticalOffsetPlaylist == _maxVerticalOffsetPlaylist)
             {
-                if (bwPlaylist.IsBusy == false)
+                if (_bwPlaylist.IsBusy == false)
                 {
-                    bwPlaylist.RunWorkerAsync();
+                    _bwPlaylist.RunWorkerAsync();
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace SoundCloudPlus.Pages
                 var bounds = Window.Current.Bounds;
                 double height = bounds.Height;
                 double width = bounds.Width;
-                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _playlistViewModel.PlaylistCollection = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, limit);
             }
             catch (Exception)

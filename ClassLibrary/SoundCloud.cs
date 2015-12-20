@@ -52,7 +52,7 @@ namespace ClassLibrary
         }
 
         #region Stream
-        private string StreamNextHref = "";
+        private string _streamNextHref = "";
         public async Task<ObservableCollection<StreamCollection>> GetStream(int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = limitValue, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -63,7 +63,7 @@ namespace ClassLibrary
                 {
                     tracks.Add(JsonConvert.DeserializeObject<StreamCollection>(item.ToString()));
                 }
-                StreamNextHref = apiResponse.Data["next_href"];
+                _streamNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
         }
@@ -80,19 +80,19 @@ namespace ClassLibrary
                     tracks.Add(JsonConvert.DeserializeObject<StreamCollection>(item.ToString()));
 
                 }
-                StreamNextHref = apiResponse.Data["next_href"];
+                _streamNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
         }
 
         public string GetStreamNextHref()
         {
-            return StreamNextHref;
+            return _streamNextHref;
         }
         #endregion
 
         #region Explore
-        private string ExploreNextHref = "";
+        private string _exploreNextHref = "";
         public async Task<ObservableCollection<Track>> GetExplore(int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -110,7 +110,7 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                ExploreNextHref = apiResponse.Data["next_href"];
+                _exploreNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
         }
@@ -132,14 +132,14 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                ExploreNextHref = apiResponse.Data["next_href"];
+                _exploreNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
         }
 
         public string GetExploreNextHref()
         {
-            return ExploreNextHref;
+            return _exploreNextHref;
         }
         #endregion
 
@@ -175,7 +175,7 @@ namespace ClassLibrary
         #region Playlist
 
         #region ProfilePlaylist
-        private string ProfilePlaylistNextHref = "";
+        private string _profilePlaylistNextHref = "";
         public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists", null, new { representation = "speedy", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -218,11 +218,11 @@ namespace ClassLibrary
                 object nhref = pO.NextHref;
                 if (nhref != null)
                 {
-                    PlaylistNextHref = nhref.ToString();
+                    _playlistNextHref = nhref.ToString();
                 }
                 else
                 {
-                    PlaylistNextHref = "";
+                    _playlistNextHref = "";
                 }
                 return c;
             }
@@ -259,11 +259,11 @@ namespace ClassLibrary
                 object nhref = pO.NextHref;
                 if (nhref != null)
                 {
-                    PlaylistNextHref = nhref.ToString();
+                    _playlistNextHref = nhref.ToString();
                 }
                 else
                 {
-                    PlaylistNextHref = "";
+                    _playlistNextHref = "";
                 }
                 return c;
             }
@@ -271,7 +271,7 @@ namespace ClassLibrary
 
         public string GetProfilePlaylistNextHref()
         {
-            return ProfilePlaylistNextHref;
+            return _profilePlaylistNextHref;
         }
         #endregion
 
@@ -297,7 +297,7 @@ namespace ClassLibrary
         }
 
         #region Playlists_Page
-        private string PlaylistNextHref = "";
+        private string _playlistNextHref = "";
         public async Task<ObservableCollection<PlaylistCollection>> GetPlaylists(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/playlists/liked_and_owned", null, new { keepBlocked = true, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -330,11 +330,11 @@ namespace ClassLibrary
             object nhref = pO.NextHref;
             if (nhref != null)
             {
-                PlaylistNextHref = nhref.ToString();
+                _playlistNextHref = nhref.ToString();
             }
             else
             {
-                PlaylistNextHref = "";
+                _playlistNextHref = "";
             }
             return c;
         }
@@ -357,18 +357,18 @@ namespace ClassLibrary
             object nhref = pO.NextHref;
             if (nhref != null)
             {
-                PlaylistNextHref = nhref.ToString();
+                _playlistNextHref = nhref.ToString();
             }
             else
             {
-                PlaylistNextHref = "";
+                _playlistNextHref = "";
             }
             return c;
         }
 
         public string GetPlaylistNextHref()
         {
-            return PlaylistNextHref;
+            return _playlistNextHref;
         }
         #endregion
 
@@ -387,7 +387,7 @@ namespace ClassLibrary
 
         #region Tracks
 
-        private string ProfileTracksNextHref = "";
+        private string _profileTracksNextHref = "";
         public async Task<ObservableCollection<Track>> GetTracks(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -424,11 +424,11 @@ namespace ClassLibrary
                 object nhref = tO.NextHref;
                 if (nhref != null)
                 {
-                    ProfileTracksNextHref = nhref.ToString();
+                    _profileTracksNextHref = nhref.ToString();
                 }
                 else
                 {
-                    ProfileTracksNextHref = "";
+                    _profileTracksNextHref = "";
                 }
                 return c;
             }
@@ -458,18 +458,18 @@ namespace ClassLibrary
             object nhref = tO.NextHref;
             if (nhref != null)
             {
-                ProfileTracksNextHref = nhref.ToString();
+                _profileTracksNextHref = nhref.ToString();
             }
             else
             {
-                ProfileTracksNextHref = "";
+                _profileTracksNextHref = "";
             }
             return c;
         }
 
         public string GetProfileTrackNextHref()
         {
-            return ProfileTracksNextHref;
+            return _profileTracksNextHref;
         }
 
         public async Task<Uri> GetMusicFile(int id)
@@ -485,7 +485,7 @@ namespace ClassLibrary
         #endregion
 
         #region Reposts
-        private string RepostNextHref = "";
+        private string _repostNextHref = "";
         public async Task<ObservableCollection<RepostCollection>> GetReposts(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/profile/soundcloud:users:" + userId + "/reposts", null, new { keepBlocked = false, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -496,7 +496,7 @@ namespace ClassLibrary
                 {
                     rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
                 }
-                RepostNextHref = apiResponse.Data["next_href"];
+                _repostNextHref = apiResponse.Data["next_href"];
             }
             return rC;
         }
@@ -511,18 +511,18 @@ namespace ClassLibrary
                 {
                     rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
                 }
-                RepostNextHref = apiResponse.Data["next_href"];
+                _repostNextHref = apiResponse.Data["next_href"];
             }
             return rC;
         }
         public string GetProfileRepostNextHref()
         {
-            return RepostNextHref;
+            return _repostNextHref;
         }
         #endregion
 
         #region Followers
-        private string FollowerNextHref = "";
+        private string _followerNextHref = "";
         public async Task<ObservableCollection<User>> GetFollowers(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followers", null, new { keepBlocked = true, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -540,7 +540,7 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                FollowerNextHref = apiResponse.Data["next_href"];
+                _followerNextHref = apiResponse.Data["next_href"];
             }
             return followers;
         }
@@ -562,18 +562,18 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                FollowerNextHref = apiResponse.Data["next_href"];
+                _followerNextHref = apiResponse.Data["next_href"];
             }
             return followers;
         }
         public string GetFollowerNextHref()
         {
-            return FollowerNextHref;
+            return _followerNextHref;
         }
         #endregion
 
         #region Followings
-        private string FollowingNextHref = "";
+        private string _followingNextHref = "";
         public async Task<ObservableCollection<User>> GetFollowings(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/followings", null, new { limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -591,7 +591,7 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                FollowingNextHref = apiResponse.Data["next_href"];
+                _followingNextHref = apiResponse.Data["next_href"];
             }
             return followings;
         }
@@ -613,19 +613,19 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                FollowingNextHref = apiResponse.Data["next_href"];
+                _followingNextHref = apiResponse.Data["next_href"];
             }
             return followings;
         }
 
         public string GetFollowingNextHref()
         {
-            return FollowingNextHref;
+            return _followingNextHref;
         }
         #endregion
 
         #region Likes
-        private string LikesNextHref = "";
+        private string _likesNextHref = "";
         public async Task<ObservableCollection<Track>> GetLikes(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/track_likes", null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -649,7 +649,7 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                LikesNextHref = apiResponse.Data["next_href"];
+                _likesNextHref = apiResponse.Data["next_href"];
             }
             return tracklikes;
         }
@@ -677,14 +677,14 @@ namespace ClassLibrary
                         Debug.WriteLine(ex.Message);
                     }
                 }
-                LikesNextHref = apiResponse.Data["next_href"];
+                _likesNextHref = apiResponse.Data["next_href"];
             }
             return tracklikes;
         }
 
         public string GetLikesNextHref()
         {
-            return LikesNextHref;
+            return _likesNextHref;
         }
         #endregion
 

@@ -24,7 +24,7 @@ namespace SoundCloudPlus.Pages
     public sealed partial class MainPage
     {
         public static MainPage Current;
-        public MainPageViewModel _mainPageViewModel;
+        public MainPageViewModel MainPageViewModel;
         public string PageTitle;
         readonly DispatcherTimer _playbackTimer = new DispatcherTimer();
 
@@ -48,7 +48,7 @@ namespace SoundCloudPlus.Pages
             User s = App.SoundCloud.CurrentUser;
             try
             {
-                _mainPageViewModel.LoggedInUser = s;
+                MainPageViewModel.LoggedInUser = s;
             }
             catch (Exception ex)
             {
@@ -89,10 +89,10 @@ namespace SoundCloudPlus.Pages
                 try
                 {
                     MyFrame.Navigate(typeof(HomePage));
-                    _mainPageViewModel =
+                    MainPageViewModel =
                         (MainPageViewModel)Resources["MainPageViewModel"];
                     MusicPlayerControl.DataContext = App.SoundCloud.AudioPlayer;
-                    _mainPageViewModel.PageTitle = "Home";
+                    MainPageViewModel.PageTitle = "Home";
                     App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     LoadUserAvatar();
                 }
@@ -137,14 +137,14 @@ namespace SoundCloudPlus.Pages
                 case "home":
                     if (page?.GetType() != typeof(HomePage))
                     {
-                        _mainPageViewModel.PageTitle = "Home";
+                        MainPageViewModel.PageTitle = "Home";
                         MyFrame?.Navigate(typeof(HomePage));
                     }
                     break;
                 case "profile":
                     if (page?.GetType() != typeof(ProfilePage))
                     {
-                        _mainPageViewModel.PageTitle = "Profile";
+                        MainPageViewModel.PageTitle = "Profile";
                         if (b?.Tag != null)
                         {
                             int id = (int)b.Tag;
@@ -157,7 +157,7 @@ namespace SoundCloudPlus.Pages
                 case "followers":
                     if (page?.GetType() != typeof(FollowerPage))
                     {
-                        _mainPageViewModel.PageTitle = "Followers";
+                        MainPageViewModel.PageTitle = "Followers";
                         if (b?.Tag != null)
                         {
                             int id = (int)b.Tag;
@@ -170,7 +170,7 @@ namespace SoundCloudPlus.Pages
                 case "following":
                     if (page?.GetType() != typeof(FollowingPage))
                     {
-                        _mainPageViewModel.PageTitle = "Following";
+                        MainPageViewModel.PageTitle = "Following";
                         if (b?.Tag != null)
                         {
                             int id = (int)b.Tag;
@@ -196,14 +196,14 @@ namespace SoundCloudPlus.Pages
                 case "home":
                     if (page?.GetType() != typeof(HomePage))
                     {
-                        _mainPageViewModel.PageTitle = "Home";
+                        MainPageViewModel.PageTitle = "Home";
                         MyFrame?.Navigate(typeof(HomePage));
                     }
                     break;
                 case "following":
                     if (page?.GetType() != typeof(FollowingPage))
                     {
-                        _mainPageViewModel.PageTitle = "Following";
+                        MainPageViewModel.PageTitle = "Following";
                         int id = App.SoundCloud.CurrentUser.Id;
                         UserId = id;
                         MyFrame?.Navigate(typeof(FollowingPage));
@@ -213,7 +213,7 @@ namespace SoundCloudPlus.Pages
                 case "followers":
                     if (page?.GetType() != typeof(FollowerPage))
                     {
-                        _mainPageViewModel.PageTitle = "Followers";
+                        MainPageViewModel.PageTitle = "Followers";
                         int id = App.SoundCloud.CurrentUser.Id;
                         UserId = id;
                         MyFrame?.Navigate(typeof(FollowerPage));
@@ -223,21 +223,21 @@ namespace SoundCloudPlus.Pages
                 case "playlist":
                     if (page?.GetType() != typeof(PlaylistPage))
                     {
-                        _mainPageViewModel.PageTitle = "Playlist";
+                        MainPageViewModel.PageTitle = "Playlist";
                         MyFrame?.Navigate(typeof(PlaylistPage));
                     }
                     break;
                 case "like":
                     if (page?.GetType() != typeof(LikePage))
                     {
-                        _mainPageViewModel.PageTitle = "Like";
+                        MainPageViewModel.PageTitle = "Like";
                         MyFrame?.Navigate(typeof(LikePage));
                     }
                     break;
                 case "profile":
                     if (true)
                     {
-                        _mainPageViewModel.PageTitle = "Profile";
+                        MainPageViewModel.PageTitle = "Profile";
                         int id = App.SoundCloud.CurrentUser.Id;
                         UserId = id;
                         MyFrame?.Navigate(typeof(ProfilePage));
@@ -247,7 +247,7 @@ namespace SoundCloudPlus.Pages
                 case "activity":
                     if (page?.GetType() != typeof(ActivityPage))
                     {
-                        _mainPageViewModel.PageTitle = "Activity";
+                        MainPageViewModel.PageTitle = "Activity";
                         LoadActivityPageResources();
                         MyFrame?.Navigate(typeof(ActivityPage));
                     }
@@ -255,14 +255,14 @@ namespace SoundCloudPlus.Pages
                 case "setting":
                     if (page?.GetType() != typeof(SettingPage))
                     {
-                        _mainPageViewModel.PageTitle = "Setting";
+                        MainPageViewModel.PageTitle = "Setting";
                         MyFrame?.Navigate(typeof(SettingPage));
                     }
                     break;
                 case "currentsong":
                     if (page?.GetType() != typeof(PlayingPage))
                     {
-                        _mainPageViewModel.PageTitle = "Now playing";
+                        MainPageViewModel.PageTitle = "Now playing";
                         MyFrame?.Navigate(typeof(PlayingPage));
                     }
                     break;
@@ -302,7 +302,7 @@ namespace SoundCloudPlus.Pages
                 var bounds = Window.Current.Bounds;
                 double height = bounds.Height;
                 double width = bounds.Width;
-                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 GetActivities(limit);
             }
             catch (Exception)
@@ -317,7 +317,7 @@ namespace SoundCloudPlus.Pages
             try
             {
                 a = await App.SoundCloud.GetActivities(limit);
-                _mainPageViewModel.ActivityObject = a;
+                MainPageViewModel.ActivityObject = a;
             }
             catch (Exception)
             {
@@ -332,7 +332,7 @@ namespace SoundCloudPlus.Pages
             {
                 c.Add(a.Collection[i]);
             }
-            _mainPageViewModel.ActivityCollection = c;
+            MainPageViewModel.ActivityCollection = c;
         }
         #endregion
 
@@ -445,18 +445,18 @@ namespace SoundCloudPlus.Pages
 
         private void UpdateTransportControls(MediaPlayerState state)
         {
-            _mainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.PlayList.Last();
+            MainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.PlayList.Last();
             if (state == MediaPlayerState.Playing)
             {
                 MusicPlayerControl.Visibility = Visibility.Visible;
                 _playbackTimer.Start();
-                playbuttonicon.Glyph = "\ue769";
+                Playbuttonicon.Glyph = "\ue769";
                 //playbuttonicon.Glyph = "| |";     // Change to pause button
             }
             else
             {
                 _playbackTimer.Stop();
-                playbuttonicon.Glyph = "\ue768";
+                Playbuttonicon.Glyph = "\ue768";
                 //playbuttonicon.Glyph = ">";     // Change to play button
             }
         }

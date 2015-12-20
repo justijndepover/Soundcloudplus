@@ -19,44 +19,44 @@ namespace SoundCloudPlus.Pages
     public sealed partial class HomePage : Page
     {
         private HomePageViewModel _homePageViewModel;
-        private BackgroundWorker bwExplore = new BackgroundWorker();
-        private BackgroundWorker bwStream = new BackgroundWorker();
-        private ObservableCollection<StreamCollection> newStreamCollection = new ObservableCollection<StreamCollection>();
-        private ObservableCollection<Track> newExploreCollection = new ObservableCollection<Track>();
-        private double verticalOffsetStream;
-        private double verticalOffsetExplore;
-        private double maxVerticalOffsetStream;
-        private double maxVerticalOffsetExplore;
+        private BackgroundWorker _bwExplore = new BackgroundWorker();
+        private BackgroundWorker _bwStream = new BackgroundWorker();
+        private ObservableCollection<StreamCollection> _newStreamCollection = new ObservableCollection<StreamCollection>();
+        private ObservableCollection<Track> _newExploreCollection = new ObservableCollection<Track>();
+        private double _verticalOffsetStream;
+        private double _verticalOffsetExplore;
+        private double _maxVerticalOffsetStream;
+        private double _maxVerticalOffsetExplore;
 
         public HomePage()
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
             // backgroundworker init
-            initBwStream();
-            initBwExplore();
+            InitBwStream();
+            InitBwExplore();
         }
 
         #region BackgroundWorkerStream
-        private void initBwStream()
+        private void InitBwStream()
         {
-            bwStream.DoWork += BwStream_DoWork;
-            bwStream.WorkerSupportsCancellation = true;
-            bwStream.RunWorkerCompleted += BwStream_RunWorkerCompleted;
+            _bwStream.DoWork += BwStream_DoWork;
+            _bwStream.WorkerSupportsCancellation = true;
+            _bwStream.RunWorkerCompleted += BwStream_RunWorkerCompleted;
         }
 
         private void BwStream_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             try
             {
-                foreach (StreamCollection s in newStreamCollection)
+                foreach (StreamCollection s in _newStreamCollection)
                 {
                     _homePageViewModel.StreamCollection.Add(s);
                 }
             }
             catch (Exception) { }
 
-            bwStream.CancelAsync();
+            _bwStream.CancelAsync();
         }
 
         private void BwStream_DoWork(object sender, DoWorkEventArgs e)
@@ -66,25 +66,25 @@ namespace SoundCloudPlus.Pages
         #endregion
 
         #region BackgroundWorkerExplore
-        private void initBwExplore()
+        private void InitBwExplore()
         {
-            bwExplore.DoWork += BwExplore_DoWork;
-            bwExplore.WorkerSupportsCancellation = true;
-            bwExplore.RunWorkerCompleted += BwExplore_RunWorkerCompleted;
+            _bwExplore.DoWork += BwExplore_DoWork;
+            _bwExplore.WorkerSupportsCancellation = true;
+            _bwExplore.RunWorkerCompleted += BwExplore_RunWorkerCompleted;
         }
 
         private void BwExplore_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             try
             {
-                foreach (Track t in newExploreCollection)
+                foreach (Track t in _newExploreCollection)
                 {
                     _homePageViewModel.ExploreCollection.Add(t);
                 }
             }
             catch (Exception) { }
 
-            bwStream.CancelAsync();
+            _bwStream.CancelAsync();
         }
 
         private void BwExplore_DoWork(object sender, DoWorkEventArgs e)
@@ -141,7 +141,7 @@ namespace SoundCloudPlus.Pages
                 var bounds = Window.Current.Bounds;
                 double height = bounds.Height;
                 double width = bounds.Width;
-                int limit = Screen.getLimitItems(height, width, 400, 800, 200, 400);
+                int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
                 _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
             }
@@ -170,14 +170,14 @@ namespace SoundCloudPlus.Pages
         private void ScrollViewerStream_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is...
-            verticalOffsetStream = svSteam.VerticalOffset;
-            maxVerticalOffsetStream = svSteam.ScrollableHeight;
+            _verticalOffsetStream = SvSteam.VerticalOffset;
+            _maxVerticalOffsetStream = SvSteam.ScrollableHeight;
 
-            if (maxVerticalOffsetStream < 0 || verticalOffsetStream == maxVerticalOffsetStream)
+            if (_maxVerticalOffsetStream < 0 || _verticalOffsetStream == _maxVerticalOffsetStream)
             {
-                if (bwStream.IsBusy == false)
+                if (_bwStream.IsBusy == false)
                 {
-                    bwStream.RunWorkerAsync();
+                    _bwStream.RunWorkerAsync();
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace SoundCloudPlus.Pages
             {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
                 ObservableCollection<StreamCollection> newCollection = await App.SoundCloud.GetStream(b);
-                newStreamCollection = newCollection;
+                _newStreamCollection = newCollection;
             }
         }
         #endregion
@@ -198,14 +198,14 @@ namespace SoundCloudPlus.Pages
         private void ScrollViewerExplore_OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             // Laad nieuwe items in wanneer scrollviewer op einde is...
-            verticalOffsetExplore = svExplore.VerticalOffset;
-            maxVerticalOffsetExplore = svExplore.ScrollableHeight;
+            _verticalOffsetExplore = SvExplore.VerticalOffset;
+            _maxVerticalOffsetExplore = SvExplore.ScrollableHeight;
 
-            if (maxVerticalOffsetExplore < 0 || verticalOffsetExplore == maxVerticalOffsetExplore)
+            if (_maxVerticalOffsetExplore < 0 || _verticalOffsetExplore == _maxVerticalOffsetExplore)
             {
-                if (bwExplore.IsBusy == false)
+                if (_bwExplore.IsBusy == false)
                 {
-                    bwExplore.RunWorkerAsync();
+                    _bwExplore.RunWorkerAsync();
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace SoundCloudPlus.Pages
             {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
                 ObservableCollection<Track> newCollection = await App.SoundCloud.GetExplore(b);
-                newExploreCollection = newCollection;
+                _newExploreCollection = newCollection;
             }
         }
         #endregion
