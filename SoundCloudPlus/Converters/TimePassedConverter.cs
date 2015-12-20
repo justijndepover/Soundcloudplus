@@ -7,8 +7,16 @@ namespace SoundCloudPlus.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            string v = (string)value;
-            DateTime dt = System.Convert.ToDateTime(v);
+            DateTime dt;
+            try
+            {
+                string v = (string)value;
+                dt = System.Convert.ToDateTime(v);
+            }
+            catch (InvalidCastException)
+            {
+                dt = (DateTime)value;
+            }
             var ts = new TimeSpan(DateTime.UtcNow.Ticks - dt.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
 

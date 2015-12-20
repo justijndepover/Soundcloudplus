@@ -5,6 +5,7 @@ namespace ClassLibrary.Models
 {
     public class StreamCollection
     {
+        [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
         public string Type { get; set; }
         public PublishUser User { get; set; }
