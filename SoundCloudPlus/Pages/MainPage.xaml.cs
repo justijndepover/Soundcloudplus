@@ -305,8 +305,9 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 GetActivities(limit);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 Application.Current.Exit();
             }
         }

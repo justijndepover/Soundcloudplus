@@ -41,9 +41,12 @@ namespace ClassLibrary
         public async Task<bool> IsAuthenticated()
         {
             //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
-            CurrentUser = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<User>("currentUser"));
-            Code = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("code"));
-            Token = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("token"));
+            if (CurrentUser == null || Code == null || Token == null)
+            {
+                CurrentUser = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<User>("currentUser"));
+                Code = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("code"));
+                Token = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("token"));
+            }
             if (CurrentUser != null && Code != null && Token != null)
             {
                 return true;
