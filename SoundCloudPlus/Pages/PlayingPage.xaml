@@ -37,16 +37,23 @@
         <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <StackPanel>
-                    <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingArtist}">
-                        <TextBlock x:Name="PlayingArtist" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource CurrentlyPlayingName}"/>
-                    </Border>
-                    
-                    <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingTitle}" >
-                        <TextBlock x:Name="PlayingTitle" Text="{Binding PlayingTrack.Title}" Style="{StaticResource CurrentlyPlayingTitle}"/>
-                    </Border>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum200}"/>
 
-                    <!--<Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
+                    <StackPanel Grid.Column="1">
+                        <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingArtist}">
+                            <TextBlock x:Name="PlayingArtist" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource CurrentlyPlayingName}"/>
+                        </Border>
+
+                        <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingTitle}" >
+                            <TextBlock x:Name="PlayingTitle" Text="{Binding PlayingTrack.Title}" Style="{StaticResource CurrentlyPlayingTitle}"/>
+                        </Border>
+
+                        <!--<Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
                         <StackPanel>
                             <TextBlock Text="Followers"/>
                             <TextBlock Text="{Binding UserObject.FollowersCount, Converter={StaticResource IntToMillionConverter}}" />
@@ -65,6 +72,7 @@
                         </StackPanel>
                     </Button>-->
                     </StackPanel>
+                </Grid>
             </RelativePanel>
         </ScrollViewer>
     </Grid>
