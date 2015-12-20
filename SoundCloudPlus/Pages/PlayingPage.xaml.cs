@@ -59,19 +59,22 @@ namespace SoundCloudPlus.Pages
 
         private void _canvasControl_CreateResources(CanvasControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            var uri = _mainPageViewModel.PlayingTrack.ArtworkUrl.ToString();
-            uri = uri.Replace("large.jpg", "t500x500.jpg");
-            if (!string.IsNullOrWhiteSpace(uri))
+            if (_mainPageViewModel.PlayingTrack.ArtworkUrl != null)
             {
-                _scaleEffect = new ScaleEffect();
-                _blurEffect = new GaussianBlurEffect();
+                var uri = _mainPageViewModel.PlayingTrack.ArtworkUrl.ToString();
+                uri = uri.Replace("large.jpg", "t500x500.jpg");
+                if (!string.IsNullOrWhiteSpace(uri))
+                {
+                    _scaleEffect = new ScaleEffect();
+                    _blurEffect = new GaussianBlurEffect();
 
-                _image = CanvasBitmap.LoadAsync(sender.Device,
-                  new Uri(uri)).GetAwaiter().GetResult();
+                    _image = CanvasBitmap.LoadAsync(sender.Device,
+                        new Uri(uri)).GetAwaiter().GetResult();
 
-                _imageLoaded = true;
+                    _imageLoaded = true;
 
-                sender.Invalidate();
+                    sender.Invalidate();
+                }
             }
         }
 
