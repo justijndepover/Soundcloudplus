@@ -11,6 +11,7 @@ using ClassLibrary.Common;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using ClassLibrary.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,7 +32,7 @@ namespace SoundCloudPlus.Pages
             this.InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
@@ -49,11 +50,22 @@ namespace SoundCloudPlus.Pages
                     _canvasControl.Draw += _canvasControl_Draw;
                     _canvasControl.CreateResources += _canvasControl_CreateResources;
                     ContentPresenter.Content = _canvasControl;
+                    createWaveForm();
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                 }
+            }
+        }
+
+        private async void createWaveForm()
+        {
+            var url = _mainPageViewModel.PlayingTrack.WaveformUrl;
+            WaveForm wave = await App.SoundCloud.getWaveForm(url);
+            if(wave != null)
+            {
+                //create the waveform
             }
         }
 

@@ -71,6 +71,9 @@
                             <TextBlock Text="{Binding CurrentUser.Id, Converter={StaticResource IntToMillionConverter}}" />
                         </StackPanel>
                     </Button>-->
+                        <Grid x:Name="waveformgrid">
+                            
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </RelativePanel>

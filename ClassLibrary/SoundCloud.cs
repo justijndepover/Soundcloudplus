@@ -11,6 +11,7 @@ using ClassLibrary.Common;
 using ClassLibrary.Models;
 using Enough.Storage;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace ClassLibrary
 {
@@ -86,6 +87,23 @@ namespace ClassLibrary
                 _streamNextHref = apiResponse.Data["next_href"];
             }
             return tracks;
+        }
+
+        public async Task<WaveForm> getWaveForm(string url)
+        {
+            WaveForm json;
+            //ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, null, null, null, );
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if(response.IsSuccessStatusCode)
+                {
+                    string content = response.Content.ReadAsStringAsync().Result;
+                    json = JsonConvert.DeserializeObject<WaveForm>(content);
+                    return json;
+                }
+            }
+            return null;
         }
 
         public string GetStreamNextHref()
