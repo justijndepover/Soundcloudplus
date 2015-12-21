@@ -77,7 +77,7 @@
                     </Button>-->
                         
                     </StackPanel>
-                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Hidden" Padding="10 30">
+                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Padding="10 30">
                         <StackPanel  x:Name="waveformstackpanel" Orientation="Horizontal">
 
                         </StackPanel>
