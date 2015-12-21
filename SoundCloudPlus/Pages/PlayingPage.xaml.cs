@@ -12,6 +12,10 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using ClassLibrary.Models;
+using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
+using Windows.UI.Xaml;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -66,6 +70,17 @@ namespace SoundCloudPlus.Pages
             if(wave != null)
             {
                 //create the waveform
+                foreach (int i in wave.samples)
+                {
+                    Rectangle r = new Rectangle();
+                    r.Height = i;
+                    r.Width = 2;
+                    Thickness margin = r.Margin;
+                    margin.Left = 1;
+                    r.Margin = margin;
+                    r.Fill = new SolidColorBrush(Colors.White);
+                    waveformstackpanel.Children.Add(r);
+                }
             }
         }
 

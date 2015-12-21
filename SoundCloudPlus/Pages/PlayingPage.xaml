@@ -38,6 +38,10 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200" />
                         <ColumnDefinition Width="*" />
@@ -71,10 +75,14 @@
                             <TextBlock Text="{Binding CurrentUser.Id, Converter={StaticResource IntToMillionConverter}}" />
                         </StackPanel>
                     </Button>-->
-                        <Grid x:Name="waveformgrid">
-                            
-                        </Grid>
+                        
                     </StackPanel>
+                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Hidden" Padding="10 30">
+                        <StackPanel  x:Name="waveformstackpanel" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </ScrollViewer>
+                    
                 </Grid>
             </RelativePanel>
         </ScrollViewer>
