@@ -117,6 +117,7 @@
     <Compile Include="Common\BackgroundTaskState.cs" />
     <Compile Include="Common\ContinuationManager.cs" />
     <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\ErrorLogProxy.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\TileService.cs" />
     <Compile Include="Messages\AppResumedMessage.cs" />
