@@ -93,7 +93,7 @@ namespace SoundCloudPlus.Pages
         }
         #endregion
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
@@ -163,7 +163,10 @@ namespace SoundCloudPlus.Pages
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             StreamCollection s = e.ClickedItem as StreamCollection;
-            App.SoundCloud.AudioPlayer.PlayTrack(s.Track as Track);
+            if (s?.Track != null)
+            {
+                App.SoundCloud.AudioPlayer.PlayTrack(s.Track);
+            }
         }
 
         #region StreamScroller
