@@ -5,6 +5,7 @@
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "MvvmLight": "5.2.0",
+    "PostSharp": "4.2.17",
     "Win2D.uwp": "1.10.0"
   },
   "frameworks": {
