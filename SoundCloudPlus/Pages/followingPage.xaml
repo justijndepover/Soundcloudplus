@@ -3,12 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SoundCloudPlus.Pages"
+    xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:FollowingPageViewModel x:Key="FollowingViewModel" />
+        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowingViewModel}">
@@ -39,7 +41,7 @@
                         <DataTemplate>
                             <Button Padding="0" Click="OnAvatarClick" Tag="{Binding Id}" Style="{StaticResource BtnFollower}">
                                 <Grid>
-                                    <Image Source="{Binding AvatarUrl}" Style="{StaticResource ImageFollower}"/>
+                                    <Image Source="{Binding AvatarUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageFollower}"/>
                                     <Grid Style="{StaticResource GridMusicStyleBottom}">
                                         <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}" />
                                     </Grid>
