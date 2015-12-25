@@ -187,7 +187,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private void Navigation_Click(object sender, RoutedEventArgs e)
+        private async void Navigation_Click(object sender, RoutedEventArgs e)
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
@@ -265,6 +265,9 @@ namespace SoundCloudPlus.Pages
                         MainPageViewModel.PageTitle = "Now playing";
                         MyFrame?.Navigate(typeof(PlayingPage));
                     }
+                    break;
+                case "logout":
+                    bool u = await App.SoundCloud.SignIn();
                     break;
             }
 

@@ -15,8 +15,6 @@ using System.Net;
 
 namespace ClassLibrary
 {
-    ///TODO: Testen followers/ Playlists/ Profile: (Track + Playlist + Repost)
-    /// Testen of de items worden toegevoegd wanneer je op het einde van de lijst zit?
     public class SoundCloud : INotifyPropertyChanged
     {
         private static string ClientId { get; } = "776ca412db7b101b1602c6a67b1a0579";
@@ -723,6 +721,8 @@ namespace ClassLibrary
             }
             return false;
         }
+
+
 
         ///profile/soundcloud:users:26691406?keepBlocked=true&limit=10&offset=0&linked_partitioning=1&client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=eef6f5d HTTP/1.1
         //https://api.soundcloud.com/users/178017941
