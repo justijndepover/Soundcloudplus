@@ -216,6 +216,10 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _profilePageViewModel.PlaylistCollection = await App.SoundCloud.GetOwnPlaylists(id, limit);
             }
+            catch (ArgumentNullException e)
+            {
+                Debug.WriteLine(e);
+            }
             catch (Exception)
             {
                 Application.Current.Exit();
@@ -232,6 +236,10 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _profilePageViewModel.TrackCollection = await App.SoundCloud.GetTracks(id, limit);
             }
+            catch (ArgumentNullException e)
+            {
+                Debug.WriteLine(e);
+            }
             catch (Exception)
             {
                 Application.Current.Exit();
@@ -247,6 +255,10 @@ namespace SoundCloudPlus.Pages
                 double width = bounds.Width;
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _profilePageViewModel.RepostCollection = await App.SoundCloud.GetReposts(id, limit);
+            }
+            catch (ArgumentNullException e)
+            {
+                Debug.WriteLine(e);
             }
             catch (Exception)
             {
