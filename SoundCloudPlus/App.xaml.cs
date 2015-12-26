@@ -45,14 +45,15 @@ namespace SoundCloudPlus
             {
                 return;
             }
+
 #if DEBUG
             if (Debugger.IsAttached)
             {
                 DebugSettings.EnableFrameRateCounter = false;
-            }
-            
-            SoundCloud = new SoundCloud();
+            }       
 #endif
+
+            SoundCloud = new SoundCloud();
 
             CreateRootFrame();
 
@@ -78,7 +79,7 @@ namespace SoundCloudPlus
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-        protected async override void OnActivated(IActivatedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
 
             ContinuationManager = new ContinuationManager();
