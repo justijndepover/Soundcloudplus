@@ -505,7 +505,7 @@
                 <Setter Property="Foreground" Value="{ThemeResource DefaultTextForegroundThemeBrush}"/>
                 <Setter Property="FontSize" Value="24"/>
                 <Setter Property="FontWeight" Value="Light" />
-                <Setter Property="Margin" Value="0 0 0 8" />
+                <Setter Property="Margin" Value="0 16 0 8" />
             </Style>
             <Style TargetType="Pivot" x:Key="PivotTitle" >
                 <Setter Property="Foreground" Value="Black"/>

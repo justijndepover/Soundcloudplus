@@ -201,16 +201,6 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
-                        <Button Style="{StaticResource ButtonsInMenu}" Grid.Row="12" Click="Navigation_Click" Tag="logout"  ToolTipService.ToolTip="Logout">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE8B5;" />
-                                <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Logout" />
-                            </Grid>
-                        </Button>
                     </Grid>
                 </ScrollViewer>
             </SplitView.Pane>

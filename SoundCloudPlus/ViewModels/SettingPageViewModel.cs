@@ -1,11 +1,22 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SoundCloudPlus.Annotations;
+using ClassLibrary.Models;
 
 namespace SoundCloudPlus.ViewModels
 {
     public class SettingPageViewModel : INotifyPropertyChanged
     {
+        private User _activeUser;
+
+        public User ActiveUser
+        {
+            get { return _activeUser; }
+            set { _activeUser = value; OnPropertyChanged(nameof(ActiveUser)); }
+        }
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

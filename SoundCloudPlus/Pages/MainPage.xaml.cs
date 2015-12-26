@@ -266,9 +266,6 @@ namespace SoundCloudPlus.Pages
                         MyFrame?.Navigate(typeof(PlayingPage));
                     }
                     break;
-                case "logout":
-                    bool u = await App.SoundCloud.SignIn();
-                    break;
             }
 
             if (ActualWidth < 720 && SplitViewMenu.IsPaneOpen)

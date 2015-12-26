@@ -15,6 +15,8 @@ using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using Enough.Storage;
 using TilesAndNotifications.Services;
+using System.Text;
+using System.Xml;
 
 namespace ClassLibrary
 {
@@ -214,11 +216,40 @@ namespace ClassLibrary
             }
         }
 
+        void UpdateToastMessage(Track t)
+        {
+            var template = ToastTemplateType.ToastImageAndText02;
+            var xml = ToastNotificationManager.GetTemplateContent(template);
+            xml.DocumentElement.SetAttribute("launch", "Args");
+
+            var title = xml.CreateTextNode(t.Title);
+            var artist = xml.CreateTextNode(t.User.Username);
+            var elements = xml.GetElementsByTagName("text");
+            elements[0].AppendChild(artist);
+            elements[1].AppendChild(title);
+
+            var imageElement = xml.GetElementsByTagName("image");
+            imageElement[0].Attributes[1].NodeValue = t.ArtworkUrl;
+
+            var toast = new ToastNotification(xml);
+            var notifier = ToastNotificationManager.CreateToastNotifier();
+            notifier.Show(toast);
+        }
+
         public async void PlayTrack(Track track)
         {
             var song = track;
             bool trackAlreadyInPlaylist = true;
-            UpdateLiveTile(track);
+            bool LiveTile = await StorageHelper.TryLoadObjectAsync<bool>("LiveTilesEnabled");
+            if (LiveTile)
+            {
+                UpdateLiveTile(track);
+            }
+            bool Toast = await StorageHelper.TryLoadObjectAsync<bool>("ToastsEnabled");
+            if (Toast)
+            {
+                UpdateToastMessage(track);
+            }
             if (PlayList == null)
             {
                 PlayList = new List<Track>();
