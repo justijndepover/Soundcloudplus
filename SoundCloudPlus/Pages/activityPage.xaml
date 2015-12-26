@@ -6,12 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
-    xmlns:converters1="using:SoundCloudPlus.Converters"
+    xmlns:converters="using:SoundCloudPlus.Converters"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="MainPageViewModel" />
         <viewModels:AcitivityPageViewModel x:Key="ActivityViewModels" />
-        <converters1:IntToMillionConverter x:Key="IntToMillionConverter"/>
+        <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
+        <converters:TimePassedConverter x:Key="TimePassedConverter" />
+        <converters:ActivityTypeConverter x:Key="ActivityTypeConverter" />
+        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -36,7 +39,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Activity" Style="{StaticResource PageTitle}" />
-                <GridView x:Name="ActivityGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ActivityCollection}" SizeChanged="ActivityGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                <GridView x:Name="ActivityGridView" RelativePanel.Below="PageTitle" SizeChanged="ActivityGridView_OnSizeChanged" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ActivityCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -45,20 +48,28 @@
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="AvatarUrl: " />
-                                <Image Source="{Binding User.AvatarUrl}" Style="{StaticResource ImageAlbum}"/>
-                                <TextBlock Text="Username: " />
-                                <TextBlock Text="{Binding User.Username}" />
-                                <TextBlock Text="Type: " />
-                                <TextBlock Text="{Binding Type}" />
-                                <TextBlock Text="CreatedAt: " />
-                                <TextBlock Text="{Binding CreatedAt}" />
-                                <TextBlock Text="Following: " />
-                                <TextBlock Text="{Binding User.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />
-                                <TextBlock Text="Link: " />
-                                <TextBlock Text="{Binding User.PermalinkUrl}" />
-                            </StackPanel>
+                            <Border Style="{StaticResource BorderStyle1}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="68"/>
+                                        <RowDefinition Height="32"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                        <Image x:Name="StreamItemArtworkImage" Source="{Binding User.AvatarUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum}"/>
+                                    </Grid>
+                                    <TextBlock x:Name="StreamItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                    <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                        <Run Text="{Binding Type, Converter={StaticResource ActivityTypeConverter}}" Foreground="Gray"/>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
+
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.Footer>

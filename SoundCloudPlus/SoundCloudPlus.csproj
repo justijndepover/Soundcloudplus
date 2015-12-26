@@ -103,6 +103,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ActivityTypeConverter.cs" />
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />

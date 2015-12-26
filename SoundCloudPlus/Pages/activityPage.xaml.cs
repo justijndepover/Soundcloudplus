@@ -45,7 +45,7 @@ namespace SoundCloudPlus.Pages
 
         private void ActivityGridView_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Screen.MakeResponsive(e, 200, 400, ActivityGridView);
+            Screen.MakeResponsive(e, 400, 800, ActivityGridView);
         }
     }
 }

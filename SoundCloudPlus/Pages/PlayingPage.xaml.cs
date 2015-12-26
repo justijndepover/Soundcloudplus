@@ -127,9 +127,9 @@ namespace SoundCloudPlus.Pages
                     };
 
                     _blurEffect.Source = _scaleEffect;
-                    _blurEffect.BlurAmount = 15;
+                    _blurEffect.BlurAmount = 100;
 
-                    session.DrawImage(_blurEffect, 0.0f, 0.0f);
+                    session.DrawImage(_blurEffect, 2.0f, 2.0f);
                 }
             }
 
