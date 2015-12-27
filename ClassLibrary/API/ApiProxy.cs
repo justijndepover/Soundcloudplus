@@ -181,6 +181,13 @@ namespace ClassLibrary.API
                 await StorageHelper.SaveObjectAsync(token, "token");
                 return true;
             }
+            if (webAuthenticationResult.ResponseErrorDetail == 430)
+            {
+                MessageDialog md = new MessageDialog(
+                    "Sorry but we can't sign you in for now. You've reached your limit. Please try again in a couple of hours.");
+                md.Commands.Add(new UICommand("Close", Action));
+                await md.ShowAsync();
+            }
             return false;
 
             }
