@@ -11,16 +11,14 @@ namespace ClassLibrary.Common
 {
     public class ErrorLogProxy
     {
-        public ErrorLogProxy(Exception ex)
+        public ErrorLogProxy(string message)
         {
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    string exception = JsonConvert.SerializeObject(ex);
-
                     // ReSharper disable once AccessToDisposedClosure
-                    HttpResponseMessage response = AsyncHelper.RunSync(() => client.PostAsync("http://arnvanhoutte.be/api/soundcloud?exception=" + exception, new StringContent("")));
+                    HttpResponseMessage response = AsyncHelper.RunSync(() => client.GetAsync("http://arnvanhoutte.be/api/soundcloud?error=" + message));
                     if (response.IsSuccessStatusCode)
                     {
                         Debug.WriteLine("good job");

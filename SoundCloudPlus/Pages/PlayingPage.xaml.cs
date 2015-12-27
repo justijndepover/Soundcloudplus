@@ -58,7 +58,7 @@ namespace SoundCloudPlus.Pages
                 }
                 catch (Exception ex)
                 {
-                    new ErrorLogProxy(ex);
+                    new ErrorLogProxy(ex.ToString());
                 }
             }
         }
