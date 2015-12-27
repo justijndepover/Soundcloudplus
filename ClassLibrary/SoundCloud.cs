@@ -126,7 +126,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
@@ -148,7 +149,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
@@ -209,9 +211,10 @@ namespace ClassLibrary
                     }
                     pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Debug.WriteLine(e);
+                    new ErrorLogProxy(ex);
+                    Debug.WriteLine(ex);
                 }
             }
             //return pO;
@@ -308,7 +311,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
             }
@@ -556,7 +559,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _followerNextHref = apiResponse.Data["next_href"];
@@ -578,7 +581,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _followerNextHref = apiResponse.Data["next_href"];
@@ -607,7 +610,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _followingNextHref = apiResponse.Data["next_href"];
@@ -629,7 +632,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _followingNextHref = apiResponse.Data["next_href"];
@@ -665,7 +668,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _likesNextHref = apiResponse.Data["next_href"];
@@ -693,7 +696,7 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        new ErrorLogProxy(ex);
                     }
                 }
                 _likesNextHref = apiResponse.Data["next_href"];

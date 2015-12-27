@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using ClassLibrary.Common;
 using Enough.Storage;
 using Newtonsoft.Json;
 
@@ -185,7 +186,7 @@ namespace ClassLibrary.API
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                new ErrorLogProxy(ex);
                 return false;
             }
         }

@@ -108,7 +108,7 @@ namespace BackgroundAudioTask
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                new ErrorLogProxy(ex);
             }
         }
 

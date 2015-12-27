@@ -71,8 +71,9 @@ namespace SoundCloudPlus.Pages
                 PlayerProgressBar.Value = position.TotalMilliseconds;
                 //PlayerProgressBar.Value = (position.TotalMilliseconds - 0) / (App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds - 0) * (100 - 0) + 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                new ErrorLogProxy(ex);
                 Debug.WriteLine("Error: Progressbar value is NaN");
             }
         }
@@ -98,7 +99,8 @@ namespace SoundCloudPlus.Pages
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
+                    new ErrorLogProxy(ex);
+                    new ErrorLogProxy(ex);
                 }
             }
             base.OnNavigatedTo(e);
@@ -307,7 +309,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                new ErrorLogProxy(ex);
+                new ErrorLogProxy(ex);
                 Application.Current.Exit();
             }
         }
@@ -320,8 +323,9 @@ namespace SoundCloudPlus.Pages
                 a = await App.SoundCloud.GetActivities(limit);
                 MainPageViewModel.ActivityObject = a;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                new ErrorLogProxy(ex);
                 return;
             }
 
