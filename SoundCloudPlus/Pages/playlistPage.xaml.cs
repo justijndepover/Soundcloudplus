@@ -16,13 +16,13 @@ namespace SoundCloudPlus.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PlaylistPage : Page
+    public sealed partial class PlaylistPage
     {
         private BackgroundWorker _bwPlaylist = new BackgroundWorker();
         private ObservableCollection<PlaylistCollection> _newPlaylistCollection = new ObservableCollection<PlaylistCollection>();
         private double _verticalOffsetPlaylist;
         private double _maxVerticalOffsetPlaylist;
-        private FollowerPageViewModel _followerViewModel;
+
         public PlaylistPage()
         {
             InitializeComponent();

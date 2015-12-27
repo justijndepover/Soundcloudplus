@@ -21,7 +21,6 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class ProfilePage : Page
     {
-        private int _userId;
         private BackgroundWorker _bwProfileTrack = new BackgroundWorker();
         private BackgroundWorker _bwProfilePlaylist = new BackgroundWorker();
         private BackgroundWorker _bwRepost = new BackgroundWorker();
@@ -31,18 +30,8 @@ namespace SoundCloudPlus.Pages
             new ObservableCollection<PlaylistCollection>();
 
         private ObservableCollection<RepostCollection> _newProfileRepostCollection = new ObservableCollection<RepostCollection>();
-        private double _verticalOffsetProfileTrack;
-        private double _verticalOffsetProfilePlaylist;
-        private double _verticalOffsetProfileRepost;
-        private double _maxVerticalOffsetProfileTrack;
-        private double _maxVerticalOffsetProfilePlaylist;
-        private double _maxVerticalOffsetProfileRepost;
 
-        public int UserId
-        {
-            get { return _userId; }
-            set { _userId = value; }
-        }
+        public int UserId { get; set; }
 
         public ProfilePage()
         {

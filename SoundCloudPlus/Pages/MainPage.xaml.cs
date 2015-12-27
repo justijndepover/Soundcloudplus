@@ -189,7 +189,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private async void Navigation_Click(object sender, RoutedEventArgs e)
+        private void Navigation_Click(object sender, RoutedEventArgs e)
         {
             Page page = MyFrame?.Content as Page;
             Button b = sender as Button;
