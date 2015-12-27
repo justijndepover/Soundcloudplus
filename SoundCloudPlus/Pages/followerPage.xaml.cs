@@ -91,7 +91,7 @@ namespace SoundCloudPlus.Pages
 
         #endregion
         
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();

@@ -21,7 +21,7 @@ namespace SoundCloudPlus.Pages
             NavigationCacheMode = NavigationCacheMode.Required;
         }
         private SearchPageViewModel _searchPageViewModel;
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();

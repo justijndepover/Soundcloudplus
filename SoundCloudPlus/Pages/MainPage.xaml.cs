@@ -77,7 +77,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             Application.Current.Suspending += ForegroundApp_Suspending;
             Application.Current.Resuming += ForegroundApp_Resuming;
@@ -359,7 +359,7 @@ namespace SoundCloudPlus.Pages
             content.DataContext = MyFrame.DataContext;
         }
 
-        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override async void OnNavigatedFrom(NavigationEventArgs e)
         {
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
             {

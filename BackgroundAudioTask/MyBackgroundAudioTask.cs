@@ -575,7 +575,7 @@ namespace BackgroundAudioTask
                         catch (Exception)
                         {
                             MessageDialog md = new MessageDialog("Sorry, we can't play this song. It is DRM protected");
-                            md.ShowAsync();
+                            md.ShowAsync().GetResults();
                             return null;
                         }
                     }
