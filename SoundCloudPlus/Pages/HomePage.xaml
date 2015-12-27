@@ -37,13 +37,18 @@
         </VisualStateManager.VisualStateGroups>
         <RelativePanel>
             <TextBlock x:Name="PageTitle" Text="Home" Style="{StaticResource PageTitle}" Margin="20" />
-                <Pivot x:Name="RootPivot" Style="{StaticResource PivotTitle}" RelativePanel.Below="PageTitle">
-                    <PivotItem Header="Stream">
-                        <!--Pivot content goes here-->
-                        <ScrollViewer x:Name="SvSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">
-                            <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                               
-                                <GridView.ItemTemplate>
+            <Pivot x:Name="RootPivot" Style="{StaticResource PivotTitle}" RelativePanel.Below="PageTitle">
+                <PivotItem Header="Stream">
+                    <!--Pivot content goes here-->
+                    <ScrollViewer x:Name="SvSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">
+                        <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SelectionMode="None">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
@@ -67,7 +72,7 @@
                                                     <Run Text="{Binding Track.Title}" Foreground="Gray"/>
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
-                                            
+
 
                                             <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
@@ -97,19 +102,19 @@
                                 <Grid Height="52" />
                             </GridView.Footer>
                         </GridView>
-                        </ScrollViewer>
-                    </PivotItem>
-                    <PivotItem Header="Explore">
-                        <!--Pivot content goes here-->
-                        <ScrollViewer x:Name="SvExplore" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerExplore_OnViewChanged">
-                            <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                                <GridView.ItemContainerStyle>
-                                    <Style TargetType="GridViewItem">
-                                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    </Style>
-                                </GridView.ItemContainerStyle>
-                                <GridView.ItemTemplate>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem Header="Explore">
+                    <!--Pivot content goes here-->
+                    <ScrollViewer x:Name="SvExplore" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerExplore_OnViewChanged">
+                        <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SelectionMode="None">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle1}">
                                         <Grid>
@@ -133,7 +138,7 @@
                                                     <Run Text="{Binding Title}" Foreground="Gray"/>
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
-                                            
+
                                             <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
                                                 <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
                                                     <StackPanel Orientation="Horizontal">
@@ -162,9 +167,9 @@
                                 <Grid Height="52" />
                             </GridView.Footer>
                         </GridView>
-                        </ScrollViewer>
-                    </PivotItem>
-                </Pivot>
-            </RelativePanel>
+                    </ScrollViewer>
+                </PivotItem>
+            </Pivot>
+        </RelativePanel>
     </Grid>
 </Page>

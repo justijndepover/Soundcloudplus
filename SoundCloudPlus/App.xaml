@@ -831,11 +831,12 @@
                             FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
                             HorizontalContentAlignment="Stretch"
                             Padding="{TemplateBinding Padding}" 
+                            BorderBrush="{StaticResource SoundcloudOrange}"
                             PointerOverBackgroundMargin="1" 
                             PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
                             ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
                             SelectionCheckMarkVisualEnabled="True" 
-                            SelectedBorderThickness="0"
+                            SelectedBorderThickness="6"
                             SelectedBackground="Transparent" 
                             VerticalContentAlignment="Stretch"/>
                         </ControlTemplate>
