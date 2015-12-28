@@ -13,10 +13,7 @@ using Windows.UI.Notifications;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
-using Enough.Storage;
 using TilesAndNotifications.Services;
-using System.Text;
-using System.Xml;
 
 namespace ClassLibrary
 {
@@ -39,10 +36,8 @@ namespace ClassLibrary
                 bool isMyBackgroundTaskRunning;
 
                 string value =
-                    AsyncHelper.RunSync(
-                        () =>
-                            StorageHelper.TryLoadObjectAsync<string>(
-                                ApplicationSettingsConstants.BackgroundTaskState));
+                    ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState) as
+                        string;
                 if (value == null)
                 {
                     return false;
@@ -88,13 +83,11 @@ namespace ClassLibrary
         {
             _backgroundAudioTaskStarted = new AutoResetEvent(false);
         }
-        private async void ResetAfterLostBackground()
+        private void ResetAfterLostBackground()
         {
             BackgroundMediaPlayer.Shutdown();
             _backgroundAudioTaskStarted.Reset();
-            await
-                StorageHelper.SaveObjectAsync(BackgroundTaskState.Unknown.ToString(),
-                    ApplicationSettingsConstants.BackgroundTaskState);
+            ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Unknown.ToString());
 
             try
             {
@@ -236,16 +229,16 @@ namespace ClassLibrary
             notifier.Show(toast);
         }
 
-        public async void PlayTrack(Track track)
+        public void PlayTrack(Track track)
         {
             var song = track;
             bool trackAlreadyInPlaylist = true;
-            bool LiveTile = await StorageHelper.TryLoadObjectAsync<bool>("LiveTilesEnabled");
+            bool LiveTile = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue("LiveTilesEnabled");
             if (LiveTile)
             {
                 UpdateLiveTile(track);
             }
-            bool Toast = await StorageHelper.TryLoadObjectAsync<bool>("ToastsEnabled");
+            bool Toast = (bool)ApplicationSettingHelper.ReadRoamingSettingsValue("ToastsEnabled");
             if (Toast)
             {
                 UpdateToastMessage(track);
@@ -266,11 +259,9 @@ namespace ClassLibrary
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
                 // First update the persisted start track
-                await StorageHelper.SaveObjectAsync(song.Id, ApplicationSettingsConstants.TrackId);
-                await
-                    StorageHelper.SaveObjectAsync(new TimeSpan().ToString(),
-                        ApplicationSettingsConstants.Position);
-                
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.TrackId, song.Id);
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.Position, new TimeSpan().ToString());
+
                 StartBackgroundAudioTask();
             }
             else

@@ -1,21 +1,20 @@
-﻿using SoundCloudPlus.ViewModels;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.Numerics;
-using Windows.Foundation.Numerics;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 using ClassLibrary.Common;
+using ClassLibrary.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using ClassLibrary.Models;
-using Windows.UI.Xaml.Shapes;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
-using Windows.UI.Xaml;
+using SoundCloudPlus.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -33,7 +32,7 @@ namespace SoundCloudPlus.Pages
         private MainPageViewModel _mainPageViewModel;
         public PlayingPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -84,7 +83,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private void _canvasControl_CreateResources(CanvasControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        private void _canvasControl_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
         {
             if (_mainPageViewModel.PlayingTrack.ArtworkUrl != null)
             {
@@ -119,7 +118,7 @@ namespace SoundCloudPlus.Pages
 
                     var scalefactor = pixelWidth / _image.Size.Width;
 
-                    _scaleEffect.Source = this._image;
+                    _scaleEffect.Source = _image;
                     _scaleEffect.Scale = new Vector2
                     {
                         X = (float)scalefactor,

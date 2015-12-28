@@ -15,7 +15,6 @@ using ClassLibrary.API;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
-using Enough.Storage;
 using Newtonsoft.Json;
 
 // ReSharper disable AccessToDisposedClosure
@@ -79,7 +78,7 @@ namespace BackgroundAudioTask
             _smtc.IsPreviousEnabled = true;
 
             // Read persisted state of foreground app
-            var value = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<object>(ApplicationSettingsConstants.AppState));
+            var value = ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.AppState);
             _foregroundAppState = value == null ? AppState.Unknown : EnumHelper.Parse<AppState>(value.ToString());
 
             // Add handlers for MediaPlayer
@@ -92,9 +91,7 @@ namespace BackgroundAudioTask
             if (_foregroundAppState != AppState.Suspended)
                 MessageService.SendMessageToForeground(new BackgroundAudioTaskStartedMessage());
 
-            AsyncHelper.RunSync(() =>
-                StorageHelper.SaveObjectAsync(BackgroundTaskState.Running.ToString(),
-                    ApplicationSettingsConstants.BackgroundTaskState));
+            ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
 
             _deferral = taskInstance.GetDeferral(); // This must be retrieved prior to subscribing to events below which use it
 
@@ -137,10 +134,12 @@ namespace BackgroundAudioTask
                 _backgroundTaskStarted.Reset();
 
                 // save state
-                AsyncHelper.RunSync(() => StorageHelper.SaveObjectAsync(GetCurrentTrackId() == null ? null : GetCurrentTrackId().ToString(), ApplicationSettingsConstants.TrackId));
-                AsyncHelper.RunSync(() => StorageHelper.SaveObjectAsync(BackgroundMediaPlayer.Current.Position.ToString(), ApplicationSettingsConstants.Position));
-                AsyncHelper.RunSync(() => StorageHelper.SaveObjectAsync(BackgroundTaskState.Canceled.ToString(), ApplicationSettingsConstants.BackgroundTaskState));
-                AsyncHelper.RunSync(() => StorageHelper.SaveObjectAsync(Enum.GetName(typeof(AppState), _foregroundAppState), ApplicationSettingsConstants.AppState));
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.TrackId, GetCurrentTrackId() == null ? null : GetCurrentTrackId().ToString());
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.Position, BackgroundMediaPlayer.Current.Position.ToString());
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState,
+                    BackgroundTaskState.Canceled.ToString());
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.AppState,
+                    Enum.GetName(typeof (AppState), _foregroundAppState));
 
                 // unsubscribe from list changes
                 if (_playbackList != null)
@@ -272,11 +271,8 @@ namespace BackgroundAudioTask
                     _playbackStartedPreviously = true;
 
                     // If the task was cancelled we would have saved the current track and its position. We will try playback from there.
-                    var currentTrackId = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<object>(ApplicationSettingsConstants.TrackId));
-                    var currentTrackPosition =
-                        AsyncHelper.RunSync(() =>
-                            StorageHelper.TryLoadObjectAsync<object>(
-                                ApplicationSettingsConstants.Position));
+                    var currentTrackId = ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.TrackId);
+                    var currentTrackPosition = ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.Position);
                     if (currentTrackId != null)
                     {
                         // Find the index of the item by name
@@ -360,7 +356,7 @@ namespace BackgroundAudioTask
             if (_foregroundAppState == AppState.Active)
                 MessageService.SendMessageToForeground(new TrackChangedMessage(currentTrackId));
             else
-                AsyncHelper.RunSync(() => StorageHelper.SaveObjectAsync(currentTrackId, TrackIdKey));
+                ApplicationSettingHelper.SaveLocalSettingsValue(TrackIdKey, currentTrackId);
         }
 
         /// <summary>
@@ -433,7 +429,7 @@ namespace BackgroundAudioTask
                 Debug.WriteLine("App suspending"); // App is suspended, you can save your task state at this point
                 _foregroundAppState = AppState.Suspended;
                 var currentTrackId = GetCurrentTrackId();
-                AsyncHelper.RunSync(() => StorageHelper.SaveObjectAsync(currentTrackId?.ToString(), ApplicationSettingsConstants.TrackId));
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.TrackId, currentTrackId?.ToString());
                 return;
             }
 
@@ -571,6 +567,11 @@ namespace BackgroundAudioTask
                         try
                         {
                             mp3 = apiResponse.Data["hls_mp3_128_url"].Value;
+                            using (var httpClient = new HttpClient())
+                            {
+                                var resp = AsyncHelper.RunSync(() => httpClient.GetAsync(mp3));
+                                
+                            }
                         }
                         catch (Exception)
                         {

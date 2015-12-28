@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
-using Windows.UI;
-using Windows.UI.Popups;
-using Windows.UI.Xaml.Media;
 
 namespace SoundCloudPlus.Pages
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -10,7 +9,6 @@ using Windows.Security.Authentication.Web;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using ClassLibrary.Common;
-using Enough.Storage;
 using Newtonsoft.Json;
 
 namespace ClassLibrary.API
@@ -100,8 +98,8 @@ namespace ClassLibrary.API
                     else
                     {
                         apiResponse.Succes = false;
-                        await StorageHelper.DeleteObjectAsync<string>("code");
-                        await StorageHelper.DeleteObjectAsync<string>("token");
+                        ApplicationSettingHelper.DeleteRoamingSettingsValue("code");
+                        ApplicationSettingHelper.DeleteRoamingSettingsValue("token");
                     }
                 }
                 catch (Exception)
@@ -177,8 +175,8 @@ namespace ClassLibrary.API
                 var response = webAuthenticationResult.ResponseData;
                 var code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
                 var token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
-                await StorageHelper.SaveObjectAsync(code, "code");
-                await StorageHelper.SaveObjectAsync(token, "token");
+                ApplicationSettingHelper.SaveRoamingSettingsValue("code", code);
+                ApplicationSettingHelper.SaveRoamingSettingsValue("token", token);
                 return true;
             }
             if (webAuthenticationResult.ResponseErrorDetail == 430)

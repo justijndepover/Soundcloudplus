@@ -1,10 +1,10 @@
 ﻿using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Enough.Storage;
+using ClassLibrary.Common;
 using SoundCloudPlus.ViewModels;
-using Windows.UI.Notifications;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -40,7 +40,7 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
@@ -52,13 +52,13 @@ namespace SoundCloudPlus.Pages
             {
                 _settingPageViewModel = (SettingPageViewModel)Resources["SettingViewModel"];
                 _settingPageViewModel.ActiveUser = App.SoundCloud.CurrentUser;
-                bool LiveTilesBool = await StorageHelper.TryLoadObjectAsync<bool>("LiveTilesEnabled");
+                bool LiveTilesBool = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue("LiveTilesEnabled");
                 if (LiveTilesBool)
                 {
                     LivetilesToggle.IsOn = true;
                 }
 
-                bool ToastsEnabled = await StorageHelper.TryLoadObjectAsync<bool>("ToastsEnabled");
+                bool ToastsEnabled = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue("ToastsEnabled");
                 if (ToastsEnabled)
                 {
                     ToastToggle.IsOn = true;
@@ -81,7 +81,7 @@ namespace SoundCloudPlus.Pages
             currentView.BackRequested -= CurrentView_BackRequested;
         }
 
-        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox c = sender as ComboBox;
             if(c.SelectedIndex == 0)
@@ -97,7 +97,7 @@ namespace SoundCloudPlus.Pages
                 App.RootFrame.RequestedTheme = ElementTheme.Dark;
             }
 
-            await StorageHelper.SaveObjectAsync(App.RootFrame.RequestedTheme);
+            ApplicationSettingHelper.SaveRoamingSettingsValue("ElementTheme", App.RootFrame.RequestedTheme);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -105,31 +105,31 @@ namespace SoundCloudPlus.Pages
             bool u = await App.SoundCloud.SignIn();
         }
 
-        private async void LivetilesToggle_Toggled(object sender, RoutedEventArgs e)
+        private void LivetilesToggle_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch.IsOn)
             {
-                await StorageHelper.SaveObjectAsync(true, "LiveTilesEnabled");
+                ApplicationSettingHelper.SaveRoamingSettingsValue("LiveTilesEnabled", true);
             }
             else
             {
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
                 updater.Clear();
-                await StorageHelper.SaveObjectAsync(false, "LiveTilesEnabled");
+                ApplicationSettingHelper.SaveRoamingSettingsValue("LiveTilesEnabled", false);
             }
         }
 
-        private async void ToastToggle_Toggled(object sender, RoutedEventArgs e)
+        private void ToastToggle_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch.IsOn)
             {
-                await StorageHelper.SaveObjectAsync(true, "ToastsEnabled");
+                ApplicationSettingHelper.SaveRoamingSettingsValue("ToastsEnabled", true);
             }
             else
             {
-                await StorageHelper.SaveObjectAsync(false, "ToastsEnabled");
+                ApplicationSettingHelper.SaveRoamingSettingsValue("ToastsEnabled", false);
             }
         }
     }

@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 using ClassLibrary.API;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
-using Enough.Storage;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace ClassLibrary
 {
@@ -42,9 +40,9 @@ namespace ClassLibrary
             //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
             if (CurrentUser == null || Code == null || Token == null)
             {
-                CurrentUser = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<User>("currentUser"));
-                Code = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("code"));
-                Token = AsyncHelper.RunSync(() => StorageHelper.TryLoadObjectAsync<string>("token"));
+                CurrentUser = (User) ApplicationSettingHelper.ReadRoamingSettingsValue("currentUser");
+                Code = (string) ApplicationSettingHelper.ReadRoamingSettingsValue("code");
+                Token = (string) ApplicationSettingHelper.ReadRoamingSettingsValue("token");
                 if (CurrentUser == null && Code == null && Token == null)
                 {
 
@@ -242,29 +240,26 @@ namespace ClassLibrary
             {
                 return c;
             }
+            for (int i = 0; i < l; i++)
+            {
+                if (pO.Collection[i].ArtworkUrl == null)
+                {
+                    int pId = pO.Collection[i].Id;
+                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                    pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                }
+                c.Add(pO.Collection[i]);
+            }
+            object nhref = pO.NextHref;
+            if (nhref != null)
+            {
+                _playlistNextHref = nhref.ToString();
+            }
             else
             {
-                for (int i = 0; i < l; i++)
-                {
-                    if (pO.Collection[i].ArtworkUrl == null)
-                    {
-                        int pId = pO.Collection[i].Id;
-                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
-                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
-                    }
-                    c.Add(pO.Collection[i]);
-                }
-                object nhref = pO.NextHref;
-                if (nhref != null)
-                {
-                    _playlistNextHref = nhref.ToString();
-                }
-                else
-                {
-                    _playlistNextHref = "";
-                }
-                return c;
+                _playlistNextHref = "";
             }
+            return c;
         }
 
         public async Task<ObservableCollection<PlaylistCollection>> GetOwnPlaylists(int userId, string nextHref)
@@ -283,29 +278,26 @@ namespace ClassLibrary
             {
                 return c;
             }
+            for (int i = 0; i < l; i++)
+            {
+                if (pO.Collection[i].ArtworkUrl == null)
+                {
+                    int pId = pO.Collection[i].Id;
+                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                    pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                }
+                c.Add(pO.Collection[i]);
+            }
+            object nhref = pO.NextHref;
+            if (nhref != null)
+            {
+                _playlistNextHref = nhref.ToString();
+            }
             else
             {
-                for (int i = 0; i < l; i++)
-                {
-                    if (pO.Collection[i].ArtworkUrl == null)
-                    {
-                        int pId = pO.Collection[i].Id;
-                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
-                        pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
-                    }
-                    c.Add(pO.Collection[i]);
-                }
-                object nhref = pO.NextHref;
-                if (nhref != null)
-                {
-                    _playlistNextHref = nhref.ToString();
-                }
-                else
-                {
-                    _playlistNextHref = "";
-                }
-                return c;
+                _playlistNextHref = "";
             }
+            return c;
         }
 
         public string GetProfilePlaylistNextHref()
@@ -454,23 +446,20 @@ namespace ClassLibrary
             {
                 return c;
             }
+            for (int i = 0; i < l; i++)
+            {
+                c.Add(tO.Collection[i]);
+            }
+            object nhref = tO.NextHref;
+            if (nhref != null)
+            {
+                _profileTracksNextHref = nhref.ToString();
+            }
             else
             {
-                for (int i = 0; i < l; i++)
-                {
-                    c.Add(tO.Collection[i]);
-                }
-                object nhref = tO.NextHref;
-                if (nhref != null)
-                {
-                    _profileTracksNextHref = nhref.ToString();
-                }
-                else
-                {
-                    _profileTracksNextHref = "";
-                }
-                return c;
+                _profileTracksNextHref = "";
             }
+            return c;
         }
 
         public async Task<ObservableCollection<Track>> GetTracks(int userId, string nextHref)
@@ -732,11 +721,11 @@ namespace ClassLibrary
         {
             if (await ApiProxy.Authenticate())
             {
-                Token = await StorageHelper.TryLoadObjectAsync<string>("token");
+                Token = ApplicationSettingHelper.ReadRoamingSettingsValue("token") as string;
                 ApiResponse apiResponse =
                     await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new { oauth_token = Token });
                 CurrentUser = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
-                await StorageHelper.SaveObjectAsync(CurrentUser, "currentUser");
+                ApplicationSettingHelper.SaveRoamingSettingsValue("currentUser", CurrentUser);
                 return true;
             }
             return false;
