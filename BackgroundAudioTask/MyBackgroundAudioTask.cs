@@ -10,6 +10,8 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage.Streams;
+using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using ClassLibrary.API;
 using ClassLibrary.Common;
@@ -567,16 +569,11 @@ namespace BackgroundAudioTask
                         try
                         {
                             mp3 = apiResponse.Data["hls_mp3_128_url"].Value;
-                            using (var httpClient = new HttpClient())
-                            {
-                                var resp = AsyncHelper.RunSync(() => httpClient.GetAsync(mp3));
-                                
-                            }
+                            UpdateToastMessage("Sorry, we can't play this song. It uses the HLS protocol, and the app does not support it yet.");
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            MessageDialog md = new MessageDialog("Sorry, we can't play this song. It is DRM protected");
-                            md.ShowAsync().GetResults();
+                            new ErrorLogProxy(ex.ToString());
                             return null;
                         }
                     }
@@ -584,6 +581,20 @@ namespace BackgroundAudioTask
                 }
             }
             return null;
+        }
+        void UpdateToastMessage(string message)
+        {
+            var template = ToastTemplateType.ToastImageAndText02;
+            var xml = ToastNotificationManager.GetTemplateContent(template);
+            xml.DocumentElement.SetAttribute("launch", "Args");
+            
+            var node = xml.CreateTextNode(message);
+            var elements = xml.GetElementsByTagName("text");
+            elements[1].AppendChild(node);
+            
+            var toast = new ToastNotification(xml);
+            var notifier = ToastNotificationManager.CreateToastNotifier("App");
+            notifier.Show(toast);
         }
     }
 }

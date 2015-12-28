@@ -1,1 +1,1 @@
-C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\AppPackages\SoundCloudPlus_0.1.6.0\SoundCloudPlus_0.1.6.0_x86_x64_arm.appxbundle
+C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\AppPackages\SoundCloudPlus_0.1.7.0\SoundCloudPlus_0.1.7.0_x86_x64_arm.appxbundle
