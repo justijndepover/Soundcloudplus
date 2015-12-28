@@ -78,7 +78,7 @@ namespace BackgroundAudioTask
             _smtc.IsPreviousEnabled = true;
 
             // Read persisted state of foreground app
-            var value = ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.AppState);
+            var value = ApplicationSettingHelper.ReadLocalSettingsValue<string>(ApplicationSettingsConstants.AppState);
             _foregroundAppState = value == null ? AppState.Unknown : EnumHelper.Parse<AppState>(value.ToString());
 
             // Add handlers for MediaPlayer
@@ -271,8 +271,8 @@ namespace BackgroundAudioTask
                     _playbackStartedPreviously = true;
 
                     // If the task was cancelled we would have saved the current track and its position. We will try playback from there.
-                    var currentTrackId = ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.TrackId);
-                    var currentTrackPosition = ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.Position);
+                    var currentTrackId = ApplicationSettingHelper.ReadLocalSettingsValue<int>(ApplicationSettingsConstants.TrackId);
+                    var currentTrackPosition = ApplicationSettingHelper.ReadLocalSettingsValue<string>(ApplicationSettingsConstants.Position);
                     if (currentTrackId != null)
                     {
                         // Find the index of the item by name

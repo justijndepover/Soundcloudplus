@@ -59,6 +59,7 @@ namespace ClassLibrary.Common
                 catch (Exception e)
                 {
                     synch.InnerException = e;
+                    new ErrorLogProxy(e.ToString());
                     throw;
                 }
                 finally

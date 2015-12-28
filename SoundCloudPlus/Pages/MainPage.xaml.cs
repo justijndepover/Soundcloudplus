@@ -57,7 +57,15 @@ namespace SoundCloudPlus.Pages
 
         private void LoadTheme()
         {
-            App.RootFrame.RequestedTheme = (ElementTheme) ApplicationSettingHelper.ReadRoamingSettingsValue("ElementTheme");
+            try
+            {
+                App.RootFrame.RequestedTheme = (ElementTheme)ApplicationSettingHelper.ReadRoamingSettingsValue<ElementTheme>("ElementTheme");
+            }
+            catch (Exception)
+            {
+                App.RootFrame.RequestedTheme = ElementTheme.Default;
+                ApplicationSettingHelper.SaveRoamingSettingsValue("ElementTheme", ElementTheme.Default);
+            }
         }
 
         private void _playbackTimer_Tick(object sender, object e)

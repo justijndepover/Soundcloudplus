@@ -36,8 +36,7 @@ namespace ClassLibrary
                 bool isMyBackgroundTaskRunning;
 
                 string value =
-                    ApplicationSettingHelper.ReadLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState) as
-                        string;
+                    ApplicationSettingHelper.ReadLocalSettingsValue<string>(ApplicationSettingsConstants.BackgroundTaskState) as string;
                 if (value == null)
                 {
                     return false;
@@ -233,12 +232,12 @@ namespace ClassLibrary
         {
             var song = track;
             bool trackAlreadyInPlaylist = true;
-            bool LiveTile = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue("LiveTilesEnabled");
+            bool LiveTile = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
             if (LiveTile)
             {
                 UpdateLiveTile(track);
             }
-            bool Toast = (bool)ApplicationSettingHelper.ReadRoamingSettingsValue("ToastsEnabled");
+            bool Toast = (bool)ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
             if (Toast)
             {
                 UpdateToastMessage(track);

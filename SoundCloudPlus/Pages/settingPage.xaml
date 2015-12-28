@@ -70,7 +70,7 @@
                 <TextBlock x:Name="Toasts" RelativePanel.Below="LivetilesToggle" Text="Enable toast messages" Style="{StaticResource SubTitle}" />
                 <ToggleSwitch x:Name="ToastToggle" RelativePanel.Below="Toasts" Toggled="ToastToggle_Toggled"/>
                 <TextBlock x:Name="Information" RelativePanel.Below="ToastToggle" Text="Information" Style="{StaticResource SubTitle}" />
-                <TextBlock RelativePanel.Below="Information" Text="Version: 1.0.1" />
+                <TextBlock RelativePanel.Below="Information" x:Name="VersionTextBlock"/>
             </RelativePanel>
         </ScrollViewer>
     </Grid>

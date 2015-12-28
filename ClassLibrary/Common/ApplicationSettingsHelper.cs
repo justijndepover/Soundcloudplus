@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.Storage;
 using Newtonsoft.Json;
+using ClassLibrary.Models;
 
 namespace ClassLibrary.Common
 {
@@ -11,55 +12,56 @@ namespace ClassLibrary.Common
         /// <summary>
         /// Function to read a setting value and clear it after reading it
         /// </summary>
-        public static object ReadResetSettingsValue(string key)
+        public static object ReadResetSettingsValue<T>(string key)
         {
             if (!LocalSettings.Values.ContainsKey(key))
             {
-                return null;
+                return default(T);
             }
             string value = LocalSettings.Values[key] as string;
             LocalSettings.Values.Remove(key);
             try
             {
-                return JsonConvert.DeserializeObject(value);
+                return JsonConvert.DeserializeObject<T>(value);
             }
             catch (Exception)
             {
                 return value;
             }
         }
-        public static object ReadRoamingSettingsValue(string key)
+        public static object ReadRoamingSettingsValue<T>(string key)
         {
             if (!RoamingSettings.Values.ContainsKey(key))
             {
-                return null;
+                return default(T);
             }
             string value = (string) RoamingSettings.Values[key];
             try
             {
-                return JsonConvert.DeserializeObject(value);
+                return JsonConvert.DeserializeObject<T>(value);
             }
             catch (Exception)
             {
                 return value;
             }
         }
-        public static object ReadLocalSettingsValue(string key)
+        public static object ReadLocalSettingsValue<T>(string key)
         {
             if (!LocalSettings.Values.ContainsKey(key))
             {
-                return null;
+                return default(T);
             }
             string value = (string)LocalSettings.Values[key];
             try
             {
-                return JsonConvert.DeserializeObject(value);
+                return JsonConvert.DeserializeObject<T>(value);
             }
             catch (Exception)
             {
                 return value;
             }
         }
+
         /// <summary>
         /// Save a key value pair in settings. Create if it doesn't exist
         /// </summary>
