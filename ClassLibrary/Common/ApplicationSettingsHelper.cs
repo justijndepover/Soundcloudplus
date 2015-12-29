@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.Storage;
 using Newtonsoft.Json;
-using ClassLibrary.Models;
 
 namespace ClassLibrary.Common
 {

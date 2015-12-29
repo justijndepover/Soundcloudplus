@@ -2,8 +2,8 @@
 {
     public class WaveForm
     {
-        public int width { get; set; }
-        public int height { get; set; }
-        public int[] samples { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int[] Samples { get; set; }
     }
 }

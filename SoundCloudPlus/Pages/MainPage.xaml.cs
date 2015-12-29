@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
@@ -456,7 +455,7 @@ namespace SoundCloudPlus.Pages
 
         private void UpdateTransportControls(MediaPlayerState state)
         {
-            MainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.PlayList.Last();
+            MainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.CurrentTrack;
             if (state == MediaPlayerState.Playing)
             {
                 MusicPlayerControl.Visibility = Visibility.Visible;

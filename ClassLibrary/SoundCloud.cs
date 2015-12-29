@@ -104,7 +104,7 @@ namespace ClassLibrary
             return tracks;
         }
 
-        public async Task<WaveForm> getWaveForm(string url)
+        public async Task<WaveForm> GetWaveForm(string url)
         {
             WaveForm json;
             //ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, null, null, null, );

@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using Windows.ApplicationModel;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
@@ -51,18 +51,18 @@ namespace SoundCloudPlus.Pages
 
             if(e.NavigationMode != NavigationMode.Back)
             {
-                var version = Windows.ApplicationModel.Package.Current.Id.Version;
+                var version = Package.Current.Id.Version;
                 VersionTextBlock.Text = "Version: "+ version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
                 _settingPageViewModel = (SettingPageViewModel)Resources["SettingViewModel"];
                 _settingPageViewModel.ActiveUser = App.SoundCloud.CurrentUser;
-                bool LiveTilesBool = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
-                if (LiveTilesBool)
+                bool liveTilesBool = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
+                if (liveTilesBool)
                 {
                     LivetilesToggle.IsOn = true;
                 }
 
-                bool ToastsEnabled = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
-                if (ToastsEnabled)
+                bool toastsEnabled = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
+                if (toastsEnabled)
                 {
                     ToastToggle.IsOn = true;
                 }

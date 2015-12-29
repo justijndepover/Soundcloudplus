@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Numerics;
 using Windows.Graphics.Display;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
 using Microsoft.Graphics.Canvas;
@@ -53,7 +49,7 @@ namespace SoundCloudPlus.Pages
                     _canvasControl.Draw += _canvasControl_Draw;
                     _canvasControl.CreateResources += _canvasControl_CreateResources;
                     ContentPresenter.Content = _canvasControl;
-                    createWaveForm();
+                    CreateWaveForm();
                 }
                 catch (Exception ex)
                 {
@@ -62,25 +58,11 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private async void createWaveForm()
+        private async void CreateWaveForm()
         {
             var url = _mainPageViewModel.PlayingTrack.WaveformUrl;
-            WaveForm wave = await App.SoundCloud.getWaveForm(url);
-            if(wave != null)
-            {
-                //create the waveform
-                foreach (int i in wave.samples)
-                {
-                    Rectangle r = new Rectangle();
-                    r.Height = i;
-                    r.Width = 2;
-                    Thickness margin = r.Margin;
-                    margin.Left = 1;
-                    r.Margin = margin;
-                    r.Fill = new SolidColorBrush(Colors.White);
-                    waveformstackpanel.Children.Add(r);
-                }
-            }
+            WaveForm wave = await App.SoundCloud.GetWaveForm(url);
+            WaveFormControl.FillWaveForm(wave);
         }
 
         private void _canvasControl_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
