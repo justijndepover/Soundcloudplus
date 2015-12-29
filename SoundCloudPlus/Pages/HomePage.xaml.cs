@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -159,10 +161,17 @@ namespace SoundCloudPlus.Pages
         }
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
+            GridView gridView = (GridView) sender;
+            ObservableCollection<StreamCollection> streamCollections = (ObservableCollection<StreamCollection>) gridView.ItemsSource;
             StreamCollection s = e.ClickedItem as StreamCollection;
             if (s?.Track != null)
             {
-                App.SoundCloud.AudioPlayer.PlayTrack(s.Track);
+                List<Track> playList = (from streamCollection in streamCollections where streamCollection.Track != null select streamCollection.Track).ToList();
+                App.SoundCloud.AudioPlayer.PlayTrack(playList, s.Track);
+            }
+            else if (s?.Playlist != null)
+            {
+                App.SoundCloud.AudioPlayer.PlayTrack(s.Playlist.Tracks, s.Playlist.Tracks[0]);
             }
         }
 

@@ -9,6 +9,7 @@ namespace ClassLibrary.Models
         public DateTime CreatedAt { get; set; }
         public string Type { get; set; }
         public PublishUser User { get; set; }
+        public Playlist Playlist { get; set; }
         public string Uuid { get; set; }
         public Track Track { get; set; }
     }

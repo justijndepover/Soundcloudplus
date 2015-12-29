@@ -228,50 +228,40 @@ namespace ClassLibrary
             notifier.Show(toast);
         }
 
-        public void PlayTrack(Track track)
+        public void PlayTrack(List<Track> playList, Track track)
         {
-            var song = track;
-            bool trackAlreadyInPlaylist = true;
-            bool LiveTile = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
-            if (LiveTile)
+            bool liveTile = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
+            if (liveTile)
             {
                 UpdateLiveTile(track);
             }
-            bool Toast = (bool)ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
-            if (Toast)
+            bool toast = (bool)ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
+            if (toast)
             {
                 UpdateToastMessage(track);
             }
-            if (PlayList == null)
-            {
-                PlayList = new List<Track>();
-            }
-            if (!PlayList.Contains(track))
-            {
-                PlayList.Add(track);
-                trackAlreadyInPlaylist = false;
-            }
-            Debug.WriteLine("Clicked item from App: " + song.Id);
+            Debug.WriteLine("Clicked item from App: " + track.Id);
 
             Debug.WriteLine(CurrentPlayer.CurrentState);
             // Start the background task if it wasn't running
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
                 // First update the persisted start track
-                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.TrackId, song.Id);
+                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.TrackId, track.Id);
                 ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.Position, new TimeSpan().ToString());
 
                 StartBackgroundAudioTask();
             }
             else
             {
-                // Switch to the selected track
-                if (!trackAlreadyInPlaylist)
+
+                if (!PlayList.Equals(playList))
                 {
-                    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
+                    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(playList));
                 }
-                MessageService.SendMessageToBackground(new TrackChangedMessage(song.Id));
+                MessageService.SendMessageToBackground(new TrackChangedMessage(track.Id));
             }
+            PlayList = playList;
 
             if (MediaPlayerState.Paused == CurrentPlayer.CurrentState)
             {

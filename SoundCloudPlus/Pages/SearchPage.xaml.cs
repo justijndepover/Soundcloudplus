@@ -1,4 +1,6 @@
-﻿using Windows.UI.Core;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -63,7 +65,7 @@ namespace SoundCloudPlus.Pages
 
         private void SearchGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            App.SoundCloud.AudioPlayer.PlayTrack(e.ClickedItem as Track);
+            App.SoundCloud.AudioPlayer.PlayTrack(new List<Track>((ObservableCollection<Track>) SearchGridView.ItemsSource), e.ClickedItem as Track);
         }
     }
 }
