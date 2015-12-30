@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Shapes;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
 
-namespace SoundCloudPlus
+namespace SoundCloudPlus.Controls
 {
     public class WaveFormControl : Grid
     {

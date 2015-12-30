@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:common="using:ClassLibrary.Common"
     xmlns:soundCloudPlus="using:SoundCloudPlus"
+    xmlns:controls="using:SoundCloudPlus.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -80,7 +81,7 @@
                         
                     </StackPanel>
                 </Grid>
-                <soundCloudPlus:WaveFormControl x:Name="WaveFormControl" Background="{StaticResource SoundcloudOrange}" Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
+                <controls:WaveFormControl x:Name="WaveFormControl" Background="{StaticResource SoundcloudOrange}" Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
             </RelativePanel>
         </ScrollViewer>
     </Grid>
