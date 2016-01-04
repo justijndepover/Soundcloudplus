@@ -14,6 +14,7 @@
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
         <converters:TimePassedConverter x:Key="TimePassedConverter" />
+        <converters:PlaylistConverter x:Key="PlaylistConverter" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <VisualStateManager.VisualStateGroups>
@@ -50,7 +51,7 @@
                             </GridView.ItemContainerStyle>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Style="{StaticResource BorderStyle1}">
+                                    <Border Style="{StaticResource BorderStyle1}" >
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="150"/>
@@ -62,7 +63,8 @@
                                                 <RowDefinition Height="32"/>
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding Track.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image Visibility="{Binding Playlist, Converter={StaticResource PlaylistConverter}}" x:Name="StreamItemArtworkImage" Source="{Binding Track.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image Visibility="{Binding Track, Converter={StaticResource PlaylistConverter}}" Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}" />
                                                 <Grid Style="{StaticResource GridMusicStyleBottom}">
                                                     <TextBlock Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>
@@ -72,6 +74,12 @@
                                                     <Run Text="{Binding Track.Title}" Foreground="Gray"/>
                                             </TextBlock>
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
+
+                                            <TextBlock Text="{Binding Playlist.User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                            <TextBlock Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                    <Run Text="{Binding Playlist.Title}" Foreground="Gray"/>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Playlist.CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
 
 
                                             <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">

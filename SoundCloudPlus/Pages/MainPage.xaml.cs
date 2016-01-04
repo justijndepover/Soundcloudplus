@@ -29,6 +29,7 @@ namespace SoundCloudPlus.Pages
         public int UserId { get; set; }
 
         public List<int> UserIdHistory { get; set; }
+        public Playlist CurrentPlaylist { get; set; }
 
         public MainPage()
         {
@@ -186,6 +187,13 @@ namespace SoundCloudPlus.Pages
                             MyFrame?.Navigate(typeof(FollowingPage));
                             UserIdHistory.Add(id);
                         }
+                    }
+                    break;
+                case "playlistview":
+                    if (page?.GetType() != typeof(PlaylistViewPage))
+                    {
+                        MainPageViewModel.PageTitle = "Playlist";
+                        MyFrame?.Navigate(typeof(PlaylistViewPage));
                     }
                     break;
             }

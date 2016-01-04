@@ -107,6 +107,7 @@
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
+    <Compile Include="Converters\PlaylistConverter.cs" />
     <Compile Include="Converters\TimePassedConverter.cs" />
     <Compile Include="Converters\TrackCountConverter.cs" />
     <Compile Include="Pages\ActivityPage.xaml.cs">
@@ -133,6 +134,9 @@
     <Compile Include="Pages\PlaylistPage.xaml.cs">
       <DependentUpon>PlaylistPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PlaylistViewPage.xaml.cs">
+      <DependentUpon>PlaylistViewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -152,6 +156,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlayingPageViewModel.cs" />
     <Compile Include="ViewModels\PlaylistPageViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistViewPageViewModel.cs" />
     <Compile Include="ViewModels\ProfilePageViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
@@ -211,6 +216,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PlaylistPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PlaylistViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

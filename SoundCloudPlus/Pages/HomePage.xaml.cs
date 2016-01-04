@@ -171,7 +171,10 @@ namespace SoundCloudPlus.Pages
             }
             else if (s?.Playlist != null)
             {
+
                 App.SoundCloud.AudioPlayer.PlayTrack(s.Playlist.Tracks, s.Playlist.Tracks[0]);
+                MainPage.Current.CurrentPlaylist = s.Playlist;
+                MainPage.Current.Navigate(sender, "playlistview");
             }
         }
 
