@@ -42,17 +42,41 @@ namespace SoundCloudPlus.Controls
                 //create the waveform
                 int index = 0;
                 int sample;
+                RowDefinition row1 = new RowDefinition();
+                row1.Height = new GridLength(2, GridUnitType.Star);
+                RowDefinitions.Add(row1);
+                RowDefinition row2 = new RowDefinition();
+                row1.Height = new GridLength(1, GridUnitType.Star);
+                RowDefinitions.Add(row2);
                 for (sample = 0; sample < wave.Samples.Length; sample = sample + 6)
                 {
                     int i = wave.Samples[sample];
                     ColumnDefinitions.Add(new ColumnDefinition());
+                    Thickness margin = new Thickness();
+                    margin.Left = 1;
+                    margin.Right = 1;
+                    margin.Bottom = 1;
+                    margin.Top = 1;
                     Rectangle r = new Rectangle
                     {
-                        Height = i
+                        Height = i/2,
+                        Margin = margin,
+                        VerticalAlignment = VerticalAlignment.Bottom
+                    };
+                    Rectangle r2 = new Rectangle
+                    {
+                        Height = i/4,
+                        Margin = margin,
+                        VerticalAlignment = VerticalAlignment.Top
                     };
                     r.SetValue(ColumnProperty, index);
+                    r.SetValue(RowProperty, 0);
+                    r2.SetValue(ColumnProperty, index);
+                    r2.SetValue(RowProperty, 1);
                     r.Fill = new SolidColorBrush(Colors.White);
+                    r2.Fill = new SolidColorBrush(Colors.White);
                     Children.Add(r);
+                    Children.Add(r2);
                     index++;
                 }
                 _slider.Minimum = 0;

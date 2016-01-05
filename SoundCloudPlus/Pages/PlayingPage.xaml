@@ -59,7 +59,7 @@
                             <TextBlock x:Name="PlayingTitle" Text="{Binding PlayingTrack.Title}" Style="{StaticResource CurrentlyPlayingTitle}"/>
                         </Border>
                     </StackPanel>
-                    <controls:WaveFormControl Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" x:Name="WaveFormControl" Background="{StaticResource SoundcloudOrange}" Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
+                    <controls:WaveFormControl Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="0 14 0 0" x:Name="WaveFormControl"  Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
 
                     <Border Background="#55000000" Margin="0 14" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"  HorizontalAlignment="Stretch">
                         <ListView ItemsSource="{Binding PlayingList}" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" x:Name="PlayListView">
