@@ -51,37 +51,39 @@
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Source="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum200}"/>
                     <StackPanel Grid.Row="0" Grid.Column="1">
-                        <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingArtist}">
+                        <Border Background="#55000000" Margin="14 0 0 14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingArtist}">
                             <TextBlock x:Name="PlayingArtist" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource CurrentlyPlayingName}"/>
                         </Border>
 
-                        <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingTitle}" >
+                        <Border Background="#55000000" Margin="14 0" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingTitle}" >
                             <TextBlock x:Name="PlayingTitle" Text="{Binding PlayingTrack.Title}" Style="{StaticResource CurrentlyPlayingTitle}"/>
                         </Border>
                     </StackPanel>
                     <controls:WaveFormControl Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" x:Name="WaveFormControl" Background="{StaticResource SoundcloudOrange}" Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
 
-                    <ListView Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" ItemsSource="{Binding PlayingList}" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" x:Name="PlayListView">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="50"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding Title}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding User.Username}"/>
-                                    <TextBlock Grid.Column="2" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <Border Background="#55000000" Margin="0 14" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"  HorizontalAlignment="Stretch">
+                        <ListView ItemsSource="{Binding PlayingList}" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" x:Name="PlayListView">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="White"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding User.Username}" Foreground="White"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Foreground="White"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
                 </Grid>
             </RelativePanel>
         </ScrollViewer>

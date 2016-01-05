@@ -12,12 +12,20 @@ namespace SoundCloudPlus.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            Playlist p = (Playlist) value;
-            if (p.ArtworkUrl != null)
+            try
             {
-                return p.ArtworkUrl;
+                Playlist p = (Playlist)value;
+                if (p.ArtworkUrl != null)
+                {
+                    return p.ArtworkUrl;
+                }
+                return p.User.AvatarUrl;
             }
-            return p.User.AvatarUrl;
+            catch
+            {
+                return null;
+            }
+            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
