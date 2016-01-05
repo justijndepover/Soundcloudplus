@@ -166,8 +166,8 @@ namespace SoundCloudPlus.Pages
             StreamCollection s = e.ClickedItem as StreamCollection;
             if (s?.Track != null)
             {
-                List<Track> playList = (from streamCollection in streamCollections where streamCollection.Track != null select streamCollection.Track).ToList();
-                App.SoundCloud.AudioPlayer.PlayTrack(playList, s.Track);
+                //List<Track> playList = (from streamCollection in streamCollections where streamCollection.Track != null select streamCollection.Track).ToList();
+                App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> {s.Track}, s.Track);
             }
             else if (s?.Playlist != null)
             {

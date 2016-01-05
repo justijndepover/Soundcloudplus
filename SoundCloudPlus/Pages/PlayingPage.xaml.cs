@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
+using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +18,7 @@ using SoundCloudPlus.ViewModels;
 
 namespace SoundCloudPlus.Pages
 {
-    
+
 
     public sealed partial class PlayingPage : Page
     {
@@ -47,6 +49,7 @@ namespace SoundCloudPlus.Pages
                     LayoutRoot.DataContext = _mainPageViewModel;
                     _canvasControl = new CanvasControl();
                     _canvasControl.Draw += _canvasControl_Draw;
+                    App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     _canvasControl.CreateResources += _canvasControl_CreateResources;
                     ContentPresenter.Content = _canvasControl;
                     CreateWaveForm();
@@ -56,6 +59,30 @@ namespace SoundCloudPlus.Pages
                     new ErrorLogProxy(ex.ToString());
                 }
             }
+        }
+
+        private async void CurrentPlayer_CurrentStateChanged(Windows.Media.Playback.MediaPlayer sender, object args)
+        {
+            List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
+            Track track = App.SoundCloud.AudioPlayer.CurrentTrack;
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            {
+                int index;
+                for (index = 0; index < playlist.Count; index++)
+                {
+                    if (track.Id.Equals(playlist[index].Id))
+                    {
+                        try
+                        {
+                            PlayListView.SelectedIndex = index;
+                        }
+                        catch (Exception ex)
+                        {
+                            new ErrorLogProxy(ex.ToString());
+                        }
+                    }
+                }
+            });
         }
 
         private async void CreateWaveForm()
@@ -113,7 +140,6 @@ namespace SoundCloudPlus.Pages
                     session.DrawImage(_blurEffect, 2.0f, 2.0f);
                 }
             }
-
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
@@ -131,5 +157,10 @@ namespace SoundCloudPlus.Pages
             currentView.BackRequested -= CurrentView_BackRequested;
         }
 
+        private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Track t = (Track)e.ClickedItem;
+            App.SoundCloud.AudioPlayer.PlayTrack(_mainPageViewModel.PlayingList, t);
+        }
     }
 }

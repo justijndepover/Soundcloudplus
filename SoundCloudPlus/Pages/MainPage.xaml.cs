@@ -464,6 +464,8 @@ namespace SoundCloudPlus.Pages
         private void UpdateTransportControls(MediaPlayerState state)
         {
             MainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.CurrentTrack;
+            MainPageViewModel.PlayingList = App.SoundCloud.AudioPlayer.PlayList;
+
             if (state == MediaPlayerState.Playing)
             {
                 MusicPlayerControl.Visibility = Visibility.Visible;

@@ -14,6 +14,7 @@
 
     <Page.Resources>
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
+        <converters:TimePassedConverter x:Key="TimePassedConverter"/>
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
         <converters:IntToMillionConverter x:Key="IntToMillionConverter" />
     </Page.Resources>
@@ -24,8 +25,6 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultState">
                     <VisualState.StateTriggers>
@@ -40,9 +39,10 @@
         <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
-                <Grid x:Name="InfoGrid">
+                <Grid x:Name="InfoGrid" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="200" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -50,8 +50,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Source="{Binding PlayingTrack.ArtworkUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageAlbum200}"/>
-
-                    <StackPanel Grid.Column="1">
+                    <StackPanel Grid.Row="0" Grid.Column="1">
                         <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingArtist}">
                             <TextBlock x:Name="PlayingArtist" Text="{Binding PlayingTrack.User.Username}" Style="{StaticResource CurrentlyPlayingName}"/>
                         </Border>
@@ -59,29 +58,31 @@
                         <Border Background="#55000000" Margin="14" HorizontalAlignment="Left" Width="{Binding Path=Width, ElementName=PlayingTitle}" >
                             <TextBlock x:Name="PlayingTitle" Text="{Binding PlayingTrack.Title}" Style="{StaticResource CurrentlyPlayingTitle}"/>
                         </Border>
-
-                        <!--<Button Click="btnFollowers_Click"  Grid.Row="2" Grid.Column="1" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
-                        <StackPanel>
-                            <TextBlock Text="Followers"/>
-                            <TextBlock Text="{Binding UserObject.FollowersCount, Converter={StaticResource IntToMillionConverter}}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Click="btnFollowing_Click" Grid.Row="2" Grid.Column="2" Style="{StaticResource btnProfileMeta}" Tag="{Binding UserObject.Id, Mode=TwoWay}">
-                        <StackPanel>
-                            <TextBlock Text="Following" />
-                            <TextBlock Text="{Binding UserObject.FollowingsCount, Converter={StaticResource IntToMillionConverter}}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource btnProfileMeta}">
-                        <StackPanel>
-                            <TextBlock Text="Tracks" />
-                            <TextBlock Text="{Binding CurrentUser.Id, Converter={StaticResource IntToMillionConverter}}" />
-                        </StackPanel>
-                    </Button>-->
-                        
                     </StackPanel>
+                    <controls:WaveFormControl Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" x:Name="WaveFormControl" Background="{StaticResource SoundcloudOrange}" Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
+
+                    <ListView Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" ItemsSource="{Binding PlayingList}" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" x:Name="PlayListView">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Title}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding User.Username}"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
-                <controls:WaveFormControl x:Name="WaveFormControl" Background="{StaticResource SoundcloudOrange}" Height="140" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="InfoGrid"/>
             </RelativePanel>
         </ScrollViewer>
     </Grid>
