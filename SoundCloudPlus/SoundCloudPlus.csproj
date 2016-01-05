@@ -107,6 +107,8 @@
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
+    <Compile Include="Converters\PlaylistToImageConverter.cs" />
+    <Compile Include="Converters\TrackToImageConverter.cs" />
     <Compile Include="Converters\PlaylistConverter.cs" />
     <Compile Include="Converters\TimePassedConverter.cs" />
     <Compile Include="Converters\TrackCountConverter.cs" />

@@ -11,6 +11,8 @@
     <Page.Resources>
         <viewModels:HomePageViewModel x:Key="HomePageViewModel" />
         <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
+        <converters:TrackToImageConverter x:Key="TrackToImageConverter"/>
+        <converters:PlaylistToImageConverter x:Key="PlaylistToImageConverter"/>
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
         <converters:TimePassedConverter x:Key="TimePassedConverter" />
@@ -23,8 +25,6 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultState">
                     <VisualState.StateTriggers>
@@ -63,8 +63,8 @@
                                                 <RowDefinition Height="32"/>
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                                <Image Visibility="{Binding Playlist, Converter={StaticResource PlaylistConverter}}" x:Name="StreamItemArtworkImage" Source="{Binding Track.ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
-                                                <Image Visibility="{Binding Track, Converter={StaticResource PlaylistConverter}}" Source="{Binding Playlist.ArtworkUrl}" Style="{StaticResource ImageAlbum}" />
+                                                <Image Visibility="{Binding Playlist, Converter={StaticResource PlaylistConverter}}" Source="{Binding Playlist,Converter={StaticResource PlaylistToImageConverter}}" Style="{StaticResource ImageAlbum}"/>
+                                                <Image Visibility="{Binding Track, Converter={StaticResource PlaylistConverter}}" Source="{Binding Track,Converter={StaticResource TrackToImageConverter}}" Style="{StaticResource ImageAlbum}" />
                                                 <Grid Style="{StaticResource GridMusicStyleBottom}">
                                                     <TextBlock Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
                                                 </Grid>

@@ -1,22 +1,23 @@
 ﻿using System;
-using Windows.UI.Xaml;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
+using ClassLibrary.Models;
 
 namespace SoundCloudPlus.Converters
 {
-    class PlaylistConverter : IValueConverter
+    public class TrackToImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var o = value;
-            if(o == null)
+            Track t = (Track) value;
+            if (t.ArtworkUrl != null)
             {
-                return Visibility.Collapsed;
+                return t.ArtworkUrl;
             }
-            else
-            {
-                return Visibility.Visible;
-            }
+            return t.User.AvatarUrl;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

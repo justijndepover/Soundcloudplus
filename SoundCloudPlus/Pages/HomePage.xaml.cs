@@ -115,7 +115,7 @@ namespace SoundCloudPlus.Pages
                             await md.ShowAsync();
                         }
                         attempts = attempts + 1;
-                        new ManualResetEvent(false).WaitOne(1000);
+                        new ManualResetEvent(false).WaitOne(1500);
                     }
                 }
                 catch (Exception ex)
