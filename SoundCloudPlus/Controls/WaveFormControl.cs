@@ -50,34 +50,45 @@ namespace SoundCloudPlus.Controls
                 RowDefinitions.Add(row2);
                 for (sample = 0; sample < wave.Samples.Length; sample = sample + 6)
                 {
-                    int i = wave.Samples[sample];
-                    ColumnDefinitions.Add(new ColumnDefinition());
-                    Thickness margin = new Thickness();
-                    margin.Left = 1;
-                    margin.Right = 1;
-                    margin.Bottom = 1;
-                    margin.Top = 1;
-                    Rectangle r = new Rectangle
+                    int s = sample / 6;
+                    if((s & 1) == 0)
                     {
-                        Height = i/2,
-                        Margin = margin,
-                        VerticalAlignment = VerticalAlignment.Bottom
-                    };
-                    Rectangle r2 = new Rectangle
+                        int i = wave.Samples[sample];
+                        ColumnDefinition col = new ColumnDefinition();
+                        col.Width = new GridLength(1, GridUnitType.Star);
+                        ColumnDefinitions.Add(col);
+                        Thickness margin = new Thickness();
+                        margin.Bottom = 1;
+                        margin.Top = 1;
+                        Rectangle r = new Rectangle
+                        {
+                            Height = i / 2,
+                            Margin = margin,
+                            VerticalAlignment = VerticalAlignment.Bottom
+                        };
+                        Rectangle r2 = new Rectangle
+                        {
+                            Height = i / 4,
+                            Margin = margin,
+                            VerticalAlignment = VerticalAlignment.Top
+                        };
+                        r.SetValue(ColumnProperty, index);
+                        r.SetValue(RowProperty, 0);
+                        r2.SetValue(ColumnProperty, index);
+                        r2.SetValue(RowProperty, 1);
+                        r.Fill = new SolidColorBrush(Colors.White);
+                        r2.Fill = new SolidColorBrush(Colors.White);
+                        Children.Add(r);
+                        Children.Add(r2);
+                        index = index + 2;
+                    }
+                    else
                     {
-                        Height = i/4,
-                        Margin = margin,
-                        VerticalAlignment = VerticalAlignment.Top
-                    };
-                    r.SetValue(ColumnProperty, index);
-                    r.SetValue(RowProperty, 0);
-                    r2.SetValue(ColumnProperty, index);
-                    r2.SetValue(RowProperty, 1);
-                    r.Fill = new SolidColorBrush(Colors.White);
-                    r2.Fill = new SolidColorBrush(Colors.White);
-                    Children.Add(r);
-                    Children.Add(r2);
-                    index++;
+                        ColumnDefinition col = new ColumnDefinition();
+                        col.Width = new GridLength(1, GridUnitType.Star);
+                        ColumnDefinitions.Add(col);
+                    }
+                    
                 }
                 _slider.Minimum = 0;
                 _slider.StepFrequency = 1;
