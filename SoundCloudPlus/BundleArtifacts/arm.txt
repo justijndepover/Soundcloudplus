@@ -1,2 +1,2 @@
-MainPackage=C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\bin\ARM\Release\SoundCloudPlus_0.2.0.0_ARM.appx
-SymbolPackage=C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\AppPackages\SoundCloudPlus_0.2.0.0_Test\SoundCloudPlus_0.2.0.0_ARM.appxsym
+MainPackage=C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\bin\ARM\Release\SoundCloudPlus_0.2.1.0_ARM.appx
+SymbolPackage=C:\Users\arnva\OneDrive\Apps\WindowsUniversal\Soundcloudplus\SoundCloudPlus\AppPackages\SoundCloudPlus_0.2.1.0_Test\SoundCloudPlus_0.2.1.0_ARM.appxsym
