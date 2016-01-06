@@ -161,20 +161,31 @@ namespace SoundCloudPlus.Pages
         }
         private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            GridView gridView = (GridView) sender;
-            ObservableCollection<StreamCollection> streamCollections = (ObservableCollection<StreamCollection>) gridView.ItemsSource;
-            StreamCollection s = e.ClickedItem as StreamCollection;
-            if (s?.Track != null)
+            try
             {
-                //List<Track> playList = (from streamCollection in streamCollections where streamCollection.Track != null select streamCollection.Track).ToList();
-                App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> {s.Track}, s.Track);
-            }
-            else if (s?.Playlist != null)
-            {
+                StreamCollection s = e.ClickedItem as StreamCollection;
+                if (s == null)
+                {
+                    Track t = e.ClickedItem as Track;
+                    App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { t }, t);
+                }
+                if (s?.Track != null)
+                {
+                    //List<Track> playList = (from streamCollection in streamCollections where streamCollection.Track != null select streamCollection.Track).ToList();
+                    App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { s.Track }, s.Track);
+                }
+                else if (s?.Playlist != null)
+                {
 
-                App.SoundCloud.AudioPlayer.PlayTrack(s.Playlist.Tracks, s.Playlist.Tracks[0]);
-                MainPage.Current.CurrentPlaylist = s.Playlist;
-                MainPage.Current.Navigate(sender, "playlistview");
+                    App.SoundCloud.AudioPlayer.PlayTrack(s.Playlist.Tracks, s.Playlist.Tracks[0]);
+                    MainPage.Current.CurrentPlaylist = s.Playlist;
+                    MainPage.Current.Navigate(sender, "playlistview");
+                }
+            }
+            catch (InvalidCastException)
+            {
+                Track t = e.ClickedItem as Track;
+                App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { t }, t);
             }
         }
 

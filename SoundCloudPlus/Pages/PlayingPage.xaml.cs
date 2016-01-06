@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Numerics;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
+using Windows.Media.Playback;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
@@ -63,33 +65,51 @@ namespace SoundCloudPlus.Pages
 
         private async void CurrentPlayer_CurrentStateChanged(Windows.Media.Playback.MediaPlayer sender, object args)
         {
-            List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
-            Track track = App.SoundCloud.AudioPlayer.CurrentTrack;
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            try
             {
-                int index;
-                for (index = 0; index < playlist.Count; index++)
+                var currentState = sender.CurrentState;
+                if (currentState == MediaPlayerState.Playing)
                 {
-                    if (track.Id.Equals(playlist[index].Id))
+                List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
+                Track track = App.SoundCloud.AudioPlayer.CurrentTrack;
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                {
+                    int index;
+                    for (index = 0; index < playlist.Count; index++)
                     {
-                        try
+                        if (track.Id.Equals(playlist[index].Id))
                         {
-                            PlayListView.SelectedIndex = index;
-                        }
-                        catch (Exception ex)
-                        {
-                            new ErrorLogProxy(ex.ToString());
+                            try
+                            {
+                                PlayListView.SelectedIndex = index;
+                            }
+                            catch (Exception ex)
+                            {
+                                new ErrorLogProxy(ex.ToString());
+                            }
                         }
                     }
+                });
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                new ErrorLogProxy(ex.ToString());
+            }
         }
 
         private async void CreateWaveForm()
         {
             var url = _mainPageViewModel.PlayingTrack.WaveformUrl;
-            WaveForm wave = await App.SoundCloud.GetWaveForm(url);
-            WaveFormControl.FillWaveForm(wave);
+            if (url != null)
+            {
+                WaveForm wave = await App.SoundCloud.GetWaveForm(url);
+                WaveFormControl.FillWaveForm(wave);
+            }
+            else
+            {
+                WaveFormControl.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void _canvasControl_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
