@@ -153,7 +153,8 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                Playlist p = e.ClickedItem as Playlist;
+                PlaylistCollection pc = e.ClickedItem as PlaylistCollection;
+                Playlist p = pc.Playlist;
                 App.SoundCloud.AudioPlayer.PlayTrack(p.Tracks, p.Tracks[0]);
                 MainPage.Current.CurrentPlaylist = p;
                 MainPage.Current.Navigate(sender, "playlistview");
