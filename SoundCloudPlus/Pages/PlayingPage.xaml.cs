@@ -156,8 +156,15 @@ namespace SoundCloudPlus.Pages
                     session.Units = CanvasUnits.Pixels;
 
                     double displayScaling = DisplayInformation.GetForCurrentView().LogicalDpi / 96.0;
-
-                    double pixelWidth = sender.ActualWidth * displayScaling;
+                    double pixelWidth;
+                    if (sender.ActualWidth > sender.ActualHeight)
+                    {
+                        pixelWidth = sender.ActualWidth * displayScaling;
+                    }
+                    else
+                    {
+                        pixelWidth = sender.ActualHeight * displayScaling;
+                    }
 
                     var scalefactor = pixelWidth / _image.Size.Width;
 

@@ -31,13 +31,12 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PageTitle.Visibility" Value="Collapsed" />
                         <Setter Target="ArtistImageColumn.Width" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" />
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <Grid x:Name="InfoGrid" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
