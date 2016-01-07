@@ -150,7 +150,10 @@ namespace SoundCloudPlus.Pages
             {
                 string genre = s.Replace("+", " ").Replace("%", "").Replace("26", " & ").Replace("  ", " ");
                 cboGenre.Items.Add(genre);
-                cboGenre.SelectedIndex = 0;
+                if(cboGenre.SelectedIndex == -1)
+                {
+                    cboGenre.SelectedIndex = 0;
+                }
             }
         }
 
