@@ -22,6 +22,7 @@ namespace SoundCloudPlus.Pages
         private BackgroundWorker _bwStream = new BackgroundWorker();
         private ObservableCollection<StreamCollection> _newStreamCollection = new ObservableCollection<StreamCollection>();
         private ObservableCollection<Track> _newExploreCollection = new ObservableCollection<Track>();
+        private List<String> _genre;
         private double _verticalOffsetStream;
         private double _verticalOffsetExplore;
         private double _maxVerticalOffsetStream;
@@ -99,6 +100,15 @@ namespace SoundCloudPlus.Pages
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Frame.BackStack.Clear();
+            try
+            {
+                LoadGenres();
+            }
+            catch (Exception ex)
+            {
+                new ErrorLogProxy(ex.ToString());
+            }
+
             if (e.NavigationMode != NavigationMode.Back)
             {
                 _homePageViewModel =
@@ -133,6 +143,17 @@ namespace SoundCloudPlus.Pages
             Application.Current.Exit();
         }
 
+        private async void LoadGenres()
+        {
+            _genre = await App.SoundCloud.GetGenres();
+            foreach (string s in _genre)
+            {
+                string genre = s.Replace("+", " ").Replace("%", "").Replace("26", " & ").Replace("  ", " ");
+                cboGenre.Items.Add(genre);
+                cboGenre.SelectedIndex = 0;
+            }
+        }
+
         private async void UpdateStreamExploreCollection()
         {
             try
@@ -142,7 +163,10 @@ namespace SoundCloudPlus.Pages
                 double width = bounds.Width;
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
-                _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit);
+                if (_genre != null)
+                {
+                    _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit, _genre[cboGenre.SelectedIndex]);
+                }
             }
             catch (Exception ex)
             {
@@ -251,6 +275,11 @@ namespace SoundCloudPlus.Pages
 
             TextBlock txb = (TextBlock)b.Content;
             txb.Text = "\ue0a5";
+        }
+
+        private void cboGenre_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateStreamExploreCollection();
         }
     }
 }

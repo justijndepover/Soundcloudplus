@@ -114,68 +114,71 @@
                 </PivotItem>
                 <PivotItem Header="Explore">
                     <!--Pivot content goes here-->
-                    <ScrollViewer x:Name="SvExplore" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerExplore_OnViewChanged">
-                        <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" SizeChanged="ExploreGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SelectionMode="None">
-                            <GridView.ItemContainerStyle>
-                                <Style TargetType="GridViewItem">
-                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                </Style>
-                            </GridView.ItemContainerStyle>
-                            <GridView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Style="{StaticResource BorderStyle1}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="150"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="50"/>
-                                                <RowDefinition Height="68"/>
-                                                <RowDefinition Height="32"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                                <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl, Mode=TwoWay}" Style="{StaticResource ImageAlbum}"/>
-                                                <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                                    <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                    <RelativePanel SizeChanged="ExploreGridView_SizeChanged">
+                        <ComboBox x:Name="cboGenre" Margin="0 8" SelectionChanged="cboGenre_SelectionChanged"/>
+                        <ScrollViewer x:Name="SvExplore" RelativePanel.Below="cboGenre" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerExplore_OnViewChanged">
+                            <GridView x:Name="ExploreGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="ExploreTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding ExploreCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SelectionMode="None">
+                                <GridView.ItemContainerStyle>
+                                    <Style TargetType="GridViewItem">
+                                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </GridView.ItemContainerStyle>
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource BorderStyle1}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50"/>
+                                                    <RowDefinition Height="68"/>
+                                                    <RowDefinition Height="32"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                                                    <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl, Mode=TwoWay}" Style="{StaticResource ImageAlbum}"/>
+                                                    <Grid Style="{StaticResource GridMusicStyleBottom}">
+                                                        <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
+                                                    </Grid>
                                                 </Grid>
-                                            </Grid>
-                                            <TextBlock x:Name="StreamItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
-                                            <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
+                                                <TextBlock x:Name="StreamItemArtist" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
+                                                <TextBlock x:Name="StreamItemTitle" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
                                                     <Run Text="{Binding Title}" Foreground="Gray"/>
-                                            </TextBlock>
-                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CreatedAt, Converter={StaticResource TimePassedConverter}}" Style="{StaticResource SongTime}" />
 
-                                            <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}"/>
-                                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
-                                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}"/>
-                                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
-                                                    </StackPanel>
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-                            <GridView.Footer>
-                                <Grid Height="52" />
-                            </GridView.Footer>
-                        </GridView>
-                    </ScrollViewer>
+                                                <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                                                    <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}"/>
+                                                            <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
+                                                            <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}"/>
+                                                            <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                                <GridView.Footer>
+                                    <Grid Height="52" />
+                                </GridView.Footer>
+                            </GridView>
+                        </ScrollViewer>
+                    </RelativePanel>
                 </PivotItem>
             </Pivot>
         </RelativePanel>

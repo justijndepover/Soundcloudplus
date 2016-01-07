@@ -128,9 +128,9 @@ namespace ClassLibrary
 
         #region Explore
         private string _exploreNextHref = "";
-        public async Task<ObservableCollection<Track>> GetExplore(int limitValue)
+        public async Task<ObservableCollection<Track>> GetExplore(int limitValue, string genre)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/Popular+Music", null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/"+genre, null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
@@ -768,6 +768,27 @@ namespace ClassLibrary
                 foreach (var item in apiResponse.Data["results"])
                 {
                     results.Add(item["output"].ToString());
+                }
+            }
+            return results;
+        }
+        #endregion
+
+        #region Genre
+            public async Task<List<String>> GetGenres()
+        {
+            //https://api-v2.soundcloud.com/explore/categories?limit=10&offset=0&linked_partitioning=1&client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=8f103e4
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/categories", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            List<String> results = new List<String>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["music"])
+                {
+                    results.Add(item.ToString());
+                }
+                foreach (var item in apiResponse.Data["audio"])
+                {
+                    results.Add(item.ToString());
                 }
             }
             return results;
