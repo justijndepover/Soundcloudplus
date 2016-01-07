@@ -219,11 +219,12 @@ namespace ClassLibrary
             {
                 try
                 {
+                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
                     if (pO.Collection[0].Playlist.ArtworkUrl != null)
                     {
                         pO.Collection[0].Playlist.ArtworkUrl = pO.Collection[0].Playlist.User.AvatarUrl;
                     }
-                    pO = JsonConvert.DeserializeObject<PlaylistObject>(apiResponse.Data.ToString());
+                    
                 }
                 catch (Exception ex)
                 {
