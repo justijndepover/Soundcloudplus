@@ -107,15 +107,13 @@ namespace ClassLibrary
 
         public async Task<WaveForm> GetWaveForm(string url)
         {
-            WaveForm json;
-            //ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, null, null, null, );
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(url);
                 if(response.IsSuccessStatusCode)
                 {
                     string content = response.Content.ReadAsStringAsync().Result;
-                    json = JsonConvert.DeserializeObject<WaveForm>(content);
+                    var json = JsonConvert.DeserializeObject<WaveForm>(content);
                     return json;
                 }
             }
@@ -346,12 +344,13 @@ namespace ClassLibrary
             {
                 try
                 {
+                    int pId = pO.Collection[i].Playlist.Id;
+                    ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
+                    pO.Collection[i].Playlist.Tracks = new List<Track>(trackList);
+
                     if (pO.Collection[i].ArtworkUrl == null)
                     {
-                        int pId = pO.Collection[i].Playlist.Id;
-                        ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
                         pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
-                        pO.Collection[i].Playlist.Tracks = new List<Track>(trackList);
                     }
                 }
                 catch (Exception e)

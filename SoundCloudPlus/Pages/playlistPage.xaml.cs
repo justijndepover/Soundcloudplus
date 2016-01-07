@@ -150,12 +150,12 @@ namespace SoundCloudPlus.Pages
         }
 
         private void PlaylistGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
+        { 
             try
             {
                 PlaylistCollection p = e.ClickedItem as PlaylistCollection;
                 App.SoundCloud.AudioPlayer.PlayTrack(p?.Playlist.Tracks, p?.Playlist.Tracks[0]);
-                MainPage.Current.Navigate(sender, "playlistview");
+                //MainPage.Current.Navigate(sender, "playlistview"); I COMMENTED THIS OUT BECAUSE THE PAGE WAS BLANK
             }
             catch(Exception ex)
             {

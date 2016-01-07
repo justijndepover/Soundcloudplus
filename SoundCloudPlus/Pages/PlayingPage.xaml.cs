@@ -101,6 +101,7 @@ namespace SoundCloudPlus.Pages
         private async void CreateWaveForm()
         {
             var url = _mainPageViewModel.PlayingTrack.WaveformUrl;
+            url = url.Replace(".png", ".json");
             if (url != null)
             {
                 WaveForm wave = await App.SoundCloud.GetWaveForm(url);

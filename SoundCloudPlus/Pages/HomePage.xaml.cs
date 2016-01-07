@@ -159,7 +159,7 @@ namespace SoundCloudPlus.Pages
         {
             Screen.MakeResponsive(e, 400, 800, ExploreGridView);
         }
-        private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
+        private async void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {
@@ -177,9 +177,8 @@ namespace SoundCloudPlus.Pages
                 else if (s?.Playlist != null)
                 {
 
-                    App.SoundCloud.AudioPlayer.PlayTrack(s.Playlist.Tracks, s.Playlist.Tracks[0]);
-                    MainPage.Current.CurrentPlaylist = s.Playlist;
-                    MainPage.Current.Navigate(sender, "playlistview");
+                    App.SoundCloud.AudioPlayer.PlayTrack(new List<Track>(await App.SoundCloud.GetTracksFromPlaylist(s.Playlist.Id)), s.Playlist.Tracks[0]);
+                    //MainPage.Current.Navigate(sender, "playlistview");
                 }
             }
             catch (InvalidCastException)
