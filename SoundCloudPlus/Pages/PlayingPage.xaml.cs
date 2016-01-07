@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using System.Threading;
 using Windows.ApplicationModel.Core;
@@ -70,6 +71,8 @@ namespace SoundCloudPlus.Pages
             try
             {
                 var currentState = sender.CurrentState;
+                Debug.WriteLine("PlayingPage CurrentState changed to: " + currentState);
+
                 if (currentState == MediaPlayerState.Playing)
                 {
                     List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
@@ -84,6 +87,8 @@ namespace SoundCloudPlus.Pages
                                 try
                                 {
                                     PlayListView.SelectedIndex = index;
+                                    _currentTrack = App.SoundCloud.AudioPlayer.CurrentTrack;
+                                    _canvasControl.Invalidate();
                                 }
                                 catch (Exception ex)
                                 {
@@ -196,7 +201,7 @@ namespace SoundCloudPlus.Pages
 
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            _currentTrack = (Track)e.ClickedItem;
+            _currentTrack = _mainPageViewModel.PlayingTrack = (Track)e.ClickedItem;
             App.SoundCloud.AudioPlayer.PlayTrack(App.SoundCloud.AudioPlayer.PlayList, _currentTrack);
             _canvasControl.Invalidate();
         }
