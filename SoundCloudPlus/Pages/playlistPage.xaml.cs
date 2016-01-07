@@ -149,6 +149,19 @@ namespace SoundCloudPlus.Pages
             Screen.MakeResponsive(e, 400, 800, PlaylistGridView);
         }
 
-        
+        private void PlaylistGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                Playlist p = e.ClickedItem as Playlist;
+                App.SoundCloud.AudioPlayer.PlayTrack(p.Tracks, p.Tracks[0]);
+                MainPage.Current.CurrentPlaylist = p;
+                MainPage.Current.Navigate(sender, "playlistview");
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
