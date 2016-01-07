@@ -25,6 +25,7 @@ namespace SoundCloudPlus.Pages
     public sealed partial class PlaylistViewPage : Page
     {
         private PlaylistViewPageViewModel _playlistViewPageViewModel;
+        private MainPageViewModel _mainPageViewModel;
 
         public PlaylistViewPage()
         {
@@ -33,14 +34,11 @@ namespace SoundCloudPlus.Pages
 
         private void PlaylistGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            /*GridView gridView = (GridView)sender;
-            ObservableCollection<PlaylistCollection> playlistCollections = (ObservableCollection<PlaylistCollection>)gridView.ItemsSource;
-            PlaylistCollection p = e.ClickedItem as PlaylistCollection;
-            if (p?.Playlist.Tracks != null)
+            if(_mainPageViewModel != null)
             {
-                List<Track> playList = (from playlistCollection in playlistCollections where playlistCollections. != null select streamCollection.Track).ToList();
-                App.SoundCloud.AudioPlayer.PlayTrack(playList, p.Track);
-            }*/
+                Track t = (Track)e.ClickedItem;
+                App.SoundCloud.AudioPlayer.PlayTrack(_mainPageViewModel.PlayingList, t);
+            }
         }
 
         private void PlaylistGridView_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -73,9 +71,18 @@ namespace SoundCloudPlus.Pages
 
             if (e.NavigationMode != NavigationMode.Back)
             {
-                _playlistViewPageViewModel =
+                try
+                {
+                    _mainPageViewModel = MainPage.Current.MainPageViewModel;
+                    _playlistViewPageViewModel =
                     (PlaylistViewPageViewModel)Resources["PlaylistViewPageViewModel"];
-                _playlistViewPageViewModel.Playlist = (Playlist) MainPage.Current.CurrentPlaylist;
+                    _playlistViewPageViewModel.Playlist = (Playlist)MainPage.Current.CurrentPlaylist;
+                }
+                catch
+                {
+
+                }
+                
             }
             base.OnNavigatedTo(e);
         }
