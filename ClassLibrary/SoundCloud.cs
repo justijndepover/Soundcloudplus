@@ -361,14 +361,7 @@ namespace ClassLibrary
                 c.Add(pO.Collection[i]);
             }
             object nhref = pO.NextHref;
-            if (nhref != null)
-            {
-                _playlistNextHref = nhref.ToString();
-            }
-            else
-            {
-                _playlistNextHref = "";
-            }
+            _playlistNextHref = nhref != null ? nhref.ToString() : "";
             return c;
         }
 

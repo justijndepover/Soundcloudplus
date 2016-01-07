@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.Media.Playback;
@@ -30,6 +31,7 @@ namespace SoundCloudPlus.Pages
         private ScaleEffect _scaleEffect;
         private GaussianBlurEffect _blurEffect;
         private MainPageViewModel _mainPageViewModel;
+        private Track _currentTrack;
         public PlayingPage()
         {
             InitializeComponent();
@@ -49,10 +51,10 @@ namespace SoundCloudPlus.Pages
                 {
                     _mainPageViewModel = MainPage.Current.MainPageViewModel;
                     LayoutRoot.DataContext = _mainPageViewModel;
+                    _currentTrack = _mainPageViewModel.PlayingTrack;
                     _canvasControl = new CanvasControl();
                     _canvasControl.Draw += _canvasControl_Draw;
                     App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
-                    _canvasControl.CreateResources += _canvasControl_CreateResources;
                     ContentPresenter.Content = _canvasControl;
                     CreateWaveForm();
                 }
@@ -70,26 +72,26 @@ namespace SoundCloudPlus.Pages
                 var currentState = sender.CurrentState;
                 if (currentState == MediaPlayerState.Playing)
                 {
-                List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
-                Track track = App.SoundCloud.AudioPlayer.CurrentTrack;
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
-                {
-                    int index;
-                    for (index = 0; index < playlist.Count; index++)
+                    List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
+                    Track track = App.SoundCloud.AudioPlayer.CurrentTrack;
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                     {
-                        if (track.Id.Equals(playlist[index].Id))
+                        int index;
+                        for (index = 0; index < playlist.Count; index++)
                         {
-                            try
+                            if (track.Id.Equals(playlist[index].Id))
                             {
-                                PlayListView.SelectedIndex = index;
-                            }
-                            catch (Exception ex)
-                            {
-                                new ErrorLogProxy(ex.ToString());
+                                try
+                                {
+                                    PlayListView.SelectedIndex = index;
+                                }
+                                catch (Exception ex)
+                                {
+                                    new ErrorLogProxy(ex.ToString());
+                                }
                             }
                         }
-                    }
-                });
+                    });
                 }
             }
             catch (Exception ex)
@@ -113,11 +115,11 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private void _canvasControl_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
+        private void _canvasControl_Draw(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            if (_mainPageViewModel.PlayingTrack.ArtworkUrl != null)
+            if (_currentTrack?.ArtworkUrl != null)
             {
-                var uri = _mainPageViewModel.PlayingTrack.ArtworkUrl.ToString();
+                var uri = _currentTrack.ArtworkUrl.ToString();
                 uri = uri.Replace("large.jpg", "t500x500.jpg");
                 if (!string.IsNullOrWhiteSpace(uri))
                 {
@@ -129,13 +131,18 @@ namespace SoundCloudPlus.Pages
 
                     _imageLoaded = true;
 
-                    sender.Invalidate();
+                    //sender.Invalidate();
                 }
             }
-        }
+            else
+            {_scaleEffect = new ScaleEffect();
+                    _blurEffect = new GaussianBlurEffect();
 
-        private void _canvasControl_Draw(CanvasControl sender, CanvasDrawEventArgs args)
-        {
+                    _image = CanvasBitmap.LoadAsync(sender.Device,
+                        new Uri("ms-appx:///Assets/10SoundBackground.png")).GetAwaiter().GetResult();
+
+                    _imageLoaded = true;
+            }
             if (_imageLoaded)
             {
                 using (var session = args.DrawingSession)
@@ -180,8 +187,9 @@ namespace SoundCloudPlus.Pages
 
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            Track t = (Track)e.ClickedItem;
-            App.SoundCloud.AudioPlayer.PlayTrack(_mainPageViewModel.PlayingList, t);
+            _currentTrack = (Track)e.ClickedItem;
+            App.SoundCloud.AudioPlayer.PlayTrack(App.SoundCloud.AudioPlayer.PlayList, _currentTrack);
+            _canvasControl.Invalidate();
         }
     }
 }
