@@ -153,15 +153,13 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                PlaylistCollection pc = e.ClickedItem as PlaylistCollection;
-                Playlist p = pc.Playlist;
-                App.SoundCloud.AudioPlayer.PlayTrack(p.Tracks, p.Tracks[0]);
-                MainPage.Current.CurrentPlaylist = p;
+                PlaylistCollection p = e.ClickedItem as PlaylistCollection;
+                App.SoundCloud.AudioPlayer.PlayTrack(p?.Playlist.Tracks, p?.Playlist.Tracks[0]);
                 MainPage.Current.Navigate(sender, "playlistview");
             }
-            catch
+            catch(Exception ex)
             {
-
+                new ErrorLogProxy(ex.ToString());
             }
         }
     }

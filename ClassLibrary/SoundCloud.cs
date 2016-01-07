@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -347,9 +348,10 @@ namespace ClassLibrary
                 {
                     if (pO.Collection[i].ArtworkUrl == null)
                     {
-                        int pId = pO.Collection[i].Id;
+                        int pId = pO.Collection[i].Playlist.Id;
                         ObservableCollection<Track> trackList = await GetTracksFromPlaylist(pId);
                         pO.Collection[i].ArtworkUrl = trackList[0].ArtworkUrl.ToString();
+                        pO.Collection[i].Playlist.Tracks = new List<Track>(trackList);
                     }
                 }
                 catch (Exception e)
