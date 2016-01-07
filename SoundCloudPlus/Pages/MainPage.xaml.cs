@@ -25,6 +25,7 @@ namespace SoundCloudPlus.Pages
         public MainPageViewModel MainPageViewModel;
         public string PageTitle;
         readonly DispatcherTimer _playbackTimer = new DispatcherTimer();
+        public Frame MainFrame;
 
         public int UserId { get; set; }
 
@@ -37,6 +38,7 @@ namespace SoundCloudPlus.Pages
             LoadTheme();
             Current = this;
             NavigationCacheMode = NavigationCacheMode.Required;
+            MainFrame = MyFrame;
             UserIdHistory = new List<int>();
             _playbackTimer.Interval = TimeSpan.FromMilliseconds(250);
             _playbackTimer.Tick += _playbackTimer_Tick;

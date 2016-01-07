@@ -37,6 +37,10 @@ namespace SoundCloudPlus.Controls
         }
         public void FillWaveForm(WaveForm wave)
         {
+            Children.Clear();
+            RowDefinitions.Clear();
+            ColumnDefinitions.Clear();
+
             if (wave != null)
             {
                 //create the waveform

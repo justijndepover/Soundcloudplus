@@ -261,7 +261,8 @@ namespace SoundCloudPlus.Pages
             List<int> l = MainPage.Current.UserIdHistory;
             int prevId = l[l.Count - 1];
             MainPage.Current.UserId = prevId;
-            if (Frame.CanGoBack) Frame.GoBack();
+            e.Handled = true;
+            if (MainPage.Current.MainFrame.CanGoBack) Frame.GoBack();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -71,7 +71,8 @@ namespace SoundCloudPlus.Pages
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (Frame.CanGoBack) Frame.GoBack();
+            e.Handled = true;
+            if (MainPage.Current.MainFrame.CanGoBack) Frame.GoBack();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
