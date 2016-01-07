@@ -211,9 +211,9 @@
         <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="GridRowTitle" Width="350" />
-                <ColumnDefinition x:Name="GridRow" Width="52" />
+                <ColumnDefinition x:Name="GridRow" Width="60" />
                 <ColumnDefinition x:Name="GridRowProgress" Width="*" />
-                <ColumnDefinition x:Name="GridRow2" Width="52" />
+                <ColumnDefinition x:Name="GridRow2" Width="60" />
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />
                 <ColumnDefinition Width="52" />

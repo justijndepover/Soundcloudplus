@@ -10,6 +10,10 @@ namespace SoundCloudPlus.Converters
             int val = System.Convert.ToInt32(value);
             DateTime time = new DateTime();
             time = time.AddMilliseconds(val);
+            if(time.Hour != 0)
+            {
+                return time.ToString("hh:mm:ss");
+            }
             return time.ToString("mm:ss");
         }
 
