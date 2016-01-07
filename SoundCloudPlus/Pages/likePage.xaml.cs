@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
 using SoundCloudPlus.ViewModels;
+using System.Collections.Generic;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -132,8 +133,9 @@ namespace SoundCloudPlus.Pages
 
         private void TrackLikesGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            MainPageViewModel a = (MainPageViewModel)DataContext;
+            //MainPageViewModel a = (MainPageViewModel)DataContext;
             Track t = e.ClickedItem as Track;
+            App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { t }, t);
             //a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
         }
 
