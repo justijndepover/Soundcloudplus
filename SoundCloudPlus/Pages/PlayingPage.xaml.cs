@@ -123,6 +123,7 @@ namespace SoundCloudPlus.Pages
                 uri = uri.Replace("large.jpg", "t500x500.jpg");
                 if (!string.IsNullOrWhiteSpace(uri))
                 {
+
                     _scaleEffect = new ScaleEffect();
                     _blurEffect = new GaussianBlurEffect();
 
@@ -163,9 +164,17 @@ namespace SoundCloudPlus.Pages
                     };
 
                     _blurEffect.Source = _scaleEffect;
-                    _blurEffect.BlurAmount = 100;
-
+                    if(Window.Current.Bounds.Width < 720)
+                    {
+                        _blurEffect.BlurAmount = 0;
+                    }
+                    else
+                    {
+                        _blurEffect.BlurAmount = 100;
+                    }
+                    
                     session.DrawImage(_blurEffect, 2.0f, 2.0f);
+
                 }
             }
         }
