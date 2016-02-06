@@ -271,18 +271,24 @@ namespace SoundCloudPlus.Pages
         }
         #endregion
 
-        private void LikeButton_Click(object sender, RoutedEventArgs e)
+        /*private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             b.Style = Application.Current.Resources["BtnLikeActive"] as Style;
 
             TextBlock txb = (TextBlock)b.Content;
             txb.Text = "\ue0a5";
-        }
+        }*/
 
         private void cboGenre_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateStreamExploreCollection();
+        }
+
+        private void LikeButton_Click(System.Object sender, RoutedEventArgs e)
+        {
+            //Button b = sender as Button;
+            //await App.SoundCloud.likeTrack(b.Tag.ToString());
         }
     }
 }

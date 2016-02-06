@@ -176,6 +176,19 @@ namespace ClassLibrary
         {
             return _exploreNextHref;
         }
+
+        public async Task<bool> likeTrack(string trackId)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/users/"+CurrentUser.Id+"/favorites/" + trackId, null, new { client_id = ClientId, app_version = "f4415c5" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            if (apiResponse.Succes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region Categories

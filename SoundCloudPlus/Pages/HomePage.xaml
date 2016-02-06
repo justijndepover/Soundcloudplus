@@ -156,7 +156,7 @@
                                                             <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                         </StackPanel>
                                                     </Button>
-                                                    <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                    <Button Style="{StaticResource BtnProfileMenuFunctionButtons}" Click="LikeButton_Click" Tag="{Binding Id}">
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
                                                             <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>

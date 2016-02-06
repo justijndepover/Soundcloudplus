@@ -55,7 +55,7 @@ namespace ClassLibrary.API
             }
             if (method == HttpMethod.Put)
             {
-                //return await Put(endpoint, queryString, jsonBody);
+                return await Put(endpoint, queryString, body, clientHeaders, useNewBasepoint);
             }
             else if (method == HttpMethod.Delete)
             {
@@ -153,6 +153,56 @@ namespace ClassLibrary.API
                 {
                     apiResponse.Succes = false;
                 }
+                }
+            }
+            return apiResponse;
+        }
+
+        private async Task<ApiResponse> Put(string endpoint, string queryString, object body, object queryHeaders = null, bool useNewBasepoint = true)
+        {
+            var apiResponse = new ApiResponse();
+            string finalEndpoint;
+            if (useNewBasepoint)
+            {
+                finalEndpoint = (NewBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            }
+            else
+            {
+                finalEndpoint = (OldBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            }
+            using (var client = new HttpClient())
+            {
+                using (var multipartFormDataContent = new MultipartFormDataContent())
+                {
+                    if (queryHeaders != null)
+                    {
+                        var properties = queryHeaders.GetType().GetRuntimeProperties();
+                        foreach (var property in properties)
+                        {
+                            var val = property.GetValue(queryHeaders);
+                            client.DefaultRequestHeaders.Add(property.Name, val.ToString());
+                        }
+                    }
+                    if (body != null)
+                    {
+                        var properties = body.GetType().GetRuntimeProperties();
+                        foreach (var property in properties)
+                        {
+                            var value = property.GetValue(body);
+                            multipartFormDataContent.Add(new StringContent(value.ToString()), '"' + property.Name + '"');
+                        }
+                    }
+                   
+                    var response = await client.PutAsync(finalEndpoint, multipartFormDataContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        apiResponse.Succes = true;
+                        apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
+                    }
+                    else
+                    {
+                        apiResponse.Succes = false;
+                    }
                 }
             }
             return apiResponse;
