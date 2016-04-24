@@ -55,13 +55,13 @@ namespace SoundCloudPlus.Pages
                 VersionTextBlock.Text = "Version: "+ version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
                 _settingPageViewModel = (SettingPageViewModel)Resources["SettingViewModel"];
                 _settingPageViewModel.ActiveUser = App.SoundCloud.CurrentUser;
-                bool liveTilesBool = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
+                bool liveTilesBool = (bool) ApplicationSettingsHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
                 if (liveTilesBool)
                 {
                     LivetilesToggle.IsOn = true;
                 }
 
-                bool toastsEnabled = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
+                bool toastsEnabled = (bool) ApplicationSettingsHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
                 if (toastsEnabled)
                 {
                     ToastToggle.IsOn = true;
@@ -101,7 +101,7 @@ namespace SoundCloudPlus.Pages
                 App.RootFrame.RequestedTheme = ElementTheme.Dark;
             }
 
-            ApplicationSettingHelper.SaveRoamingSettingsValue("ElementTheme", App.RootFrame.RequestedTheme);
+            ApplicationSettingsHelper.SaveRoamingSettingsValue("ElementTheme", App.RootFrame.RequestedTheme);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -114,13 +114,13 @@ namespace SoundCloudPlus.Pages
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch.IsOn)
             {
-                ApplicationSettingHelper.SaveRoamingSettingsValue("LiveTilesEnabled", true);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("LiveTilesEnabled", true);
             }
             else
             {
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
                 updater.Clear();
-                ApplicationSettingHelper.SaveRoamingSettingsValue("LiveTilesEnabled", false);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("LiveTilesEnabled", false);
             }
         }
 
@@ -129,11 +129,11 @@ namespace SoundCloudPlus.Pages
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch.IsOn)
             {
-                ApplicationSettingHelper.SaveRoamingSettingsValue("ToastsEnabled", true);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("ToastsEnabled", true);
             }
             else
             {
-                ApplicationSettingHelper.SaveRoamingSettingsValue("ToastsEnabled", false);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("ToastsEnabled", false);
             }
         }
     }

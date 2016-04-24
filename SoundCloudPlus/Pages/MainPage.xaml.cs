@@ -61,12 +61,12 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                App.RootFrame.RequestedTheme = (ElementTheme)ApplicationSettingHelper.ReadRoamingSettingsValue<ElementTheme>("ElementTheme");
+                App.RootFrame.RequestedTheme = (ElementTheme)ApplicationSettingsHelper.ReadRoamingSettingsValue<ElementTheme>("ElementTheme");
             }
             catch (Exception)
             {
                 App.RootFrame.RequestedTheme = ElementTheme.Default;
-                ApplicationSettingHelper.SaveRoamingSettingsValue("ElementTheme", ElementTheme.Default);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("ElementTheme", ElementTheme.Default);
             }
         }
 
@@ -92,7 +92,7 @@ namespace SoundCloudPlus.Pages
             Application.Current.Suspending += ForegroundApp_Suspending;
             Application.Current.Resuming += ForegroundApp_Resuming;
 
-            ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.AppState,
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState,
                 AppState.Active.ToString());
 
             if (e.NavigationMode != NavigationMode.Back)
@@ -104,7 +104,7 @@ namespace SoundCloudPlus.Pages
                         (MainPageViewModel)Resources["MainPageViewModel"];
                     MusicPlayerControl.DataContext = App.SoundCloud.AudioPlayer;
                     MainPageViewModel.PageTitle = "Home";
-                    App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                    //App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     LoadUserAvatar();
                 }
                 catch (Exception ex)
@@ -382,29 +382,33 @@ namespace SoundCloudPlus.Pages
         {
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
             {
-                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
             }
 
             base.OnNavigatedFrom(e);
         }
 
         #region Foreground App Lifecycle Handlers
-        void ForegroundApp_Resuming(object sender, object e)
+        async void ForegroundApp_Resuming(object sender, object e)
         {
-            ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.AppState, AppState.Active.ToString());
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Active.ToString());
 
             // Verify the task is running
             if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
             {
                 // If yes, it's safe to reconnect to media play handlers
                 App.SoundCloud.AudioPlayer.AddMediaPlayerEventHandlers();
-
+                App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                 // Send message to background task that app is resumed so it can start sending notifications again
                 MessageService.SendMessageToBackground(new AppResumedMessage());
 
                 UpdateTransportControls(App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentState);
 
-                //var trackId = GetCurrentTrackIdAfterAppResume();
+                var trackId = App.SoundCloud.AudioPlayer.GetCurrentTrackIdAfterAppResume();
+                if (trackId != 0)
+                {
+                    App.SoundCloud.AudioPlayer.CurrentTrack = await App.SoundCloud.AudioPlayer.GetTrackById(trackId);
+                }
                 //txtCurrentTrack.Text = trackId == null ? string.Empty : playlistView.GetSongById(trackId).Title;
                 //txtCurrentState.Text = CurrentPlayer.CurrentState.ToString();
             }
@@ -417,7 +421,7 @@ namespace SoundCloudPlus.Pages
                 App.SoundCloud.AudioPlayer.RemoveMediaPlayerEventHandlers();
                 MessageService.SendMessageToBackground(new AppSuspendedMessage());
             }
-            ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.AppState, AppState.Suspended.ToString());
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Suspended.ToString());
 
             deferral.Complete();
         }

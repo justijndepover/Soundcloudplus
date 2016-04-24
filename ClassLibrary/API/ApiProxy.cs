@@ -98,8 +98,8 @@ namespace ClassLibrary.API
                     else
                     {
                         apiResponse.Succes = false;
-                        ApplicationSettingHelper.DeleteRoamingSettingsValue("code");
-                        ApplicationSettingHelper.DeleteRoamingSettingsValue("token");
+                        ApplicationSettingsHelper.DeleteRoamingSettingsValue("code");
+                        ApplicationSettingsHelper.DeleteRoamingSettingsValue("token");
                     }
                 }
                 catch (Exception)
@@ -225,8 +225,8 @@ namespace ClassLibrary.API
                 var response = webAuthenticationResult.ResponseData;
                 var code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
                 var token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
-                ApplicationSettingHelper.SaveRoamingSettingsValue("code", code);
-                ApplicationSettingHelper.SaveRoamingSettingsValue("token", token);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("code", code);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("token", token);
                 return true;
             }
             if (webAuthenticationResult.ResponseErrorDetail == 430)

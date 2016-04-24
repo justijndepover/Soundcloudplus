@@ -41,9 +41,9 @@ namespace ClassLibrary
             //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
             if (CurrentUser == null || Code == null || Token == null)
             {
-                CurrentUser = (User) ApplicationSettingHelper.ReadRoamingSettingsValue<User>("currentUser");
-                Code = (string) ApplicationSettingHelper.ReadRoamingSettingsValue<string>("code");
-                Token = (string) ApplicationSettingHelper.ReadRoamingSettingsValue<string>("token");
+                CurrentUser = (User) ApplicationSettingsHelper.ReadRoamingSettingsValue<User>("currentUser");
+                Code = (string) ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("code");
+                Token = (string) ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("token");
                 if (CurrentUser == null && Code == null && Token == null)
                 {
 
@@ -729,11 +729,11 @@ namespace ClassLibrary
         {
             if (await ApiProxy.Authenticate())
             {
-                Token = ApplicationSettingHelper.ReadRoamingSettingsValue<string>("token") as string;
+                Token = ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("token") as string;
                 ApiResponse apiResponse =
                     await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new { oauth_token = Token });
                 CurrentUser = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
-                ApplicationSettingHelper.SaveRoamingSettingsValue("currentUser", CurrentUser);
+                ApplicationSettingsHelper.SaveRoamingSettingsValue("currentUser", CurrentUser);
                 return true;
             }
             return false;

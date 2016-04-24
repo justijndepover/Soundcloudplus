@@ -1,16 +1,31 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.Storage;
 using Newtonsoft.Json;
 
 namespace ClassLibrary.Common
 {
-    public class ApplicationSettingHelper
+    public class ApplicationSettingsHelper
     {
         private static readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
         private static readonly ApplicationDataContainer RoamingSettings = ApplicationData.Current.RoamingSettings;
         /// <summary>
         /// Function to read a setting value and clear it after reading it
         /// </summary>
+        public static object ReadResetSettingsValue(string key)
+        {
+            Debug.WriteLine("Key: " + key);
+            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(key))
+            {
+                return null;
+            }
+            else
+            {
+                var value = ApplicationData.Current.LocalSettings.Values[key];
+                ApplicationData.Current.LocalSettings.Values.Remove(key);
+                return value;
+            }
+        }
         public static object ReadResetSettingsValue<T>(string key)
         {
             if (!LocalSettings.Values.ContainsKey(key))
@@ -86,6 +101,19 @@ namespace ClassLibrary.Common
             else
             {
                 LocalSettings.Values[key] = value;
+            }
+        }
+        public static void SaveSettingsValue(string key, object value)
+        {
+            Debug.WriteLine(key + ":" + (value == null ? "null" : value.ToString()));
+
+            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(key))
+            {
+                ApplicationData.Current.LocalSettings.Values.Add(key, value);
+            }
+            else
+            {
+                ApplicationData.Current.LocalSettings.Values[key] = value;
             }
         }
         public static void DeleteLocalSettingsValue(string key)

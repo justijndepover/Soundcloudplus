@@ -9,6 +9,7 @@
 //
 //*********************************************************
 
+using System;
 using System.Runtime.Serialization;
 
 namespace ClassLibrary.Messages
@@ -20,12 +21,12 @@ namespace ClassLibrary.Messages
         {
         }
 
-        public TrackChangedMessage(int? trackId)
+        public TrackChangedMessage(int trackId)
         {
             TrackId = trackId;
         }
 
         [DataMember]
-        public int? TrackId;
+        public int TrackId;
     }
 }

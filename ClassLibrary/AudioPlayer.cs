@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Media.Playback;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
+using ClassLibrary.API;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
 using ClassLibrary.Models;
+using Newtonsoft.Json;
 using TilesAndNotifications.Services;
 
 namespace ClassLibrary
 {
     public class AudioPlayer : INotifyPropertyChanged
     {
-        private const int RpcSServerUnavailable = -2147023174; // 0x800706BA
-        private readonly AutoResetEvent _backgroundAudioTaskStarted;
+        const int RPC_S_SERVER_UNAVAILABLE = -2147023174; // 0x800706BA
+        private AutoResetEvent backgroundAudioTaskStarted;
+        private bool _isMyBackgroundTaskRunning = false;
         private Track _currentTrack;
         public List<Track> PlayList { get; set; }
         public Track CurrentTrack
@@ -33,40 +38,61 @@ namespace ClassLibrary
         {
             get
             {
-                bool isMyBackgroundTaskRunning;
+                if (_isMyBackgroundTaskRunning)
+                    return true;
 
-                string value =
-                    ApplicationSettingHelper.ReadLocalSettingsValue<string>(ApplicationSettingsConstants.BackgroundTaskState) as string;
+                string value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.BackgroundTaskState) as string;
                 if (value == null)
                 {
                     return false;
                 }
-                try
+                else
                 {
-                    isMyBackgroundTaskRunning = EnumHelper.Parse<BackgroundTaskState>(value) == BackgroundTaskState.Running;
+                    try
+                    {
+                        _isMyBackgroundTaskRunning = EnumHelper.Parse<BackgroundTaskState>(value) == BackgroundTaskState.Running;
+                    }
+                    catch (ArgumentException)
+                    {
+                        _isMyBackgroundTaskRunning = false;
+                    }
+                    return _isMyBackgroundTaskRunning;
                 }
-                catch (ArgumentException)
-                {
-                    isMyBackgroundTaskRunning = false;
-                }
-                return isMyBackgroundTaskRunning;
             }
         }
+        /// <summary>
+        /// You should never cache the MediaPlayer and always call Current. It is possible
+        /// for the background task to go away for several different reasons. When it does
+        /// an RPC_S_SERVER_UNAVAILABLE error is thrown. We need to reset the foreground state
+        /// and restart the background task.
+        /// </summary>
         public MediaPlayer CurrentPlayer
         {
             get
             {
                 MediaPlayer mp = null;
-                try
+                int retryCount = 2;
+
+                while (mp == null && --retryCount >= 0)
                 {
-                    mp = BackgroundMediaPlayer.Current;
-                }
-                catch (Exception ex)
-                {
-                    if (ex.HResult == RpcSServerUnavailable)
+                    try
                     {
-                        ResetAfterLostBackground();
-                        StartBackgroundAudioTask();
+                        mp = BackgroundMediaPlayer.Current;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
+                        {
+                            // The foreground app uses RPC to communicate with the background process.
+                            // If the background process crashes or is killed for any reason RPC_S_SERVER_UNAVAILABLE
+                            // is returned when calling Current. We must restart the task, the while loop will retry to set mp.
+                            ResetAfterLostBackground();
+                            StartBackgroundAudioTask();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
 
@@ -80,13 +106,13 @@ namespace ClassLibrary
         }
         public AudioPlayer()
         {
-            _backgroundAudioTaskStarted = new AutoResetEvent(false);
+            backgroundAudioTaskStarted = new AutoResetEvent(false);
         }
         private void ResetAfterLostBackground()
         {
             BackgroundMediaPlayer.Shutdown();
-            _backgroundAudioTaskStarted.Reset();
-            ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Unknown.ToString());
+            backgroundAudioTaskStarted.Reset();
+            ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Unknown.ToString());
 
             try
             {
@@ -94,34 +120,59 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                if (ex.HResult == RpcSServerUnavailable)
+                if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
                 {
                     throw new Exception("Failed to get a MediaPlayer instance.");
                 }
             }
         }
+
         public void StartBackgroundAudioTask()
         {
             AddMediaPlayerEventHandlers();
 
             var startResult = CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
-                MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
-                MessageService.SendMessageToBackground(new StartPlaybackMessage());
-                //bool result = _backgroundAudioTaskStarted.WaitOne(10000);
-                ////Send message to initiate playback
-                //if (result)
-                //{
-                //    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
-                //    MessageService.SendMessageToBackground(new StartPlaybackMessage());
-                //}
-                //else
-                //{
-                //    throw new Exception("Background Audio Task didn't start in expected time");
-                //}
+                bool result = backgroundAudioTaskStarted.WaitOne(10000);
+                //Send message to initiate playback
+                if (result)
+                {
+                    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
+                    MessageService.SendMessageToBackground(new StartPlaybackMessage());
+                }
+                else
+                {
+                    throw new Exception("Background Audio Task didn't start in expected time");
+                }
             });
             startResult.Completed = BackgroundTaskInitializationCompleted;
         }
+        public void AddMediaPlayerEventHandlers()
+        {
+            CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+            try
+            {
+                BackgroundMediaPlayer.MessageReceivedFromBackground += BackgroundMediaPlayer_MessageReceivedFromBackground;
+            }
+            catch (Exception ex)
+            {
+                if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
+                {
+                    // Internally MessageReceivedFromBackground calls Current which can throw RPC_S_SERVER_UNAVAILABLE
+                    ResetAfterLostBackground();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        private void CurrentPlayer_CurrentStateChanged(MediaPlayer sender, object args)
+        {
+            
+        }
+
         public void RemoveMediaPlayerEventHandlers()
         {
             try
@@ -130,28 +181,13 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                if (ex.HResult == RpcSServerUnavailable)
+                if (ex.HResult == RPC_S_SERVER_UNAVAILABLE)
                 {
                     // do nothing
                 }
                 else
                 {
                     throw;
-                }
-            }
-        }
-        public void AddMediaPlayerEventHandlers()
-        {
-            try
-            {
-                BackgroundMediaPlayer.MessageReceivedFromBackground += BackgroundMediaPlayer_MessageReceivedFromBackground;
-            }
-            catch (Exception ex)
-            {
-                if (ex.HResult == RpcSServerUnavailable)
-                {
-                    // Internally MessageReceivedFromBackground calls Current which can throw RPC_S_SERVER_UNAVAILABLE
-                    ResetAfterLostBackground();
                 }
             }
         }
@@ -173,16 +209,12 @@ namespace ClassLibrary
             {
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                 {
-                    if (!trackChangedMessage.TrackId.HasValue)
+                    if (trackChangedMessage.TrackId == 0)
                     {
                         return;
                     }
-                    
-                    CurrentTrack = PlayList.Where(track =>
-                    {
-                        Debug.Assert(track.Id != null, "track.Id != null");
-                        return track.Id.Value.Equals(trackChangedMessage.TrackId.Value);
-                    }).FirstOrDefault();
+
+                    CurrentTrack = AsyncHelper.RunSync(() => GetTrackById(trackChangedMessage.TrackId));
                 });
                 return;
             }
@@ -191,7 +223,7 @@ namespace ClassLibrary
             if (MessageService.TryParseMessage(e.Data, out backgroundAudioTaskStartedMessage))
             {
                 Debug.WriteLine("BackgroundAudioTask started");
-                _backgroundAudioTaskStarted.Set();
+                backgroundAudioTaskStarted.Set();
             }
         }
         void UpdateLiveTile(Track t)
@@ -230,25 +262,23 @@ namespace ClassLibrary
 
         public void PlayTrack(List<Track> playList, Track track)
         {
-            bool liveTile = (bool) ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
+            bool liveTile = (bool) ApplicationSettingsHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
             if (liveTile)
             {
                 UpdateLiveTile(track);
             }
-            bool toast = (bool)ApplicationSettingHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
+            bool toast = (bool)ApplicationSettingsHelper.ReadRoamingSettingsValue<bool>("ToastsEnabled");
             if (toast)
             {
                 UpdateToastMessage(track);
             }
             Debug.WriteLine("Clicked item from App: " + track.Id);
-
-            Debug.WriteLine(CurrentPlayer.CurrentState);
             // Start the background task if it wasn't running
             if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
                 // First update the persisted start track
-                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.TrackId, track.Id);
-                ApplicationSettingHelper.SaveLocalSettingsValue(ApplicationSettingsConstants.Position, new TimeSpan().ToString());
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, track.Id);
+                ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.Position, new TimeSpan().ToString());
 
                 StartBackgroundAudioTask();
             }
@@ -259,7 +289,7 @@ namespace ClassLibrary
                 {
                     MessageService.SendMessageToBackground(new UpdatePlaylistMessage(playList));
                 }
-                MessageService.SendMessageToBackground(new TrackChangedMessage(track.Id));
+                MessageService.SendMessageToBackground(new TrackChangedMessage(track.Id.Value));
             }
             PlayList = playList;
 
@@ -273,6 +303,38 @@ namespace ClassLibrary
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public int GetCurrentTrackIdAfterAppResume()
+        {
+            object value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.TrackId);
+            if (value != null)
+                return (int)value;
+            return 0;
+        }
+
+        public async Task<Track> GetTrackById(int trackId)
+        {
+            if (trackId == 0)
+            {
+                throw new Exception();
+            }
+            foreach (var track in PlayList)
+            {
+                if (track.Id == trackId)
+                {
+                    return track;
+                }
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync("https://api.soundcloud.com/tracks/" + trackId + "?client_id=776ca412db7b101b1602c6a67b1a0579");
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Track>(await response.Content.ReadAsStringAsync());
+                }
+                return new Track();
+            }
         }
     }
 }
