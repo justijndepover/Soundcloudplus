@@ -21,12 +21,12 @@ namespace ClassLibrary.Messages
         {
         }
 
-        public TrackChangedMessage(int trackId)
+        public TrackChangedMessage(string trackId)
         {
             TrackId = trackId;
         }
 
         [DataMember]
-        public int TrackId;
+        public string TrackId;
     }
 }

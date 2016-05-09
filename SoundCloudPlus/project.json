@@ -4,8 +4,6 @@
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
-    "MvvmLight": "5.2.0",
-    "PostSharp": "4.2.25",
     "Win2D.uwp": "1.17.0"
   },
   "frameworks": {

@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace ClassLibrary.Models
 {
     public class Track
     {
         [JsonProperty("id")]
-        public int? Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("created_at")]
         public string CreatedAt { get; set; }
         [JsonProperty("duration")]
@@ -91,5 +92,6 @@ namespace ClassLibrary.Models
         public User CreatedWith { get; set; }
         [JsonProperty("attachments_uri")]
         public string AttachmentsUri { get; set; }
+        public Uri PlaybackUri { get; set; }
     }
 }

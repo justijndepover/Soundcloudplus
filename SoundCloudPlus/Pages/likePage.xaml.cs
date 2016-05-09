@@ -135,7 +135,7 @@ namespace SoundCloudPlus.Pages
         {
             //MainPageViewModel a = (MainPageViewModel)DataContext;
             Track t = e.ClickedItem as Track;
-            App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { t }, t);
+            //MainPage.Current.PlayTrack(new List<Track> { t }, t);
             //a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
         }
 

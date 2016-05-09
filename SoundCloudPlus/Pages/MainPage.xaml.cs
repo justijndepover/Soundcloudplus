@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.Devices.Midi;
+using Windows.Foundation;
 using Windows.Media.Playback;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
@@ -54,7 +59,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
                 new ErrorLogProxy(ex.ToString());
-            }         
+            }
         }
 
         private void LoadTheme()
@@ -72,9 +77,9 @@ namespace SoundCloudPlus.Pages
 
         private void _playbackTimer_Tick(object sender, object e)
         {
-            var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
+            var position = App.AudioPlayer.CurrentPlayer.Position;
             PlayerPosition.Text = position.Minutes.ToString("00") + ":" + position.Seconds.ToString("00");
-            PlayerProgressBar.Maximum = App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
+            PlayerProgressBar.Maximum = App.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
             try
             {
                 PlayerProgressBar.Value = position.TotalMilliseconds;
@@ -102,9 +107,9 @@ namespace SoundCloudPlus.Pages
                     MyFrame.Navigate(typeof(HomePage));
                     MainPageViewModel =
                         (MainPageViewModel)Resources["MainPageViewModel"];
-                    MusicPlayerControl.DataContext = App.SoundCloud.AudioPlayer;
+                    MusicPlayerControl.DataContext = App.AudioPlayer;
                     MainPageViewModel.PageTitle = "Home";
-                    //App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                    //App.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     LoadUserAvatar();
                 }
                 catch (Exception ex)
@@ -114,16 +119,6 @@ namespace SoundCloudPlus.Pages
             }
             base.OnNavigatedTo(e);
         }
-
-        private async void CurrentPlayer_CurrentStateChanged(MediaPlayer sender, object args)
-        {
-            var currentState = sender.CurrentState; // cache outside of completion or you might get a different value
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
-            {
-                UpdateTransportControls(currentState);
-            });
-        }
-
         private void NavButton_Click(object sender, RoutedEventArgs e)
         {
             SplitViewMenu.IsPaneOpen = !SplitViewMenu.IsPaneOpen;
@@ -380,8 +375,9 @@ namespace SoundCloudPlus.Pages
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
+            if (App.AudioPlayer.IsMyBackgroundTaskRunning)
             {
+                App.AudioPlayer.RemoveMediaPlayerEventHandlers();
                 ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.BackgroundTaskState, BackgroundTaskState.Running.ToString());
             }
 
@@ -394,31 +390,29 @@ namespace SoundCloudPlus.Pages
             ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Active.ToString());
 
             // Verify the task is running
-            if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
+            if (App.AudioPlayer.IsMyBackgroundTaskRunning)
             {
                 // If yes, it's safe to reconnect to media play handlers
-                App.SoundCloud.AudioPlayer.AddMediaPlayerEventHandlers();
-                App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                App.AudioPlayer.AddMediaPlayerEventHandlers();
                 // Send message to background task that app is resumed so it can start sending notifications again
                 MessageService.SendMessageToBackground(new AppResumedMessage());
 
-                UpdateTransportControls(App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentState);
+                UpdateTransportControls(App.AudioPlayer.CurrentPlayer.CurrentState);
 
-                var trackId = App.SoundCloud.AudioPlayer.GetCurrentTrackIdAfterAppResume();
-                if (trackId != 0)
+                var trackId = App.AudioPlayer.GetCurrentTrackIdAfterAppResume();
+                if (trackId != null)
                 {
-                    App.SoundCloud.AudioPlayer.CurrentTrack = await App.SoundCloud.AudioPlayer.GetTrackById(trackId);
+                    App.AudioPlayer.CurrentTrack = await App.AudioPlayer.GetTrackById(trackId);
                 }
-                //txtCurrentTrack.Text = trackId == null ? string.Empty : playlistView.GetSongById(trackId).Title;
-                //txtCurrentState.Text = CurrentPlayer.CurrentState.ToString();
+                MainPageViewModel.PlayingTrack = trackId == null ? new Track() : await App.AudioPlayer.GetTrackById(trackId);
             }
         }
         void ForegroundApp_Suspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
+            if (App.AudioPlayer.IsMyBackgroundTaskRunning)
             {
-                App.SoundCloud.AudioPlayer.RemoveMediaPlayerEventHandlers();
+                App.AudioPlayer.RemoveMediaPlayerEventHandlers();
                 MessageService.SendMessageToBackground(new AppSuspendedMessage());
             }
             ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState, AppState.Suspended.ToString());
@@ -437,24 +431,24 @@ namespace SoundCloudPlus.Pages
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Play button pressed from App");
-            if (App.SoundCloud.AudioPlayer.IsMyBackgroundTaskRunning)
+            if (App.AudioPlayer.IsMyBackgroundTaskRunning)
             {
-                if (MediaPlayerState.Playing == App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentState)
+                if (MediaPlayerState.Playing == App.AudioPlayer.CurrentPlayer.CurrentState)
                 {
-                    App.SoundCloud.AudioPlayer.CurrentPlayer.Pause();
+                    App.AudioPlayer.CurrentPlayer.Pause();
                 }
-                else if (MediaPlayerState.Paused == App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentState)
+                else if (MediaPlayerState.Paused == App.AudioPlayer.CurrentPlayer.CurrentState)
                 {
-                    App.SoundCloud.AudioPlayer.CurrentPlayer.Play();
+                    App.AudioPlayer.CurrentPlayer.Play();
                 }
-                else if (MediaPlayerState.Closed == App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentState)
+                else if (MediaPlayerState.Closed == App.AudioPlayer.CurrentPlayer.CurrentState)
                 {
-                    App.SoundCloud.AudioPlayer.StartBackgroundAudioTask();
+                    App.AudioPlayer.StartBackgroundAudioTask();
                 }
             }
             else
             {
-                App.SoundCloud.AudioPlayer.StartBackgroundAudioTask();
+                App.AudioPlayer.StartBackgroundAudioTask();
             }
         }
         private void nextButton_Click(object sender, RoutedEventArgs e)
@@ -467,10 +461,10 @@ namespace SoundCloudPlus.Pages
             //nextButton.IsEnabled = false;
         }
 
-        private void UpdateTransportControls(MediaPlayerState state)
+        public void UpdateTransportControls(MediaPlayerState state)
         {
-            MainPageViewModel.PlayingTrack = App.SoundCloud.AudioPlayer.CurrentTrack;
-            MainPageViewModel.PlayingList = App.SoundCloud.AudioPlayer.PlayList;
+            MainPageViewModel.PlayingTrack = App.AudioPlayer.CurrentTrack;
+            MainPageViewModel.PlayingList = App.AudioPlayer.PlayList;
 
             if (state == MediaPlayerState.Playing)
             {
@@ -522,7 +516,7 @@ namespace SoundCloudPlus.Pages
             if (e.NewValue > (e.OldValue + 5000) || e.NewValue < (e.OldValue - 5000))
             {
                 TimeSpan newPos = TimeSpan.FromMilliseconds(e.NewValue);
-                App.SoundCloud.AudioPlayer.CurrentPlayer.Position = newPos;
+                App.AudioPlayer.CurrentPlayer.Position = newPos;
             }
         }
     }

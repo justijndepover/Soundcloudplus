@@ -7,12 +7,12 @@ namespace ClassLibrary.Messages
     [DataContract]
     public class UpdatePlaylistMessage
     {
-        public UpdatePlaylistMessage(List<Track> playList)
+        public UpdatePlaylistMessage(IEnumerable<Track> playList)
         {
             PlayList = playList;
         }
 
         [DataMember]
-        public List<Track> PlayList;
+        public IEnumerable<Track> PlayList;
     }
 }

@@ -22,18 +22,18 @@ namespace ClassLibrary
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
         public User CurrentUser { get; set; }
-        private AudioPlayer _audioPlayer;
-        public AudioPlayer AudioPlayer
-        {
-            get { return _audioPlayer; }
-            set { _audioPlayer = value; OnPropertyChanged(nameof(AudioPlayer)); }
-        }
+        //private AudioPlayer _audioPlayer;
+        //public AudioPlayer AudioPlayer
+        //{
+        //    get { return _audioPlayer; }
+        //    set { _audioPlayer = value; OnPropertyChanged(nameof(AudioPlayer)); }
+        //}
 
         public SoundCloud()
         {
             ApiProxy = new ApiProxy();
             AsyncHelper.RunSync(IsAuthenticated);
-            AudioPlayer = new AudioPlayer();
+            //AudioPlayer = new AudioPlayer();
         }
 
         public async Task<bool> IsAuthenticated()

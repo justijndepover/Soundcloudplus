@@ -103,6 +103,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AudioPlayer.cs" />
     <Compile Include="Converters\ActivityTypeConverter.cs" />
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <Content Include="Assets\10SoundBackground.png" />
     <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\Media\Coldplay_StrawberrySwing_WMALossless.wma" />
     <Content Include="Assets\Square310x310Logo.scale-200.png" />
     <Content Include="Assets\Square71x71Logo.scale-200.png" />
     <None Include="Package.StoreAssociation.xml" />
@@ -238,11 +240,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundTasks\BackgroundTasks.csproj">
+      <Project>{a4b44c80-df37-4430-b8c2-159450457e2d}</Project>
+      <Name>BackgroundTasks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
       <Project>{21d8dd89-f4df-4890-b414-6dfdb15424e9}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

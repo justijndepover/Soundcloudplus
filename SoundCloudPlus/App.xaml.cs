@@ -19,6 +19,7 @@ namespace SoundCloudPlus
     sealed partial class App
     {
         public static SoundCloud SoundCloud { get; set; }
+        public static AudioPlayer AudioPlayer { get; set; }
         public static ContinuationManager ContinuationManager { get; private set; }
         public static Frame RootFrame { get; set; }
         /// <summary>
@@ -54,6 +55,7 @@ namespace SoundCloudPlus
 #endif
 
             SoundCloud = new SoundCloud();
+            AudioPlayer = new AudioPlayer();
 
             CreateRootFrame();
 

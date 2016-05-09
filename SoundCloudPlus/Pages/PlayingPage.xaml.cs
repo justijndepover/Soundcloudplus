@@ -56,7 +56,7 @@ namespace SoundCloudPlus.Pages
                     _currentTrack = _mainPageViewModel.PlayingTrack;
                     _canvasControl = new CanvasControl();
                     _canvasControl.Draw += _canvasControl_Draw;
-                    App.SoundCloud.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                    //MainPage.Current.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     ContentPresenter.Content = _canvasControl;
                     CreateWaveForm();
                 }
@@ -76,8 +76,8 @@ namespace SoundCloudPlus.Pages
 
                 if (currentState == MediaPlayerState.Playing)
                 {
-                    List<Track> playlist = App.SoundCloud.AudioPlayer.PlayList;
-                    Track track = App.SoundCloud.AudioPlayer.CurrentTrack;
+                    List<Track> playlist = MainPage.Current.MainPageViewModel.PlayingList;
+                    Track track = MainPage.Current.MainPageViewModel.PlayingTrack;
                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                     {
                         int index;
@@ -88,7 +88,7 @@ namespace SoundCloudPlus.Pages
                                 try
                                 {
                                     PlayListView.SelectedIndex = index;
-                                    _currentTrack = App.SoundCloud.AudioPlayer.CurrentTrack;
+                                    _currentTrack = MainPage.Current.MainPageViewModel.PlayingTrack;
                                     _canvasControl.Invalidate();
                                 }
                                 catch (Exception ex)
@@ -211,7 +211,7 @@ namespace SoundCloudPlus.Pages
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
             _currentTrack = _mainPageViewModel.PlayingTrack = (Track)e.ClickedItem;
-            App.SoundCloud.AudioPlayer.PlayTrack(App.SoundCloud.AudioPlayer.PlayList, _currentTrack);
+            //MainPage.Current.PlayTrack(MainPage.Current.MainPageViewModel.PlayingList, _currentTrack);
             _canvasControl.Invalidate();
         }
     }

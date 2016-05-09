@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using ClassLibrary.Common;
 using ClassLibrary.Models;
+using SoundCloudPlus.Pages;
 
 namespace SoundCloudPlus.Controls
 {
@@ -23,8 +24,8 @@ namespace SoundCloudPlus.Controls
         }
         private void _playbackTimer_Tick(object sender, object e)
         {
-            var position = App.SoundCloud.AudioPlayer.CurrentPlayer.Position;
-            _slider.Maximum = App.SoundCloud.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
+            var position = App.AudioPlayer.CurrentPlayer.Position;
+            _slider.Maximum = App.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
             try
             {
                 _slider.Value = position.TotalMilliseconds;
@@ -110,7 +111,7 @@ namespace SoundCloudPlus.Controls
             if (e.NewValue > e.OldValue + 5000 || e.NewValue < e.OldValue - 5000)
             {
                 TimeSpan newPos = TimeSpan.FromMilliseconds(e.NewValue);
-                App.SoundCloud.AudioPlayer.CurrentPlayer.Position = newPos;
+                //MainPage.Current.CurrentPlayer.Position = newPos;
             }
         }
     }

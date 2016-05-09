@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="API\ApiProxy.cs" />
     <Compile Include="API\ApiResponse.cs" />
-    <Compile Include="AudioPlayer.cs" />
     <Compile Include="Common\ApplicationSettingsConstants.cs" />
     <Compile Include="Common\ApplicationSettingsHelper.cs" />
     <Compile Include="Common\AppState.cs" />
@@ -138,6 +137,7 @@
     <Compile Include="Common\TitleBar.cs" />
     <Compile Include="Models\PrimaryTile.cs" />
     <Compile Include="Models\RepostCollection.cs" />
+    <Compile Include="Models\SongModel.cs" />
     <Compile Include="Models\StreamCollection.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\TrackObject.cs" />

@@ -194,24 +194,24 @@ namespace SoundCloudPlus.Pages
                 if (s == null)
                 {
                     Track t = e.ClickedItem as Track;
-                    App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { t }, t);
+                    App.AudioPlayer.PlayTrack(new List<Track> { t }, t);
                 }
                 if (s?.Track != null)
                 {
-                    //List<Track> playList = (from streamCollection in streamCollections where streamCollection.Track != null select streamCollection.Track).ToList();
-                    App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { s.Track }, s.Track);
+                    List<Track> playList = (from streamCollection in _newStreamCollection where streamCollection.Track != null select streamCollection.Track).ToList();
+                    App.AudioPlayer.PlayTrack(new List<Track> { s.Track }, s.Track);
                 }
                 else if (s?.Playlist != null)
                 {
 
-                    App.SoundCloud.AudioPlayer.PlayTrack(new List<Track>(await App.SoundCloud.GetTracksFromPlaylist(s.Playlist.Id)), s.Playlist.Tracks[0]);
-                    //MainPage.Current.Navigate(sender, "playlistview");
+                    App.AudioPlayer.PlayTrack(new List<Track>(await App.SoundCloud.GetTracksFromPlaylist(s.Playlist.Id)), s.Playlist.Tracks[0]);
+                    MainPage.Current.Navigate(sender, "playlistview");
                 }
             }
             catch (InvalidCastException)
             {
                 Track t = e.ClickedItem as Track;
-                App.SoundCloud.AudioPlayer.PlayTrack(new List<Track> { t }, t);
+                //MainPage.Current.PlayTrack(new List<Track> { t }, t);
             }
         }
 
