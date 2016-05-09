@@ -209,9 +209,10 @@ namespace SoundCloudPlus.Pages
             {
                 Debug.WriteLine(e);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -229,9 +230,10 @@ namespace SoundCloudPlus.Pages
             {
                 Debug.WriteLine(e);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -249,9 +251,10 @@ namespace SoundCloudPlus.Pages
             {
                 Debug.WriteLine(e);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
         #endregion
@@ -320,7 +323,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 

@@ -66,7 +66,7 @@ namespace SoundCloudPlus.Pages
 
         private void SearchGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //MainPage.Current.PlayTrack(new List<Track>((ObservableCollection<Track>) SearchGridView.ItemsSource), e.ClickedItem as Track);
+            App.AudioPlayer.PlayTrack(new List<Track>((ObservableCollection<Track>) SearchGridView.ItemsSource), e.ClickedItem as Track);
         }
     }
 }

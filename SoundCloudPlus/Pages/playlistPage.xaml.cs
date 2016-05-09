@@ -123,9 +123,10 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _playlistViewModel.PlaylistCollection = await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, limit);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -155,12 +156,13 @@ namespace SoundCloudPlus.Pages
             try
             {
                 PlaylistCollection p = e.ClickedItem as PlaylistCollection;
-                //MainPage.Current.PlayTrack(p?.Playlist.Tracks, p?.Playlist.Tracks[0]);
+                App.AudioPlayer.PlayTrack(p?.Playlist.Tracks, p?.Playlist.Tracks[0]);
                 //MainPage.Current.Navigate(sender, "playlistview"); I COMMENTED THIS OUT BECAUSE THE PAGE WAS BLANK
             }
             catch(Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
     }

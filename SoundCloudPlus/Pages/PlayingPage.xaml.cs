@@ -62,7 +62,8 @@ namespace SoundCloudPlus.Pages
                 }
                 catch (Exception ex)
                 {
-                    new ErrorLogProxy(ex.ToString());
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
                 }
             }
         }
@@ -93,7 +94,8 @@ namespace SoundCloudPlus.Pages
                                 }
                                 catch (Exception ex)
                                 {
-                                    new ErrorLogProxy(ex.ToString());
+                                    ErrorLogProxy.LogError(ex.ToString());
+                                    ErrorLogProxy.NotifyError(ex.ToString());
                                 }
                             }
                         }
@@ -102,7 +104,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -211,7 +214,7 @@ namespace SoundCloudPlus.Pages
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
             _currentTrack = _mainPageViewModel.PlayingTrack = (Track)e.ClickedItem;
-            //MainPage.Current.PlayTrack(MainPage.Current.MainPageViewModel.PlayingList, _currentTrack);
+            App.AudioPlayer.PlayTrack(MainPage.Current.MainPageViewModel.PlayingList, _currentTrack);
             _canvasControl.Invalidate();
         }
     }

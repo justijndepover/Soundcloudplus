@@ -106,7 +106,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
 
             if (e.NavigationMode != NavigationMode.Back)
@@ -130,7 +131,8 @@ namespace SoundCloudPlus.Pages
                 }
                 catch (Exception ex)
                 {
-                    new ErrorLogProxy(ex.ToString());
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
                 }
 
                 UpdateStreamExploreCollection();
@@ -173,7 +175,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                //ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -211,7 +214,7 @@ namespace SoundCloudPlus.Pages
             catch (InvalidCastException)
             {
                 Track t = e.ClickedItem as Track;
-                //MainPage.Current.PlayTrack(new List<Track> { t }, t);
+                App.AudioPlayer.PlayTrack(new List<Track> { t }, t);
             }
         }
 

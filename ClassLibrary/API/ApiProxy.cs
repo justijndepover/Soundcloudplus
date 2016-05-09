@@ -241,7 +241,8 @@ namespace ClassLibrary.API
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
                 return false;
             }
         }

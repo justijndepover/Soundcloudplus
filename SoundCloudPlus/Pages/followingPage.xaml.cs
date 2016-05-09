@@ -91,9 +91,10 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 200, 400, 200, 400);
                 _followingPageViewModel.FollowingsCollection = await App.SoundCloud.GetFollowings(id, limit);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 

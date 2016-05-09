@@ -58,7 +58,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -87,12 +88,13 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
                 Debug.WriteLine("Error: Progressbar value is NaN");
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             Application.Current.Suspending += ForegroundApp_Suspending;
             Application.Current.Resuming += ForegroundApp_Resuming;
@@ -114,7 +116,8 @@ namespace SoundCloudPlus.Pages
                 }
                 catch (Exception ex)
                 {
-                    new ErrorLogProxy(ex.ToString());
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
                 }
             }
             base.OnNavigatedTo(e);
@@ -320,8 +323,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -335,7 +338,8 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
                 return;
             }
 
@@ -397,14 +401,14 @@ namespace SoundCloudPlus.Pages
                 // Send message to background task that app is resumed so it can start sending notifications again
                 MessageService.SendMessageToBackground(new AppResumedMessage());
 
-                UpdateTransportControls(App.AudioPlayer.CurrentPlayer.CurrentState);
-
                 var trackId = App.AudioPlayer.GetCurrentTrackIdAfterAppResume();
                 if (trackId != null)
                 {
-                    App.AudioPlayer.CurrentTrack = await App.AudioPlayer.GetTrackById(trackId);
+                    App.AudioPlayer.CurrentTrack = MainPageViewModel.PlayingTrack = await App.AudioPlayer.GetTrackById(trackId);
                 }
-                MainPageViewModel.PlayingTrack = trackId == null ? new Track() : await App.AudioPlayer.GetTrackById(trackId);
+
+                UpdateTransportControls(App.AudioPlayer.CurrentPlayer.CurrentState);
+
             }
         }
         void ForegroundApp_Suspending(object sender, SuspendingEventArgs e)
@@ -464,7 +468,7 @@ namespace SoundCloudPlus.Pages
         public void UpdateTransportControls(MediaPlayerState state)
         {
             MainPageViewModel.PlayingTrack = App.AudioPlayer.CurrentTrack;
-            MainPageViewModel.PlayingList = App.AudioPlayer.PlayList;
+            //MainPageViewModel.PlayingList = App.AudioPlayer.PlayList;
 
             if (state == MediaPlayerState.Playing)
             {

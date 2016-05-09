@@ -37,7 +37,7 @@ namespace SoundCloudPlus.Pages
             if(_mainPageViewModel != null)
             {
                 Track t = (Track)e.ClickedItem;
-                //MainPage.Current.PlayTrack(_mainPageViewModel.PlayingList, t);
+                App.AudioPlayer.PlayTrack(_mainPageViewModel.PlayingList, t);
             }
         }
 

@@ -56,10 +56,11 @@ namespace ClassLibrary.Common
                 {
                     ret = await task();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    synch.InnerException = e;
-                    new ErrorLogProxy(e.ToString());
+                    synch.InnerException = ex;
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
                     throw;
                 }
                 finally

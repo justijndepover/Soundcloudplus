@@ -120,9 +120,10 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _likePageViewModel.TrackLikesCollection = await App.SoundCloud.GetLikes(App.SoundCloud.CurrentUser.Id, limit);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Application.Current.Exit();
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -135,7 +136,7 @@ namespace SoundCloudPlus.Pages
         {
             //MainPageViewModel a = (MainPageViewModel)DataContext;
             Track t = e.ClickedItem as Track;
-            //MainPage.Current.PlayTrack(new List<Track> { t }, t);
+            App.AudioPlayer.PlayTrack(new List<Track> { t }, t);
             //a.PlayingTrack = await App.SoundCloud.GetMusicFile(t.Id.Value);
         }
 

@@ -32,8 +32,8 @@ namespace SoundCloudPlus.Controls
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
-                Debug.WriteLine("Error: Progressbar value is NaN");
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
         public void FillWaveForm(WaveForm wave)

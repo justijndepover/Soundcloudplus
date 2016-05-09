@@ -173,7 +173,7 @@ namespace SoundCloudPlus
         private async void CurrentPlayer_CurrentStateChanged(MediaPlayer sender, object args)
         {
             var currentState = sender.CurrentState; // cache outside of completion or you might get a different value
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 MainPage.Current.UpdateTransportControls(currentState);
             });
@@ -242,7 +242,8 @@ namespace SoundCloudPlus
             }
             catch (Exception ex)
             {
-                new ErrorLogProxy(ex.ToString());
+                ErrorLogProxy.LogError(ex.ToString());
+                ErrorLogProxy.NotifyError(ex.ToString());
             }
         }
 
@@ -336,12 +337,21 @@ namespace SoundCloudPlus
             }
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync("https://api.soundcloud.com/tracks/" + trackId + "?client_id=776ca412db7b101b1602c6a67b1a0579");
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    return JsonConvert.DeserializeObject<Track>(await response.Content.ReadAsStringAsync());
+                    HttpResponseMessage response = await client.GetAsync("https://api.soundcloud.com/tracks/" + trackId + "?client_id=776ca412db7b101b1602c6a67b1a0579");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return JsonConvert.DeserializeObject<Track>(await response.Content.ReadAsStringAsync());
+                    }
+                    return new Track();
                 }
-                return new Track();
+                catch (Exception ex)
+                {
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
+                    return new Track();
+                }
             }
         }
     }

@@ -507,7 +507,7 @@ namespace BackgroundTasks
             }
 
             // Don't auto start
-            BackgroundMediaPlayer.Current.AutoPlay = false;
+            BackgroundMediaPlayer.Current.AutoPlay = true;
 
             // Assign the list to the player
             BackgroundMediaPlayer.Current.Source = playbackList;
@@ -542,9 +542,8 @@ namespace BackgroundTasks
                         }
                         catch (Exception ex)
                         {
-                            var a = new ErrorLogProxy(ex.ToString());
-                            Debug.WriteLine(a);
-                            return null;
+                            ErrorLogProxy.LogError(ex.ToString());
+                            ErrorLogProxy.NotifyError(ex.ToString());return null;
                         }
                     }
                     return new Uri(mp3);

@@ -52,15 +52,22 @@ namespace ClassLibrary
                 {
                     if (CurrentUser == null)
                     {
-                        new ErrorLogProxy("CurrentUser is null");
+                        ErrorLogProxy.LogError("CurrentUser is null");
+                        ErrorLogProxy.NotifyError("CurrentUser is null");
                     }
                     if (Code == null)
                     {
-                        new ErrorLogProxy("Code == null");
+                        ErrorLogProxy.LogError("Code is null");
+#if DEBUG
+                        //ErrorLogProxy.NotifyError("Code is null");
+#endif
                     }
                     if (Token == null)
                     {
-                        new ErrorLogProxy("Token == null");
+                        ErrorLogProxy.LogError("Token is null");
+#if DEBUG
+                        //ErrorLogProxy.NotifyError("Token is null");
+#endif
                     }
                 }
             }
@@ -142,7 +149,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
@@ -164,7 +172,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
@@ -241,8 +250,8 @@ namespace ClassLibrary
                 }
                 catch (Exception ex)
                 {
-                    new ErrorLogProxy(ex.ToString());
-                    Debug.WriteLine(ex);
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
                 }
             }
             //return pO;
@@ -333,7 +342,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
             }
@@ -573,7 +583,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _followerNextHref = apiResponse.Data["next_href"];
@@ -595,7 +606,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _followerNextHref = apiResponse.Data["next_href"];
@@ -624,7 +636,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _followingNextHref = apiResponse.Data["next_href"];
@@ -646,7 +659,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _followingNextHref = apiResponse.Data["next_href"];
@@ -682,7 +696,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _likesNextHref = apiResponse.Data["next_href"];
@@ -710,7 +725,8 @@ namespace ClassLibrary
                     }
                     catch (Exception ex)
                     {
-                        new ErrorLogProxy(ex.ToString());
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyError(ex.ToString());
                     }
                 }
                 _likesNextHref = apiResponse.Data["next_href"];
