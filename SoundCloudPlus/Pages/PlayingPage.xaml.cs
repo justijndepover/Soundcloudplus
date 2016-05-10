@@ -6,6 +6,7 @@ using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.Media.Playback;
+using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -33,6 +34,7 @@ namespace SoundCloudPlus.Pages
         private GaussianBlurEffect _blurEffect;
         private MainPageViewModel _mainPageViewModel;
         private Track _currentTrack;
+        DisplayRequest displayRequest = new DisplayRequest();
         public PlayingPage()
         {
             InitializeComponent();
@@ -43,6 +45,8 @@ namespace SoundCloudPlus.Pages
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
+
+            displayRequest.RequestActive(); //to request keep display on
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             currentView.BackRequested += CurrentView_BackRequested;
@@ -198,6 +202,7 @@ namespace SoundCloudPlus.Pages
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
+            displayRequest.RequestRelease(); //to request keep display on
             if (MainPage.Current.MainFrame.CanGoBack) Frame.GoBack();
         }
 

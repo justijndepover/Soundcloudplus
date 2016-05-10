@@ -135,7 +135,7 @@ namespace SoundCloudPlus.Pages
                     ErrorLogProxy.NotifyError(ex.ToString());
                 }
 
-                UpdateStreamExploreCollection();
+                //UpdateStreamExploreCollection();
             }
             base.OnNavigatedTo(e);
         }
@@ -145,18 +145,20 @@ namespace SoundCloudPlus.Pages
             Application.Current.Exit();
         }
 
-        private async void LoadGenres()
+        private void LoadGenres()
         {
-            _genre = await App.SoundCloud.GetGenres();
-            foreach (string s in _genre)
-            {
-                string genre = s.Replace("+", " ").Replace("%", "").Replace("26", " & ").Replace("  ", " ");
-                cboGenre.Items.Add(genre);
-                if(cboGenre.SelectedIndex == -1)
+            _genre = new List<string>() { "Music", "Audio" };
+            //_genre = await App.SoundCloud.GetGenres();
+            //foreach (string s in _genre)
+            //{
+                //string genre = s.Replace("+", " ").Replace("%", "").Replace("26", " & ").Replace("  ", " ");
+                cboGenre.Items.Add("Music");
+                cboGenre.Items.Add("Audio");
+                if (cboGenre.SelectedIndex == -1)
                 {
                     cboGenre.SelectedIndex = 0;
                 }
-            }
+            //}
         }
 
         private async void UpdateStreamExploreCollection()
@@ -167,10 +169,12 @@ namespace SoundCloudPlus.Pages
                 double height = bounds.Height;
                 double width = bounds.Width;
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
-                _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
+                var a = await App.SoundCloud.GetStream(limit);
+                _homePageViewModel.StreamCollection = a;
                 if (_genre != null && cboGenre.SelectedIndex != -1)
                 {
-                    _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit, _genre[cboGenre.SelectedIndex]);
+                    var b = await App.SoundCloud.GetExplore(limit, _genre[cboGenre.SelectedIndex]);
+                    _homePageViewModel.ExploreCollection = b;
                 }
             }
             catch (Exception ex)

@@ -132,21 +132,15 @@ namespace ClassLibrary
         private string _exploreNextHref = "";
         public async Task<ObservableCollection<Track>> GetExplore(int limitValue, string genre)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/"+genre, null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/charts", null, new { kind = "top", genre = "soundcloud:genres:all-" + genre, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                foreach (var item in apiResponse.Data["tracks"])
+                foreach (var item in apiResponse.Data["collection"])
                 {
-                    try
-                    {
-                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
-                    }
+
+                    tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
             }
@@ -159,17 +153,11 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                foreach (var item in apiResponse.Data["tracks"])
+                foreach (var item in apiResponse.Data["collection"])
                 {
-                    try
-                    {
-                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
-                    }
+
+                    tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
             }
@@ -181,7 +169,7 @@ namespace ClassLibrary
             return _exploreNextHref;
         }
 
-        public async Task<bool> likeTrack(string trackId)
+        public async Task<bool> LikeTrack(string trackId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/users/"+CurrentUser.Id+"/favorites/" + trackId, null, new { client_id = ClientId, app_version = "f4415c5" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             if (apiResponse.Succes)
@@ -798,7 +786,7 @@ namespace ClassLibrary
             public async Task<List<String>> GetGenres()
         {
             //https://api-v2.soundcloud.com/explore/categories?limit=10&offset=0&linked_partitioning=1&client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=8f103e4
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/explore/categories", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/charts/categories", null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
             List<String> results = new List<String>();
             if (apiResponse.Succes)
             {
