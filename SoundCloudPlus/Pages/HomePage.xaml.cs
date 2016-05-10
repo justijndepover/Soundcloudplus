@@ -168,7 +168,7 @@ namespace SoundCloudPlus.Pages
                 double width = bounds.Width;
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
                 _homePageViewModel.StreamCollection = await App.SoundCloud.GetStream(limit);
-                if (_genre != null)
+                if (_genre != null && cboGenre.SelectedIndex != -1)
                 {
                     _homePageViewModel.ExploreCollection = await App.SoundCloud.GetExplore(limit, _genre[cboGenre.SelectedIndex]);
                 }

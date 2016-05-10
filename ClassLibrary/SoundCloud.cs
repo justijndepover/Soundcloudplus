@@ -22,18 +22,11 @@ namespace ClassLibrary
         private string Token { get; set; }
         private ApiProxy ApiProxy { get; }
         public User CurrentUser { get; set; }
-        //private AudioPlayer _audioPlayer;
-        //public AudioPlayer AudioPlayer
-        //{
-        //    get { return _audioPlayer; }
-        //    set { _audioPlayer = value; OnPropertyChanged(nameof(AudioPlayer)); }
-        //}
 
         public SoundCloud()
         {
             ApiProxy = new ApiProxy();
             AsyncHelper.RunSync(IsAuthenticated);
-            //AudioPlayer = new AudioPlayer();
         }
 
         public async Task<bool> IsAuthenticated()
@@ -57,6 +50,7 @@ namespace ClassLibrary
                     }
                     if (Code == null)
                     {
+                        Code = (string)ApplicationSettingsHelper.ReadLocalSettingsValue<string>("code");
                         ErrorLogProxy.LogError("Code is null");
 #if DEBUG
                         //ErrorLogProxy.NotifyError("Code is null");
@@ -64,6 +58,7 @@ namespace ClassLibrary
                     }
                     if (Token == null)
                     {
+                        Token = (string)ApplicationSettingsHelper.ReadLocalSettingsValue<string>("token");
                         ErrorLogProxy.LogError("Token is null");
 #if DEBUG
                         //ErrorLogProxy.NotifyError("Token is null");
@@ -755,10 +750,6 @@ namespace ClassLibrary
             return false;
         }
 
-
-
-        ///profile/soundcloud:users:26691406?keepBlocked=true&limit=10&offset=0&linked_partitioning=1&client_id=02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea&app_version=eef6f5d HTTP/1.1
-        //https://api.soundcloud.com/users/178017941
         public async Task<User> GetUser(int id)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);

@@ -210,7 +210,8 @@ namespace ClassLibrary.API
 
         public async Task<bool> Authenticate()
         {
-            var callbackUrl = new Uri("https://soundcloud.com/soundcloud-callback.html"); //WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
+            var callbackUrl = new Uri("https://soundcloud.com/soundcloud-callback.html");
+                //WebAuthenticationBroker.GetCurrentApplicationCallbackUri();
             var requestUrl = new UriBuilder("https://soundcloud.com/connect")
             {
                 Query =
@@ -219,25 +220,28 @@ namespace ClassLibrary.API
             };
             try
             {
-            var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, requestUrl.Uri, callbackUrl);
-            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success && !String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
-            {
-                var response = webAuthenticationResult.ResponseData;
-                var code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
-                var token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
-                ApplicationSettingsHelper.SaveRoamingSettingsValue("code", code);
-                ApplicationSettingsHelper.SaveRoamingSettingsValue("token", token);
-                return true;
-            }
-            if (webAuthenticationResult.ResponseErrorDetail == 430)
-            {
-                MessageDialog md = new MessageDialog(
-                    "Sorry but we can't sign you in for now. You've reached your limit. Please try again in a couple of hours.");
-                md.Commands.Add(new UICommand("Close", Action));
-                await md.ShowAsync();
-            }
-            return false;
-
+                var webAuthenticationResult =
+                    await
+                        WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, requestUrl.Uri,
+                            callbackUrl);
+                if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success &&
+                    !String.IsNullOrWhiteSpace(webAuthenticationResult.ResponseData))
+                {
+                    var response = webAuthenticationResult.ResponseData;
+                    var code = Regex.Split(response, "code=")[1].Split('&')[0].Split('#')[0];
+                    var token = Regex.Split(response, "access_token=")[1].Split('&')[0].Split('#')[0];
+                    ApplicationSettingsHelper.SaveRoamingSettingsValue("code", code);
+                    ApplicationSettingsHelper.SaveRoamingSettingsValue("token", token);
+                    ApplicationSettingsHelper.SaveLocalSettingsValue("code", code);
+                    ApplicationSettingsHelper.SaveLocalSettingsValue("token", token);
+                    return true;
+                }
+                if (webAuthenticationResult.ResponseErrorDetail == 430)
+                {
+                    ErrorLogProxy.NotifyError(
+                        "Sorry but we can't sign you in for now. You've reached your limit. Please try again in a couple of hours.");
+                }
+                return false;
             }
             catch (Exception ex)
             {
