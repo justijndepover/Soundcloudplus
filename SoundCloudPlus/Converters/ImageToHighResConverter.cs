@@ -10,7 +10,7 @@ namespace SoundCloudPlus.Converters
             string source = (string) value;
             try
             {
-                return source.Replace("large.jpg", "t500x500.jpg");
+                return source?.Replace("large.jpg", "t500x500.jpg");
             }
             catch
             {

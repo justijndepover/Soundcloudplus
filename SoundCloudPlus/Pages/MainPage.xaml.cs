@@ -517,7 +517,9 @@ namespace SoundCloudPlus.Pages
 
         private void PlayerProgressBar_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (e.NewValue > (e.OldValue + 5000) || e.NewValue < (e.OldValue - 5000))
+            var max = App.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
+
+            if (e.NewValue > (e.OldValue + (max/100)) || e.NewValue < (e.OldValue - (max/100)))
             {
                 TimeSpan newPos = TimeSpan.FromMilliseconds(e.NewValue);
                 App.AudioPlayer.CurrentPlayer.Position = newPos;
