@@ -483,7 +483,7 @@ namespace SoundCloudPlus.Pages
 
             if (state == MediaPlayerState.Playing)
             {
-                MusicPlayerControl.Visibility = Visibility.Visible;
+                MusicPlayerControl.Height = 64;
                 _playbackTimer.Start();
                 Playbuttonicon.Glyph = "\ue769";
                 //playbuttonicon.Glyph = "| |";     // Change to pause button

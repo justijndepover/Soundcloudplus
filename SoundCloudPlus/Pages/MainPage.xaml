@@ -69,7 +69,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="64" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="MobileNavBar" Visibility="Collapsed" Background="{ThemeResource ToggleButtonPointerOverBackgroundThemeBrush}">
             <Button x:Name="NavButton" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
@@ -80,7 +80,7 @@
                 </Border>
             </Grid>
         </Grid>
-        <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="2" CompactPaneLength="52" DisplayMode="CompactInline" PaneClosed="SplitViewMenu_PaneClosed" >
+        <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="1" CompactPaneLength="52" DisplayMode="CompactInline" PaneClosed="SplitViewMenu_PaneClosed" >
             <SplitView.Pane>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <Grid>
@@ -208,7 +208,7 @@
                 <Frame x:Name="MyFrame" Loaded="MyFrame_OnLoaded" />
             </SplitView.Content>
         </SplitView>
-        <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}" Visibility="Collapsed">
+        <Grid x:Name="MusicPlayerControl" Grid.Row="2" Style="{StaticResource MusicControl}" Height="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="GridRowTitle" Width="350" />
                 <ColumnDefinition x:Name="GridRow" Width="60" />
