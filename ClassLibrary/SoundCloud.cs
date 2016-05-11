@@ -46,23 +46,15 @@ namespace ClassLibrary
                     if (CurrentUser == null)
                     {
                         ErrorLogProxy.LogError("CurrentUser is null");
-                        ErrorLogProxy.NotifyError("CurrentUser is null");
+                        ErrorLogProxy.NotifyErrorInDebug("CurrentUser is null");
                     }
                     if (Code == null)
                     {
                         Code = (string)ApplicationSettingsHelper.ReadLocalSettingsValue<string>("code");
-                        ErrorLogProxy.LogError("Code is null");
-#if DEBUG
-                        //ErrorLogProxy.NotifyError("Code is null");
-#endif
                     }
                     if (Token == null)
                     {
                         Token = (string)ApplicationSettingsHelper.ReadLocalSettingsValue<string>("token");
-                        ErrorLogProxy.LogError("Token is null");
-#if DEBUG
-                        //ErrorLogProxy.NotifyError("Token is null");
-#endif
                     }
                 }
             }
@@ -234,7 +226,7 @@ namespace ClassLibrary
                 catch (Exception ex)
                 {
                     ErrorLogProxy.LogError(ex.ToString());
-                    ErrorLogProxy.NotifyError(ex.ToString());
+                    ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                 }
             }
             //return pO;
@@ -326,7 +318,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
             }
@@ -567,7 +559,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
                 _followerNextHref = apiResponse.Data["next_href"];
@@ -590,7 +582,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
                 _followerNextHref = apiResponse.Data["next_href"];
@@ -620,7 +612,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
                 _followingNextHref = apiResponse.Data["next_href"];
@@ -643,7 +635,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
                 _followingNextHref = apiResponse.Data["next_href"];
@@ -680,7 +672,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
                 _likesNextHref = apiResponse.Data["next_href"];
@@ -709,7 +701,7 @@ namespace ClassLibrary
                     catch (Exception ex)
                     {
                         ErrorLogProxy.LogError(ex.ToString());
-                        ErrorLogProxy.NotifyError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
                 _likesNextHref = apiResponse.Data["next_href"];

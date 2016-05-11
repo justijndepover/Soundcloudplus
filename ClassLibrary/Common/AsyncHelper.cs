@@ -60,7 +60,7 @@ namespace ClassLibrary.Common
                 {
                     synch.InnerException = ex;
                     ErrorLogProxy.LogError(ex.ToString());
-                    ErrorLogProxy.NotifyError(ex.ToString());
+                    ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     throw;
                 }
                 finally

@@ -246,7 +246,7 @@ namespace ClassLibrary.API
             catch (Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                 return false;
             }
         }

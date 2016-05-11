@@ -73,6 +73,12 @@ namespace SoundCloudPlus.Pages
                 {
                     BandToggle.IsOn = true;
                 }
+
+                bool debugModeEnabled = (bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("DebugModeEnabled");
+                if (debugModeEnabled)
+                {
+                    DebugToggle.IsOn = true;
+                }
             }
         }
 
@@ -159,6 +165,19 @@ namespace SoundCloudPlus.Pages
             else
             {
                 ApplicationSettingsHelper.SaveLocalSettingsValue("BandTilesEnabled", false);
+            }
+        }
+
+        private void DebugToggle_OnToggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null && toggleSwitch.IsOn)
+            {
+                ApplicationSettingsHelper.SaveLocalSettingsValue("DebugModeEnabled", true);
+            }
+            else
+            {
+                ApplicationSettingsHelper.SaveLocalSettingsValue("DebugModeEnabled", false);
             }
         }
     }

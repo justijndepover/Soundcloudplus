@@ -31,9 +31,16 @@ namespace ClassLibrary.Common
             }
         }
 
+        public static void NotifyErrorInDebug(string message)
+        {
+            if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("DebugModeEnabled"))
+            {
+                UpdateToastMessage(message);
+            }
+        }
         public static void NotifyError(string message)
         {
-            UpdateToastMessage(message);
+                UpdateToastMessage(message);
         }
         private static void UpdateToastMessage(string message)
         {

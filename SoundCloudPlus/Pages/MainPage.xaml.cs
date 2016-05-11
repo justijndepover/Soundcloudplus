@@ -59,7 +59,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
             }
         }
 
@@ -89,7 +89,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                 Debug.WriteLine("Error: Progressbar value is NaN");
             }
         }
@@ -121,7 +121,7 @@ namespace SoundCloudPlus.Pages
                 catch (Exception ex)
                 {
                     ErrorLogProxy.LogError(ex.ToString());
-                    ErrorLogProxy.NotifyError(ex.ToString());
+                    ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                 }
             }
             base.OnNavigatedTo(e);
@@ -328,7 +328,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
             }
         }
 
@@ -343,7 +343,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                 return;
             }
 

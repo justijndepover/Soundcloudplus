@@ -126,7 +126,7 @@ namespace SoundCloudPlus.Pages
             catch (Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
             }
         }
 
@@ -162,7 +162,7 @@ namespace SoundCloudPlus.Pages
             catch(Exception ex)
             {
                 ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyError(ex.ToString());
+                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
             }
         }
     }

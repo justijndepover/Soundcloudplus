@@ -543,7 +543,8 @@ namespace BackgroundTasks
                         catch (Exception ex)
                         {
                             ErrorLogProxy.LogError(ex.ToString());
-                            ErrorLogProxy.NotifyError(ex.ToString());return null;
+                            ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                            return null;
                         }
                     }
                     return new Uri(mp3);
