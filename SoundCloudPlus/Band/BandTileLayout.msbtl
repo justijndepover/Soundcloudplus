@@ -36,7 +36,7 @@
             {
               "$type": "TextButton",
               "PressedColor": "R: 192, G: 192, B: 192",
-              "Text": ">",
+              "Text": ">|",
               "Name": "",
               "ElementId": 4,
               "Id": "32e54009-95b4-47d3-a452-c1e1e89fe29b",
@@ -50,7 +50,7 @@
             {
               "$type": "TextButton",
               "PressedColor": "R: 192, G: 192, B: 192",
-              "Text": "<",
+              "Text": "<|",
               "Name": "",
               "ElementId": 3,
               "Id": "4ef98ab8-a4f5-400b-aa99-5ad04b2d7176",
@@ -64,7 +64,7 @@
             {
               "$type": "TextButton",
               "PressedColor": "R: 192, G: 192, B: 192",
-              "Text": "▶",
+              "Text": ">",
               "Name": "",
               "ElementId": 2,
               "Id": "9470135d-53ce-48c3-831a-bc3b517251ee",

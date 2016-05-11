@@ -21,9 +21,9 @@ namespace SoundCloudPlus.Band
         private readonly TextButton button2 = new TextButton();
         private readonly TextButton button3 = new TextButton();
 
-        private readonly TextButtonData buttonData = new TextButtonData(4, ">");
-        private readonly TextButtonData button2Data = new TextButtonData(3, "<");
-        private readonly TextButtonData button3Data = new TextButtonData(2, "▶");
+        private readonly TextButtonData buttonData = new TextButtonData(4, ">|");
+        private readonly TextButtonData button2Data = new TextButtonData(3, "|<");
+        private readonly TextButtonData button3Data = new TextButtonData(2, ">");
 
         public BandTileLayout()
         {

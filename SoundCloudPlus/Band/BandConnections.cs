@@ -66,6 +66,10 @@ namespace SoundCloudPlus.Band
         }
         public async Task CreateAndPushTileAsync(string name)
         {
+            if (BandClient == null)
+            {
+                return;
+            }
             try
             {
                 var designed = new BandTileLayout();
