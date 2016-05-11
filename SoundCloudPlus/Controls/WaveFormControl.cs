@@ -105,13 +105,14 @@ namespace SoundCloudPlus.Controls
                 _playbackTimer.Start();
             }
         }
-
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (e.NewValue > e.OldValue + 5000 || e.NewValue < e.OldValue - 5000)
+            var max = App.AudioPlayer.CurrentPlayer.NaturalDuration.TotalMilliseconds;
+
+            if (e.NewValue > (e.OldValue + (max / 100)) || e.NewValue < (e.OldValue - (max / 100)))
             {
                 TimeSpan newPos = TimeSpan.FromMilliseconds(e.NewValue);
-                //MainPage.Current.CurrentPlayer.Position = newPos;
+                App.AudioPlayer.CurrentPlayer.Position = newPos;
             }
         }
     }

@@ -60,7 +60,7 @@ namespace SoundCloudPlus.Pages
                     _currentTrack = _mainPageViewModel.PlayingTrack;
                     _canvasControl = new CanvasControl();
                     _canvasControl.Draw += _canvasControl_Draw;
-                    //MainPage.Current.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                    App.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     ContentPresenter.Content = _canvasControl;
                     CreateWaveForm();
                 }

@@ -71,6 +71,8 @@
                 <ToggleSwitch x:Name="ToastToggle" RelativePanel.Below="Toasts" Toggled="ToastToggle_Toggled"/>
                 <TextBlock x:Name="Information" RelativePanel.Below="ToastToggle" Text="Information" Style="{StaticResource SubTitle}" />
                 <TextBlock RelativePanel.Below="Information" x:Name="VersionTextBlock"/>
+                <TextBlock x:Name="Band" RelativePanel.Below="VersionTextBlock" Text="Enable Band tiles" Style="{StaticResource SubTitle}" />
+                <ToggleSwitch x:Name="BandToggle" RelativePanel.RightOf="Band" RelativePanel.AlignBottomWith="Band" Toggled="BandToggle_OnToggled" />
             </RelativePanel>
         </ScrollViewer>
     </Grid>

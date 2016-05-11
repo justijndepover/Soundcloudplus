@@ -113,6 +113,10 @@ namespace SoundCloudPlus.Pages
                     MainPageViewModel.PageTitle = "Home";
                     //App.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     LoadUserAvatar();
+                    if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled"))
+                    {
+                        await App.BandConnections.ConnectBand();
+                    }
                 }
                 catch (Exception ex)
                 {

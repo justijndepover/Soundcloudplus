@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using ClassLibrary;
 using ClassLibrary.Common;
 using Microsoft.ApplicationInsights;
+using SoundCloudPlus.Band;
 using SoundCloudPlus.Pages;
 
 namespace SoundCloudPlus
@@ -20,6 +21,7 @@ namespace SoundCloudPlus
     {
         public static SoundCloud SoundCloud { get; set; }
         public static AudioPlayer AudioPlayer { get; set; }
+        public static BandConnections BandConnections { get; set; }
         public static ContinuationManager ContinuationManager { get; private set; }
         public static Frame RootFrame { get; set; }
         /// <summary>
@@ -40,7 +42,7 @@ namespace SoundCloudPlus
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             if (e.PrelaunchActivated)
             {
@@ -56,7 +58,15 @@ namespace SoundCloudPlus
 
             SoundCloud = new SoundCloud();
             AudioPlayer = new AudioPlayer();
-
+            BandConnections = new BandConnections();
+            if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled"))
+            {
+                await App.BandConnections.ConnectBand();
+                if (App.BandConnections.BandClient != null)
+                {
+                    await App.BandConnections.CreateAndPushTileAsync("10Sound");
+                }
+            }
             CreateRootFrame();
 
             if (RootFrame.Content == null)

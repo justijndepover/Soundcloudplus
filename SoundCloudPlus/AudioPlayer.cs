@@ -29,7 +29,14 @@ namespace SoundCloudPlus
         private AutoResetEvent backgroundAudioTaskStarted;
         private bool _isMyBackgroundTaskRunning = false;
         private Track _currentTrack;
-        public List<Track> PlayList { get; set; }
+        private List<Track> _playList;
+
+        public List<Track> PlayList
+        {
+            get { return _playList; }
+            set { _playList = value; OnPropertyChanged(nameof(PlayList));}
+        }
+
         public Track CurrentTrack
         {
             get { return _currentTrack; }
@@ -271,7 +278,8 @@ namespace SoundCloudPlus
         {
             var oldPlaylist = PlayList;
             PlayList = playList;
-
+            MainPage.Current.MainPageViewModel.PlayingList = PlayList;
+            MainPage.Current.MainPageViewModel.PlayingTrack = track;
             bool liveTile = (bool)ApplicationSettingsHelper.ReadRoamingSettingsValue<bool>("LiveTilesEnabled");
             if (liveTile)
             {

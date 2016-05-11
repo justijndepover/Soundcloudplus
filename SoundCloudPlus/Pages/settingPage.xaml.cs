@@ -1,4 +1,5 @@
 ﻿using Windows.ApplicationModel;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
@@ -65,6 +66,12 @@ namespace SoundCloudPlus.Pages
                 if (toastsEnabled)
                 {
                     ToastToggle.IsOn = true;
+                }
+
+                bool bandTilesEnabled = (bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("ToastsEnabled");
+                if (bandTilesEnabled)
+                {
+                    BandToggle.IsOn = true;
                 }
             }
         }
@@ -134,6 +141,24 @@ namespace SoundCloudPlus.Pages
             else
             {
                 ApplicationSettingsHelper.SaveRoamingSettingsValue("ToastsEnabled", false);
+            }
+        }
+
+        private async void BandToggle_OnToggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null && toggleSwitch.IsOn)
+            {
+                await App.BandConnections.ConnectBand();
+                if (App.BandConnections.BandClient != null)
+                {
+                    await App.BandConnections.CreateAndPushTileAsync("10Sound");
+                }
+                ApplicationSettingsHelper.SaveLocalSettingsValue("BandTilesEnabled", true);
+            }
+            else
+            {
+                ApplicationSettingsHelper.SaveLocalSettingsValue("BandTilesEnabled", false);
             }
         }
     }

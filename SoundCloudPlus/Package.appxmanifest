@@ -37,10 +37,15 @@
             <Task Type="audio" />
           </BackgroundTasks>
         </Extension>
+        <uap:Extension Category="windows.appService"
+                       EntryPoint="BackgroundTasks.BackgroundEventTask">
+          <uap:AppService Name="com.microsoft.band.observer" />
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <DeviceCapability Name="bluetooth" />
   </Capabilities>
 </Package>
