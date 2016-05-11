@@ -60,7 +60,7 @@ namespace SoundCloudPlus.Pages
                     _currentTrack = _mainPageViewModel.PlayingTrack;
                     _canvasControl = new CanvasControl();
                     _canvasControl.Draw += _canvasControl_Draw;
-                    App.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
+                    App.AudioPlayer.CurrentTrackChanged += AudioPlayer_CurrentTrackChanged;
                     ContentPresenter.Content = _canvasControl;
                     CreateWaveForm();
                 }
@@ -72,44 +72,28 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        private async void CurrentPlayer_CurrentStateChanged(Windows.Media.Playback.MediaPlayer sender, object args)
+        private void AudioPlayer_CurrentTrackChanged(object sender, EventArgs e)
         {
-            try
+            List<Track> playlist = App.AudioPlayer.PlayList;
+            Track track = App.AudioPlayer.CurrentTrack;
+            int index;
+            for (index = 0; index < playlist.Count; index++)
             {
-                var currentState = sender.CurrentState;
-                Debug.WriteLine("PlayingPage CurrentState changed to: " + currentState);
-
-                if (currentState == MediaPlayerState.Playing)
+                if (track.Id.Equals(playlist[index].Id))
                 {
-                    List<Track> playlist = MainPage.Current.MainPageViewModel.PlayingList;
-                    Track track = MainPage.Current.MainPageViewModel.PlayingTrack;
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                    try
                     {
-                        int index;
-                        for (index = 0; index < playlist.Count; index++)
-                        {
-                            if (track.Id.Equals(playlist[index].Id))
-                            {
-                                try
-                                {
-                                    PlayListView.SelectedIndex = index;
-                                    _currentTrack = MainPage.Current.MainPageViewModel.PlayingTrack;
-                                    _canvasControl.Invalidate();
-                                }
-                                catch (Exception ex)
-                                {
-                                    ErrorLogProxy.LogError(ex.ToString());
-                                    ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
-                                }
-                            }
-                        }
-                    });
+                        PlayListView.SelectedIndex = index;
+                        _currentTrack = track;
+                        _canvasControl.Invalidate();
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
             }
         }
 

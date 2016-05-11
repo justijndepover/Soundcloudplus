@@ -61,7 +61,8 @@ namespace SoundCloudPlus.Band
             }
             catch (Exception ex)
             {
-                throw;
+                ErrorLogProxy.LogError(ex.Message);
+                ErrorLogProxy.NotifyErrorInDebug(ex.Message);
             }
         }
         public async Task CreateAndPushTileAsync(string name)
@@ -105,8 +106,8 @@ namespace SoundCloudPlus.Band
             }
             catch (Exception ex)
             {
-                
-                throw;
+                ErrorLogProxy.LogError(ex.Message);
+                ErrorLogProxy.NotifyErrorInDebug(ex.Message);
             }
         }
 

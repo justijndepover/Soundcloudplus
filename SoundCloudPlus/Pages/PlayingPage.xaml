@@ -74,7 +74,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="3*"/>
                                             <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="100"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="White"/>
                                         <TextBlock Grid.Column="1" Text="{Binding User.Username}" Foreground="White"/>

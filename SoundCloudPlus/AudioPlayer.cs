@@ -40,7 +40,7 @@ namespace SoundCloudPlus
         public Track CurrentTrack
         {
             get { return _currentTrack; }
-            set { _currentTrack = value; OnPropertyChanged(nameof(CurrentTrack)); }
+            set { _currentTrack = value; OnPropertyChanged(nameof(CurrentTrack)); OnCurrentTrackChanged(EventArgs.Empty); }
         }
 
         public bool IsMyBackgroundTaskRunning
@@ -322,6 +322,12 @@ namespace SoundCloudPlus
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public event EventHandler CurrentTrackChanged;
+        protected void OnCurrentTrackChanged(EventArgs e)
+        {
+            EventHandler handler = CurrentTrackChanged;
+            handler?.Invoke(this, e);
+        }
         public string GetCurrentTrackIdAfterAppResume()
         {
             object value = ApplicationSettingsHelper.ReadResetSettingsValue(ApplicationSettingsConstants.TrackId);
