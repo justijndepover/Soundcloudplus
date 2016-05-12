@@ -152,8 +152,11 @@ namespace SoundCloudPlus.Pages
             //foreach (string s in _genre)
             //{
                 //string genre = s.Replace("+", " ").Replace("%", "").Replace("26", " & ").Replace("  ", " ");
+            if (cboGenre.Items.Count < 2)
+            {
                 cboGenre.Items.Add("Music");
                 cboGenre.Items.Add("Audio");
+            }
                 if (cboGenre.SelectedIndex == -1)
                 {
                     cboGenre.SelectedIndex = 0;
