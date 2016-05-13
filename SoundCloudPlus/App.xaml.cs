@@ -93,7 +93,6 @@ namespace SoundCloudPlus
         }
         protected override async void OnActivated(IActivatedEventArgs e)
         {
-
             ContinuationManager = new ContinuationManager();
 
             CreateRootFrame();
@@ -136,6 +135,5 @@ namespace SoundCloudPlus
             
             Window.Current.Content = RootFrame;
         }
-
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml;
 using ClassLibrary.Models;
 using SoundCloudPlus.Annotations;
 
@@ -51,7 +52,19 @@ namespace SoundCloudPlus.ViewModels
             get { return _loggedInUser; }
             set { _loggedInUser = value; OnPropertyChanged(nameof(LoggedInUser)); }
         }
-        
+        private Visibility _pinButtonVisibility;
+
+        public Visibility PinButtonVisibility
+        {
+            get { return _pinButtonVisibility; }
+            set { _pinButtonVisibility = value; OnPropertyChanged(nameof(PinButtonVisibility));}
+        }
+
+        public MainPageViewModel()
+        {
+            PinButtonVisibility = Visibility.Collapsed;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

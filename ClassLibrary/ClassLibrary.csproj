@@ -133,8 +133,8 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\PlaylistCollection.cs" />
-    <Compile Include="Models\PlaylistObject.cs" />
     <Compile Include="Common\TitleBar.cs" />
+    <Compile Include="Models\PlaylistObject.cs" />
     <Compile Include="Models\PrimaryTile.cs" />
     <Compile Include="Models\RepostCollection.cs" />
     <Compile Include="Models\SongModel.cs" />

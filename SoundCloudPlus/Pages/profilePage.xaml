@@ -59,7 +59,7 @@
             <Pivot x:Name="RootPivot" RelativePanel.Below="ProfileBannerBorder" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Style="{StaticResource PivotTitle}">
                 <PivotItem Header="Tracks">
                     <ScrollViewer x:Name="SvProfileTracks" ViewChanged="SvProfileTracks_OnViewChanged" VerticalScrollBarVisibility="Hidden">
-                        <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="TrackCollectionGridView_SizeChanged">
+                        <GridView x:Name="TrackCollectionGridView" IsItemClickEnabled="True" RelativePanel.Below="ProfileInformationLeft" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="TrackCollectionGridView_SizeChanged" ItemClick="TrackCollectionGridView_ItemClick">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
                                     <Setter Property="VerticalContentAlignment" Value="Stretch" />

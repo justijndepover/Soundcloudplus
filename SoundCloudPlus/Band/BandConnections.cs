@@ -56,7 +56,6 @@ namespace SoundCloudPlus.Band
                     IBandClient bandClient = await BandClientManager.Instance.ConnectAsync(pairedBands[0]);
                     BandClient = bandClient;
                     BandInfo = pairedBands[0];
-
                 }
             }
             catch (Exception ex)

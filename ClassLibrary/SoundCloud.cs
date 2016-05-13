@@ -230,7 +230,7 @@ namespace ClassLibrary
                 }
             }
             //return pO;
-            int l = pO.Collection.Count();
+            int l = pO.Collection.Length;
             ObservableCollection<PlaylistCollection> c = new ObservableCollection<PlaylistCollection>();
 
             if (l == 0)

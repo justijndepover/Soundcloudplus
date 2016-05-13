@@ -19,7 +19,6 @@ using ClassLibrary.Messages;
 using ClassLibrary.Models;
 using Newtonsoft.Json;
 using SoundCloudPlus.Pages;
-using TilesAndNotifications.Services;
 
 namespace SoundCloudPlus
 {

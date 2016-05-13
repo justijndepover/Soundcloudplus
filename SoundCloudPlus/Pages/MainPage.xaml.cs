@@ -31,9 +31,8 @@ namespace SoundCloudPlus.Pages
         public string PageTitle;
         readonly DispatcherTimer _playbackTimer = new DispatcherTimer();
         public Frame MainFrame;
-
+        public Button PinToStartButton;
         public int UserId { get; set; }
-
         public List<int> UserIdHistory { get; set; }
         public Playlist CurrentPlaylist { get; set; }
 
@@ -42,6 +41,7 @@ namespace SoundCloudPlus.Pages
             InitializeComponent();
             LoadTheme();
             Current = this;
+            PinToStartButton = PinButton;
             NavigationCacheMode = NavigationCacheMode.Required;
             MainFrame = MyFrame;
             UserIdHistory = new List<int>();
@@ -108,7 +108,6 @@ namespace SoundCloudPlus.Pages
 
             ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.AppState,
                 AppState.Active.ToString());
-
             if (e.NavigationMode != NavigationMode.Back)
             {
                 try
@@ -123,6 +122,12 @@ namespace SoundCloudPlus.Pages
                     if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled"))
                     {
                         await App.BandConnections.ConnectBand();
+                    }
+                    string param = e.Parameter?.ToString();
+                    if (!string.IsNullOrWhiteSpace(param))
+                    {
+                        string[] arr = param.Split(',');
+                        Navigate(new Button{Tag = arr[1]}, arr[0]);
                     }
                 }
                 catch (Exception ex)
@@ -198,6 +203,19 @@ namespace SoundCloudPlus.Pages
                             MyFrame?.Navigate(typeof(FollowingPage));
                             UserIdHistory.Add(id);
                         }
+                    }
+                    break;
+                case "search":
+                    if (page?.GetType() != typeof(SearchPage))
+                    {
+                        MyFrame?.Navigate(typeof(SearchPage),(string)b.Tag);
+                    }
+                    break;
+                case "playlist":
+                    if (page?.GetType() != typeof(PlaylistPage))
+                    {
+                        MainPageViewModel.PageTitle = "Playlist";
+                        MyFrame?.Navigate(typeof(PlaylistPage));
                     }
                     break;
                 case "playlistview":

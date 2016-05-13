@@ -17,6 +17,7 @@ namespace SoundCloudPlus.Pages
     /// </summary>
     public sealed partial class SearchPage : Page
     {
+        private string query;
         public SearchPage()
         {
             InitializeComponent();
@@ -37,11 +38,19 @@ namespace SoundCloudPlus.Pages
                     (SearchPageViewModel)Resources["SearchPageViewModel"];
                 if (await App.SoundCloud.IsAuthenticated())
                 {
-                    _searchPageViewModel.TrackSearchCollection = await App.SoundCloud.Search(e.Parameter as string);
+                    query = e.Parameter as string;
+                    _searchPageViewModel.TrackSearchCollection = await App.SoundCloud.Search(query);
                 }
+
+                MainPage.Current.MainPageViewModel.PinButtonVisibility = Visibility.Visible;
+                MainPage.Current.PinToStartButton.Click += PinToStartButton_Click;
             }
             base.OnNavigatedTo(e);
+        }
 
+        private void PinToStartButton_Click(object sender, RoutedEventArgs e)
+        {
+            TileService.CreateTileLinkedToPage("10Sound", query, new[] {"search", query});
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
@@ -56,6 +65,7 @@ namespace SoundCloudPlus.Pages
             var currentView = SystemNavigationManager.GetForCurrentView();
 
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            MainPage.Current.MainPageViewModel.PinButtonVisibility = Visibility.Collapsed;
 
             currentView.BackRequested -= CurrentView_BackRequested;
         }
