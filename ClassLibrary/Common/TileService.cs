@@ -1,7 +1,13 @@
 ﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
+using System.Net;
+using System.Net.Http;
 using System.Xml.Linq;
 using Windows.Data.Xml.Dom;
+using Windows.Storage;
 using Windows.UI.StartScreen;
+using Windows.UI.Xaml.Media.Imaging;
 using ClassLibrary.Models;
 
 namespace ClassLibrary.Common
@@ -62,6 +68,41 @@ namespace ClassLibrary.Common
         }
         public static async void CreateTileLinkedToPage(string title, string name, string[] arguments, string uri = "ms-appx:///Assets/10SoundBackground.png")
         {
+            if (!uri.StartsWith("ms-appx:///"))
+            {
+                try
+                {
+                    var rootFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("10Sound\\Tilepics", CreationCollisionOption.OpenIfExists);
+
+                    var coverpic_file = await rootFolder.CreateFileAsync(name, CreationCollisionOption.FailIfExists);
+                    try
+                    {
+                        using (HttpClient client = new HttpClient())
+                        {
+                            var response = await client.GetAsync(uri);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                Stream resStream = await response.Content.ReadAsStreamAsync();
+                                using (var stream = await coverpic_file.OpenAsync(FileAccessMode.ReadWrite))
+                                {
+                                    await resStream.CopyToAsync(stream.AsStreamForWrite());
+                                }
+                                uri = "ms-appx:///Local/Tilepics" + name;
+                            }
+                        }
+                    }
+                    catch(Exception ex) //any exceptions happend while saving the picture
+                    {
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                    }
+                }
+                catch (Exception ex) //any exceptions happend while saving the picture
+                {
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                }
+            }
             string argument = string.Join(",", arguments);
             SecondaryTile tile = new SecondaryTile(Guid.NewGuid().ToString(), name, title,
                 new Uri(uri), TileSize.Default) {Arguments = argument };

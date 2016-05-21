@@ -214,8 +214,8 @@ namespace SoundCloudPlus.Pages
                 else if (s?.Playlist != null)
                 {
 
-                    App.AudioPlayer.PlayTrack(new List<Track>(await App.SoundCloud.GetTracksFromPlaylist(s.Playlist.Id)), s.Playlist.Tracks[0]);
-                    MainPage.Current.Navigate(sender, "playlistview");
+                    App.AudioPlayer.PlayTrack(s.Playlist.Tracks, s.Playlist.Tracks[0]);
+                    MainPage.Current.Navigate(new PlaylistViewPage(), s.Playlist.Id.ToString());
                 }
             }
             catch (InvalidCastException)

@@ -157,7 +157,7 @@ namespace SoundCloudPlus.Pages
             {
                 PlaylistCollection p = e.ClickedItem as PlaylistCollection;
                 App.AudioPlayer.PlayTrack(p?.Playlist.Tracks, p?.Playlist.Tracks[0]);
-                //MainPage.Current.Navigate(sender, "playlistview"); I COMMENTED THIS OUT BECAUSE THE PAGE WAS BLANK
+                MainPage.Current.Navigate(new PlaylistViewPage(), p?.Playlist.Id.ToString());
             }
             catch(Exception ex)
             {

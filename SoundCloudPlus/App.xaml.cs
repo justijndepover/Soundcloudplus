@@ -42,7 +42,7 @@ namespace SoundCloudPlus
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             if (e.PrelaunchActivated)
             {
@@ -59,14 +59,7 @@ namespace SoundCloudPlus
             SoundCloud = new SoundCloud();
             AudioPlayer = new AudioPlayer();
             BandConnections = new BandConnections();
-            if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled"))
-            {
-                await App.BandConnections.ConnectBand();
-                if (App.BandConnections.BandClient != null)
-                {
-                    await App.BandConnections.CreateAndPushTileAsync("10Sound");
-                }
-            }
+            
             CreateRootFrame();
 
             if (RootFrame.Content == null)

@@ -26,6 +26,8 @@ namespace SoundCloudPlus.Pages
     {
         private PlaylistViewPageViewModel _playlistViewPageViewModel;
         private MainPageViewModel _mainPageViewModel;
+        private string _playlistName;
+        private string _playlistId;
 
         public PlaylistViewPage()
         {
@@ -62,7 +64,7 @@ namespace SoundCloudPlus.Pages
             if (MainPage.Current.MainFrame.CanGoBack) Frame.GoBack();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var currentView = SystemNavigationManager.GetForCurrentView();
@@ -77,16 +79,34 @@ namespace SoundCloudPlus.Pages
                     _mainPageViewModel = MainPage.Current.MainPageViewModel;
                     _playlistViewPageViewModel =
                     (PlaylistViewPageViewModel)Resources["PlaylistViewPageViewModel"];
-                    _playlistViewPageViewModel.Playlist = (Playlist)MainPage.Current.CurrentPlaylist;
+                    if (e.Parameter != null && !ReferenceEquals(e.Parameter, string.Empty))
+                    {
+                        _playlistId = e.Parameter.ToString();
+                        _playlistViewPageViewModel.Playlist = await App.SoundCloud.GetPlaylist(Convert.ToInt32(e.Parameter.ToString()));
+                        _playlistName = _playlistViewPageViewModel.Playlist.Title;
+                    }
+                    MainPage.Current.MainPageViewModel.PinButtonVisibility = Visibility.Visible;
+                    MainPage.Current.PinToStartButton.Click += PinToStartButton_Click;
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    ErrorLogProxy.LogError(ex.ToString());
+                    ErrorLogProxy.NotifyError(ex.ToString());
                 }
                 
             }
             base.OnNavigatedTo(e);
         }
-
+        private void PinToStartButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (false)//_playlistViewPageViewModel.Playlist.ArtworkUrl != null)
+            {
+                TileService.CreateTileLinkedToPage("10Sound", _playlistName, new[] { "playlist", _playlistId }, _playlistViewPageViewModel.Playlist.ArtworkUrl);
+            }
+            else
+            {
+                TileService.CreateTileLinkedToPage("10Sound", _playlistName, new[] { "playlist", _playlistId });
+            }
+        }
     }
 }

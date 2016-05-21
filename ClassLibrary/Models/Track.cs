@@ -66,7 +66,7 @@ namespace ClassLibrary.Models
         [JsonProperty("permalink_url")]
         public string PermalinkUrl { get; set; }
         [JsonProperty("artwork_url")]
-        public object ArtworkUrl { get; set; }
+        public string ArtworkUrl { get; set; }
         [JsonProperty("waveform_url")]
 
         public string WaveformUrl { get; set; }

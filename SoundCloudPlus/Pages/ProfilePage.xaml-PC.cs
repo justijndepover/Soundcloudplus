@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -210,10 +209,9 @@ namespace SoundCloudPlus.Pages
             {
                 Debug.WriteLine(e);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                Application.Current.Exit();
             }
         }
 
@@ -231,10 +229,9 @@ namespace SoundCloudPlus.Pages
             {
                 Debug.WriteLine(e);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                Application.Current.Exit();
             }
         }
 
@@ -252,10 +249,9 @@ namespace SoundCloudPlus.Pages
             {
                 Debug.WriteLine(e);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                Application.Current.Exit();
             }
         }
         #endregion
@@ -324,8 +320,7 @@ namespace SoundCloudPlus.Pages
             }
             catch (Exception ex)
             {
-                ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                new ErrorLogProxy(ex.ToString());
             }
         }
 
@@ -367,7 +362,7 @@ namespace SoundCloudPlus.Pages
                 userId = App.SoundCloud.CurrentUser.Id;
             }
             b.Tag = userId;
-            MainPage.Current.Navigate(new FollowerPage(), userId.ToString());
+            MainPage.Current.Navigate(sender, "followers");
         }
 
         private void btnFollowing_Click(object sender, RoutedEventArgs e)
@@ -383,13 +378,7 @@ namespace SoundCloudPlus.Pages
                 userId = App.SoundCloud.CurrentUser.Id;
             }
             b.Tag = userId;
-            MainPage.Current.Navigate(new FollowingPage(), userId.ToString());
-        }
-
-        private void TrackCollectionGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Track p = e.ClickedItem as Track;
-            App.AudioPlayer.PlayTrack(_profilePageViewModel.TrackCollection.ToList(), p);
+            MainPage.Current.Navigate(sender, "following");
         }
     }
 }

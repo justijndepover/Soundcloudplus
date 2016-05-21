@@ -190,6 +190,7 @@
     <Content Include="Band\audio_pause.png" />
     <Content Include="Band\audio_play.png" />
     <Content Include="Band\audio_prev.png" />
+    <Content Include="Band\bandglyph.png" />
     <Content Include="Band\bandicon.png" />
     <Content Include="Band\bandsmallicon.png" />
     <Content Include="Properties\Default.rd.xml" />

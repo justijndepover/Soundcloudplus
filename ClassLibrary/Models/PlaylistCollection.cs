@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ClassLibrary.Models
 {
@@ -52,9 +53,6 @@ namespace ClassLibrary.Models
         public int UserId { get; set; }
         [JsonProperty("track_count")]
         public int TrackCount { get; set; }
-        //
-        /*[JsonProperty("artwork_url")]
-        public string ArtworkUrl { get; set; }*/
         [JsonProperty("type")]
         public string Type { get; set; }
         [JsonProperty("user")]

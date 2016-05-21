@@ -119,15 +119,20 @@ namespace SoundCloudPlus.Pages
                     MainPageViewModel.PageTitle = "Home";
                     //App.AudioPlayer.CurrentPlayer.CurrentStateChanged += CurrentPlayer_CurrentStateChanged;
                     LoadUserAvatar();
-                    if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled"))
-                    {
-                        await App.BandConnections.ConnectBand();
-                    }
+                   
                     string param = e.Parameter?.ToString();
                     if (!string.IsNullOrWhiteSpace(param))
                     {
                         string[] arr = param.Split(',');
-                        Navigate(new Button{Tag = arr[1]}, arr[0]);
+                        switch (arr[0])
+                        {
+                            case "search":
+                                Navigate(new SearchPage(), arr[1]);
+                                break;
+                            case "playlist":
+                                Navigate(new PlaylistViewPage(), arr[1]);
+                                break;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -153,79 +158,88 @@ namespace SoundCloudPlus.Pages
             }
         }
 
-        public void Navigate(object sender, string destination)
+        public void Navigate(Page destination, string parameter = null)
         {
             Page page = MyFrame?.Content as Page;
-            Button b = sender as Button;
-            switch (destination)
-            {
-                case "home":
+
+            var @switch = new Dictionary<Type, Action> {
+                { typeof(HomePage), () => {
                     if (page?.GetType() != typeof(HomePage))
                     {
                         MainPageViewModel.PageTitle = "Home";
                         MyFrame?.Navigate(typeof(HomePage));
                     }
-                    break;
-                case "profile":
+                } },
+                { typeof(ProfilePage), () =>
+                {
                     if (page?.GetType() != typeof(ProfilePage))
                     {
                         MainPageViewModel.PageTitle = "Profile";
-                        if (b?.Tag != null)
+                        if (parameter != null)
                         {
-                            int id = (int)b.Tag;
+                            int id = Convert.ToInt32(parameter);
                             UserId = id;
                             MyFrame?.Navigate(typeof(ProfilePage));
                             UserIdHistory.Add(id);
                         }
                     }
-                    break;
-                case "followers":
+                } },
+                { typeof(FollowerPage), () =>
+                {
                     if (page?.GetType() != typeof(FollowerPage))
                     {
                         MainPageViewModel.PageTitle = "Followers";
-                        if (b?.Tag != null)
+                        if (parameter != null)
                         {
-                            int id = (int)b.Tag;
+                            int id = Convert.ToInt32(parameter);
                             UserId = id;
                             MyFrame?.Navigate(typeof(FollowerPage));
                             UserIdHistory.Add(id);
                         }
                     }
-                    break;
-                case "following":
+                } },
+                { typeof(FollowingPage), () =>
+                {
                     if (page?.GetType() != typeof(FollowingPage))
                     {
                         MainPageViewModel.PageTitle = "Following";
-                        if (b?.Tag != null)
+                        if (parameter != null)
                         {
-                            int id = (int)b.Tag;
+                            int id = Convert.ToInt32(parameter);
                             UserId = id;
                             MyFrame?.Navigate(typeof(FollowingPage));
                             UserIdHistory.Add(id);
                         }
                     }
-                    break;
-                case "search":
+                } },
+                { typeof(SearchPage), () =>
+                {
                     if (page?.GetType() != typeof(SearchPage))
                     {
-                        MyFrame?.Navigate(typeof(SearchPage),(string)b.Tag);
+                        MainPageViewModel.PageTitle = parameter;
+                        MyFrame?.Navigate(typeof(SearchPage), parameter);
                     }
-                    break;
-                case "playlist":
+                } },
+                { typeof(PlaylistPage), () =>
+                {
                     if (page?.GetType() != typeof(PlaylistPage))
                     {
                         MainPageViewModel.PageTitle = "Playlist";
                         MyFrame?.Navigate(typeof(PlaylistPage));
                     }
-                    break;
-                case "playlistview":
+                } },
+                { typeof(PlaylistViewPage), () =>
+                {
                     if (page?.GetType() != typeof(PlaylistViewPage))
                     {
                         MainPageViewModel.PageTitle = "Playlist";
-                        MyFrame?.Navigate(typeof(PlaylistViewPage));
+                        MyFrame?.Navigate(typeof(PlaylistViewPage), parameter);
                     }
-                    break;
-            }
+                } }
+            };
+
+            @switch[destination.GetType()]();
+            
             if (ActualWidth < 720 && SplitViewMenu.IsPaneOpen)
             {
                 SplitViewMenu.IsPaneOpen = false;
@@ -553,6 +567,19 @@ namespace SoundCloudPlus.Pages
                 TimeSpan newPos = TimeSpan.FromMilliseconds(e.NewValue);
                 App.AudioPlayer.CurrentPlayer.Position = newPos;
             }
+        }
+
+        private async void BandButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if ((bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled"))
+            {
+                await App.BandConnections.ConnectBand();
+                if (App.BandConnections.BandClient != null)
+                {
+                    await App.BandConnections.CreateAndPushTileAsync("10Sound");
+                }
+            }
+
         }
     }
 }

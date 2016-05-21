@@ -122,10 +122,9 @@ namespace SoundCloudPlus.Pages
                 int limit = Screen.GetLimitItems(height, width, 200, 400, 200, 400);
                 _followerViewModel.FollowersCollection = await App.SoundCloud.GetFollowers(id, limit);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorLogProxy.LogError(ex.ToString());
-                ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                Application.Current.Exit();
             }
         }
 
@@ -155,7 +154,7 @@ namespace SoundCloudPlus.Pages
             Button b = sender as Button;
             int userId = (int)b.Tag;
 
-            MainPage.Current.Navigate(new ProfilePage(), userId.ToString());
+            MainPage.Current.Navigate(sender, "profile");
         }
     }
 }

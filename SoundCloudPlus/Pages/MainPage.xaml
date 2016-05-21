@@ -80,6 +80,9 @@
                         <TextBlock Text="Beta" Style="{StaticResource Beta}" />
                     </Border>
                 </Grid>
+                <Button x:Name="BandButton" Visibility="{Binding BandIconVisibility}" Style="{StaticResource BtnNav}" Click="BandButton_OnClick">
+                    <Image x:Name="BandIcon" Source="../Band/bandglyph.png" Margin="4" Stretch="Uniform" Opacity="{Binding BandIconOpacity}"/>
+                </Button>
                 <Button x:Name="PinButton" Style="{StaticResource BtnNav}" Visibility="{Binding PinButtonVisibility}" Content="&#xE718;"/>
             </StackPanel>
         </Grid>

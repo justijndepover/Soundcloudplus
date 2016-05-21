@@ -115,6 +115,14 @@ namespace SoundCloudPlus
         public AudioPlayer()
         {
             backgroundAudioTaskStarted = new AutoResetEvent(false);
+            if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
+            {
+                // First update the persisted start track
+                //ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, track.Id);
+                //ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.Position, new TimeSpan().ToString());
+
+                StartBackgroundAudioTask();
+            }
         }
         private void ResetAfterLostBackground()
         {
@@ -145,8 +153,11 @@ namespace SoundCloudPlus
                 //Send message to initiate playback
                 if (result)
                 {
-                    MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
-                    MessageService.SendMessageToBackground(new StartPlaybackMessage());
+                    if (PlayList != null)
+                    {
+                        MessageService.SendMessageToBackground(new UpdatePlaylistMessage(PlayList));
+                        MessageService.SendMessageToBackground(new StartPlaybackMessage());
+                    }
                 }
                 else
                 {
@@ -291,7 +302,7 @@ namespace SoundCloudPlus
             }
             Debug.WriteLine("Clicked item from App: " + track.Id);
             // Start the background task if it wasn't running
-            if (!IsMyBackgroundTaskRunning || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
+            if (!IsMyBackgroundTaskRunning)// || MediaPlayerState.Closed == CurrentPlayer.CurrentState)
             {
                 // First update the persisted start track
                 ApplicationSettingsHelper.SaveSettingsValue(ApplicationSettingsConstants.TrackId, track.Id);
@@ -302,7 +313,7 @@ namespace SoundCloudPlus
             else
             {
 
-                if (!oldPlaylist.Equals(playList))
+                if (oldPlaylist == null || !oldPlaylist.Equals(playList))
                 {
                     MessageService.SendMessageToBackground(new UpdatePlaylistMessage(playList));
                 }

@@ -11,6 +11,7 @@ using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using ClassLibrary.Common;
 using ClassLibrary.Messages;
@@ -18,6 +19,7 @@ using Microsoft.Band;
 using Microsoft.Band.Tiles;
 using Microsoft.Band.Tiles.Pages;
 using SoundCloudPlus.Annotations;
+using SoundCloudPlus.Pages;
 
 namespace SoundCloudPlus.Band
 {
@@ -68,7 +70,7 @@ namespace SoundCloudPlus.Band
         {
             if (BandClient == null)
             {
-                return;
+                await FindBands();
             }
             try
             {
@@ -82,15 +84,12 @@ namespace SoundCloudPlus.Band
                 myTile.PageLayouts.Add(designed.Layout);
 
                 _bandTileId = BandTileId;
-                if (BandClient.TileManager.TileInstalledAndOwned(ref _bandTileId, CancellationToken.None))
+                if (BandClient != null && BandClient.TileManager.TileInstalledAndOwned(ref _bandTileId, CancellationToken.None))
                 {
-                    await BandClient.TileManager.SetPagesAsync(myTile.TileId, new PageData(BandPageId, 0, designed.Data.All));
-                    BandClient.TileManager.TileButtonPressed += TileManager_TileButtonPressed;
-                    await BandClient.TileManager.StartReadingsAsync();
                 }
                 else
                 {
-                    var tilecapacity = await BandClient.TileManager.GetRemainingTileCapacityAsync();
+                    var tilecapacity = await BandClient?.TileManager.GetRemainingTileCapacityAsync();
                     if (tilecapacity == 0)
                     {
                         ErrorLogProxy.NotifyError("No space on Band for tile");
@@ -98,10 +97,12 @@ namespace SoundCloudPlus.Band
                     }
                     await BandClient.TileManager.RemoveTileAsync(myTile.TileId);
                     await BandClient.TileManager.AddTileAsync(myTile);
-                    await BandClient.TileManager.SetPagesAsync(myTile.TileId, new PageData(BandPageId, 0, designed.Data.All));
-                    BandClient.TileManager.TileButtonPressed += TileManager_TileButtonPressed;
-                    await BandClient.TileManager.StartReadingsAsync();
                 }
+                await BandClient.TileManager.SetPagesAsync(myTile.TileId, new PageData(BandPageId, 0, designed.Data.All));
+                BandClient.TileManager.TileButtonPressed += TileManager_TileButtonPressed;
+                await BandClient.TileManager.StartReadingsAsync();
+                MainPage.Current.MainPageViewModel.BandIconVisibility = Visibility.Visible;
+                MainPage.Current.MainPageViewModel.BandIconOpacity = (float)1.0;
             }
             catch (Exception ex)
             {

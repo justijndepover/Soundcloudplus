@@ -68,7 +68,7 @@ namespace SoundCloudPlus.Pages
                     ToastToggle.IsOn = true;
                 }
 
-                bool bandTilesEnabled = (bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("ToastsEnabled");
+                bool bandTilesEnabled = (bool)ApplicationSettingsHelper.ReadLocalSettingsValue<bool>("BandTilesEnabled");
                 if (bandTilesEnabled)
                 {
                     BandToggle.IsOn = true;

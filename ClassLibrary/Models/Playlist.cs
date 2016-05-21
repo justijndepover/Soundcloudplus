@@ -7,7 +7,7 @@ namespace ClassLibrary.Models
     public class Playlist
     {
         [JsonProperty("artwork_url")]
-        public object ArtworkUrl { get; set; }
+        public string ArtworkUrl { get; set; }
         [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
         [JsonProperty("description")]

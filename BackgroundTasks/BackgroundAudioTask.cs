@@ -56,6 +56,7 @@ namespace BackgroundTasks
         #region Private fields, properties
         private const string TrackIdKey = "trackid";
         private const string TitleKey = "title";
+        private const string ArtistKey = "artist";
         private const string AlbumArtKey = "albumart";
         private SystemMediaTransportControls smtc;
         private MediaPlaybackList playbackList = new MediaPlaybackList();
@@ -130,7 +131,8 @@ namespace BackgroundTasks
 
             // Mark the background task as started to unblock SMTC Play operation (see related WaitOne on this signal)
             backgroundTaskStarted.Set();
-
+            
+            smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
             // Associate a cancellation and completed handlers with the background task.
             taskInstance.Task.Completed += TaskCompleted;
             taskInstance.Canceled += new BackgroundTaskCanceledEventHandler(OnCanceled); // event may raise immediately before continung thread excecution so must be at the end
@@ -189,7 +191,7 @@ namespace BackgroundTasks
         }
         #endregion
 
-        #region SysteMediaTransportControls related functions and handlers
+        #region SystemMediaTransportControls related functions and handlers
         /// <summary>
         /// Update Universal Volume Control (UVC) using SystemMediaTransPortControl APIs
         /// </summary>
@@ -206,6 +208,7 @@ namespace BackgroundTasks
             smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
             smtc.DisplayUpdater.Type = MediaPlaybackType.Music;
             smtc.DisplayUpdater.MusicProperties.Title = item.Source.CustomProperties[TitleKey] as string;
+            smtc.DisplayUpdater.MusicProperties.Artist = item.Source.CustomProperties[ArtistKey] as string;
 
             var albumArtUri = item.Source.CustomProperties[AlbumArtKey] as Uri;
             if (albumArtUri != null)
@@ -502,6 +505,7 @@ namespace BackgroundTasks
                 var source = MediaSource.CreateFromUri(GetMusicFile(song.Id));
                 source.CustomProperties[TrackIdKey] = song.Id;
                 source.CustomProperties[TitleKey] = song.Title;
+                source.CustomProperties[ArtistKey] = song.User.Username;
                 source.CustomProperties[AlbumArtKey] = song.ArtworkUrl;
                 playbackList.Items.Add(new MediaPlaybackItem(source));
             }

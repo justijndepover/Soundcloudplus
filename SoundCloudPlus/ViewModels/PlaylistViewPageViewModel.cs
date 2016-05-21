@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SoundCloudPlus.ViewModels
 {
-    class PlaylistViewPageViewModel : INotifyPropertyChanged
+    public class PlaylistViewPageViewModel : INotifyPropertyChanged
     {
         private Playlist _playlist;
         public Playlist Playlist
