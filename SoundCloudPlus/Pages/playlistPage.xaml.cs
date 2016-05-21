@@ -29,7 +29,6 @@ namespace SoundCloudPlus.Pages
             NavigationCacheMode = NavigationCacheMode.Required;
             InitBwPlaylist();
         }
-
         #region BackgroundWorkerPlaylist
 
         private void InitBwPlaylist()

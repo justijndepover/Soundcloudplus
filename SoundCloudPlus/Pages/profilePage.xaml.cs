@@ -204,7 +204,7 @@ namespace SoundCloudPlus.Pages
                 double height = bounds.Height;
                 double width = bounds.Width;
                 int limit = Screen.GetLimitItems(height, width, 400, 800, 200, 400);
-                _profilePageViewModel.PlaylistCollection = await App.SoundCloud.GetOwnPlaylists(id, limit);
+                _profilePageViewModel.PlaylistCollection = await App.SoundCloud.GetOwnPlaylists(id, 10);
             }
             catch (ArgumentNullException e)
             {
