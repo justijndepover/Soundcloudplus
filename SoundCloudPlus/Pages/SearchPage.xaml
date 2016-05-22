@@ -38,48 +38,13 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Search Result" Style="{StaticResource PageTitle}" />
-                <GridView x:Name="SearchGridView" RelativePanel.Below="PageTitle" IsItemClickEnabled="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackSearchCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="SearchGridView_SizeChanged" ItemClick="SearchGridView_ItemClick">
+                <GridView x:Name="SearchGridView" RelativePanel.Below="PageTitle" IsItemClickEnabled="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackSearchCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="SearchGridView_SizeChanged" ItemClick="SearchGridView_ItemClick" ItemTemplate="{StaticResource TrackDataTemplate}">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         </Style>
                     </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource BorderStyle1}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="78"/>
-                                        <RowDefinition Height="22"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                        <Image x:Name="TrackLikesItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
-                                        <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                            <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}" Style="{StaticResource AudioDuration}"/>
-                                        </Grid>
-                                    </Grid>
-                                    <TextBlock x:Name="TrackLikesItemArtist" Grid.Column="1"  Grid.Row="0" Text="{Binding User.Username}" Style="{StaticResource SongArtist}" />
-                                    <TextBlock x:Name="TrackLikesItemTitle" Grid.Column="1" Grid.Row="1" Style="{StaticResource SongTitle}">
-                                        <Run Text="{Binding Title}" Foreground="Gray"/>
-                                    </TextBlock>
-                                    <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
-                                        <TextBlock Text="&#xE768;" Style="{StaticResource SongControlButton}"/>
-                                        <TextBlock Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
-                                        <TextBlock Text="&#xE006;" Style="{StaticResource SongControlButton}"/>
-                                        <TextBlock Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
-                                        <TextBlock Text="&#xE134;" Style="{StaticResource SongControlButton}"/>
-                                        <TextBlock Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource SongControlText}" />
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
                     <GridView.Footer>
                         <Grid Height="52" />
                     </GridView.Footer>
