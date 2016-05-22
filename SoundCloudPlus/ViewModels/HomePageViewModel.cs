@@ -29,6 +29,8 @@ namespace SoundCloudPlus.ViewModels
             get { return _selectedExploreTrack; }
             set { _selectedExploreTrack = value; OnPropertyChanged(nameof(SelectedExploreTrack));}
         }
+    
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

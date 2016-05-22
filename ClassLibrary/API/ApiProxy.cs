@@ -51,7 +51,7 @@ namespace ClassLibrary.API
             }
             if (method == HttpMethod.Post)
             {
-                return await Post(endpoint, queryString, body, clientHeaders);
+                return await Post(endpoint, queryString, body, clientHeaders, useNewBasepoint);
             }
             if (method == HttpMethod.Put)
             {
@@ -59,7 +59,7 @@ namespace ClassLibrary.API
             }
             else if (method == HttpMethod.Delete)
             {
-                //return await Delete(endpoint, queryString);
+                return await Delete(endpoint, queryString, clientHeaders, useNewBasepoint);
             }
             return null;
         }
@@ -117,7 +117,7 @@ namespace ClassLibrary.API
             Application.Current.Exit();
         }
 
-        private async Task<ApiResponse> Post(string endpoint, string queryString, object body, object queryHeaders = null)
+        private async Task<ApiResponse> Post(string endpoint, string queryString, object body, object queryHeaders = null, bool useNewBasepoint = true)
         {
             var apiResponse = new ApiResponse();
             var finalEndpoint = (NewBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
@@ -191,9 +191,61 @@ namespace ClassLibrary.API
                             var value = property.GetValue(body);
                             multipartFormDataContent.Add(new StringContent(value.ToString()), '"' + property.Name + '"');
                         }
+
+                        var response = await client.PutAsync(finalEndpoint, multipartFormDataContent);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            apiResponse.Succes = true;
+                            apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
+                        }
+                        else
+                        {
+                            apiResponse.Succes = false;
+                        }
                     }
-                   
-                    var response = await client.PutAsync(finalEndpoint, multipartFormDataContent);
+                    else
+                    {
+                        var response = await client.PutAsync(finalEndpoint, new StringContent(String.Empty));
+                        if (response.IsSuccessStatusCode)
+                        {
+                            apiResponse.Succes = true;
+                            apiResponse.Data = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
+                        }
+                        else
+                        {
+                            apiResponse.Succes = false;
+                        }
+                    }
+                }
+            }
+            return apiResponse;
+        }
+
+        private async Task<ApiResponse> Delete(string endpoint, string queryString, object queryHeaders = null, bool useNewBasepoint = true)
+        {
+            var apiResponse = new ApiResponse();
+            string finalEndpoint;
+            if (useNewBasepoint)
+            {
+                finalEndpoint = (NewBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            }
+            else
+            {
+                finalEndpoint = (OldBasepoint + endpoint) + (!String.IsNullOrEmpty(queryString) ? "?" + queryString : "");
+            }
+            using (var client = new HttpClient())
+            {
+                    if (queryHeaders != null)
+                    {
+                        var properties = queryHeaders.GetType().GetRuntimeProperties();
+                        foreach (var property in properties)
+                        {
+                            var val = property.GetValue(queryHeaders);
+                            client.DefaultRequestHeaders.Add(property.Name, val.ToString());
+                        }
+                    }
+                    
+                    var response = await client.DeleteAsync(finalEndpoint);
                     if (response.IsSuccessStatusCode)
                     {
                         apiResponse.Succes = true;
@@ -203,7 +255,6 @@ namespace ClassLibrary.API
                     {
                         apiResponse.Succes = false;
                     }
-                }
             }
             return apiResponse;
         }

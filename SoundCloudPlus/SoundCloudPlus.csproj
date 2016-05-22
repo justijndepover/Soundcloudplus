@@ -112,6 +112,7 @@
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />
     <Compile Include="Converters\IntToTimeConverter.cs" />
+    <Compile Include="Converters\LikesIconConverter.cs" />
     <Compile Include="Converters\PlaylistToImageConverter.cs" />
     <Compile Include="Converters\TrackToImageConverter.cs" />
     <Compile Include="Converters\PlaylistConverter.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AcitivityPageViewModel.cs" />
+    <Compile Include="ViewModels\CommandsViewModel.cs" />
     <Compile Include="ViewModels\FollowerPageViewModel.cs" />
     <Compile Include="ViewModels\FollowingPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />

@@ -16,9 +16,6 @@ using System.Linq;
 using Windows.ApplicationModel.Background;
 using Windows.Media;
 using Windows.Media.Playback;
-
-using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.Media.Core;
 using System.Collections.Generic;
 using System.Net.Http;

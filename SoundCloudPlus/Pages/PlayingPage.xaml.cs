@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Numerics;
-using System.Threading;
-using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
-using Windows.Media.Playback;
 using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -15,7 +11,6 @@ using ClassLibrary.Common;
 using ClassLibrary.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using SoundCloudPlus.ViewModels;
 

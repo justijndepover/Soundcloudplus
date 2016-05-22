@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -34,9 +33,9 @@ namespace ClassLibrary
             //I am not letting this run aync because it causes issues when other code tries to use propery before async is completed
             if (CurrentUser == null || Code == null || Token == null)
             {
-                CurrentUser = (User) ApplicationSettingsHelper.ReadRoamingSettingsValue<User>("currentUser");
-                Code = (string) ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("code");
-                Token = (string) ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("token");
+                CurrentUser = (User)ApplicationSettingsHelper.ReadRoamingSettingsValue<User>("currentUser");
+                Code = (string)ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("code");
+                Token = (string)ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("token");
                 if (CurrentUser == null && Code == null && Token == null)
                 {
 
@@ -45,6 +44,7 @@ namespace ClassLibrary
                 {
                     if (CurrentUser == null)
                     {
+                        CurrentUser = (User)ApplicationSettingsHelper.ReadLocalSettingsValue<User>("currentUser");
                         ErrorLogProxy.LogError("CurrentUser is null");
                         ErrorLogProxy.NotifyErrorInDebug("CurrentUser is null");
                     }
@@ -70,16 +70,28 @@ namespace ClassLibrary
         public async Task<ObservableCollection<StreamCollection>> GetStream(int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/stream", null, new { limit = limitValue, offset = 0, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            ObservableCollection<StreamCollection> tracks = new ObservableCollection<StreamCollection>();
+            ObservableCollection<StreamCollection> streamCollection = new ObservableCollection<StreamCollection>();
             if (apiResponse.Succes)
             {
                 foreach (var item in apiResponse.Data["collection"])
                 {
-                    tracks.Add(JsonConvert.DeserializeObject<StreamCollection>(item.ToString()));
+
+                    StreamCollection stream = JsonConvert.DeserializeObject<StreamCollection>(item.ToString());
+                    if (stream.Track != null)
+                    {
+                        foreach (var like in await GetCurrentUserLikes())
+                        {
+                            if (stream.Track.Id == like)
+                            {
+                                stream.Track.IsLiked = true;
+                            }
+                        }
+                    }
+                    streamCollection.Add(stream);
                 }
                 _streamNextHref = apiResponse.Data["next_href"];
             }
-            return tracks;
+            return streamCollection;
         }
 
         public async Task<ObservableCollection<StreamCollection>> GetStream(string nextHref)
@@ -128,10 +140,18 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
+                var likes = await GetCurrentUserLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
-
-                    tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                    Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
+                    foreach (var like in likes)
+                    {
+                        if (t.Id == like)
+                        {
+                            t.IsLiked = true;
+                        }
+                    }
+                    tracks.Add(t);
 
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
@@ -145,10 +165,18 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
+                var likes = await GetCurrentUserLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
-
-                    tracks.Add(JsonConvert.DeserializeObject<Track>(item["track"].ToString()));
+                    Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
+                    foreach (var like in likes)
+                    {
+                        if (t.Id == like)
+                        {
+                            t.IsLiked = true;
+                        }
+                    }
+                    tracks.Add(t);
 
                 }
                 _exploreNextHref = apiResponse.Data["next_href"];
@@ -159,19 +187,6 @@ namespace ClassLibrary
         public string GetExploreNextHref()
         {
             return _exploreNextHref;
-        }
-
-        public async Task<bool> LikeTrack(string trackId)
-        {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/users/"+CurrentUser.Id+"/favorites/" + trackId, null, new { client_id = ClientId, app_version = "f4415c5" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
-            if (apiResponse.Succes)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
 
@@ -266,12 +281,20 @@ namespace ClassLibrary
             Playlist playlist = new Playlist();
             if (apiResponse.Succes)
             {
+                var likes = await GetCurrentUserLikes();
                 try
                 {
                     playlist = JsonConvert.DeserializeObject<Playlist>(apiResponse.Data.ToString());
                     var tracks = playlist.Tracks;
                     foreach (var track in tracks.ToList())
                     {
+                        foreach (var like in likes)
+                        {
+                            if (track.Id == like)
+                            {
+                                track.IsLiked = true;
+                            }
+                        }
                         if (playlist.ArtworkUrl == null)
                         {
                             playlist.ArtworkUrl = track.ArtworkUrl;
@@ -364,44 +387,26 @@ namespace ClassLibrary
         public async Task<ObservableCollection<Track>> GetTracks(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
-            TrackObject tO = new TrackObject();
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                tO = JsonConvert.DeserializeObject<TrackObject>(apiResponse.Data.ToString());
-                try
+                var likes = await GetCurrentUserLikes();
+                foreach (var item in apiResponse.Data["collection"])
                 {
-                    if (tO.Collection[0].ArtworkUrl == null)
+                    Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
+                    foreach (var like in likes)
                     {
-                        User u = await GetUser(tO.Collection[0].User.Id);
-                        tO.Collection[0].ArtworkUrl = u.AvatarUrl;
+                        if (t.Id == like)
+                        {
+                            t.IsLiked = true;
+                        }
                     }
                 }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e);
-                }
             }
-
-            int l = tO.Collection.Count();
-            ObservableCollection<Track> c = new ObservableCollection<Track>();
-            if (l == 0)
-            {
-                return c;
-            }
-            for (int i = 0; i < l; i++)
-            {
-                c.Add(tO.Collection[i]);
-            }
-            object nhref = tO.NextHref;
-            if (nhref != null)
-            {
-                _profileTracksNextHref = nhref.ToString();
-            }
-            else
-            {
-                _profileTracksNextHref = "";
-            }
-            return c;
+            
+            object nhref = apiResponse.Data["next_href"].ToString();
+            _profileTracksNextHref = nhref != null ? nhref.ToString() : "";
+            return tracks;
         }
 
         public async Task<ObservableCollection<Track>> GetTracks(int userId, string nextHref)
@@ -600,6 +605,28 @@ namespace ClassLibrary
 
         #region Likes
         private string _likesNextHref = "";
+
+        public async Task<ObservableCollection<string>> GetCurrentUserLikes()
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/e1/me/track_likes/ids", null, new { limit = 5000, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ObservableCollection<string> userLikes = new ObservableCollection<string>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    try
+                    {
+                        userLikes.Add(JsonConvert.DeserializeObject<string>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                    }
+                }
+            }
+            return userLikes;
+        }
         public async Task<ObservableCollection<Track>> GetLikes(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/track_likes", null, new { tag = "out-of-experiment", limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
@@ -658,6 +685,16 @@ namespace ClassLibrary
             return tracklikes;
         }
 
+        public async Task<bool> LikeTrack(string id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/e1/me/track_likes/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            return apiResponse.Succes;
+        }
+        public async Task<bool> UnlikeTrack(string id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Delete, "/e1/me/track_likes/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            return apiResponse.Succes;
+        }
         public string GetLikesNextHref()
         {
             return _likesNextHref;
@@ -670,15 +707,22 @@ namespace ClassLibrary
             if (await ApiProxy.Authenticate())
             {
                 Token = ApplicationSettingsHelper.ReadRoamingSettingsValue<string>("token") as string;
-                ApiResponse apiResponse =
-                    await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new { oauth_token = Token });
-                CurrentUser = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
-                ApplicationSettingsHelper.SaveRoamingSettingsValue("currentUser", CurrentUser);
+                CurrentUser = await GetCurrentUser();
                 return true;
             }
             return false;
         }
 
+        public async Task<User> GetCurrentUser()
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/me", null, new { oauth_token = Token });
+            User user = new User();
+            if (apiResponse.Succes)
+            {
+                CurrentUser = JsonConvert.DeserializeObject<User>(apiResponse.Data.ToString());
+            }
+            return user;
+        } 
         public async Task<User> GetUser(int id)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
@@ -698,11 +742,20 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
+                var likes = await GetCurrentUserLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     if (item["kind"].ToString().Contains("track"))
                     {
-                        tracks.Add(JsonConvert.DeserializeObject<Track>(item.ToString()));
+                        Track t = JsonConvert.DeserializeObject<Track>(item.ToString());
+                        foreach (var like in likes)
+                        {
+                            if (t.Id == like)
+                            {
+                                t.IsLiked = true;
+                            }
+                        }
+                        tracks.Add(t);
                     }
                 }
             }

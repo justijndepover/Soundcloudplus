@@ -1,5 +1,4 @@
 ﻿using Windows.ApplicationModel;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;

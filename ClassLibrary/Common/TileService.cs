@@ -1,13 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.IO.IsolatedStorage;
-using System.Net;
 using System.Net.Http;
 using System.Xml.Linq;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.UI.StartScreen;
-using Windows.UI.Xaml.Media.Imaging;
 using ClassLibrary.Models;
 
 namespace ClassLibrary.Common

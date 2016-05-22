@@ -89,7 +89,7 @@
                                                         <TextBlock Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}"><!--Command="{Binding Track.LikeCommand}" CommandParameter="{Binding Track.Id}">-->
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
                                                         <TextBlock Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>

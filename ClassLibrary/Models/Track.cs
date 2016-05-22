@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ClassLibrary.Annotations;
 using Newtonsoft.Json;
 
 namespace ClassLibrary.Models
 {
-    public class Track
+    public class Track : INotifyPropertyChanged
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -68,7 +71,6 @@ namespace ClassLibrary.Models
         [JsonProperty("artwork_url")]
         public string ArtworkUrl { get; set; }
         [JsonProperty("waveform_url")]
-
         public string WaveformUrl { get; set; }
         [JsonProperty("user")]
         public User User { get; set; }
@@ -93,5 +95,20 @@ namespace ClassLibrary.Models
         [JsonProperty("attachments_uri")]
         public string AttachmentsUri { get; set; }
         public Uri PlaybackUri { get; set; }
+        private bool _isLiked;
+
+        public bool IsLiked
+        {
+            get { return _isLiked; }
+            set { _isLiked = value; OnPropertyChanged(nameof(IsLiked));}
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

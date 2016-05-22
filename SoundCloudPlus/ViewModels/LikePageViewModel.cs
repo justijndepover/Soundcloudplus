@@ -14,6 +14,7 @@ namespace SoundCloudPlus.ViewModels
             get { return _trackLikesCollection; }
             set { _trackLikesCollection = value; OnPropertyChanged(nameof(TrackLikesCollection)); }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

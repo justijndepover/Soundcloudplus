@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:SoundCloudPlus.Converters"
+    xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     x:Class="SoundCloudPlus.App">
     
     <Application.Resources>
@@ -13,6 +14,9 @@
             <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
             <converters:TimePassedConverter x:Key="TimePassedConverter" />
             <converters:PlaylistConverter x:Key="PlaylistConverter" />
+            <converters:LikesIconConverter x:Key="LikesIconConverter" />
+
+            <viewModels:CommandsViewModel x:Key="Commands"/>
             
             <Color x:Key="SystemAccentColor">#FC561F</Color>
             
@@ -1144,9 +1148,9 @@
                                         Style="{StaticResource FunctionText}" />
                                 </StackPanel>
                             </Button>
-                            <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                            <Button  Style="{StaticResource BtnProfileMenuFunctionButtons}" Command="{Binding LikeCommand, Source={StaticResource Commands}}" CommandParameter="{Binding}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock Text="{Binding IsLiked, Converter={StaticResource LikesIconConverter}}" Style="{StaticResource FunctionIcon}" />
                                     <TextBlock
                                         Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"
                                         Style="{StaticResource FunctionText}" />
