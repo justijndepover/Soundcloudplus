@@ -27,8 +27,8 @@ namespace SoundCloudPlus.Pages
         private BackgroundWorker _bwRepost = new BackgroundWorker();
         private ObservableCollection<Track> _newProfileTrackCollection = new ObservableCollection<Track>();
 
-        private ObservableCollection<PlaylistCollection> _newProfilePlaylistCollection =
-            new ObservableCollection<PlaylistCollection>();
+        private ObservableCollection<Playlist> _newProfilePlaylistCollection =
+            new ObservableCollection<Playlist>();
 
         private ObservableCollection<RepostCollection> _newProfileRepostCollection = new ObservableCollection<RepostCollection>();
 
@@ -94,7 +94,7 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                foreach (PlaylistCollection pc in _newProfilePlaylistCollection)
+                foreach (Playlist pc in _newProfilePlaylistCollection)
                 {
                     _profilePageViewModel.PlaylistCollection.Add(pc);
                 }
@@ -116,7 +116,7 @@ namespace SoundCloudPlus.Pages
             if (e != null)
             {
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
-                ObservableCollection<PlaylistCollection> newCollection = await App.SoundCloud.GetOwnPlaylists(App.SoundCloud.CurrentUser.Id, b);
+                ObservableCollection<Playlist> newCollection = await App.SoundCloud.GetOwnPlaylists(App.SoundCloud.CurrentUser.Id, b);
                 _newProfilePlaylistCollection = newCollection;
             }
         }

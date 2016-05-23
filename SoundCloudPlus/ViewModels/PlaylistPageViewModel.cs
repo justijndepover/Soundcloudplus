@@ -10,8 +10,8 @@ namespace SoundCloudPlus.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<PlaylistCollection> _playlistCollection;
-        public ObservableCollection<PlaylistCollection> PlaylistCollection
+        private ObservableCollection<Playlist> _playlistCollection;
+        public ObservableCollection<Playlist> PlaylistCollection
         {
             get { return _playlistCollection; }
             set { _playlistCollection = value; OnPropertyChanged(nameof(PlaylistCollection)); }

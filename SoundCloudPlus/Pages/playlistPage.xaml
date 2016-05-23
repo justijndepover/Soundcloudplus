@@ -36,40 +36,13 @@
         <ScrollViewer x:Name="SvPlaylist" ViewChanged="SvPlaylist_OnViewChanged" VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Playlists" Style="{StaticResource PageTitle}" />
-                <GridView x:Name="PlaylistGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" SizeChanged="PlaylistGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ItemClick="PlaylistGridView_ItemClick" IsItemClickEnabled="True">
+                <GridView x:Name="PlaylistGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding PlaylistCollection}" SizeChanged="PlaylistGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ItemClick="PlaylistGridView_ItemClick" IsItemClickEnabled="True" ItemTemplate="{StaticResource PlaylistDataTemplate}">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         </Style>
                     </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource BorderStyle1}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="50"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                                        <Image x:Name="StreamItemArtworkImage" Source="{Binding ArtworkUrl}" Style="{StaticResource ImageAlbum}"/>
-                                    </Grid>
-                                    <TextBlock x:Name="PlaylistArtist" Text="{Binding Playlist.Title}" Style="{StaticResource SongArtist}" Grid.Column="1" Grid.Row="0"/>
-                                    <TextBlock x:Name="PlaylistUser" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="1">
-                                        <Run Text="{Binding Playlist.User.Username}" Foreground="Gray"/>
-                                    </TextBlock>
-                                    <TextBlock x:Name="PlaylistCount" Grid.Column="1" Style="{StaticResource SongTitle}" Grid.Row="2">
-                                        <Run Text="{Binding Playlist.TrackCount, Converter={StaticResource TrackCountConverter}}" Foreground="Gray"/>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
                     <GridView.Footer>
                         <Grid Height="52" />
                     </GridView.Footer>

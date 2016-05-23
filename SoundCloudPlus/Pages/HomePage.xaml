@@ -17,6 +17,7 @@
         <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
         <converters:TimePassedConverter x:Key="TimePassedConverter" />
         <converters:PlaylistConverter x:Key="PlaylistConverter" />
+        <converters:StreamCollectionTemplateSelector x:Key="StreamCollectionTemplateSelector"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource HomePageViewModel}">
         <VisualStateManager.VisualStateGroups>
@@ -42,14 +43,14 @@
                 <PivotItem Header="Stream">
                     <!--Pivot content goes here-->
                     <ScrollViewer x:Name="SvSteam" VerticalScrollBarVisibility="Hidden" ViewChanged="ScrollViewerStream_OnViewChanged">
-                        <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SelectionMode="None">
+                        <GridView x:Name="StreamGridView" IsItemClickEnabled="True" ItemClick="TrackGridView_OnItemClick"  RelativePanel.Below="StreamTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding StreamCollection}" SizeChanged="StreamGridView_SizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SelectionMode="None" ItemTemplateSelector="{StaticResource StreamCollectionTemplateSelector}">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
                                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 </Style>
                             </GridView.ItemContainerStyle>
-                            <GridView.ItemTemplate>
+                            <!--<GridView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource BorderStyle1}" >
                                         <Grid>
@@ -89,7 +90,7 @@
                                                         <TextBlock Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
                                                     </StackPanel>
                                                 </Button>
-                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}"><!--Command="{Binding Track.LikeCommand}" CommandParameter="{Binding Track.Id}">-->
+                                                <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">--><!--Command="{Binding Track.LikeCommand}" CommandParameter="{Binding Track.Id}">--><!--
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="&#xE006;" Style="{StaticResource FunctionIcon}"/>
                                                         <TextBlock Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}" Style="{StaticResource FunctionText}"/>
@@ -105,7 +106,7 @@
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
+                            </GridView.ItemTemplate>-->
                             <GridView.Footer>
                                 <Grid Height="52" />
                             </GridView.Footer>

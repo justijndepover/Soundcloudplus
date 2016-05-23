@@ -12,7 +12,6 @@ namespace SoundCloudPlus.ViewModels
             LikeCommand.CanExecuteFunc = obj => true;
             LikeCommand.ExecuteFunc = LikeUnlikeTrack;
         }
-
         public async void LikeUnlikeTrack(object parameter)
         {
             Track track = (Track) parameter;

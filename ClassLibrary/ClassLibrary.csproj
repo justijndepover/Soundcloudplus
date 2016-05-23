@@ -133,7 +133,6 @@
     <Compile Include="Models\ActivityCollection.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Playlist.cs" />
-    <Compile Include="Models\PlaylistCollection.cs" />
     <Compile Include="Common\TitleBar.cs" />
     <Compile Include="Models\PlaylistObject.cs" />
     <Compile Include="Models\PrimaryTile.cs" />
@@ -141,7 +140,6 @@
     <Compile Include="Models\SongModel.cs" />
     <Compile Include="Models\StreamCollection.cs" />
     <Compile Include="Models\Track.cs" />
-    <Compile Include="Models\TrackObject.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Common\Screen.cs" />
     <Compile Include="Models\WaveForm.cs" />

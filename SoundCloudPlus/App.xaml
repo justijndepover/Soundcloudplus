@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    xmlns:models="using:ClassLibrary.Models"
     x:Class="SoundCloudPlus.App">
     
     <Application.Resources>
@@ -17,7 +18,7 @@
             <converters:LikesIconConverter x:Key="LikesIconConverter" />
 
             <viewModels:CommandsViewModel x:Key="Commands"/>
-            
+
             <Color x:Key="SystemAccentColor">#FC561F</Color>
             
             <SolidColorBrush x:Key="SoundcloudOrange" Color="{StaticResource SystemAccentColor}" />
@@ -25,7 +26,7 @@
 
             <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.4" />
             <SolidColorBrush x:Key="SystemControlHighlightListLowBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.4" />
-            
+            <SolidColorBrush x:Key="TrackListItemForegroundColor" Color="#000000" />
             <!--BETA-->
             <Style TargetType="TextBlock" x:Key="Beta">
                 <Setter Property="Foreground" Value="White"/>
@@ -1112,7 +1113,7 @@
                 </Setter>
             </Style>
 
-            <DataTemplate x:Key="TrackDataTemplate">
+            <DataTemplate x:Key="TrackDataTemplate"><!--x:DataType="models:Track">-->
                 <Border Style="{StaticResource BorderStyle1}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -1168,7 +1169,85 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-            
+
+            <DataTemplate x:Key="PlaylistDataTemplate"><!--x:DataType="models:Playlist">-->
+                <Border Style="{StaticResource BorderStyle1}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="68"/>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0" Grid.RowSpan="4" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                            <Image Source="{Binding ArtworkUrl}"
+                                   Style="{StaticResource ImageAlbum}" />
+                            <Grid Style="{StaticResource GridMusicStyleBottom}">
+                                <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}"
+                                           Style="{StaticResource AudioDuration}" />
+                            </Grid>
+                        </Grid>
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding User.Username}" Style="{StaticResource SongArtist}" />
+                        <TextBlock Grid.Column="1" Grid.Row="1"
+                                   Style="{StaticResource SongTitle}">
+                            <Run Text="{Binding Title}" Foreground="Gray" />
+                        </TextBlock>
+                        
+                        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tracks}" IsItemClickEnabled="False" ItemTemplate="{StaticResource TrackListDataTemplate}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+
+                        <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <!--<Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock
+                                        Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Style="{StaticResource FunctionText}" />
+                                </StackPanel>
+                            </Button>-->
+                            <Button  Style="{StaticResource BtnProfileMenuFunctionButtons}" Command="{Binding LikeCommand, Source={StaticResource Commands}}" CommandParameter="{Binding}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding IsLiked, Converter={StaticResource LikesIconConverter}}" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock
+                                        Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Style="{StaticResource FunctionText}" />
+                                </StackPanel>
+                            </Button>
+                            <!--<Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock
+                                        Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Style="{StaticResource FunctionText}" />
+                                </StackPanel>
+                            </Button>-->
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="TrackListDataTemplate"><!--x:DataType="models:Track">-->
+                <Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{StaticResource TrackListItemForegroundColor}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding User.Username}" Foreground="{StaticResource TrackListItemForegroundColor}"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

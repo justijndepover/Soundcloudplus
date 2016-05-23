@@ -24,8 +24,8 @@ namespace SoundCloudPlus.ViewModels
             set { _repostCollection = value; OnPropertyChanged(nameof(RepostCollection)); }
         }
 
-        private ObservableCollection<PlaylistCollection> _playlistCollection;
-        public ObservableCollection<PlaylistCollection> PlaylistCollection
+        private ObservableCollection<Playlist> _playlistCollection;
+        public ObservableCollection<Playlist> PlaylistCollection
         {
             get { return _playlistCollection; }
             set { _playlistCollection = value; OnPropertyChanged(nameof(PlaylistCollection)); }

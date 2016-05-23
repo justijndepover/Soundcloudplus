@@ -19,7 +19,7 @@ namespace SoundCloudPlus.Pages
     public sealed partial class PlaylistPage
     {
         private BackgroundWorker _bwPlaylist = new BackgroundWorker();
-        private ObservableCollection<PlaylistCollection> _newPlaylistCollection = new ObservableCollection<PlaylistCollection>();
+        private ObservableCollection<Playlist> _newPlaylistCollection = new ObservableCollection<Playlist>();
         private double _verticalOffsetPlaylist;
         private double _maxVerticalOffsetPlaylist;
 
@@ -47,7 +47,7 @@ namespace SoundCloudPlus.Pages
         {
             try
             {
-                foreach (PlaylistCollection pC in _newPlaylistCollection)
+                foreach (Playlist pC in _newPlaylistCollection)
                 {
                     _playlistViewModel.PlaylistCollection.Add(pC);
                 }
@@ -69,7 +69,7 @@ namespace SoundCloudPlus.Pages
                 var b = e.Replace("https://api-v2.soundcloud.com", "");
                 if (b != "")
                 {
-                    ObservableCollection<PlaylistCollection> newCollection =
+                    ObservableCollection<Playlist> newCollection =
                     await App.SoundCloud.GetPlaylists(App.SoundCloud.CurrentUser.Id, b);
                     _newPlaylistCollection = newCollection;
                 }
@@ -154,9 +154,9 @@ namespace SoundCloudPlus.Pages
         { 
             try
             {
-                PlaylistCollection p = e.ClickedItem as PlaylistCollection;
-                App.AudioPlayer.PlayTrack(p?.Playlist.Tracks, p?.Playlist.Tracks[0]);
-                MainPage.Current.Navigate(new PlaylistViewPage(), p?.Playlist.Id.ToString());
+                Playlist p = e.ClickedItem as Playlist;
+                App.AudioPlayer.PlayTrack(p?.Tracks, p?.Tracks[0]);
+                MainPage.Current.Navigate(new PlaylistViewPage(), p?.Id.ToString());
             }
             catch(Exception ex)
             {

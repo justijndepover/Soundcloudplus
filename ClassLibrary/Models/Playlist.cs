@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ClassLibrary.Annotations;
 using Newtonsoft.Json;
 
 namespace ClassLibrary.Models
@@ -62,5 +65,20 @@ namespace ClassLibrary.Models
         public List<Track> Tracks { get; set; }
         [JsonProperty("track_count")]
         public int TrackCount { get; set; }
+        private bool _isLiked;
+
+        public bool IsLiked
+        {
+            get { return _isLiked; }
+            set { _isLiked = value; OnPropertyChanged(nameof(IsLiked)); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
