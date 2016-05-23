@@ -15,13 +15,11 @@ namespace SoundCloudPlus.Converters
                 StreamCollection stream = (StreamCollection) item;
                 if (stream.Playlist != null)
                 {
-                    element.DataContext = stream.Playlist;
-                    return Application.Current.Resources["PlaylistDataTemplate"] as DataTemplate;
+                    return  Application.Current.Resources["PlaylistDataTemplateContentPresenter"] as DataTemplate;
                 }
                 if (stream.Track != null)
                 {
-                    element.DataContext = stream.Track;
-                    return Application.Current.Resources["TrackDataTemplate"] as DataTemplate;
+                    return Application.Current.Resources["TrackDataTemplateContentPresenter"] as DataTemplate;
                 }
             }
             return null;

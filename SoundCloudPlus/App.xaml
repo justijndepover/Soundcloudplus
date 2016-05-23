@@ -126,7 +126,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
             <Style TargetType="Button" x:Key="BtnLikeActive">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="FontSize" Value="12" />
@@ -1126,10 +1125,10 @@
                             <RowDefinition Height="32"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                            <Image Source="{Binding Track.ArtworkUrl}"
+                            <Image Source="{Binding ArtworkUrl}"
                                    Style="{StaticResource ImageAlbum}" />
                             <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                <TextBlock Text="{Binding Track.Duration, Converter={StaticResource IntToTimeConverter}}"
+                                <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}"
                                            Style="{StaticResource AudioDuration}" />
                             </Grid>
                         </Grid>
@@ -1137,7 +1136,7 @@
                                    Text="{Binding User.Username}" Style="{StaticResource SongArtist}" />
                         <TextBlock Grid.Column="1" Grid.Row="1"
                                    Style="{StaticResource SongTitle}">
-                            <Run Text="{Binding Track.Title}" Foreground="Gray" />
+                            <Run Text="{Binding Title}" Foreground="Gray" />
                         </TextBlock>
                         
                         <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
@@ -1145,15 +1144,15 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}" />
                                     <TextBlock
-                                        Text="{Binding Track.PlaybackCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Text="{Binding PlaybackCount, Converter={StaticResource IntToMillionConverter}}"
                                         Style="{StaticResource FunctionText}" />
                                 </StackPanel>
                             </Button>
-                            <Button  Style="{StaticResource BtnProfileMenuFunctionButtons}" Command="{Binding Track.LikeCommand, Source={StaticResource Commands}}" CommandParameter="{Binding}">
+                            <Button  Style="{StaticResource BtnProfileMenuFunctionButtons}" Command="{Binding LikeCommand, Source={StaticResource Commands}}" CommandParameter="{Binding}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Track.IsLiked, Converter={StaticResource LikesIconConverter}}" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock Text="{Binding IsLiked, Converter={StaticResource LikesIconConverter}}" Style="{StaticResource FunctionIcon}" />
                                     <TextBlock
-                                        Text="{Binding Track.LikesCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"
                                         Style="{StaticResource FunctionText}" />
                                 </StackPanel>
                             </Button>
@@ -1161,7 +1160,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE134;" Style="{StaticResource FunctionIcon}" />
                                     <TextBlock
-                                        Text="{Binding Track.CommentCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Text="{Binding CommentCount, Converter={StaticResource IntToMillionConverter}}"
                                         Style="{StaticResource FunctionText}" />
                                 </StackPanel>
                             </Button>
@@ -1184,10 +1183,10 @@
                             <RowDefinition Height="32"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="0" Grid.RowSpan="4" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
-                            <Image Source="{Binding Playlist.ArtworkUrl}"
+                            <Image Source="{Binding ArtworkUrl}"
                                    Style="{StaticResource ImageAlbum}" />
                             <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                <TextBlock Text="{Binding Playlist.Duration, Converter={StaticResource IntToTimeConverter}}"
+                                <TextBlock Text="{Binding Duration, Converter={StaticResource IntToTimeConverter}}"
                                            Style="{StaticResource AudioDuration}" />
                             </Grid>
                         </Grid>
@@ -1195,7 +1194,7 @@
                                    Text="{Binding User.Username}" Style="{StaticResource SongArtist}" />
                         <TextBlock Grid.Column="1" Grid.Row="1"
                                    Style="{StaticResource SongTitle}">
-                            <Run Text="{Binding Playlist.Title}" Foreground="Gray" />
+                            <Run Text="{Binding Title}" Foreground="Gray" />
                         </TextBlock>
                         
                         <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tracks}" IsItemClickEnabled="False" ItemTemplate="{StaticResource TrackListDataTemplate}">
@@ -1215,11 +1214,11 @@
                                         Style="{StaticResource FunctionText}" />
                                 </StackPanel>
                             </Button>-->
-                            <Button  Style="{StaticResource BtnProfileMenuFunctionButtons}" Command="{Binding Playlist.LikeCommand, Source={StaticResource Commands}}" CommandParameter="{Binding}">
+                            <Button  Style="{StaticResource BtnProfileMenuFunctionButtons}" Command="{Binding LikeCommand, Source={StaticResource Commands}}" CommandParameter="{Binding}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Playlist.IsLiked, Converter={StaticResource LikesIconConverter}}" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock Text="{Binding IsLiked, Converter={StaticResource LikesIconConverter}}" Style="{StaticResource FunctionIcon}" />
                                     <TextBlock
-                                        Text="{Binding Playlist.LikesCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Text="{Binding LikesCount, Converter={StaticResource IntToMillionConverter}}"
                                         Style="{StaticResource FunctionText}" />
                                 </StackPanel>
                             </Button>
@@ -1236,7 +1235,8 @@
                 </Border>
             </DataTemplate>
 
-            <DataTemplate x:Key="TrackListDataTemplate"><!--x:DataType="models:Track">-->
+            <DataTemplate x:Key="TrackListDataTemplate">
+                <!--x:DataType="models:Track">-->
                 <Border>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -1247,6 +1247,16 @@
                         <TextBlock Grid.Column="1" Text="{Binding User.Username}" Foreground="{StaticResource TrackListItemForegroundColor}"/>
                     </Grid>
                 </Border>
+            </DataTemplate>
+
+            <Style TargetType="ContentPresenter">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            </Style>
+            <DataTemplate x:Key="TrackDataTemplateContentPresenter">
+                <ContentControl  Content="{Binding Track}" ContentTemplate="{StaticResource TrackDataTemplate}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="PlaylistDataTemplateContentPresenter">
+                <ContentControl  Content="{Binding Playlist}" ContentTemplate="{StaticResource PlaylistDataTemplate}"/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
