@@ -189,14 +189,14 @@ namespace SoundCloudPlus.Pages
 
         private void StreamGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Screen.MakeResponsive(e, 400, 800, StreamGridView);
+            //Screen.MakeResponsive(e, 400, 800, StreamGridView);
         }
 
         private void ExploreGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Screen.MakeResponsive(e, 400, 800, ExploreGridView);
         }
-        private async void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
+        private void TrackGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {

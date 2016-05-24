@@ -108,6 +108,7 @@
     <Compile Include="AudioPlayer.cs" />
     <Compile Include="Band\BandConnections.cs" />
     <Compile Include="Band\BandTileLayout.cs" />
+    <Compile Include="Controls\VariableSizedGridView.cs" />
     <Compile Include="Converters\ActivityTypeConverter.cs" />
     <Compile Include="Converters\ImageToHighResConverter.cs" />
     <Compile Include="Converters\IntToMillionConverter.cs" />

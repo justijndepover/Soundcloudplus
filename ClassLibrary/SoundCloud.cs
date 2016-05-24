@@ -87,6 +87,10 @@ namespace ClassLibrary
                             }
                         }
                     }
+                    else if(stream.Playlist != null)
+                    {
+                        stream.Playlist = await GetPlaylist(stream.Playlist.Id);
+                    }
                     streamCollection.Add(stream);
                 }
                 _streamNextHref = apiResponse.Data["next_href"];
@@ -97,18 +101,27 @@ namespace ClassLibrary
         public async Task<ObservableCollection<StreamCollection>> GetStream(string nextHref)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, nextHref, null, null, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            ObservableCollection<StreamCollection> tracks = new ObservableCollection<StreamCollection>();
+            ObservableCollection<StreamCollection> streamCollection = new ObservableCollection<StreamCollection>();
             if (apiResponse.Succes)
             {
                 foreach (var item in apiResponse.Data["collection"])
                 {
-
-                    tracks.Add(JsonConvert.DeserializeObject<StreamCollection>(item.ToString()));
-
+                    StreamCollection stream = JsonConvert.DeserializeObject<StreamCollection>(item.ToString());
+                    if (stream.Track != null)
+                    {
+                        foreach (var like in await GetCurrentUserLikes())
+                        {
+                            if (stream.Track.Id == like)
+                            {
+                                stream.Track.IsLiked = true;
+                            }
+                        }
+                    }
+                    streamCollection.Add(stream);
                 }
                 _streamNextHref = apiResponse.Data["next_href"];
             }
-            return tracks;
+            return streamCollection;
         }
 
         public async Task<WaveForm> GetWaveForm(string url)
@@ -273,7 +286,7 @@ namespace ClassLibrary
 
         public async Task<Playlist> GetPlaylist(int playlistId)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/playlists/" + playlistId, null, new { limit = 10, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/playlists/" + playlistId, null, new { limit = 50, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             Playlist playlist = new Playlist();
             if (apiResponse.Succes)
             {
@@ -281,23 +294,22 @@ namespace ClassLibrary
                 try
                 {
                     playlist = JsonConvert.DeserializeObject<Playlist>(apiResponse.Data.ToString());
-                    var tracks = playlist.Tracks;
-                    foreach (var track in tracks.ToList())
+                    for (int i = 0; i < playlist.Tracks.Count; i++)
                     {
                         foreach (var like in likes)
                         {
-                            if (track.Id == like)
+                            if (playlist.Tracks[i].Id == like)
                             {
-                                track.IsLiked = true;
+                                playlist.Tracks[i].IsLiked = true;
                             }
                         }
                         if (playlist.ArtworkUrl == null)
                         {
-                            playlist.ArtworkUrl = track.ArtworkUrl;
+                            playlist.ArtworkUrl = playlist.Tracks[i].ArtworkUrl;
                         }
-                        if (track.Title == null)
+                        if (playlist.Tracks[i].Title == null)
                         {
-                            playlist.Tracks.Remove(track);
+                            playlist.Tracks[i] = await GetTrackById(playlist.Tracks[i].Id);
                         }
                     }
                 }
@@ -376,6 +388,31 @@ namespace ClassLibrary
         #region Tracks
 
         private string _profileTracksNextHref = "";
+
+        public async Task<Track> GetTrackById(string id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/tracks", null, new { ids = id, }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            Track tracks = new Track();
+            if (apiResponse.Succes)
+            {
+                var likes = await GetCurrentUserLikes();
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
+                    foreach (var like in likes)
+                    {
+                        if (t.Id == like)
+                        {
+                            t.IsLiked = true;
+                        }
+                    }
+                }
+            }
+
+            object nhref = apiResponse.Data["next_href"].ToString();
+            _profileTracksNextHref = nhref != null ? nhref.ToString() : "";
+            return tracks;
+        }
         public async Task<ObservableCollection<Track>> GetTracks(int userId, int limitValue)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/users/" + userId + "/tracks", null, new { keepBlocked = false, limit = limitValue, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
