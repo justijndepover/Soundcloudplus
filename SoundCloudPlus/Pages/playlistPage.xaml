@@ -41,11 +41,9 @@
                         <Style TargetType="GridViewItem">
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Height" Value="300"/>
                         </Style>
                     </GridView.ItemContainerStyle>
-                    <GridView.Footer>
-                        <Grid Height="52" />
-                    </GridView.Footer>
                 </GridView>
             </RelativePanel>
         </ScrollViewer>

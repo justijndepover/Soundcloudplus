@@ -7,11 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
+    xmlns:controls="using:SoundCloudPlus.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:FollowerPageViewModel x:Key="FollowerViewModel" />
-        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
-        <local:MainPage x:Key="MainPage"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource FollowerViewModel}">
         <VisualStateManager.VisualStateGroups>
@@ -20,8 +19,6 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultState">
                     <VisualState.StateTriggers>
@@ -36,24 +33,19 @@
         <ScrollViewer x:Name="SvFollower" ViewChanged="SvFollower_OnViewChanged" VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Followers" Style="{StaticResource PageTitle}" />
-                <GridView x:Name="FollowerGridView" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" SizeChanged="FollowerGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" >
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Button Padding="0" Click="OnAvatarClick" Tag="{Binding Id}" Style="{StaticResource BtnFollower}">
-                                <Grid>
-                                    <Image Source="{Binding AvatarUrl, Converter={StaticResource ImageToHighResConverter}}" Style="{StaticResource ImageFollower}"/>
-                                    <Grid Style="{StaticResource GridMusicStyleBottom}">
-                                        <TextBlock Text="{Binding Username}" Style="{StaticResource FollowerName}" />
-                                    </Grid>
-                                    <!--<TextBlock Text="{Binding PermalinkUrl}"></TextBlock>-->
-                                </Grid>
-                            </Button>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                    <GridView.Footer>
-                        <Grid Height="52" />
-                    </GridView.Footer>
-                </GridView>
+                <controls:VariableSizedGridView x:Name="FollowerGridView" IsItemClickEnabled="True" IsResponsive="True" RelativePanel.Below="PageTitle" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding FollowersCollection}" SizeChanged="FollowerGridView_OnSizeChanged" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ItemTemplate="{StaticResource UserDataTemplate}" ItemClick="FollowerGridView_ItemClick">
+                    <controls:VariableSizedGridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </controls:VariableSizedGridView.ItemContainerStyle>
+                    <controls:VariableSizedGridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Horizontal" ItemHeight="164"/>
+                        </ItemsPanelTemplate>
+                    </controls:VariableSizedGridView.ItemsPanel>
+                </controls:VariableSizedGridView>
             </RelativePanel>
         </ScrollViewer>
     </Grid>

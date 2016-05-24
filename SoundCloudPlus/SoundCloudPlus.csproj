@@ -115,6 +115,7 @@
     <Compile Include="Converters\IntToTimeConverter.cs" />
     <Compile Include="Converters\LikesIconConverter.cs" />
     <Compile Include="Converters\PlaylistToImageConverter.cs" />
+    <Compile Include="Converters\SearchCollectionTemplateSelector.cs" />
     <Compile Include="Converters\StreamCollectionTemplateSelector.cs" />
     <Compile Include="Converters\TrackToImageConverter.cs" />
     <Compile Include="Converters\PlaylistConverter.cs" />

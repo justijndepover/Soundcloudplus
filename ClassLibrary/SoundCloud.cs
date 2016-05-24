@@ -117,6 +117,10 @@ namespace ClassLibrary
                             }
                         }
                     }
+                    else if (stream.Playlist != null)
+                    {
+                        stream.Playlist = await GetPlaylist(stream.Playlist.Id);
+                    }
                     streamCollection.Add(stream);
                 }
                 _streamNextHref = apiResponse.Data["next_href"];
@@ -330,14 +334,21 @@ namespace ClassLibrary
             ObservableCollection<Playlist> playlist = new ObservableCollection<Playlist>();
             if (apiResponse.Succes)
             {
-                foreach (var item in apiResponse.Data["collection"])
+                try
                 {
-                    Playlist p = await GetPlaylist(Convert.ToInt32(item["playlist"]["id"].Value));
-                    foreach (var track in p.Tracks.Where(track => p.ArtworkUrl == null))
+                    foreach (var item in apiResponse.Data["collection"])
                     {
-                        p.ArtworkUrl = track.ArtworkUrl;
+                        Playlist p = await GetPlaylist(Convert.ToInt32(item["playlist"]["id"].Value));
+                        foreach (var track in p.Tracks.Where(track => p.ArtworkUrl == null))
+                        {
+                            p.ArtworkUrl = track.ArtworkUrl;
+                        }
+                        playlist.Add(p);
                     }
-                    playlist.Add(p);
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                 }
             }
             object nhref = apiResponse.Data["next_href"].ToString();
@@ -757,15 +768,16 @@ namespace ClassLibrary
         #endregion
 
         #region Search + AutoSuggest
-        public async Task<ObservableCollection<Track>> Search(string query)
+        public async Task<ObservableCollection<SearchCollection>> Search(string query)
         {
-            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/search", null, new { q = query, facet = "model", limit = "10", offset = "0", client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
-            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/search", null, new { q = query, facet = "model", limit = "50", offset = "0", client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token });
+            ObservableCollection<SearchCollection> results = new ObservableCollection<SearchCollection>();
             if (apiResponse.Succes)
             {
                 var likes = await GetCurrentUserLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
+                    SearchCollection result = new SearchCollection();
                     if (item["kind"].ToString().Contains("track"))
                     {
                         Track t = JsonConvert.DeserializeObject<Track>(item.ToString());
@@ -776,11 +788,29 @@ namespace ClassLibrary
                                 t.IsLiked = true;
                             }
                         }
-                        tracks.Add(t);
+                        result.Track = t;
+                    } else if (item["kind"].ToString().Contains("user"))
+                    {
+                        User u = JsonConvert.DeserializeObject<User>(item.ToString());
+                        result.User = u;
+                    } else if (item["kind"].ToString().Contains("playlist"))
+                    {
+                        Playlist p = JsonConvert.DeserializeObject<Playlist>(item.ToString());
+
+                        p = await GetPlaylist(p.Id);
+                        foreach (var like in likes)
+                        {
+                            if (p.Id.ToString() == like)
+                            {
+                                p.IsLiked = true;
+                            }
+                        }
+                        result.Playlist = p;
                     }
+                    results.Add(result);
                 }
             }
-            return tracks;
+            return results;
         }
         public async Task<ObservableCollection<String>> AutoSuggest(string query)
         {

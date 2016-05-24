@@ -1203,6 +1203,8 @@
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="Padding" Value="6,3" />
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
@@ -1212,7 +1214,7 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{StaticResource TrackListItemForegroundColor}"/>
+                                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{StaticResource TrackListItemForegroundColor}" FontSize="12"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -1248,7 +1250,52 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-            
+
+            <DataTemplate x:Key="UserDataTemplate"><!--x:DataType="models:User">-->
+                <Border Style="{StaticResource BorderStyle1}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="68"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" Style="{StaticResource GridMusicStyleTop}">
+                            <Image Source="{Binding AvatarUrl}"
+                                   Style="{StaticResource ImageAlbum}" />
+                        </Grid>
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding Username}" Style="{StaticResource SongArtist}" />
+                        <TextBlock Grid.Column="1" Grid.Row="1"
+                                   Style="{StaticResource SongTitle}">
+                            <Run Text="{Binding FullName}" Foreground="Gray" />
+                        </TextBlock>
+
+                        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE716;" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock
+                                        Text="{Binding FollowersCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Style="{StaticResource FunctionText}" />
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource BtnProfileMenuFunctionButtons}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE768;" Style="{StaticResource FunctionIcon}" />
+                                    <TextBlock
+                                        Text="{Binding TrackCount, Converter={StaticResource IntToMillionConverter}}"
+                                        Style="{StaticResource FunctionText}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
             </Style>
@@ -1260,6 +1307,9 @@
             </DataTemplate>
             <DataTemplate x:Key="PlaylistDataTemplateContentPresenter">
                 <ContentControl HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  Content="{Binding Playlist}" ContentTemplate="{StaticResource PlaylistDataTemplate}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="UserDataTemplateContentPresenter">
+                <ContentControl HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  Content="{Binding User}" ContentTemplate="{StaticResource UserDataTemplate}"/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

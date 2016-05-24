@@ -147,15 +147,13 @@ namespace SoundCloudPlus.Pages
 
         private void FollowerGridView_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Screen.MakeResponsive(e, 200, 400, FollowerGridView);
+            //Screen.MakeResponsive(e, 200, 400, FollowerGridView);
         }
-
-        private void OnAvatarClick(object sender, RoutedEventArgs e)
+        
+        private void FollowerGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Button b = sender as Button;
-            int userId = (int)b.Tag;
-
-            MainPage.Current.Navigate(new ProfilePage(), userId.ToString());
+            User u = e.ClickedItem as User;
+            MainPage.Current.Navigate(new ProfilePage(), u?.Id.ToString());
         }
     }
 }

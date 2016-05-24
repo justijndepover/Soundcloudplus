@@ -116,14 +116,7 @@ namespace SoundCloudPlus.Pages
 
         private void FollowingGridView_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Screen.MakeResponsive(e, 200, 400, FollowingGridView);
-        }
-
-        private void OnAvatarClick(object sender, RoutedEventArgs e)
-        {
-            Button b = sender as Button;
-            int userId = (int)b.Tag;
-            MainPage.Current.Navigate(new ProfilePage(), userId.ToString());
+            //Screen.MakeResponsive(e, 200, 400, FollowingGridView);
         }
 
         #region FollowingScroller
@@ -154,6 +147,10 @@ namespace SoundCloudPlus.Pages
         }
         #endregion
 
-
+        private void FollowingGridView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            User u = e.ClickedItem as User;
+            MainPage.Current.Navigate(new ProfilePage(), u?.Id.ToString());
+        }
     }
 }

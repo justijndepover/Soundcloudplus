@@ -137,6 +137,7 @@
     <Compile Include="Models\PlaylistObject.cs" />
     <Compile Include="Models\PrimaryTile.cs" />
     <Compile Include="Models\RepostCollection.cs" />
+    <Compile Include="Models\SearchCollection.cs" />
     <Compile Include="Models\SongModel.cs" />
     <Compile Include="Models\StreamCollection.cs" />
     <Compile Include="Models\Track.cs" />

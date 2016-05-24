@@ -66,22 +66,62 @@ namespace SoundCloudPlus.Controls
         }
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
-            var collection = item as StreamCollection;
-            if (collection != null)
+            if (item.GetType() == typeof(StreamCollection))
             {
-                StreamCollection obj = collection;
-                element.SetValue(VariableSizedWrapGrid.ColumnSpanProperty, 1);
-                if (obj.Playlist == null)
+                var collection = item as StreamCollection;
+                if (collection != null)
                 {
+                    StreamCollection obj = collection;
+                    element.SetValue(VariableSizedWrapGrid.ColumnSpanProperty, 1);
+                    if (obj.Playlist == null)
+                    {
+                        element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 1);
+                    }
+                    else if (obj.Track == null)
+                    {
+                        element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 2);
+                    }
+                    element.SetValue(VerticalContentAlignmentProperty, VerticalAlignment.Stretch);
+                    element.SetValue(HorizontalContentAlignmentProperty, HorizontalAlignment.Stretch);
+                    base.PrepareContainerForItemOverride(element, collection);
+                }
+            }else if (item.GetType() == typeof(SearchCollection))
+            {
+                var collection = item as SearchCollection;
+                if (collection != null)
+                {
+                    SearchCollection obj = collection;
+                    element.SetValue(VariableSizedWrapGrid.ColumnSpanProperty, 1);
+                    if (obj.Playlist != null)
+                    {
+                        element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 2);
+                    }
+                    else if (obj.Track != null)
+                    {
+                        element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 1);
+                    }
+                    else if (obj.User != null)
+                    {
+                        element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 1);
+                    }
+                    element.SetValue(VerticalContentAlignmentProperty, VerticalAlignment.Stretch);
+                    element.SetValue(HorizontalContentAlignmentProperty, HorizontalAlignment.Stretch);
+                    base.PrepareContainerForItemOverride(element, collection);
+                }
+            }
+            else if (item.GetType() == typeof(User))
+            {
+                var collection = item as User;
+                if (collection != null)
+                {
+                    User obj = collection;
+                    element.SetValue(VariableSizedWrapGrid.ColumnSpanProperty, 1);
                     element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 1);
+
+                    element.SetValue(VerticalContentAlignmentProperty, VerticalAlignment.Stretch);
+                    element.SetValue(HorizontalContentAlignmentProperty, HorizontalAlignment.Stretch);
+                    base.PrepareContainerForItemOverride(element, collection);
                 }
-                else if (obj.Track == null)
-                {
-                    element.SetValue(VariableSizedWrapGrid.RowSpanProperty, 2);
-                }
-                element.SetValue(VerticalContentAlignmentProperty, VerticalAlignment.Stretch);
-                element.SetValue(HorizontalContentAlignmentProperty, HorizontalAlignment.Stretch);
-                base.PrepareContainerForItemOverride(element, collection);
             }
         }
 

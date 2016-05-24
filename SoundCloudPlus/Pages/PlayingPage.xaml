@@ -2,13 +2,10 @@
     x:Class="SoundCloudPlus.Pages.PlayingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SoundCloudPlus.Pages"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     xmlns:converters="using:SoundCloudPlus.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:common="using:ClassLibrary.Common"
-    xmlns:soundCloudPlus="using:SoundCloudPlus"
     xmlns:controls="using:SoundCloudPlus.Controls"
     mc:Ignorable="d">
 
@@ -16,8 +13,6 @@
         <viewModels:MainPageViewModel x:Key="MainPageViewModel" />
         <converters:TimePassedConverter x:Key="TimePassedConverter"/>
         <converters:ImageToHighResConverter x:Key="ImageToHighResConverter" />
-
-        <SolidColorBrush x:Key="TrackListItemForegroundColor" Color="#FFFFFF" />
     </Page.Resources>
     <Grid x:Name="LayoutRoot" DataContext="{StaticResource MainPageViewModel}">
         <VisualStateManager.VisualStateGroups>

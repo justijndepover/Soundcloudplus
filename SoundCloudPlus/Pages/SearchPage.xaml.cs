@@ -71,12 +71,24 @@ namespace SoundCloudPlus.Pages
         }
         private void SearchGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Screen.MakeResponsive(e, 400, 800, SearchGridView);
+            //Screen.MakeResponsive(e, 400, 800, SearchGridView);
         }
 
         private void SearchGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            App.AudioPlayer.PlayTrack(new List<Track>((ObservableCollection<Track>) SearchGridView.ItemsSource), e.ClickedItem as Track);
+            SearchCollection search = e.ClickedItem as SearchCollection;
+            if (search?.Track != null)
+            {
+                App.AudioPlayer.PlayTrack(new List<Track>() { search.Track }, search.Track);
+            }
+            else if (search?.Playlist != null)
+            {
+                App.AudioPlayer.PlayTrack(search.Playlist.Tracks, search.Playlist.Tracks[0]);
+            }
+            else if (search?.User != null)
+            {
+                MainPage.Current.Navigate(new ProfilePage(), search.User.Id.ToString());
+            }
         }
     }
 }

@@ -7,12 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:SoundCloudPlus.ViewModels"
     xmlns:converters="using:SoundCloudPlus.Converters"
+    xmlns:controls="using:SoundCloudPlus.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <viewModels:SearchPageViewModel x:Key="SearchPageViewModel" />
-        <converters:IntToTimeConverter x:Key="IntToTimeConverter"/>
-        <converters:ImageToHighResConverter x:Key="ImageToHighResConverter"/>
-        <converters:IntToMillionConverter x:Key="IntToMillionConverter"/>
+        <converters:SearchCollectionTemplateSelector x:Key="SearchCollectionTemplateSelector"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource SearchPageViewModel}">
@@ -22,8 +21,6 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultState">
                     <VisualState.StateTriggers>
@@ -38,17 +35,16 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <RelativePanel Style="{StaticResource RelativePanelMargin}">
                 <TextBlock x:Name="PageTitle" Text="Search Result" Style="{StaticResource PageTitle}" />
-                <GridView x:Name="SearchGridView" RelativePanel.Below="PageTitle" IsItemClickEnabled="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackSearchCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="SearchGridView_SizeChanged" ItemClick="SearchGridView_ItemClick" ItemTemplate="{StaticResource TrackDataTemplate}">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </GridView.ItemContainerStyle>
+                <controls:VariableSizedGridView x:Name="SearchGridView" IsResponsive="True" RelativePanel.Below="PageTitle" IsItemClickEnabled="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" ItemsSource="{Binding TrackSearchCollection}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" SizeChanged="SearchGridView_SizeChanged" ItemClick="SearchGridView_ItemClick" ItemTemplateSelector="{StaticResource SearchCollectionTemplateSelector}">
+                    <controls:VariableSizedGridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Horizontal" ItemHeight="164"/>
+                        </ItemsPanelTemplate>
+                    </controls:VariableSizedGridView.ItemsPanel>
                     <GridView.Footer>
                         <Grid Height="52" />
                     </GridView.Footer>
-                </GridView>
+                </controls:VariableSizedGridView>
             </RelativePanel>
         </ScrollViewer>
     </Grid>

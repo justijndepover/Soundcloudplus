@@ -8,8 +8,8 @@ namespace SoundCloudPlus.ViewModels
 {
     public class SearchPageViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Track> _trackSearchCollection;
-        public ObservableCollection<Track> TrackSearchCollection
+        private ObservableCollection<SearchCollection> _trackSearchCollection;
+        public ObservableCollection<SearchCollection> TrackSearchCollection
         {
             get { return _trackSearchCollection; }
             set { _trackSearchCollection = value; OnPropertyChanged(nameof(TrackSearchCollection)); }
