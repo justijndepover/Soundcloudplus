@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ClassLibrary.Models
 {
-    public class Playlist
+    public class Playlist : INotifyPropertyChanged
     {
         [JsonProperty("artwork_url")]
         public string ArtworkUrl { get; set; }
@@ -31,8 +31,19 @@ namespace ClassLibrary.Models
         public DateTime LastModified { get; set; }
         [JsonProperty("license")]
         public string License { get; set; }
+
+        private int _likesCount;
         [JsonProperty("likes_count")]
-        public int LikesCount { get; set; }
+        public int LikesCount
+        {
+            get { return _likesCount; }
+            set
+            {
+                _likesCount = value;
+                OnPropertyChanged(nameof(LikesCount));
+            }
+        }
+
         [JsonProperty("permalink")]
         public string Permalink { get; set; }
         [JsonProperty("permalink_url")]

@@ -73,13 +73,15 @@ namespace ClassLibrary
             ObservableCollection<StreamCollection> streamCollection = new ObservableCollection<StreamCollection>();
             if (apiResponse.Succes)
             {
+                var trackLikes = await GetCurrentUserTrackLikes();
+                var playlistLikes = await GetCurrentUserPlaylistLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
 
                     StreamCollection stream = JsonConvert.DeserializeObject<StreamCollection>(item.ToString());
                     if (stream.Track != null)
                     {
-                        foreach (var like in await GetCurrentUserLikes())
+                        foreach (var like in trackLikes)
                         {
                             if (stream.Track.Id == like)
                             {
@@ -90,6 +92,14 @@ namespace ClassLibrary
                     else if(stream.Playlist != null)
                     {
                         stream.Playlist = await GetPlaylist(stream.Playlist.Id);
+
+                        foreach (var like in playlistLikes)
+                        {
+                            if (stream.Playlist.Id.ToString() == like)
+                            {
+                                stream.Playlist.IsLiked = true;
+                            }
+                        }
                     }
                     streamCollection.Add(stream);
                 }
@@ -104,12 +114,14 @@ namespace ClassLibrary
             ObservableCollection<StreamCollection> streamCollection = new ObservableCollection<StreamCollection>();
             if (apiResponse.Succes)
             {
+                var trackLikes = await GetCurrentUserTrackLikes();
+                var playlistLikes = await GetCurrentUserPlaylistLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     StreamCollection stream = JsonConvert.DeserializeObject<StreamCollection>(item.ToString());
                     if (stream.Track != null)
                     {
-                        foreach (var like in await GetCurrentUserLikes())
+                        foreach (var like in trackLikes)
                         {
                             if (stream.Track.Id == like)
                             {
@@ -120,6 +132,13 @@ namespace ClassLibrary
                     else if (stream.Playlist != null)
                     {
                         stream.Playlist = await GetPlaylist(stream.Playlist.Id);
+                        foreach (var like in playlistLikes)
+                        {
+                            if (stream.Playlist.Id.ToString() == like)
+                            {
+                                stream.Playlist.IsLiked = true;
+                            }
+                        }
                     }
                     streamCollection.Add(stream);
                 }
@@ -157,7 +176,7 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var likes = await GetCurrentUserTrackLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
@@ -182,7 +201,7 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var likes = await GetCurrentUserTrackLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
@@ -288,19 +307,41 @@ namespace ClassLibrary
         }
         #endregion
 
+        public async Task<ObservableCollection<string>> GetCurrentUserPlaylistLikes()
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/e1/me/playlist_likes/ids", null, new { limit = 5000, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            ObservableCollection<string> userLikes = new ObservableCollection<string>();
+            if (apiResponse.Succes)
+            {
+                foreach (var item in apiResponse.Data["collection"])
+                {
+                    try
+                    {
+                        userLikes.Add(JsonConvert.DeserializeObject<string>(item.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogProxy.LogError(ex.ToString());
+                        ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
+                    }
+                }
+            }
+            return userLikes;
+        }
         public async Task<Playlist> GetPlaylist(int playlistId)
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/playlists/" + playlistId, null, new { limit = 50, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             Playlist playlist = new Playlist();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var trackLikes = await GetCurrentUserTrackLikes();
+                var playlistLikes = await GetCurrentUserTrackLikes();
                 try
                 {
                     playlist = JsonConvert.DeserializeObject<Playlist>(apiResponse.Data.ToString());
                     for (int i = 0; i < playlist.Tracks.Count; i++)
                     {
-                        foreach (var like in likes)
+                        foreach (var like in trackLikes)
                         {
                             if (playlist.Tracks[i].Id == like)
                             {
@@ -314,6 +355,13 @@ namespace ClassLibrary
                         if (playlist.Tracks[i].Title == null)
                         {
                             playlist.Tracks[i] = await GetTrackById(playlist.Tracks[i].Id);
+                        }
+                    }
+                    foreach (var like in playlistLikes)
+                    {
+                        if (playlist.Id.ToString() == like)
+                        {
+                            playlist.IsLiked = true;
                         }
                     }
                 }
@@ -406,7 +454,7 @@ namespace ClassLibrary
             Track tracks = new Track();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var likes = await GetCurrentUserTrackLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
@@ -430,7 +478,7 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var likes = await GetCurrentUserTrackLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
@@ -455,7 +503,7 @@ namespace ClassLibrary
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var likes = await GetCurrentUserTrackLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     Track t = JsonConvert.DeserializeObject<Track>(item["track"].ToString());
@@ -637,8 +685,7 @@ namespace ClassLibrary
 
         #region Likes
         private string _likesNextHref = "";
-
-        public async Task<ObservableCollection<string>> GetCurrentUserLikes()
+        public async Task<ObservableCollection<string>> GetCurrentUserTrackLikes()
         {
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Get, "/e1/me/track_likes/ids", null, new { limit = 5000, offset = 0, linked_partitioning = 1, client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             ObservableCollection<string> userLikes = new ObservableCollection<string>();
@@ -786,14 +833,15 @@ namespace ClassLibrary
             ObservableCollection<SearchCollection> results = new ObservableCollection<SearchCollection>();
             if (apiResponse.Succes)
             {
-                var likes = await GetCurrentUserLikes();
+                var trackLikes = await GetCurrentUserTrackLikes();
+                var playlistLikes = await GetCurrentUserPlaylistLikes();
                 foreach (var item in apiResponse.Data["collection"])
                 {
                     SearchCollection result = new SearchCollection();
                     if (item["kind"].ToString().Contains("track"))
                     {
                         Track t = JsonConvert.DeserializeObject<Track>(item.ToString());
-                        foreach (var like in likes)
+                        foreach (var like in trackLikes)
                         {
                             if (t.Id == like)
                             {
@@ -810,7 +858,7 @@ namespace ClassLibrary
                         Playlist p = JsonConvert.DeserializeObject<Playlist>(item.ToString());
 
                         p = await GetPlaylist(p.Id);
-                        foreach (var like in likes)
+                        foreach (var like in playlistLikes)
                         {
                             if (p.Id.ToString() == like)
                             {

@@ -42,7 +42,7 @@ namespace SoundCloudPlus.ViewModels
                 {
                     if (await App.SoundCloud.UnlikePlaylist(playlist.Id))
                     {
-                        playlist.TrackCount--;
+                        playlist.LikesCount--;
                         playlist.IsLiked = false;
                     }
                 }
@@ -50,7 +50,7 @@ namespace SoundCloudPlus.ViewModels
                 {
                     if (await App.SoundCloud.LikePlaylist(playlist.Id))
                     {
-                        playlist.TrackCount++;
+                        playlist.LikesCount++;
                         playlist.IsLiked = true;
                     }
                 }
