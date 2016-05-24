@@ -47,7 +47,7 @@ namespace SoundCloudPlus.Pages
         {
             _bwProfileTrack.DoWork += BwProfileTrack_DoWork;
             _bwProfileTrack.WorkerSupportsCancellation = true;
-            _bwProfileTrack.RunWorkerCompleted += BwProfileTrack_RunWorkerCompleted; ;
+            _bwProfileTrack.RunWorkerCompleted += BwProfileTrack_RunWorkerCompleted;
         }
 
         private void BwProfileTrack_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

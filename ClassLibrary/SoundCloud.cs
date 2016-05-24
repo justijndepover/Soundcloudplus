@@ -727,6 +727,18 @@ namespace ClassLibrary
             ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Delete, "/e1/me/track_likes/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
             return apiResponse.Succes;
         }
+        public async Task<bool> LikePlaylist(int id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Put, "/e1/me/playlist_likes/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            return apiResponse.Succes;
+        }
+
+        public async Task<bool> UnlikePlaylist(int id)
+        {
+            ApiResponse apiResponse = await ApiProxy.RequestTask(HttpMethod.Delete, "/e1/me/playlist_likes/" + id, null, new { client_id = ClientId, app_version = "a089efd" }, new { Accept = "application/json, text/javascript, */*; q=0.01", Authorization = "OAuth " + Token }, false);
+            return apiResponse.Succes;
+        }
+
         public string GetLikesNextHref()
         {
             return _likesNextHref;
