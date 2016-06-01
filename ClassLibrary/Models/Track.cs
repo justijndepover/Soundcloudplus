@@ -84,9 +84,9 @@ namespace ClassLibrary.Models
         public int? PlaybackCount { get; set; }
         [JsonProperty("download_count")]
         public int? DownloadCount { get; set; }
-        private int _likesCount;
+        private int? _likesCount;
         [JsonProperty("likes_count")]
-        public int LikesCount
+        public int? LikesCount
         {
             get { return _likesCount; }
             set

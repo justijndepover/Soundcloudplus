@@ -103,7 +103,7 @@ namespace ClassLibrary
                     }
                     streamCollection.Add(stream);
                 }
-                _streamNextHref = apiResponse.Data["next_href"];
+                _streamNextHref = apiResponse.Data["next_href"].ToString();
             }
             return streamCollection;
         }
@@ -142,7 +142,7 @@ namespace ClassLibrary
                     }
                     streamCollection.Add(stream);
                 }
-                _streamNextHref = apiResponse.Data["next_href"];
+                _streamNextHref = apiResponse.Data["next_href"].ToString();
             }
             return streamCollection;
         }
@@ -190,7 +190,7 @@ namespace ClassLibrary
                     tracks.Add(t);
 
                 }
-                _exploreNextHref = apiResponse.Data["next_href"];
+                _exploreNextHref = apiResponse.Data["next_href"].ToString();
             }
             return tracks;
         }
@@ -215,7 +215,7 @@ namespace ClassLibrary
                     tracks.Add(t);
 
                 }
-                _exploreNextHref = apiResponse.Data["next_href"];
+                _exploreNextHref = apiResponse.Data["next_href"].ToString();
             }
             return tracks;
         }
@@ -551,7 +551,7 @@ namespace ClassLibrary
                 {
                     rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
                 }
-                _repostNextHref = apiResponse.Data["next_href"];
+                _repostNextHref = apiResponse.Data["next_href"].ToString();
             }
             return rC;
         }
@@ -566,7 +566,7 @@ namespace ClassLibrary
                 {
                     rC.Add(JsonConvert.DeserializeObject<RepostCollection>(item.ToString()));
                 }
-                _repostNextHref = apiResponse.Data["next_href"];
+                _repostNextHref = apiResponse.Data["next_href"].ToString();
             }
             return rC;
         }
@@ -596,7 +596,7 @@ namespace ClassLibrary
                         ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
-                _followerNextHref = apiResponse.Data["next_href"];
+                _followerNextHref = apiResponse.Data["next_href"].ToString();
             }
             return followers;
         }
@@ -619,7 +619,7 @@ namespace ClassLibrary
                         ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
-                _followerNextHref = apiResponse.Data["next_href"];
+                _followerNextHref = apiResponse.Data["next_href"].ToString();
             }
             return followers;
         }
@@ -649,7 +649,7 @@ namespace ClassLibrary
                         ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
-                _followingNextHref = apiResponse.Data["next_href"];
+                _followingNextHref = apiResponse.Data["next_href"].ToString();
             }
             return followings;
         }
@@ -672,7 +672,7 @@ namespace ClassLibrary
                         ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
-                _followingNextHref = apiResponse.Data["next_href"];
+                _followingNextHref = apiResponse.Data["next_href"].ToString();
             }
             return followings;
         }
@@ -730,7 +730,7 @@ namespace ClassLibrary
                         ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
-                _likesNextHref = apiResponse.Data["next_href"];
+                _likesNextHref = apiResponse.Data["next_href"].ToString();
             }
             return tracklikes;
         }
@@ -759,7 +759,7 @@ namespace ClassLibrary
                         ErrorLogProxy.NotifyErrorInDebug(ex.ToString());
                     }
                 }
-                _likesNextHref = apiResponse.Data["next_href"];
+                _likesNextHref = apiResponse.Data["next_href"].ToString();
             }
             return tracklikes;
         }

@@ -32,9 +32,9 @@ namespace ClassLibrary.Models
         [JsonProperty("license")]
         public string License { get; set; }
 
-        private int _likesCount;
+        private int? _likesCount;
         [JsonProperty("likes_count")]
-        public int LikesCount
+        public int? LikesCount
         {
             get { return _likesCount; }
             set
@@ -57,7 +57,7 @@ namespace ClassLibrary.Models
         [JsonProperty("release_date")]
         public object ReleaseDate { get; set; }
         [JsonProperty("reposts_count")]
-        public int RepostsCount { get; set; }
+        public int? RepostsCount { get; set; }
         [JsonProperty("secret_token")]
         public object SecretToken { get; set; }
         [JsonProperty("sharing")]
@@ -69,13 +69,13 @@ namespace ClassLibrary.Models
         [JsonProperty("uri")]
         public string Uri { get; set; }
         [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         [JsonProperty("user")]
         public User User { get; set; }
         [JsonProperty("tracks")]
         public List<Track> Tracks { get; set; }
         [JsonProperty("track_count")]
-        public int TrackCount { get; set; }
+        public int? TrackCount { get; set; }
         private bool _isLiked;
 
         public bool IsLiked

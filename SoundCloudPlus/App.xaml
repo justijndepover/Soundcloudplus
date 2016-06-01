@@ -1214,7 +1214,7 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{StaticResource TrackListItemForegroundColor}" FontSize="12"/>
+                                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="{ThemeResource DefaultTextForegroundThemeBrush}" FontSize="12"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

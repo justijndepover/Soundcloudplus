@@ -532,13 +532,13 @@ namespace BackgroundTasks
                     string mp3;
                     try
                     {
-                        mp3 = apiResponse.Data["http_mp3_128_url"].Value;
+                        mp3 = apiResponse.Data["http_mp3_128_url"].ToString();
                     }
                     catch (Exception)
                     {
                         try
                         {
-                            mp3 = apiResponse.Data["hls_mp3_128_url"].Value;
+                            mp3 = apiResponse.Data["hls_mp3_128_url"].ToString();
                             UpdateToastMessage("Sorry, we can't play this song. It uses the HLS protocol, and the app does not support it yet.");
                         }
                         catch (Exception ex)

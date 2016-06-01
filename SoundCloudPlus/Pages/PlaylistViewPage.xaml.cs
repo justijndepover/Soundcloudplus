@@ -71,7 +71,7 @@ namespace SoundCloudPlus.Pages
                     if (e.Parameter != null && !ReferenceEquals(e.Parameter, string.Empty))
                     {
                         _playlistId = e.Parameter.ToString();
-                        _playlistViewPageViewModel.Playlist = await App.SoundCloud.GetPlaylist(Convert.ToInt32(e.Parameter.ToString()));
+                        _playlistViewPageViewModel.Playlist = await App.SoundCloud.GetPlaylist(Convert.ToInt32(_playlistId));
                         _playlistName = _playlistViewPageViewModel.Playlist.Title;
                     }
                     MainPage.Current.MainPageViewModel.PinButtonVisibility = Visibility.Visible;

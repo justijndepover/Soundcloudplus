@@ -80,10 +80,6 @@
                         <TextBlock Text="Beta" Style="{StaticResource Beta}" />
                     </Border>
                 </Grid>
-                <Button x:Name="BandButton" Visibility="{Binding BandIconVisibility}" Style="{StaticResource BtnNav}" Click="BandButton_OnClick">
-                    <Image x:Name="BandIcon" Source="../Band/bandglyph.png" Margin="4" Stretch="Uniform" Opacity="{Binding BandIconOpacity}"/>
-                </Button>
-                <Button x:Name="PinButton" Style="{StaticResource BtnNav}" Visibility="{Binding PinButtonVisibility}" Content="&#xE718;"/>
             </StackPanel>
         </Grid>
         <SplitView x:Name="SplitViewMenu" Grid.Row="1" Grid.RowSpan="1" CompactPaneLength="52" DisplayMode="CompactInline" PaneClosed="SplitViewMenu_PaneClosed" >
@@ -103,24 +99,27 @@
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
                             <RowDefinition Height="52" />
-                            <RowDefinition Height="70" />
+                            <RowDefinition Height="52" />
                         </Grid.RowDefinitions>
                         <Button x:Name="NavButton2" Style="{StaticResource BtnNav}" Content="&#xE700;" Click="NavButton_Click" />
-                        <Grid Width="60" Height="25" HorizontalAlignment="Right" Margin="0 0 8 0">
+                        <Grid Grid.Row="0" Width="60" Height="25" HorizontalAlignment="Right" Margin="0 0 8 0">
                             <Border Background="#C82C24" Padding="0" CornerRadius="3">
                                 <TextBlock Text="Beta" Style="{StaticResource Beta}" />
                             </Border>
                         </Grid>
-                        <AutoSuggestBox x:Name="SearchBox" Style="{StaticResource SearchBox}" Grid.Row="1" QuerySubmitted="AutoSuggestBox_QuerySubmitted" TextChanged="SearchBox_TextChanged"/>
-                        <Button Style="{StaticResource ButtonsInMenu}" x:Name="SearchButton" Grid.Row="1" Click="SearchButton_Click" Visibility="Collapsed"  ToolTipService.ToolTip="Search">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE71E;" />
-                            </Grid>
-                        </Button>
+                        <AutoSuggestBox x:Name="SearchBox" Style="{StaticResource SearchBox}" Grid.Row="1"
+                                            QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                                            TextChanged="SearchBox_TextChanged" />
+                            <Button Style="{StaticResource ButtonsInMenu}" x:Name="SearchButton" Grid.Row="1"
+                                    Click="SearchButton_Click" Visibility="Collapsed" ToolTipService.ToolTip="Search">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon Style="{StaticResource IconInNav}" Glyph="&#xE71E;" />
+                                </Grid>
+                            </Button>
                         <Button Style="{StaticResource ButtonsInMenu}" x:Name="HomeButton" Grid.Row="2" Click="Navigation_Click" Tag="home" ToolTipService.ToolTip="Home">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -207,6 +206,17 @@
                                 <TextBlock Style="{StaticResource TextInMenu}" Grid.Column="1" Text="Settings" />
                             </Grid>
                         </Button>
+
+                        <StackPanel Grid.Row="12" Orientation="Horizontal" Height="52">
+                            <Button x:Name="BandButton" Visibility="{Binding BandIconVisibility}"
+                                    Style="{StaticResource BtnNav}" Click="BandButton_OnClick">
+                                <Image x:Name="BandIcon" Source="../Band/bandglyph.png" Margin="4" Stretch="Uniform"
+                                       Opacity="{Binding BandIconOpacity}" />
+                            </Button>
+                            <Button x:Name="PinButton" Style="{StaticResource BtnNav}"
+                                    Visibility="{Binding PinButtonVisibility}" Content="&#xE718;" />
+                        </StackPanel>
+                        
                     </Grid>
                 </ScrollViewer>
             </SplitView.Pane>
